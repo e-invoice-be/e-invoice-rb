@@ -1,0 +1,65 @@
+module EInvoiceAPI
+  class Certificate = EInvoiceAPI::Models::Certificate
+
+  module CurrencyCode = EInvoiceAPI::Models::CurrencyCode
+
+  class DocumentAttachmentCreate = EInvoiceAPI::Models::DocumentAttachmentCreate
+
+  class DocumentCreate = EInvoiceAPI::Models::DocumentCreate
+
+  class DocumentCreateParams = EInvoiceAPI::Models::DocumentCreateParams
+
+  class DocumentDeleteParams = EInvoiceAPI::Models::DocumentDeleteParams
+
+  module DocumentDirection = EInvoiceAPI::Models::DocumentDirection
+
+  class DocumentResponse = EInvoiceAPI::Models::DocumentResponse
+
+  class DocumentRetrieveParams = EInvoiceAPI::Models::DocumentRetrieveParams
+
+  module Documents = EInvoiceAPI::Models::Documents
+
+  class DocumentSendParams = EInvoiceAPI::Models::DocumentSendParams
+
+  module DocumentState = EInvoiceAPI::Models::DocumentState
+
+  module DocumentType = EInvoiceAPI::Models::DocumentType
+
+  class InboxListCreditNotesParams = EInvoiceAPI::Models::InboxListCreditNotesParams
+
+  class InboxListInvoicesParams = EInvoiceAPI::Models::InboxListInvoicesParams
+
+  class InboxListParams = EInvoiceAPI::Models::InboxListParams
+
+  class LookupRetrieveParams = EInvoiceAPI::Models::LookupRetrieveParams
+
+  class OutboxListDraftDocumentsParams = EInvoiceAPI::Models::OutboxListDraftDocumentsParams
+
+  class OutboxListReceivedDocumentsParams = EInvoiceAPI::Models::OutboxListReceivedDocumentsParams
+
+  class PaginatedDocumentResponse = EInvoiceAPI::Models::PaginatedDocumentResponse
+
+  class PaymentDetailCreate = EInvoiceAPI::Models::PaymentDetailCreate
+
+  class UblDocumentValidation = EInvoiceAPI::Models::UblDocumentValidation
+
+  module UnitOfMeasureCode = EInvoiceAPI::Models::UnitOfMeasureCode
+
+  class ValidateValidateJsonParams = EInvoiceAPI::Models::ValidateValidateJsonParams
+
+  class ValidateValidatePeppolIDParams = EInvoiceAPI::Models::ValidateValidatePeppolIDParams
+
+  class ValidateValidateUblParams = EInvoiceAPI::Models::ValidateValidateUblParams
+
+  class WebhookCreateParams = EInvoiceAPI::Models::WebhookCreateParams
+
+  class WebhookDeleteParams = EInvoiceAPI::Models::WebhookDeleteParams
+
+  class WebhookListParams = EInvoiceAPI::Models::WebhookListParams
+
+  class WebhookResponse = EInvoiceAPI::Models::WebhookResponse
+
+  class WebhookRetrieveParams = EInvoiceAPI::Models::WebhookRetrieveParams
+
+  class WebhookUpdateParams = EInvoiceAPI::Models::WebhookUpdateParams
+end

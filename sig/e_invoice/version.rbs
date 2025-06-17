@@ -1,3 +1,0 @@
-module EInvoice
-  VERSION: String
-end

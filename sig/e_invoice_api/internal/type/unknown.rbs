@@ -1,0 +1,26 @@
+module EInvoiceAPI
+  module Internal
+    module Type
+      class Unknown
+        extend EInvoiceAPI::Internal::Type::Converter
+        extend EInvoiceAPI::Internal::Util::SorbetRuntimeSupport
+
+        def self.===: (top other) -> bool
+
+        def self.==: (top other) -> bool
+
+        def self.coerce: (
+          top value,
+          state: EInvoiceAPI::Internal::Type::Converter::coerce_state
+        ) -> top
+
+        def self.dump: (
+          top value,
+          state: EInvoiceAPI::Internal::Type::Converter::dump_state
+        ) -> top
+
+        def self.to_sorbet_type: -> top
+      end
+    end
+  end
+end

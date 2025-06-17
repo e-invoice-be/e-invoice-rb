@@ -39,9 +39,9 @@ Layout/LineLength:
   AllowedPatterns:
     - "^\\s*#.*$"
     - ^require(_relative)?
-    - "EInvoice::Internal::Type::BaseModel$"
+    - "EInvoiceAPI::Internal::Type::BaseModel$"
     - "^\\s*[A-Z0-9_]+ = :"
-    - "EInvoice::(Models|Resources|Test)::"
+    - "EInvoiceAPI::(Models|Resources|Test)::"
   Max: 110
 
 Layout/MultilineArrayLineBreaks:

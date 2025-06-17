@@ -1,0 +1,46 @@
+module EInvoiceAPI
+  module Models
+    type document_send_params =
+      {
+        email: String?,
+        receiver_peppol_id: String?,
+        receiver_peppol_scheme: String?,
+        sender_peppol_id: String?,
+        sender_peppol_scheme: String?
+      }
+      & EInvoiceAPI::Internal::Type::request_parameters
+
+    class DocumentSendParams < EInvoiceAPI::Internal::Type::BaseModel
+      extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
+      include EInvoiceAPI::Internal::Type::RequestParameters
+
+      attr_accessor email: String?
+
+      attr_accessor receiver_peppol_id: String?
+
+      attr_accessor receiver_peppol_scheme: String?
+
+      attr_accessor sender_peppol_id: String?
+
+      attr_accessor sender_peppol_scheme: String?
+
+      def initialize: (
+        ?email: String?,
+        ?receiver_peppol_id: String?,
+        ?receiver_peppol_scheme: String?,
+        ?sender_peppol_id: String?,
+        ?sender_peppol_scheme: String?,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        email: String?,
+        receiver_peppol_id: String?,
+        receiver_peppol_scheme: String?,
+        sender_peppol_id: String?,
+        sender_peppol_scheme: String?,
+        request_options: EInvoiceAPI::RequestOptions
+      }
+    end
+  end
+end

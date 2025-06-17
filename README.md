@@ -6,7 +6,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Documentation
 
-Documentation for releases of this gem can be found [on RubyDoc](https://gemdocs.org/gems/e-invoice).
+Documentation for releases of this gem can be found [on RubyDoc](https://gemdocs.org/gems/e-invoice-api).
 
 The REST API documentation can be found on [api.e-invoice.be](https://api.e-invoice.be).
 
@@ -17,7 +17,7 @@ To use this gem, install via Bundler by adding the following to your application
 <!-- x-release-please-start-version -->
 
 ```ruby
-gem "e-invoice", "~> 0.1.0.pre.alpha.4"
+gem "e-invoice-api", "~> 0.1.0.pre.alpha.5"
 ```
 
 <!-- x-release-please-end -->
@@ -26,9 +26,9 @@ gem "e-invoice", "~> 0.1.0.pre.alpha.4"
 
 ```ruby
 require "bundler/setup"
-require "e_invoice"
+require "e_invoice_api"
 
-e_invoice = EInvoice::Client.new(
+e_invoice = EInvoiceAPI::Client.new(
   api_key: ENV["E_INVOICE_API_KEY"] # This is the default and can be omitted
 )
 
@@ -79,7 +79,8 @@ document_attachment = e_invoice.documents.attachments.add(file: Pathname("/path/
 document_attachment = e_invoice.documents.attachments.add(file: File.read("/path/to/file"))
 
 # Or, to control the filename and/or content type:
-file = EInvoice::FilePart.new(File.read("/path/to/file"), filename: "/path/to/file", content_type: "…")
+file =
+  EInvoiceAPI::FilePart.new(File.read("/path/to/file"), filename: "/path/to/file", content_type: "…")
 document_attachment = e_invoice.documents.attachments.add(file: file)
 
 puts(document_attachment.id)
@@ -89,17 +90,17 @@ Note that you can also pass a raw `IO` descriptor, but this disables retries, as
 
 ### Handling errors
 
-When the library is unable to connect to the API, or if the API returns a non-success status code (i.e., 4xx or 5xx response), a subclass of `EInvoice::Errors::APIError` will be thrown:
+When the library is unable to connect to the API, or if the API returns a non-success status code (i.e., 4xx or 5xx response), a subclass of `EInvoiceAPI::Errors::APIError` will be thrown:
 
 ```ruby
 begin
   document = e_invoice.documents.create
-rescue EInvoice::Errors::APIConnectionError => e
+rescue EInvoiceAPI::Errors::APIConnectionError => e
   puts("The server could not be reached")
   puts(e.cause)  # an underlying Exception, likely raised within `net/http`
-rescue EInvoice::Errors::RateLimitError => e
+rescue EInvoiceAPI::Errors::RateLimitError => e
   puts("A 429 status code was received; we should back off a bit.")
-rescue EInvoice::Errors::APIStatusError => e
+rescue EInvoiceAPI::Errors::APIStatusError => e
   puts("Another non-200-range status code was received")
   puts(e.status)
 end
@@ -131,7 +132,7 @@ You can use the `max_retries` option to configure or disable this:
 
 ```ruby
 # Configure the default for all requests:
-e_invoice = EInvoice::Client.new(
+e_invoice = EInvoiceAPI::Client.new(
   max_retries: 0 # default is 2
 )
 
@@ -145,7 +146,7 @@ By default, requests will time out after 60 seconds. You can use the timeout opt
 
 ```ruby
 # Configure the default for all requests:
-e_invoice = EInvoice::Client.new(
+e_invoice = EInvoiceAPI::Client.new(
   timeout: nil # default is 60
 )
 
@@ -153,7 +154,7 @@ e_invoice = EInvoice::Client.new(
 e_invoice.documents.create(request_options: {timeout: 5})
 ```
 
-On timeout, `EInvoice::Errors::APITimeoutError` is raised.
+On timeout, `EInvoiceAPI::Errors::APITimeoutError` is raised.
 
 Note that requests that time out are retried by default.
 
@@ -161,7 +162,7 @@ Note that requests that time out are retried by default.
 
 ### BaseModel
 
-All parameter and response objects inherit from `EInvoice::Internal::Type::BaseModel`, which provides several conveniences, including:
+All parameter and response objects inherit from `EInvoiceAPI::Internal::Type::BaseModel`, which provides several conveniences, including:
 
 1. All fields, including unknown ones, are accessible with `obj[:prop]` syntax, and can be destructured with `obj => {prop: prop}` or pattern-matching syntax.
 
@@ -212,9 +213,9 @@ response = client.request(
 
 ### Concurrency & connection pooling
 
-The `EInvoice::Client` instances are threadsafe, but are only are fork-safe when there are no in-flight HTTP requests.
+The `EInvoiceAPI::Client` instances are threadsafe, but are only are fork-safe when there are no in-flight HTTP requests.
 
-Each instance of `EInvoice::Client` has its own HTTP connection pool with a default size of 99. As such, we recommend instantiating the client once per application in most settings.
+Each instance of `EInvoiceAPI::Client` has its own HTTP connection pool with a default size of 99. As such, we recommend instantiating the client once per application in most settings.
 
 When all available connections from the pool are checked out, requests wait for a new connection to become available, with queue time counting towards the request timeout.
 
@@ -237,7 +238,7 @@ Or, equivalently:
 e_invoice.documents.create
 
 # You can also splat a full Params class:
-params = EInvoice::DocumentCreateParams.new
+params = EInvoiceAPI::DocumentCreateParams.new
 e_invoice.documents.create(**params)
 ```
 
@@ -247,10 +248,10 @@ Since this library does not depend on `sorbet-runtime`, it cannot provide [`T::E
 
 ```ruby
 # :EUR
-puts(EInvoice::CurrencyCode::EUR)
+puts(EInvoiceAPI::CurrencyCode::EUR)
 
-# Revealed type: `T.all(EInvoice::CurrencyCode, Symbol)`
-T.reveal_type(EInvoice::CurrencyCode::EUR)
+# Revealed type: `T.all(EInvoiceAPI::CurrencyCode, Symbol)`
+T.reveal_type(EInvoiceAPI::CurrencyCode::EUR)
 ```
 
 Enum parameters have a "relaxed" type, so you can either pass in enum constants or their literal value:
@@ -258,7 +259,7 @@ Enum parameters have a "relaxed" type, so you can either pass in enum constants 
 ```ruby
 # Using the enum constants preserves the tagged type information:
 e_invoice.documents.create(
-  currency: EInvoice::CurrencyCode::EUR,
+  currency: EInvoiceAPI::CurrencyCode::EUR,
   # …
 )
 
