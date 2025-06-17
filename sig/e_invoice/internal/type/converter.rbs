@@ -1,0 +1,56 @@
+module EInvoice
+  module Internal
+    module Type
+      module Converter
+        extend EInvoice::Internal::Util::SorbetRuntimeSupport
+
+        type input = EInvoice::Internal::Type::Converter | Class
+
+        type coerce_state =
+          {
+            strictness: bool | :strong,
+            exactness: { yes: Integer, no: Integer, maybe: Integer },
+            branched: Integer
+          }
+
+        type dump_state = { can_retry: bool }
+
+        def coerce: (
+          top value,
+          state: EInvoice::Internal::Type::Converter::coerce_state
+        ) -> top
+
+        def dump: (
+          top value,
+          state: EInvoice::Internal::Type::Converter::dump_state
+        ) -> top
+
+        def inspect: (?depth: Integer) -> String
+
+        def self.type_info: (
+          {
+            const: (nil | bool | Integer | Float | Symbol)?,
+            enum: ^-> EInvoice::Internal::Type::Converter::input?,
+            union: ^-> EInvoice::Internal::Type::Converter::input?
+          }
+          | ^-> EInvoice::Internal::Type::Converter::input
+          | EInvoice::Internal::Type::Converter::input spec
+        ) -> (^-> top)
+
+        def self.coerce: (
+          EInvoice::Internal::Type::Converter::input target,
+          top value,
+          ?state: EInvoice::Internal::Type::Converter::coerce_state
+        ) -> top
+
+        def self.dump: (
+          EInvoice::Internal::Type::Converter::input target,
+          top value,
+          ?state: EInvoice::Internal::Type::Converter::dump_state
+        ) -> top
+
+        def self.inspect: (top target, depth: Integer) -> String
+      end
+    end
+  end
+end

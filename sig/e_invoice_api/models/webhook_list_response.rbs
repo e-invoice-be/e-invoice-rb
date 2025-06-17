@@ -1,7 +1,0 @@
-module EInvoiceAPI
-  module Models
-    type webhook_list_response = ::Array[EInvoiceAPI::WebhookResponse]
-
-    WebhookListResponse: EInvoiceAPI::Internal::Type::Converter
-  end
-end

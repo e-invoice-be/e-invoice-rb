@@ -150,7 +150,7 @@ multitask(:"build:gem") do
     sig/*
   GLOB
 
-  sh(*%w[gem build -- e_invoice_api.gemspec])
+  sh(*%w[gem build -- e_invoice.gemspec])
   rm_rf(ignore_file)
 end
 
