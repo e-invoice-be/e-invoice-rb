@@ -43,13 +43,13 @@ If you’d like to use the repository from source, you can either install from g
 To install via git in your `Gemfile`:
 
 ```ruby
-gem "e-invoice-api", git: "https://www.github.com/stainless-sdks/e-invoice-api-ruby"
+gem "e-invoice-api", git: "https://www.github.com/e-invoice-be/e-invoice-rb"
 ```
 
 Alternatively, reference local copy of the repo:
 
 ```bash
-$ git clone -- 'https://www.github.com/stainless-sdks/e-invoice-api-ruby' '<path-to-repo>'
+$ git clone -- 'https://www.github.com/e-invoice-be/e-invoice-rb' '<path-to-repo>'
 ```
 
 ```ruby
