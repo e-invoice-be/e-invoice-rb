@@ -5,8 +5,8 @@ require_relative "lib/e_invoice_api/version"
 Gem::Specification.new do |s|
   s.name = "e-invoice-api"
   s.version = EInvoiceAPI::VERSION
-  s.summary = "Ruby library to access the E Invoice API"
-  s.authors = ["E Invoice"]
+  s.summary = "Ruby SDK for the e-invoice.be Peppol API"
+  s.authors = ["e-invoice"]
   s.email = "support@e-invoice.be"
   s.homepage = "https://gemdocs.org/gems/e-invoice-api"
   s.metadata["homepage_uri"] = s.homepage
