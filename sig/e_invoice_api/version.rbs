@@ -1,0 +1,3 @@
+module EInvoiceAPI
+  VERSION: String
+end

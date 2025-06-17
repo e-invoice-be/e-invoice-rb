@@ -1,0 +1,17 @@
+module EInvoiceAPI
+  module Models
+    module Documents
+      type ubl_get_params =
+        {  } & EInvoiceAPI::Internal::Type::request_parameters
+
+      class UblGetParams < EInvoiceAPI::Internal::Type::BaseModel
+        extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
+        include EInvoiceAPI::Internal::Type::RequestParameters
+
+        def initialize: (?request_options: EInvoiceAPI::request_opts) -> void
+
+        def to_hash: -> { request_options: EInvoiceAPI::RequestOptions }
+      end
+    end
+  end
+end
