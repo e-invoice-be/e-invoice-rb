@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.7 (2025-06-17)
+
+Full Changelog: [v0.1.0-alpha.6...v0.1.0-alpha.7](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.1.0-alpha.6...v0.1.0-alpha.7)
+
+### Bug Fixes
+
+* Update e_invoice_api.gemspec ([1483443](https://github.com/e-invoice-be/e-invoice-rb/commit/148344352efd63bf782a51108c5b838addcd7550))
+
+
+### Chores
+
+* **internal:** version bump ([6a57f8e](https://github.com/e-invoice-be/e-invoice-rb/commit/6a57f8e75990cac12ac033294b24615d867be17c))
+
 ## 0.1.0-alpha.6 (2025-06-17)
 
 Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
