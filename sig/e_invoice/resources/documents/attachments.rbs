@@ -1,0 +1,32 @@
+module EInvoice
+  module Resources
+    class Documents
+      class Attachments
+        def retrieve: (
+          String attachment_id,
+          document_id: String,
+          ?request_options: EInvoice::request_opts
+        ) -> EInvoice::Documents::DocumentAttachment
+
+        def list: (
+          String document_id,
+          ?request_options: EInvoice::request_opts
+        ) -> EInvoice::Models::Documents::attachment_list_response
+
+        def delete: (
+          String attachment_id,
+          document_id: String,
+          ?request_options: EInvoice::request_opts
+        ) -> EInvoice::Models::Documents::AttachmentDeleteResponse
+
+        def add: (
+          String document_id,
+          file: EInvoice::Internal::file_input,
+          ?request_options: EInvoice::request_opts
+        ) -> EInvoice::Documents::DocumentAttachment
+
+        def initialize: (client: EInvoice::Client) -> void
+      end
+    end
+  end
+end

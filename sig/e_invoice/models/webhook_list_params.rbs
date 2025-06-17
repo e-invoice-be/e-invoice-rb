@@ -1,0 +1,15 @@
+module EInvoice
+  module Models
+    type webhook_list_params =
+      {  } & EInvoice::Internal::Type::request_parameters
+
+    class WebhookListParams < EInvoice::Internal::Type::BaseModel
+      extend EInvoice::Internal::Type::RequestParameters::Converter
+      include EInvoice::Internal::Type::RequestParameters
+
+      def initialize: (?request_options: EInvoice::request_opts) -> void
+
+      def to_hash: -> { request_options: EInvoice::RequestOptions }
+    end
+  end
+end

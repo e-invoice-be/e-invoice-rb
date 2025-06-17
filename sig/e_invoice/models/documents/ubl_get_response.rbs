@@ -1,0 +1,69 @@
+module EInvoice
+  module Models
+    module Documents
+      type ubl_get_response =
+        {
+          id: String,
+          file_name: String,
+          file_hash: String?,
+          file_size: Integer,
+          receiver_peppol_id: String?,
+          receiver_peppol_scheme: String?,
+          sender_peppol_id: String?,
+          sender_peppol_scheme: String?,
+          signed_url: String?,
+          validated_at: Time?
+        }
+
+      class UblGetResponse < EInvoice::Internal::Type::BaseModel
+        attr_accessor id: String
+
+        attr_accessor file_name: String
+
+        attr_accessor file_hash: String?
+
+        attr_reader file_size: Integer?
+
+        def file_size=: (Integer) -> Integer
+
+        attr_accessor receiver_peppol_id: String?
+
+        attr_accessor receiver_peppol_scheme: String?
+
+        attr_accessor sender_peppol_id: String?
+
+        attr_accessor sender_peppol_scheme: String?
+
+        attr_accessor signed_url: String?
+
+        attr_accessor validated_at: Time?
+
+        def initialize: (
+          id: String,
+          file_name: String,
+          ?file_hash: String?,
+          ?file_size: Integer,
+          ?receiver_peppol_id: String?,
+          ?receiver_peppol_scheme: String?,
+          ?sender_peppol_id: String?,
+          ?sender_peppol_scheme: String?,
+          ?signed_url: String?,
+          ?validated_at: Time?
+        ) -> void
+
+        def to_hash: -> {
+          id: String,
+          file_name: String,
+          file_hash: String?,
+          file_size: Integer,
+          receiver_peppol_id: String?,
+          receiver_peppol_scheme: String?,
+          sender_peppol_id: String?,
+          sender_peppol_scheme: String?,
+          signed_url: String?,
+          validated_at: Time?
+        }
+      end
+    end
+  end
+end

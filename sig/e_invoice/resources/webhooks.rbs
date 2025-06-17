@@ -1,0 +1,36 @@
+module EInvoice
+  module Resources
+    class Webhooks
+      def create: (
+        events: ::Array[String],
+        url: String,
+        ?enabled: bool,
+        ?request_options: EInvoice::request_opts
+      ) -> EInvoice::WebhookResponse
+
+      def retrieve: (
+        String webhook_id,
+        ?request_options: EInvoice::request_opts
+      ) -> EInvoice::WebhookResponse
+
+      def update: (
+        String webhook_id,
+        ?enabled: bool?,
+        ?events: ::Array[String]?,
+        ?url: String?,
+        ?request_options: EInvoice::request_opts
+      ) -> EInvoice::WebhookResponse
+
+      def list: (
+        ?request_options: EInvoice::request_opts
+      ) -> EInvoice::Models::webhook_list_response
+
+      def delete: (
+        String webhook_id,
+        ?request_options: EInvoice::request_opts
+      ) -> EInvoice::Models::WebhookDeleteResponse
+
+      def initialize: (client: EInvoice::Client) -> void
+    end
+  end
+end

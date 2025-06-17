@@ -1,0 +1,403 @@
+module EInvoice
+  module Models
+    type document_create =
+      {
+        amount_due: EInvoice::Models::DocumentCreate::amount_due?,
+        attachments: ::Array[EInvoice::DocumentAttachmentCreate]?,
+        billing_address: String?,
+        billing_address_recipient: String?,
+        currency: EInvoice::Models::currency_code,
+        customer_address: String?,
+        customer_address_recipient: String?,
+        customer_email: String?,
+        customer_id: String?,
+        customer_name: String?,
+        customer_tax_id: String?,
+        direction: EInvoice::Models::document_direction,
+        document_type: EInvoice::Models::document_type,
+        due_date: Date?,
+        invoice_date: Date?,
+        invoice_id: String?,
+        invoice_total: EInvoice::Models::DocumentCreate::invoice_total?,
+        items: ::Array[EInvoice::DocumentCreate::Item]?,
+        note: String?,
+        payment_details: ::Array[EInvoice::PaymentDetailCreate]?,
+        payment_term: String?,
+        previous_unpaid_balance: EInvoice::Models::DocumentCreate::previous_unpaid_balance?,
+        purchase_order: String?,
+        remittance_address: String?,
+        remittance_address_recipient: String?,
+        service_address: String?,
+        service_address_recipient: String?,
+        service_end_date: Date?,
+        service_start_date: Date?,
+        shipping_address: String?,
+        shipping_address_recipient: String?,
+        state: EInvoice::Models::document_state,
+        subtotal: EInvoice::Models::DocumentCreate::subtotal?,
+        tax_details: ::Array[EInvoice::DocumentCreate::TaxDetail]?,
+        total_discount: EInvoice::Models::DocumentCreate::total_discount?,
+        total_tax: EInvoice::Models::DocumentCreate::total_tax?,
+        vendor_address: String?,
+        vendor_address_recipient: String?,
+        vendor_email: String?,
+        vendor_name: String?,
+        vendor_tax_id: String?
+      }
+
+    class DocumentCreate < EInvoice::Internal::Type::BaseModel
+      attr_accessor amount_due: EInvoice::Models::DocumentCreate::amount_due?
+
+      attr_accessor attachments: ::Array[EInvoice::DocumentAttachmentCreate]?
+
+      attr_accessor billing_address: String?
+
+      attr_accessor billing_address_recipient: String?
+
+      attr_reader currency: EInvoice::Models::currency_code?
+
+      def currency=: (
+        EInvoice::Models::currency_code
+      ) -> EInvoice::Models::currency_code
+
+      attr_accessor customer_address: String?
+
+      attr_accessor customer_address_recipient: String?
+
+      attr_accessor customer_email: String?
+
+      attr_accessor customer_id: String?
+
+      attr_accessor customer_name: String?
+
+      attr_accessor customer_tax_id: String?
+
+      attr_reader direction: EInvoice::Models::document_direction?
+
+      def direction=: (
+        EInvoice::Models::document_direction
+      ) -> EInvoice::Models::document_direction
+
+      attr_reader document_type: EInvoice::Models::document_type?
+
+      def document_type=: (
+        EInvoice::Models::document_type
+      ) -> EInvoice::Models::document_type
+
+      attr_accessor due_date: Date?
+
+      attr_accessor invoice_date: Date?
+
+      attr_accessor invoice_id: String?
+
+      attr_accessor invoice_total: EInvoice::Models::DocumentCreate::invoice_total?
+
+      attr_accessor items: ::Array[EInvoice::DocumentCreate::Item]?
+
+      attr_accessor note: String?
+
+      attr_accessor payment_details: ::Array[EInvoice::PaymentDetailCreate]?
+
+      attr_accessor payment_term: String?
+
+      attr_accessor previous_unpaid_balance: EInvoice::Models::DocumentCreate::previous_unpaid_balance?
+
+      attr_accessor purchase_order: String?
+
+      attr_accessor remittance_address: String?
+
+      attr_accessor remittance_address_recipient: String?
+
+      attr_accessor service_address: String?
+
+      attr_accessor service_address_recipient: String?
+
+      attr_accessor service_end_date: Date?
+
+      attr_accessor service_start_date: Date?
+
+      attr_accessor shipping_address: String?
+
+      attr_accessor shipping_address_recipient: String?
+
+      attr_reader state: EInvoice::Models::document_state?
+
+      def state=: (
+        EInvoice::Models::document_state
+      ) -> EInvoice::Models::document_state
+
+      attr_accessor subtotal: EInvoice::Models::DocumentCreate::subtotal?
+
+      attr_accessor tax_details: ::Array[EInvoice::DocumentCreate::TaxDetail]?
+
+      attr_accessor total_discount: EInvoice::Models::DocumentCreate::total_discount?
+
+      attr_accessor total_tax: EInvoice::Models::DocumentCreate::total_tax?
+
+      attr_accessor vendor_address: String?
+
+      attr_accessor vendor_address_recipient: String?
+
+      attr_accessor vendor_email: String?
+
+      attr_accessor vendor_name: String?
+
+      attr_accessor vendor_tax_id: String?
+
+      def initialize: (
+        ?amount_due: EInvoice::Models::DocumentCreate::amount_due?,
+        ?attachments: ::Array[EInvoice::DocumentAttachmentCreate]?,
+        ?billing_address: String?,
+        ?billing_address_recipient: String?,
+        ?currency: EInvoice::Models::currency_code,
+        ?customer_address: String?,
+        ?customer_address_recipient: String?,
+        ?customer_email: String?,
+        ?customer_id: String?,
+        ?customer_name: String?,
+        ?customer_tax_id: String?,
+        ?direction: EInvoice::Models::document_direction,
+        ?document_type: EInvoice::Models::document_type,
+        ?due_date: Date?,
+        ?invoice_date: Date?,
+        ?invoice_id: String?,
+        ?invoice_total: EInvoice::Models::DocumentCreate::invoice_total?,
+        ?items: ::Array[EInvoice::DocumentCreate::Item]?,
+        ?note: String?,
+        ?payment_details: ::Array[EInvoice::PaymentDetailCreate]?,
+        ?payment_term: String?,
+        ?previous_unpaid_balance: EInvoice::Models::DocumentCreate::previous_unpaid_balance?,
+        ?purchase_order: String?,
+        ?remittance_address: String?,
+        ?remittance_address_recipient: String?,
+        ?service_address: String?,
+        ?service_address_recipient: String?,
+        ?service_end_date: Date?,
+        ?service_start_date: Date?,
+        ?shipping_address: String?,
+        ?shipping_address_recipient: String?,
+        ?state: EInvoice::Models::document_state,
+        ?subtotal: EInvoice::Models::DocumentCreate::subtotal?,
+        ?tax_details: ::Array[EInvoice::DocumentCreate::TaxDetail]?,
+        ?total_discount: EInvoice::Models::DocumentCreate::total_discount?,
+        ?total_tax: EInvoice::Models::DocumentCreate::total_tax?,
+        ?vendor_address: String?,
+        ?vendor_address_recipient: String?,
+        ?vendor_email: String?,
+        ?vendor_name: String?,
+        ?vendor_tax_id: String?
+      ) -> void
+
+      def to_hash: -> {
+        amount_due: EInvoice::Models::DocumentCreate::amount_due?,
+        attachments: ::Array[EInvoice::DocumentAttachmentCreate]?,
+        billing_address: String?,
+        billing_address_recipient: String?,
+        currency: EInvoice::Models::currency_code,
+        customer_address: String?,
+        customer_address_recipient: String?,
+        customer_email: String?,
+        customer_id: String?,
+        customer_name: String?,
+        customer_tax_id: String?,
+        direction: EInvoice::Models::document_direction,
+        document_type: EInvoice::Models::document_type,
+        due_date: Date?,
+        invoice_date: Date?,
+        invoice_id: String?,
+        invoice_total: EInvoice::Models::DocumentCreate::invoice_total?,
+        items: ::Array[EInvoice::DocumentCreate::Item]?,
+        note: String?,
+        payment_details: ::Array[EInvoice::PaymentDetailCreate]?,
+        payment_term: String?,
+        previous_unpaid_balance: EInvoice::Models::DocumentCreate::previous_unpaid_balance?,
+        purchase_order: String?,
+        remittance_address: String?,
+        remittance_address_recipient: String?,
+        service_address: String?,
+        service_address_recipient: String?,
+        service_end_date: Date?,
+        service_start_date: Date?,
+        shipping_address: String?,
+        shipping_address_recipient: String?,
+        state: EInvoice::Models::document_state,
+        subtotal: EInvoice::Models::DocumentCreate::subtotal?,
+        tax_details: ::Array[EInvoice::DocumentCreate::TaxDetail]?,
+        total_discount: EInvoice::Models::DocumentCreate::total_discount?,
+        total_tax: EInvoice::Models::DocumentCreate::total_tax?,
+        vendor_address: String?,
+        vendor_address_recipient: String?,
+        vendor_email: String?,
+        vendor_name: String?,
+        vendor_tax_id: String?
+      }
+
+      type amount_due = Float | String
+
+      module AmountDue
+        extend EInvoice::Internal::Type::Union
+
+        def self?.variants: -> ::Array[EInvoice::Models::DocumentCreate::amount_due]
+      end
+
+      type invoice_total = Float | String
+
+      module InvoiceTotal
+        extend EInvoice::Internal::Type::Union
+
+        def self?.variants: -> ::Array[EInvoice::Models::DocumentCreate::invoice_total]
+      end
+
+      type item =
+        {
+          amount: EInvoice::Models::DocumentCreate::Item::amount?,
+          date: nil,
+          description: String?,
+          product_code: String?,
+          quantity: EInvoice::Models::DocumentCreate::Item::quantity?,
+          tax: EInvoice::Models::DocumentCreate::Item::tax?,
+          tax_rate: String?,
+          unit: EInvoice::Models::unit_of_measure_code?,
+          unit_price: EInvoice::Models::DocumentCreate::Item::unit_price?
+        }
+
+      class Item < EInvoice::Internal::Type::BaseModel
+        attr_accessor amount: EInvoice::Models::DocumentCreate::Item::amount?
+
+        attr_accessor date: nil
+
+        attr_accessor description: String?
+
+        attr_accessor product_code: String?
+
+        attr_accessor quantity: EInvoice::Models::DocumentCreate::Item::quantity?
+
+        attr_accessor tax: EInvoice::Models::DocumentCreate::Item::tax?
+
+        attr_accessor tax_rate: String?
+
+        attr_accessor unit: EInvoice::Models::unit_of_measure_code?
+
+        attr_accessor unit_price: EInvoice::Models::DocumentCreate::Item::unit_price?
+
+        def initialize: (
+          ?amount: EInvoice::Models::DocumentCreate::Item::amount?,
+          ?date: nil,
+          ?description: String?,
+          ?product_code: String?,
+          ?quantity: EInvoice::Models::DocumentCreate::Item::quantity?,
+          ?tax: EInvoice::Models::DocumentCreate::Item::tax?,
+          ?tax_rate: String?,
+          ?unit: EInvoice::Models::unit_of_measure_code?,
+          ?unit_price: EInvoice::Models::DocumentCreate::Item::unit_price?
+        ) -> void
+
+        def to_hash: -> {
+          amount: EInvoice::Models::DocumentCreate::Item::amount?,
+          date: nil,
+          description: String?,
+          product_code: String?,
+          quantity: EInvoice::Models::DocumentCreate::Item::quantity?,
+          tax: EInvoice::Models::DocumentCreate::Item::tax?,
+          tax_rate: String?,
+          unit: EInvoice::Models::unit_of_measure_code?,
+          unit_price: EInvoice::Models::DocumentCreate::Item::unit_price?
+        }
+
+        type amount = Float | String
+
+        module Amount
+          extend EInvoice::Internal::Type::Union
+
+          def self?.variants: -> ::Array[EInvoice::Models::DocumentCreate::Item::amount]
+        end
+
+        type quantity = Float | String
+
+        module Quantity
+          extend EInvoice::Internal::Type::Union
+
+          def self?.variants: -> ::Array[EInvoice::Models::DocumentCreate::Item::quantity]
+        end
+
+        type tax = Float | String
+
+        module Tax
+          extend EInvoice::Internal::Type::Union
+
+          def self?.variants: -> ::Array[EInvoice::Models::DocumentCreate::Item::tax]
+        end
+
+        type unit_price = Float | String
+
+        module UnitPrice
+          extend EInvoice::Internal::Type::Union
+
+          def self?.variants: -> ::Array[EInvoice::Models::DocumentCreate::Item::unit_price]
+        end
+      end
+
+      type previous_unpaid_balance = Float | String
+
+      module PreviousUnpaidBalance
+        extend EInvoice::Internal::Type::Union
+
+        def self?.variants: -> ::Array[EInvoice::Models::DocumentCreate::previous_unpaid_balance]
+      end
+
+      type subtotal = Float | String
+
+      module Subtotal
+        extend EInvoice::Internal::Type::Union
+
+        def self?.variants: -> ::Array[EInvoice::Models::DocumentCreate::subtotal]
+      end
+
+      type tax_detail =
+        {
+          amount: EInvoice::Models::DocumentCreate::TaxDetail::amount?,
+          rate: String?
+        }
+
+      class TaxDetail < EInvoice::Internal::Type::BaseModel
+        attr_accessor amount: EInvoice::Models::DocumentCreate::TaxDetail::amount?
+
+        attr_accessor rate: String?
+
+        def initialize: (
+          ?amount: EInvoice::Models::DocumentCreate::TaxDetail::amount?,
+          ?rate: String?
+        ) -> void
+
+        def to_hash: -> {
+          amount: EInvoice::Models::DocumentCreate::TaxDetail::amount?,
+          rate: String?
+        }
+
+        type amount = Float | String
+
+        module Amount
+          extend EInvoice::Internal::Type::Union
+
+          def self?.variants: -> ::Array[EInvoice::Models::DocumentCreate::TaxDetail::amount]
+        end
+      end
+
+      type total_discount = Float | String
+
+      module TotalDiscount
+        extend EInvoice::Internal::Type::Union
+
+        def self?.variants: -> ::Array[EInvoice::Models::DocumentCreate::total_discount]
+      end
+
+      type total_tax = Float | String
+
+      module TotalTax
+        extend EInvoice::Internal::Type::Union
+
+        def self?.variants: -> ::Array[EInvoice::Models::DocumentCreate::total_tax]
+      end
+    end
+  end
+end

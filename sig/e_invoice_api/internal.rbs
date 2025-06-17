@@ -1,9 +1,0 @@
-module EInvoiceAPI
-  module Internal
-    extend EInvoiceAPI::Internal::Util::SorbetRuntimeSupport
-
-    type file_input = Pathname | StringIO | IO | String | EInvoiceAPI::FilePart
-
-    OMIT: Object
-  end
-end
