@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.2 (2025-06-17)
+
+Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
+
+### Features
+
+* **api:** manual updates ([855202f](https://github.com/e-invoice-be/e-invoice-rb/commit/855202f9724b6f846d24b36508863e22b72d215f))
+
 ## 0.1.0-alpha.1 (2025-06-17)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0-alpha.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.0.1-alpha.0...v0.1.0-alpha.1)
