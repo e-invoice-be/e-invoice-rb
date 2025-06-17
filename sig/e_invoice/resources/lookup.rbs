@@ -1,0 +1,12 @@
+module EInvoice
+  module Resources
+    class Lookup
+      def retrieve: (
+        peppol_id: String,
+        ?request_options: EInvoice::request_opts
+      ) -> EInvoice::Models::LookupRetrieveResponse
+
+      def initialize: (client: EInvoice::Client) -> void
+    end
+  end
+end

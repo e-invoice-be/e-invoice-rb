@@ -1,0 +1,14 @@
+module EInvoice
+  module Models
+    type document_direction = :INBOUND | :OUTBOUND
+
+    module DocumentDirection
+      extend EInvoice::Internal::Type::Enum
+
+      INBOUND: :INBOUND
+      OUTBOUND: :OUTBOUND
+
+      def self?.values: -> ::Array[EInvoice::Models::document_direction]
+    end
+  end
+end

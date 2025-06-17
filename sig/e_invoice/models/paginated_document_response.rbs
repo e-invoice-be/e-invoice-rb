@@ -1,0 +1,40 @@
+module EInvoice
+  module Models
+    type paginated_document_response =
+      {
+        items: ::Array[EInvoice::DocumentResponse],
+        page: Integer,
+        page_size: Integer,
+        pages: Integer,
+        total: Integer
+      }
+
+    class PaginatedDocumentResponse < EInvoice::Internal::Type::BaseModel
+      attr_accessor items: ::Array[EInvoice::DocumentResponse]
+
+      attr_accessor page: Integer
+
+      attr_accessor page_size: Integer
+
+      attr_accessor pages: Integer
+
+      attr_accessor total: Integer
+
+      def initialize: (
+        items: ::Array[EInvoice::DocumentResponse],
+        page: Integer,
+        page_size: Integer,
+        pages: Integer,
+        total: Integer
+      ) -> void
+
+      def to_hash: -> {
+        items: ::Array[EInvoice::DocumentResponse],
+        page: Integer,
+        page_size: Integer,
+        pages: Integer,
+        total: Integer
+      }
+    end
+  end
+end

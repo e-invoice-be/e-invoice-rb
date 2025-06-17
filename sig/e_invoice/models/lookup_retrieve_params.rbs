@@ -1,0 +1,23 @@
+module EInvoice
+  module Models
+    type lookup_retrieve_params =
+      { peppol_id: String } & EInvoice::Internal::Type::request_parameters
+
+    class LookupRetrieveParams < EInvoice::Internal::Type::BaseModel
+      extend EInvoice::Internal::Type::RequestParameters::Converter
+      include EInvoice::Internal::Type::RequestParameters
+
+      attr_accessor peppol_id: String
+
+      def initialize: (
+        peppol_id: String,
+        ?request_options: EInvoice::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        peppol_id: String,
+        request_options: EInvoice::RequestOptions
+      }
+    end
+  end
+end

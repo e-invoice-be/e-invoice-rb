@@ -1,0 +1,25 @@
+module EInvoice
+  module Models
+    module Documents
+      type attachment_delete_params =
+        { document_id: String } & EInvoice::Internal::Type::request_parameters
+
+      class AttachmentDeleteParams < EInvoice::Internal::Type::BaseModel
+        extend EInvoice::Internal::Type::RequestParameters::Converter
+        include EInvoice::Internal::Type::RequestParameters
+
+        attr_accessor document_id: String
+
+        def initialize: (
+          document_id: String,
+          ?request_options: EInvoice::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          document_id: String,
+          request_options: EInvoice::RequestOptions
+        }
+      end
+    end
+  end
+end
