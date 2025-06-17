@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email = "support@e-invoice.be"
   s.homepage = "https://gemdocs.org/gems/e-invoice-api"
   s.metadata["homepage_uri"] = s.homepage
-  s.metadata["source_code_uri"] = "https://github.com/stainless-sdks/e-invoice-api-ruby"
+  s.metadata["source_code_uri"] = "https://github.com/e-invoice-be/e-invoice-rb"
   s.metadata["rubygems_mfa_required"] = false.to_s
   s.required_ruby_version = ">= 3.2.0"
 
