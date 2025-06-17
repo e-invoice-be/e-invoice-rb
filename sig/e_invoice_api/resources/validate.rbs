@@ -1,0 +1,62 @@
+module EInvoiceAPI
+  module Resources
+    class Validate
+      def validate_json: (
+        ?amount_due: EInvoiceAPI::Models::DocumentCreate::amount_due?,
+        ?attachments: ::Array[EInvoiceAPI::DocumentAttachmentCreate]?,
+        ?billing_address: String?,
+        ?billing_address_recipient: String?,
+        ?currency: EInvoiceAPI::Models::currency_code,
+        ?customer_address: String?,
+        ?customer_address_recipient: String?,
+        ?customer_email: String?,
+        ?customer_id: String?,
+        ?customer_name: String?,
+        ?customer_tax_id: String?,
+        ?direction: EInvoiceAPI::Models::document_direction,
+        ?document_type: EInvoiceAPI::Models::document_type,
+        ?due_date: Date?,
+        ?invoice_date: Date?,
+        ?invoice_id: String?,
+        ?invoice_total: EInvoiceAPI::Models::DocumentCreate::invoice_total?,
+        ?items: ::Array[EInvoiceAPI::DocumentCreate::Item]?,
+        ?note: String?,
+        ?payment_details: ::Array[EInvoiceAPI::PaymentDetailCreate]?,
+        ?payment_term: String?,
+        ?previous_unpaid_balance: EInvoiceAPI::Models::DocumentCreate::previous_unpaid_balance?,
+        ?purchase_order: String?,
+        ?remittance_address: String?,
+        ?remittance_address_recipient: String?,
+        ?service_address: String?,
+        ?service_address_recipient: String?,
+        ?service_end_date: Date?,
+        ?service_start_date: Date?,
+        ?shipping_address: String?,
+        ?shipping_address_recipient: String?,
+        ?state: EInvoiceAPI::Models::document_state,
+        ?subtotal: EInvoiceAPI::Models::DocumentCreate::subtotal?,
+        ?tax_details: ::Array[EInvoiceAPI::DocumentCreate::TaxDetail]?,
+        ?total_discount: EInvoiceAPI::Models::DocumentCreate::total_discount?,
+        ?total_tax: EInvoiceAPI::Models::DocumentCreate::total_tax?,
+        ?vendor_address: String?,
+        ?vendor_address_recipient: String?,
+        ?vendor_email: String?,
+        ?vendor_name: String?,
+        ?vendor_tax_id: String?,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> EInvoiceAPI::UblDocumentValidation
+
+      def validate_peppol_id: (
+        peppol_id: String,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> EInvoiceAPI::Models::ValidateValidatePeppolIDResponse
+
+      def validate_ubl: (
+        file: EInvoiceAPI::Internal::file_input,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> EInvoiceAPI::UblDocumentValidation
+
+      def initialize: (client: EInvoiceAPI::Client) -> void
+    end
+  end
+end

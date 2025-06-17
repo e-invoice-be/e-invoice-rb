@@ -1,0 +1,42 @@
+module EInvoiceAPI
+  module Models
+    type webhook_response =
+      {
+        id: String,
+        events: ::Array[String],
+        secret: String,
+        url: String,
+        enabled: bool
+      }
+
+    class WebhookResponse < EInvoiceAPI::Internal::Type::BaseModel
+      attr_accessor id: String
+
+      attr_accessor events: ::Array[String]
+
+      attr_accessor secret: String
+
+      attr_accessor url: String
+
+      attr_reader enabled: bool?
+
+      def enabled=: (bool) -> bool
+
+      def initialize: (
+        id: String,
+        events: ::Array[String],
+        secret: String,
+        url: String,
+        ?enabled: bool
+      ) -> void
+
+      def to_hash: -> {
+        id: String,
+        events: ::Array[String],
+        secret: String,
+        url: String,
+        enabled: bool
+      }
+    end
+  end
+end
