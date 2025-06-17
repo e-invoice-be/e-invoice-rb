@@ -14,7 +14,7 @@ This will install all the required dependencies.
 
 ## Modifying/Adding code
 
-Most of the SDK is generated code. Modifications to code will be persisted between generations, but may result in merge conflicts between manual patches and changes from the generator. The generator will never modify the contents of `lib/e_invoice/helpers/` and `examples/` directory.
+Most of the SDK is generated code. Modifications to code will be persisted between generations, but may result in merge conflicts between manual patches and changes from the generator. The generator will never modify the contents of `lib/e_invoice_api/helpers/` and `examples/` directory.
 
 ## Adding and running examples
 
@@ -24,7 +24,7 @@ All files in the `examples/` directory are not modified by the generator and can
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative "../lib/e_invoice"
+require_relative "../lib/e_invoice_api"
 
 # ...
 ```
@@ -43,7 +43,7 @@ If you’d like to use the repository from source, you can either install from g
 To install via git in your `Gemfile`:
 
 ```ruby
-gem "e-invoice", git: "https://www.github.com/e-invoice-be/e-invoice-rb"
+gem "e-invoice-api", git: "https://www.github.com/e-invoice-be/e-invoice-rb"
 ```
 
 Alternatively, reference local copy of the repo:
@@ -53,7 +53,7 @@ $ git clone -- 'https://www.github.com/e-invoice-be/e-invoice-rb' '<path-to-repo
 ```
 
 ```ruby
-gem "e-invoice", path: "<path-to-repo>"
+gem "e-invoice-api", path: "<path-to-repo>"
 ```
 
 ## Running commands

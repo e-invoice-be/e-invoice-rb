@@ -60,7 +60,7 @@
     }
   ],
   "release-type": "ruby",
-  "version-file": "lib/e_invoice/version.rb",
+  "version-file": "lib/e_invoice_api/version.rb",
   "extra-files": [
     {
       "type": "ruby-readme",

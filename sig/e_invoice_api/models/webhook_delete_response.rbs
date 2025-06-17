@@ -1,0 +1,13 @@
+module EInvoiceAPI
+  module Models
+    type webhook_delete_response = { is_deleted: bool }
+
+    class WebhookDeleteResponse < EInvoiceAPI::Internal::Type::BaseModel
+      attr_accessor is_deleted: bool
+
+      def initialize: (is_deleted: bool) -> void
+
+      def to_hash: -> { is_deleted: bool }
+    end
+  end
+end
