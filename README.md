@@ -2,13 +2,13 @@
 
 The e-invoice.be Peppol library provides convenient access to the E Invoice REST API from any Ruby 3.2.0+ application. It ships with comprehensive types & docstrings in Yard, RBS, and RBI – [see below](https://github.com/e-invoice-be/e-invoice-rb#Sorbet) for usage with Sorbet. The standard library's `net/http` is used as the HTTP transport, with connection pooling via the `connection_pool` gem.
 
-It is generated with [Stainless](https://www.stainless.com/).
+To get an API key, [make a free account](https://app.e-invoice.be/register?ref=ruby) and register your company.
 
 ## Documentation
 
 Documentation for releases of this gem can be found [on RubyDoc](https://gemdocs.org/gems/e-invoice).
 
-The REST API documentation can be found on [api.e-invoice.be](https://api.e-invoice.be).
+The full REST API documentation can be found on [api.e-invoice.be](https://api.e-invoice.be/api/redoc).
 
 ## Installation
 
