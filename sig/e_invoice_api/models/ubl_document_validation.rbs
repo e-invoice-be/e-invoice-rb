@@ -1,0 +1,98 @@
+module EInvoiceAPI
+  module Models
+    type ubl_document_validation =
+      {
+        id: String,
+        file_name: String?,
+        is_valid: bool,
+        issues: ::Array[EInvoiceAPI::UblDocumentValidation::Issue],
+        ubl_document: String?
+      }
+
+    class UblDocumentValidation < EInvoiceAPI::Internal::Type::BaseModel
+      attr_accessor id: String
+
+      attr_accessor file_name: String?
+
+      attr_accessor is_valid: bool
+
+      attr_accessor issues: ::Array[EInvoiceAPI::UblDocumentValidation::Issue]
+
+      attr_accessor ubl_document: String?
+
+      def initialize: (
+        id: String,
+        file_name: String?,
+        is_valid: bool,
+        issues: ::Array[EInvoiceAPI::UblDocumentValidation::Issue],
+        ?ubl_document: String?
+      ) -> void
+
+      def to_hash: -> {
+        id: String,
+        file_name: String?,
+        is_valid: bool,
+        issues: ::Array[EInvoiceAPI::UblDocumentValidation::Issue],
+        ubl_document: String?
+      }
+
+      type issue =
+        {
+          message: String,
+          schematron: String,
+          type: EInvoiceAPI::Models::UblDocumentValidation::Issue::type_,
+          flag: String?,
+          location: String?,
+          rule_id: String?,
+          test_: String?
+        }
+
+      class Issue < EInvoiceAPI::Internal::Type::BaseModel
+        attr_accessor message: String
+
+        attr_accessor schematron: String
+
+        attr_accessor type: EInvoiceAPI::Models::UblDocumentValidation::Issue::type_
+
+        attr_accessor flag: String?
+
+        attr_accessor location: String?
+
+        attr_accessor rule_id: String?
+
+        attr_accessor test_: String?
+
+        def initialize: (
+          message: String,
+          schematron: String,
+          type: EInvoiceAPI::Models::UblDocumentValidation::Issue::type_,
+          ?flag: String?,
+          ?location: String?,
+          ?rule_id: String?,
+          ?test_: String?
+        ) -> void
+
+        def to_hash: -> {
+          message: String,
+          schematron: String,
+          type: EInvoiceAPI::Models::UblDocumentValidation::Issue::type_,
+          flag: String?,
+          location: String?,
+          rule_id: String?,
+          test_: String?
+        }
+
+        type type_ = :error | :warning
+
+        module Type
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          ERROR: :error
+          WARNING: :warning
+
+          def self?.values: -> ::Array[EInvoiceAPI::Models::UblDocumentValidation::Issue::type_]
+        end
+      end
+    end
+  end
+end

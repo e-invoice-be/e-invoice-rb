@@ -1,0 +1,48 @@
+module EInvoiceAPI
+  module Models
+    class DocumentAttachment = Documents::DocumentAttachment
+
+    module Documents
+      type document_attachment =
+        {
+          id: String,
+          file_name: String,
+          file_size: Integer,
+          file_type: String,
+          file_url: String?
+        }
+
+      class DocumentAttachment < EInvoiceAPI::Internal::Type::BaseModel
+        attr_accessor id: String
+
+        attr_accessor file_name: String
+
+        attr_reader file_size: Integer?
+
+        def file_size=: (Integer) -> Integer
+
+        attr_reader file_type: String?
+
+        def file_type=: (String) -> String
+
+        attr_accessor file_url: String?
+
+        def initialize: (
+          id: String,
+          file_name: String,
+          ?file_size: Integer,
+          ?file_type: String,
+          ?file_url: String?
+        ) -> void
+
+        def to_hash: -> {
+          id: String,
+          file_name: String,
+          file_size: Integer,
+          file_type: String,
+          file_url: String?
+        }
+      end
+    end
+  end
+end

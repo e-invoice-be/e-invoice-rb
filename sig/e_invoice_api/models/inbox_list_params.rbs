@@ -1,0 +1,65 @@
+module EInvoiceAPI
+  module Models
+    type inbox_list_params =
+      {
+        date_from: Time?,
+        date_to: Time?,
+        page: Integer,
+        page_size: Integer,
+        search: String?,
+        sender: String?,
+        state: EInvoiceAPI::Models::document_state?,
+        type: EInvoiceAPI::Models::document_type?
+      }
+      & EInvoiceAPI::Internal::Type::request_parameters
+
+    class InboxListParams < EInvoiceAPI::Internal::Type::BaseModel
+      extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
+      include EInvoiceAPI::Internal::Type::RequestParameters
+
+      attr_accessor date_from: Time?
+
+      attr_accessor date_to: Time?
+
+      attr_reader page: Integer?
+
+      def page=: (Integer) -> Integer
+
+      attr_reader page_size: Integer?
+
+      def page_size=: (Integer) -> Integer
+
+      attr_accessor search: String?
+
+      attr_accessor sender: String?
+
+      attr_accessor state: EInvoiceAPI::Models::document_state?
+
+      attr_accessor type: EInvoiceAPI::Models::document_type?
+
+      def initialize: (
+        ?date_from: Time?,
+        ?date_to: Time?,
+        ?page: Integer,
+        ?page_size: Integer,
+        ?search: String?,
+        ?sender: String?,
+        ?state: EInvoiceAPI::Models::document_state?,
+        ?type: EInvoiceAPI::Models::document_type?,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        date_from: Time?,
+        date_to: Time?,
+        page: Integer,
+        page_size: Integer,
+        search: String?,
+        sender: String?,
+        state: EInvoiceAPI::Models::document_state?,
+        type: EInvoiceAPI::Models::document_type?,
+        request_options: EInvoiceAPI::RequestOptions
+      }
+    end
+  end
+end
