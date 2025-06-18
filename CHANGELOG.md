@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.9 (2025-06-18)
+
+Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)
+
+### Bug Fixes
+
+* issue where we cannot mutate arrays on base model derivatives ([24f07da](https://github.com/e-invoice-be/e-invoice-rb/commit/24f07da0a277afd9b9462b15334d405502444976))
+
+
+### Chores
+
+* **internal:** version bump ([71e3d19](https://github.com/e-invoice-be/e-invoice-rb/commit/71e3d199793955c3571ed8ee975c2670c96db1b8))
+
 ## 0.1.0-alpha.8 (2025-06-17)
 
 Full Changelog: [v0.1.0-alpha.7...v0.1.0-alpha.8](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.1.0-alpha.7...v0.1.0-alpha.8)
