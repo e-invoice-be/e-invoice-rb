@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.10 (2025-06-19)
+
+Full Changelog: [v0.1.0-alpha.9...v0.1.0-alpha.10](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.1.0-alpha.9...v0.1.0-alpha.10)
+
+### Chores
+
+* **internal:** codegen related update ([37da841](https://github.com/e-invoice-be/e-invoice-rb/commit/37da84171a83680f186c24bd56b8f35901c80881))
+
 ## 0.1.0-alpha.9 (2025-06-18)
 
 Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)
