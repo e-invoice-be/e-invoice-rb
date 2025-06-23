@@ -7,6 +7,7 @@ module EInvoiceAPI
 
       INVOICE = :INVOICE
       CREDIT_NOTE = :CREDIT_NOTE
+      DEBIT_NOTE = :DEBIT_NOTE
 
       # @!method self.values
       #   @return [Array<Symbol>]

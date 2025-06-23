@@ -1,12 +1,13 @@
 module EInvoiceAPI
   module Models
-    type document_type = :INVOICE | :CREDIT_NOTE
+    type document_type = :INVOICE | :CREDIT_NOTE | :DEBIT_NOTE
 
     module DocumentType
       extend EInvoiceAPI::Internal::Type::Enum
 
       INVOICE: :INVOICE
       CREDIT_NOTE: :CREDIT_NOTE
+      DEBIT_NOTE: :DEBIT_NOTE
 
       def self?.values: -> ::Array[EInvoiceAPI::Models::document_type]
     end
