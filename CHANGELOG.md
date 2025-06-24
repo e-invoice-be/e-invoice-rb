@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.13 (2025-06-23)
+
+Full Changelog: [v0.1.0-alpha.12...v0.1.0-alpha.13](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.1.0-alpha.12...v0.1.0-alpha.13)
+
+### Chores
+
+* **internal:** version bump ([7a57069](https://github.com/e-invoice-be/e-invoice-rb/commit/7a57069956a4e76b7064f55661ea1160ab851a7e))
+
 ## 0.1.0-alpha.12 (2025-06-23)
 
 Full Changelog: [v0.1.0-alpha.11...v0.1.0-alpha.12](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.1.0-alpha.11...v0.1.0-alpha.12)
