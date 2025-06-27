@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.2 (2025-06-27)
+
+Full Changelog: [v0.1.1...v0.1.2](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.1.1...v0.1.2)
+
+### Bug Fixes
+
+* **ci:** release-doctor — report correct token name ([62a9d81](https://github.com/e-invoice-be/e-invoice-rb/commit/62a9d8128e81a8a52586c8a2b86ecf9785274754))
+
+
+### Chores
+
+* **internal:** version bump ([6e0e8fb](https://github.com/e-invoice-be/e-invoice-rb/commit/6e0e8fbc03c06489388333fc53e143b27b163aa9))
+
 ## 0.1.1 (2025-06-26)
 
 Full Changelog: [v0.1.0...v0.1.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.1.0...v0.1.1)
