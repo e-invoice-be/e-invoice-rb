@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.3 (2025-06-28)
+
+Full Changelog: [v0.1.2...v0.1.3](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.1.2...v0.1.3)
+
+### Chores
+
+* **ci:** only run for pushes and fork pull requests ([3426465](https://github.com/e-invoice-be/e-invoice-rb/commit/34264655c03d80926f589bd4de11df9b3679a05d))
+* **internal:** codegen related update ([8e9ab58](https://github.com/e-invoice-be/e-invoice-rb/commit/8e9ab5889454ca9b7e39ab3cbb2febbca9b44b84))
+
 ## 0.1.2 (2025-06-27)
 
 Full Changelog: [v0.1.1...v0.1.2](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.1.1...v0.1.2)
