@@ -1,0 +1,159 @@
+module EInvoiceAPI
+  module Models
+    type lookup_retrieve_participants_response =
+      {
+        query_terms: String,
+        search_date: String,
+        total_count: Integer,
+        used_count: Integer,
+        participants: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant]
+      }
+
+    class LookupRetrieveParticipantsResponse < EInvoiceAPI::Internal::Type::BaseModel
+      attr_accessor query_terms: String
+
+      attr_accessor search_date: String
+
+      attr_accessor total_count: Integer
+
+      attr_accessor used_count: Integer
+
+      attr_reader participants: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant]?
+
+      def participants=: (
+        ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant]
+      ) -> ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant]
+
+      def initialize: (
+        query_terms: String,
+        search_date: String,
+        total_count: Integer,
+        used_count: Integer,
+        ?participants: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant]
+      ) -> void
+
+      def to_hash: -> {
+        query_terms: String,
+        search_date: String,
+        total_count: Integer,
+        used_count: Integer,
+        participants: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant]
+      }
+
+      type participant =
+        {
+          peppol_id: String,
+          peppol_scheme: String,
+          document_types: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::DocumentType],
+          entities: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::Entity]
+        }
+
+      class Participant < EInvoiceAPI::Internal::Type::BaseModel
+        attr_accessor peppol_id: String
+
+        attr_accessor peppol_scheme: String
+
+        attr_reader document_types: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::DocumentType]?
+
+        def document_types=: (
+          ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::DocumentType]
+        ) -> ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::DocumentType]
+
+        attr_reader entities: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::Entity]?
+
+        def entities=: (
+          ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::Entity]
+        ) -> ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::Entity]
+
+        def initialize: (
+          peppol_id: String,
+          peppol_scheme: String,
+          ?document_types: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::DocumentType],
+          ?entities: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::Entity]
+        ) -> void
+
+        def to_hash: -> {
+          peppol_id: String,
+          peppol_scheme: String,
+          document_types: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::DocumentType],
+          entities: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::Entity]
+        }
+
+        type document_type = { scheme: String, value: String }
+
+        class DocumentType < EInvoiceAPI::Internal::Type::BaseModel
+          attr_accessor scheme: String
+
+          attr_accessor value: String
+
+          def initialize: (scheme: String, value: String) -> void
+
+          def to_hash: -> { scheme: String, value: String }
+        end
+
+        type entity =
+          {
+            additional_info: String?,
+            country_code: String?,
+            geo_info: String?,
+            identifiers: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::Entity::Identifier],
+            name: String?,
+            registration_date: String?,
+            website: String?
+          }
+
+        class Entity < EInvoiceAPI::Internal::Type::BaseModel
+          attr_accessor additional_info: String?
+
+          attr_accessor country_code: String?
+
+          attr_accessor geo_info: String?
+
+          attr_reader identifiers: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::Entity::Identifier]?
+
+          def identifiers=: (
+            ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::Entity::Identifier]
+          ) -> ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::Entity::Identifier]
+
+          attr_accessor name: String?
+
+          attr_accessor registration_date: String?
+
+          attr_accessor website: String?
+
+          def initialize: (
+            ?additional_info: String?,
+            ?country_code: String?,
+            ?geo_info: String?,
+            ?identifiers: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::Entity::Identifier],
+            ?name: String?,
+            ?registration_date: String?,
+            ?website: String?
+          ) -> void
+
+          def to_hash: -> {
+            additional_info: String?,
+            country_code: String?,
+            geo_info: String?,
+            identifiers: ::Array[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant::Entity::Identifier],
+            name: String?,
+            registration_date: String?,
+            website: String?
+          }
+
+          type identifier = { scheme: String, value: String }
+
+          class Identifier < EInvoiceAPI::Internal::Type::BaseModel
+            attr_accessor scheme: String
+
+            attr_accessor value: String
+
+            def initialize: (scheme: String, value: String) -> void
+
+            def to_hash: -> { scheme: String, value: String }
+          end
+        end
+      end
+    end
+  end
+end

@@ -35,6 +35,9 @@ module EInvoiceAPI
 
   LookupRetrieveParams = EInvoiceAPI::Models::LookupRetrieveParams
 
+  LookupRetrieveParticipantsParams =
+    EInvoiceAPI::Models::LookupRetrieveParticipantsParams
+
   OutboxListDraftDocumentsParams =
     EInvoiceAPI::Models::OutboxListDraftDocumentsParams
 
