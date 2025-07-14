@@ -22,6 +22,25 @@ module EInvoiceAPI
       )
       end
 
+      # Lookup Peppol participants by name or other identifiers. You can limit the
+      # search to a specific country by providing the country code.
+      sig do
+        params(
+          query: String,
+          country_code: T.nilable(String),
+          request_options: EInvoiceAPI::RequestOptions::OrHash
+        ).returns(EInvoiceAPI::Models::LookupRetrieveParticipantsResponse)
+      end
+      def retrieve_participants(
+        # Query to lookup
+        query:,
+        # Country code of the company to lookup. If not provided, the search will be
+        # global.
+        country_code: nil,
+        request_options: {}
+      )
+      end
+
       # @api private
       sig { params(client: EInvoiceAPI::Client).returns(T.attached_class) }
       def self.new(client:)

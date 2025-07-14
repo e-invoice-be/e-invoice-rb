@@ -32,6 +32,34 @@ module EInvoiceAPI
         )
       end
 
+      # Some parameter documentations has been truncated, see
+      # {EInvoiceAPI::Models::LookupRetrieveParticipantsParams} for more details.
+      #
+      # Lookup Peppol participants by name or other identifiers. You can limit the
+      # search to a specific country by providing the country code.
+      #
+      # @overload retrieve_participants(query:, country_code: nil, request_options: {})
+      #
+      # @param query [String] Query to lookup
+      #
+      # @param country_code [String, nil] Country code of the company to lookup. If not provided, the search will be globa
+      #
+      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [EInvoiceAPI::Models::LookupRetrieveParticipantsResponse]
+      #
+      # @see EInvoiceAPI::Models::LookupRetrieveParticipantsParams
+      def retrieve_participants(params)
+        parsed, options = EInvoiceAPI::LookupRetrieveParticipantsParams.dump_request(params)
+        @client.request(
+          method: :get,
+          path: "api/lookup/participants",
+          query: parsed,
+          model: EInvoiceAPI::Models::LookupRetrieveParticipantsResponse,
+          options: options
+        )
+      end
+
       # @api private
       #
       # @param client [EInvoiceAPI::Client]

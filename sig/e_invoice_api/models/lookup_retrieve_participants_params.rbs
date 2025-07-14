@@ -1,0 +1,28 @@
+module EInvoiceAPI
+  module Models
+    type lookup_retrieve_participants_params =
+      { query: String, country_code: String? }
+      & EInvoiceAPI::Internal::Type::request_parameters
+
+    class LookupRetrieveParticipantsParams < EInvoiceAPI::Internal::Type::BaseModel
+      extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
+      include EInvoiceAPI::Internal::Type::RequestParameters
+
+      attr_accessor query: String
+
+      attr_accessor country_code: String?
+
+      def initialize: (
+        query: String,
+        ?country_code: String?,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        query: String,
+        country_code: String?,
+        request_options: EInvoiceAPI::RequestOptions
+      }
+    end
+  end
+end
