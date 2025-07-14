@@ -6,6 +6,12 @@ module EInvoiceAPI
         ?request_options: EInvoiceAPI::request_opts
       ) -> EInvoiceAPI::Models::LookupRetrieveResponse
 
+      def retrieve_participants: (
+        query: String,
+        ?country_code: String?,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> EInvoiceAPI::Models::LookupRetrieveParticipantsResponse
+
       def initialize: (client: EInvoiceAPI::Client) -> void
     end
   end

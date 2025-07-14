@@ -25,4 +25,24 @@ class EInvoiceAPI::Test::Resources::LookupTest < EInvoiceAPI::Test::ResourceTest
       }
     end
   end
+
+  def test_retrieve_participants_required_params
+    skip("skipped: tests are disabled for the time being")
+
+    response = @e_invoice.lookup.retrieve_participants(query: "query")
+
+    assert_pattern do
+      response => EInvoiceAPI::Models::LookupRetrieveParticipantsResponse
+    end
+
+    assert_pattern do
+      response => {
+        query_terms: String,
+        search_date: String,
+        total_count: Integer,
+        used_count: Integer,
+        participants: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Models::LookupRetrieveParticipantsResponse::Participant]) | nil
+      }
+    end
+  end
 end
