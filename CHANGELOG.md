@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.3 (2025-07-29)
+
+Full Changelog: [v0.2.2...v0.2.3](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.2.2...v0.2.3)
+
+### Bug Fixes
+
+* **internal:** ensure sorbet test always runs serially ([0930e8c](https://github.com/e-invoice-be/e-invoice-rb/commit/0930e8c448cb35499f1c7b3823d84de63c730370))
+
 ## 0.2.2 (2025-07-26)
 
 Full Changelog: [v0.2.1...v0.2.2](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.2.1...v0.2.2)
