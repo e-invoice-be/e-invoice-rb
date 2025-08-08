@@ -138,6 +138,7 @@ module EInvoiceAPI
       ZZ = T.let(:ZZ, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
       NAR = T.let(:NAR, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
       C62 = T.let(:C62, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
+      LTR = T.let(:LTR, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
 
       sig do
         override.returns(T::Array[EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol])
