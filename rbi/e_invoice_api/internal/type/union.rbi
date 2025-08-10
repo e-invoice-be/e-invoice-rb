@@ -16,7 +16,8 @@ module EInvoiceAPI
             T::Array[
               [
                 T.nilable(Symbol),
-                T.proc.returns(EInvoiceAPI::Internal::Type::Converter::Input)
+                T.proc.returns(EInvoiceAPI::Internal::Type::Converter::Input),
+                EInvoiceAPI::Internal::AnyHash
               ]
             ]
           )
@@ -25,7 +26,13 @@ module EInvoiceAPI
         end
 
         # @api private
-        sig { returns(T::Array[[T.nilable(Symbol), T.anything]]) }
+        sig do
+          returns(
+            T::Array[
+              [T.nilable(Symbol), T.anything, EInvoiceAPI::Internal::AnyHash]
+            ]
+          )
+        end
         protected def derefed_variants
         end
 
