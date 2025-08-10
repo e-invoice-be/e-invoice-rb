@@ -168,6 +168,7 @@ module EInvoiceAPI
         #   @option spec [Boolean] :"nil?"
         def initialize(type_info, spec = {})
           @item_type_fn = EInvoiceAPI::Internal::Type::Converter.type_info(type_info || spec)
+          @meta = EInvoiceAPI::Internal::Type::Converter.meta_info(type_info, spec)
           @nilable = spec.fetch(:nil?, false)
         end
 
