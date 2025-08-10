@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.5 (2025-08-10)
+
+Full Changelog: [v0.2.4...v0.2.5](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.2.4...v0.2.5)
+
+### Chores
+
+* collect metadata from type DSL ([65e6d57](https://github.com/e-invoice-be/e-invoice-rb/commit/65e6d57250407fbd6e9db60bdd42c9ebed56d53f))
+* **internal:** update comment in script ([576f84b](https://github.com/e-invoice-be/e-invoice-rb/commit/576f84bd8d42b7cb793bc4a27cfe5dec0a11bc91))
+* update @stainless-api/prism-cli to v5.15.0 ([dbf02d8](https://github.com/e-invoice-be/e-invoice-rb/commit/dbf02d8bbfe18ea6a6dfb22d1affac4de7b56a29))
+
 ## 0.2.4 (2025-08-08)
 
 Full Changelog: [v0.2.3...v0.2.4](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.2.3...v0.2.4)
