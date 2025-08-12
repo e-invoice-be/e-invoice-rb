@@ -4,7 +4,7 @@ require_relative "../test_helper"
 
 class EInvoiceAPI::Test::Resources::OutboxTest < EInvoiceAPI::Test::ResourceTest
   def test_list_draft_documents
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.outbox.list_draft_documents
 
@@ -68,7 +68,7 @@ class EInvoiceAPI::Test::Resources::OutboxTest < EInvoiceAPI::Test::ResourceTest
   end
 
   def test_list_received_documents
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.outbox.list_received_documents
 

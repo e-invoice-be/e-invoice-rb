@@ -4,7 +4,7 @@ require_relative "../test_helper"
 
 class EInvoiceAPI::Test::Resources::LookupTest < EInvoiceAPI::Test::ResourceTest
   def test_retrieve_required_params
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.lookup.retrieve(peppol_id: "peppol_id")
 
@@ -27,7 +27,7 @@ class EInvoiceAPI::Test::Resources::LookupTest < EInvoiceAPI::Test::ResourceTest
   end
 
   def test_retrieve_participants_required_params
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.lookup.retrieve_participants(query: "query")
 
