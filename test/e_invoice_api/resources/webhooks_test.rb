@@ -4,7 +4,7 @@ require_relative "../test_helper"
 
 class EInvoiceAPI::Test::Resources::WebhooksTest < EInvoiceAPI::Test::ResourceTest
   def test_create_required_params
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.webhooks.create(events: ["string"], url: "https://example.com")
 
@@ -24,7 +24,7 @@ class EInvoiceAPI::Test::Resources::WebhooksTest < EInvoiceAPI::Test::ResourceTe
   end
 
   def test_retrieve
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.webhooks.retrieve("webhook_id")
 
@@ -44,7 +44,7 @@ class EInvoiceAPI::Test::Resources::WebhooksTest < EInvoiceAPI::Test::ResourceTe
   end
 
   def test_update
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.webhooks.update("webhook_id")
 
@@ -64,7 +64,7 @@ class EInvoiceAPI::Test::Resources::WebhooksTest < EInvoiceAPI::Test::ResourceTe
   end
 
   def test_list
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.webhooks.list
 
@@ -74,7 +74,7 @@ class EInvoiceAPI::Test::Resources::WebhooksTest < EInvoiceAPI::Test::ResourceTe
   end
 
   def test_delete
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.webhooks.delete("webhook_id")
 
