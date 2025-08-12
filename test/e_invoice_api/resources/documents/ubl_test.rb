@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 
 class EInvoiceAPI::Test::Resources::Documents::UblTest < EInvoiceAPI::Test::ResourceTest
   def test_get
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.documents.ubl.get("document_id")
 

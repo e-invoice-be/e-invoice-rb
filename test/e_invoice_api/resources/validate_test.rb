@@ -4,7 +4,7 @@ require_relative "../test_helper"
 
 class EInvoiceAPI::Test::Resources::ValidateTest < EInvoiceAPI::Test::ResourceTest
   def test_validate_json
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.validate.validate_json
 
@@ -24,7 +24,7 @@ class EInvoiceAPI::Test::Resources::ValidateTest < EInvoiceAPI::Test::ResourceTe
   end
 
   def test_validate_peppol_id_required_params
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.validate.validate_peppol_id(peppol_id: "peppol_id")
 
@@ -44,7 +44,7 @@ class EInvoiceAPI::Test::Resources::ValidateTest < EInvoiceAPI::Test::ResourceTe
   end
 
   def test_validate_ubl_required_params
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.validate.validate_ubl(file: Pathname(__FILE__))
 

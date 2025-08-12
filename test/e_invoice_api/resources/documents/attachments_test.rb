@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 
 class EInvoiceAPI::Test::Resources::Documents::AttachmentsTest < EInvoiceAPI::Test::ResourceTest
   def test_retrieve_required_params
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.documents.attachments.retrieve("attachment_id", document_id: "document_id")
 
@@ -24,7 +24,7 @@ class EInvoiceAPI::Test::Resources::Documents::AttachmentsTest < EInvoiceAPI::Te
   end
 
   def test_list
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.documents.attachments.list("document_id")
 
@@ -34,7 +34,7 @@ class EInvoiceAPI::Test::Resources::Documents::AttachmentsTest < EInvoiceAPI::Te
   end
 
   def test_delete_required_params
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.documents.attachments.delete("attachment_id", document_id: "document_id")
 
@@ -50,7 +50,7 @@ class EInvoiceAPI::Test::Resources::Documents::AttachmentsTest < EInvoiceAPI::Te
   end
 
   def test_add_required_params
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @e_invoice.documents.attachments.add("document_id", file: Pathname(__FILE__))
 
