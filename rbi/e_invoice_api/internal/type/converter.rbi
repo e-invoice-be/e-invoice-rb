@@ -92,6 +92,60 @@ module EInvoiceAPI
 
           # @api private
           sig do
+            params(
+              type_info:
+                T.any(
+                  {
+                    const:
+                      T.nilable(
+                        T.any(NilClass, T::Boolean, Integer, Float, Symbol)
+                      ),
+                    enum:
+                      T.nilable(
+                        T.proc.returns(
+                          EInvoiceAPI::Internal::Type::Converter::Input
+                        )
+                      ),
+                    union:
+                      T.nilable(
+                        T.proc.returns(
+                          EInvoiceAPI::Internal::Type::Converter::Input
+                        )
+                      )
+                  },
+                  T.proc.returns(EInvoiceAPI::Internal::Type::Converter::Input),
+                  EInvoiceAPI::Internal::Type::Converter::Input
+                ),
+              spec:
+                T.any(
+                  {
+                    const:
+                      T.nilable(
+                        T.any(NilClass, T::Boolean, Integer, Float, Symbol)
+                      ),
+                    enum:
+                      T.nilable(
+                        T.proc.returns(
+                          EInvoiceAPI::Internal::Type::Converter::Input
+                        )
+                      ),
+                    union:
+                      T.nilable(
+                        T.proc.returns(
+                          EInvoiceAPI::Internal::Type::Converter::Input
+                        )
+                      )
+                  },
+                  T.proc.returns(EInvoiceAPI::Internal::Type::Converter::Input),
+                  EInvoiceAPI::Internal::Type::Converter::Input
+                )
+            ).returns(EInvoiceAPI::Internal::AnyHash)
+          end
+          def self.meta_info(type_info, spec)
+          end
+
+          # @api private
+          sig do
             params(translate_names: T::Boolean).returns(
               EInvoiceAPI::Internal::Type::Converter::CoerceState
             )
