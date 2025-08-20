@@ -369,7 +369,7 @@ module EInvoiceAPI
         end
         attr_accessor :amount
 
-        sig { void }
+        sig { returns(NilClass) }
         attr_accessor :date
 
         sig { returns(T.nilable(String)) }
