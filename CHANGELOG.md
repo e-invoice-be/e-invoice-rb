@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.6 (2025-08-20)
+
+Full Changelog: [v0.2.5...v0.2.6](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.2.5...v0.2.6)
+
+### Bug Fixes
+
+* bump sorbet version and fix new type errors from the breaking change ([1ecacc2](https://github.com/e-invoice-be/e-invoice-rb/commit/1ecacc2376f4afd0bc8403e97b06e788a73b51ec))
+
+
+### Chores
+
+* **internal:** codegen related update ([990de02](https://github.com/e-invoice-be/e-invoice-rb/commit/990de02fea066ce8beb7a0b8648ff2f0cfd726e5))
+
 ## 0.2.5 (2025-08-10)
 
 Full Changelog: [v0.2.4...v0.2.5](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.2.4...v0.2.5)
