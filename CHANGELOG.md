@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.7 (2025-08-25)
+
+Full Changelog: [v0.2.6...v0.2.7](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.2.6...v0.2.7)
+
+### Chores
+
+* add json schema comment for rubocop.yml ([512e286](https://github.com/e-invoice-be/e-invoice-rb/commit/512e2862466d84559993cb4ee055f7844c3eceda))
+
 ## 0.2.6 (2025-08-20)
 
 Full Changelog: [v0.2.5...v0.2.6](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.2.5...v0.2.6)
