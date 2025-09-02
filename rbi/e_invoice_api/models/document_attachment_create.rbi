@@ -14,6 +14,7 @@ module EInvoiceAPI
       sig { returns(String) }
       attr_accessor :file_name
 
+      # Base64 encoded file data
       sig { returns(T.nilable(String)) }
       attr_accessor :file_data
 
@@ -37,7 +38,13 @@ module EInvoiceAPI
           file_type: String
         ).returns(T.attached_class)
       end
-      def self.new(file_name:, file_data: nil, file_size: nil, file_type: nil)
+      def self.new(
+        file_name:,
+        # Base64 encoded file data
+        file_data: nil,
+        file_size: nil,
+        file_type: nil
+      )
       end
 
       sig do
