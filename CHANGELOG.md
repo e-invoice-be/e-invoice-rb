@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 (2025-09-16)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **api:** api update ([c79c3df](https://github.com/e-invoice-be/e-invoice-rb/commit/c79c3df2cc36e34fcda97c1d4a52bbe994c2e563))
+
 ## 0.3.0 (2025-09-02)
 
 Full Changelog: [v0.2.7...v0.3.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.2.7...v0.3.0)
