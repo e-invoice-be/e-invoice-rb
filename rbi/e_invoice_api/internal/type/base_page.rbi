@@ -31,7 +31,7 @@ module EInvoiceAPI
             client: EInvoiceAPI::Internal::Transport::BaseClient,
             req:
               EInvoiceAPI::Internal::Transport::BaseClient::RequestComponents,
-            headers: T.any(T::Hash[String, String], Net::HTTPHeader),
+            headers: T::Hash[String, String],
             page_data: T.anything
           ).void
         end
