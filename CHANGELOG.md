@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.5.0 (2025-09-23)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* **api:** api update ([34569bc](https://github.com/e-invoice-be/e-invoice-rb/commit/34569bc552219bee2c829c83f5f702c0bb07954f))
+* expose response headers for both streams and errors ([060ee53](https://github.com/e-invoice-be/e-invoice-rb/commit/060ee535da0a4f4c7cc2ed22c88c05793ce48d79))
+
+
+### Chores
+
+* do not install brew dependencies in ./scripts/bootstrap by default ([7e7229e](https://github.com/e-invoice-be/e-invoice-rb/commit/7e7229e7d4296da7b82cd2d4d042e74a28a19aa9))
+
 ## 0.4.0 (2025-09-16)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.3.0...v0.4.0)
