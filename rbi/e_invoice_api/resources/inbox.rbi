@@ -3,7 +3,8 @@
 module EInvoiceAPI
   module Resources
     class Inbox
-      # Retrieve a paginated list of received documents with filtering options.
+      # Retrieve a paginated list of received documents with filtering options including
+      # state, type, sender, date range, and text search.
       sig do
         params(
           date_from: T.nilable(Time),
