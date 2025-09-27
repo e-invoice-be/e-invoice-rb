@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.5.1 (2025-09-27)
+
+Full Changelog: [v0.5.0...v0.5.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.5.0...v0.5.1)
+
+### Bug Fixes
+
+* shorten multipart boundary sep to less than RFC specificed max length ([336fbe2](https://github.com/e-invoice-be/e-invoice-rb/commit/336fbe2d7932708e0ac0eb3d6f2d96bfa52cf165))
+
+
+### Performance Improvements
+
+* faster code formatting ([1180d4a](https://github.com/e-invoice-be/e-invoice-rb/commit/1180d4a4ebcca49f99aa860ecdb88ea312d25fb6))
+
+
+### Chores
+
+* **internal:** codegen related update ([c4a13d4](https://github.com/e-invoice-be/e-invoice-rb/commit/c4a13d47fa4210a2e0849a5b94a53d3fdc26e7d4))
+
 ## 0.5.0 (2025-09-23)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.4.0...v0.5.0)
