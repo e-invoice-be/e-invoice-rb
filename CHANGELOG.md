@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.2 (2025-09-27)
+
+Full Changelog: [v0.5.1...v0.5.2](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.5.1...v0.5.2)
+
+### Chores
+
+* allow fast-format to use bsd sed as well ([bfe57c8](https://github.com/e-invoice-be/e-invoice-rb/commit/bfe57c8ef9ccd2875fdf93180009f2f98fcdba7b))
+
 ## 0.5.1 (2025-09-27)
 
 Full Changelog: [v0.5.0...v0.5.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.5.0...v0.5.1)
