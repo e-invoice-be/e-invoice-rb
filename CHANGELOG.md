@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.5.2 (2025-09-30)
+
+Full Changelog: [v0.5.1...v0.5.2](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.5.1...v0.5.2)
+
+### Bug Fixes
+
+* always send `filename=...` for multipart requests where a file is expected ([e4ff666](https://github.com/e-invoice-be/e-invoice-rb/commit/e4ff6665e73982d21afb468a3b14dc9a4e9ac404))
+
+
+### Chores
+
+* allow fast-format to use bsd sed as well ([bfe57c8](https://github.com/e-invoice-be/e-invoice-rb/commit/bfe57c8ef9ccd2875fdf93180009f2f98fcdba7b))
+
 ## 0.5.1 (2025-09-27)
 
 Full Changelog: [v0.5.0...v0.5.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.5.0...v0.5.1)
