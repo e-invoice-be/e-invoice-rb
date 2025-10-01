@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.3 (2025-10-01)
+
+Full Changelog: [v0.5.2...v0.5.3](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.5.2...v0.5.3)
+
+### Bug Fixes
+
+* coroutine leaks from connection pool ([e3c2fbb](https://github.com/e-invoice-be/e-invoice-rb/commit/e3c2fbb823d70358893251e83f40f02ee0b1551b))
+
 ## 0.5.2 (2025-09-30)
 
 Full Changelog: [v0.5.1...v0.5.2](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.5.1...v0.5.2)
