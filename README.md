@@ -17,7 +17,7 @@ To use this gem, install via Bundler by adding the following to your application
 <!-- x-release-please-start-version -->
 
 ```ruby
-gem "e-invoice-api", "~> 0.5.2"
+gem "e-invoice-api", "~> 0.5.3"
 ```
 
 <!-- x-release-please-end -->
