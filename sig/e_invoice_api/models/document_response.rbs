@@ -36,9 +36,12 @@ module EInvoiceAPI
         shipping_address_recipient: String?,
         state: EInvoiceAPI::Models::document_state,
         subtotal: String?,
+        tax_code: EInvoiceAPI::Models::DocumentResponse::tax_code,
         tax_details: ::Array[EInvoiceAPI::DocumentResponse::TaxDetail],
         total_discount: String?,
         total_tax: String?,
+        vatex: EInvoiceAPI::Models::DocumentResponse::vatex?,
+        vatex_note: String?,
         vendor_address: String?,
         vendor_address_recipient: String?,
         vendor_email: String?,
@@ -143,6 +146,12 @@ module EInvoiceAPI
 
       attr_accessor subtotal: String?
 
+      attr_reader tax_code: EInvoiceAPI::Models::DocumentResponse::tax_code?
+
+      def tax_code=: (
+        EInvoiceAPI::Models::DocumentResponse::tax_code
+      ) -> EInvoiceAPI::Models::DocumentResponse::tax_code
+
       attr_reader tax_details: ::Array[EInvoiceAPI::DocumentResponse::TaxDetail]?
 
       def tax_details=: (
@@ -152,6 +161,10 @@ module EInvoiceAPI
       attr_accessor total_discount: String?
 
       attr_accessor total_tax: String?
+
+      attr_accessor vatex: EInvoiceAPI::Models::DocumentResponse::vatex?
+
+      attr_accessor vatex_note: String?
 
       attr_accessor vendor_address: String?
 
@@ -198,9 +211,12 @@ module EInvoiceAPI
         ?shipping_address_recipient: String?,
         ?state: EInvoiceAPI::Models::document_state,
         ?subtotal: String?,
+        ?tax_code: EInvoiceAPI::Models::DocumentResponse::tax_code,
         ?tax_details: ::Array[EInvoiceAPI::DocumentResponse::TaxDetail],
         ?total_discount: String?,
         ?total_tax: String?,
+        ?vatex: EInvoiceAPI::Models::DocumentResponse::vatex?,
+        ?vatex_note: String?,
         ?vendor_address: String?,
         ?vendor_address_recipient: String?,
         ?vendor_email: String?,
@@ -243,9 +259,12 @@ module EInvoiceAPI
         shipping_address_recipient: String?,
         state: EInvoiceAPI::Models::document_state,
         subtotal: String?,
+        tax_code: EInvoiceAPI::Models::DocumentResponse::tax_code,
         tax_details: ::Array[EInvoiceAPI::DocumentResponse::TaxDetail],
         total_discount: String?,
         total_tax: String?,
+        vatex: EInvoiceAPI::Models::DocumentResponse::vatex?,
+        vatex_note: String?,
         vendor_address: String?,
         vendor_address_recipient: String?,
         vendor_email: String?,
@@ -342,6 +361,25 @@ module EInvoiceAPI
         }
       end
 
+      type tax_code = :AE | :E | :S | :Z | :G | :O | :K | :L | :M | :B
+
+      module TaxCode
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        AE: :AE
+        E: :E
+        S: :S
+        Z: :Z
+        G: :G
+        O: :O
+        K: :K
+        L: :L
+        M: :M
+        B: :B
+
+        def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentResponse::tax_code]
+      end
+
       type tax_detail = { amount: String?, rate: String? }
 
       class TaxDetail < EInvoiceAPI::Internal::Type::BaseModel
@@ -352,6 +390,139 @@ module EInvoiceAPI
         def initialize: (?amount: String?, ?rate: String?) -> void
 
         def to_hash: -> { amount: String?, rate: String? }
+      end
+
+      type vatex =
+        :"VATEX-EU-79-C"
+        | :"VATEX-EU-132"
+        | :"VATEX-EU-132-1A"
+        | :"VATEX-EU-132-1B"
+        | :"VATEX-EU-132-1C"
+        | :"VATEX-EU-132-1D"
+        | :"VATEX-EU-132-1E"
+        | :"VATEX-EU-132-1F"
+        | :"VATEX-EU-132-1G"
+        | :"VATEX-EU-132-1H"
+        | :"VATEX-EU-132-1I"
+        | :"VATEX-EU-132-1J"
+        | :"VATEX-EU-132-1K"
+        | :"VATEX-EU-132-1L"
+        | :"VATEX-EU-132-1M"
+        | :"VATEX-EU-132-1N"
+        | :"VATEX-EU-132-1O"
+        | :"VATEX-EU-132-1P"
+        | :"VATEX-EU-132-1Q"
+        | :"VATEX-EU-143"
+        | :"VATEX-EU-143-1A"
+        | :"VATEX-EU-143-1B"
+        | :"VATEX-EU-143-1C"
+        | :"VATEX-EU-143-1D"
+        | :"VATEX-EU-143-1E"
+        | :"VATEX-EU-143-1F"
+        | :"VATEX-EU-143-1FA"
+        | :"VATEX-EU-143-1G"
+        | :"VATEX-EU-143-1H"
+        | :"VATEX-EU-143-1I"
+        | :"VATEX-EU-143-1J"
+        | :"VATEX-EU-143-1K"
+        | :"VATEX-EU-143-1L"
+        | :"VATEX-EU-144"
+        | :"VATEX-EU-146-1E"
+        | :"VATEX-EU-148"
+        | :"VATEX-EU-148-A"
+        | :"VATEX-EU-148-B"
+        | :"VATEX-EU-148-C"
+        | :"VATEX-EU-148-D"
+        | :"VATEX-EU-148-E"
+        | :"VATEX-EU-148-F"
+        | :"VATEX-EU-148-G"
+        | :"VATEX-EU-151"
+        | :"VATEX-EU-151-1A"
+        | :"VATEX-EU-151-1AA"
+        | :"VATEX-EU-151-1B"
+        | :"VATEX-EU-151-1C"
+        | :"VATEX-EU-151-1D"
+        | :"VATEX-EU-151-1E"
+        | :"VATEX-EU-159"
+        | :"VATEX-EU-309"
+        | :"VATEX-EU-AE"
+        | :"VATEX-EU-D"
+        | :"VATEX-EU-F"
+        | :"VATEX-EU-G"
+        | :"VATEX-EU-I"
+        | :"VATEX-EU-IC"
+        | :"VATEX-EU-O"
+        | :"VATEX-EU-J"
+        | :"VATEX-FR-FRANCHISE"
+        | :"VATEX-FR-CNWVAT"
+
+      module Vatex
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        VATEX_EU_79_C: :"VATEX-EU-79-C"
+        VATEX_EU_132: :"VATEX-EU-132"
+        VATEX_EU_132_1_A: :"VATEX-EU-132-1A"
+        VATEX_EU_132_1_B: :"VATEX-EU-132-1B"
+        VATEX_EU_132_1_C: :"VATEX-EU-132-1C"
+        VATEX_EU_132_1_D: :"VATEX-EU-132-1D"
+        VATEX_EU_132_1_E: :"VATEX-EU-132-1E"
+        VATEX_EU_132_1_F: :"VATEX-EU-132-1F"
+        VATEX_EU_132_1_G: :"VATEX-EU-132-1G"
+        VATEX_EU_132_1_H: :"VATEX-EU-132-1H"
+        VATEX_EU_132_1_I: :"VATEX-EU-132-1I"
+        VATEX_EU_132_1_J: :"VATEX-EU-132-1J"
+        VATEX_EU_132_1_K: :"VATEX-EU-132-1K"
+        VATEX_EU_132_1_L: :"VATEX-EU-132-1L"
+        VATEX_EU_132_1_M: :"VATEX-EU-132-1M"
+        VATEX_EU_132_1_N: :"VATEX-EU-132-1N"
+        VATEX_EU_132_1_O: :"VATEX-EU-132-1O"
+        VATEX_EU_132_1_P: :"VATEX-EU-132-1P"
+        VATEX_EU_132_1_Q: :"VATEX-EU-132-1Q"
+        VATEX_EU_143: :"VATEX-EU-143"
+        VATEX_EU_143_1_A: :"VATEX-EU-143-1A"
+        VATEX_EU_143_1_B: :"VATEX-EU-143-1B"
+        VATEX_EU_143_1_C: :"VATEX-EU-143-1C"
+        VATEX_EU_143_1_D: :"VATEX-EU-143-1D"
+        VATEX_EU_143_1_E: :"VATEX-EU-143-1E"
+        VATEX_EU_143_1_F: :"VATEX-EU-143-1F"
+        VATEX_EU_143_1_FA: :"VATEX-EU-143-1FA"
+        VATEX_EU_143_1_G: :"VATEX-EU-143-1G"
+        VATEX_EU_143_1_H: :"VATEX-EU-143-1H"
+        VATEX_EU_143_1_I: :"VATEX-EU-143-1I"
+        VATEX_EU_143_1_J: :"VATEX-EU-143-1J"
+        VATEX_EU_143_1_K: :"VATEX-EU-143-1K"
+        VATEX_EU_143_1_L: :"VATEX-EU-143-1L"
+        VATEX_EU_144: :"VATEX-EU-144"
+        VATEX_EU_146_1_E: :"VATEX-EU-146-1E"
+        VATEX_EU_148: :"VATEX-EU-148"
+        VATEX_EU_148_A: :"VATEX-EU-148-A"
+        VATEX_EU_148_B: :"VATEX-EU-148-B"
+        VATEX_EU_148_C: :"VATEX-EU-148-C"
+        VATEX_EU_148_D: :"VATEX-EU-148-D"
+        VATEX_EU_148_E: :"VATEX-EU-148-E"
+        VATEX_EU_148_F: :"VATEX-EU-148-F"
+        VATEX_EU_148_G: :"VATEX-EU-148-G"
+        VATEX_EU_151: :"VATEX-EU-151"
+        VATEX_EU_151_1_A: :"VATEX-EU-151-1A"
+        VATEX_EU_151_1_AA: :"VATEX-EU-151-1AA"
+        VATEX_EU_151_1_B: :"VATEX-EU-151-1B"
+        VATEX_EU_151_1_C: :"VATEX-EU-151-1C"
+        VATEX_EU_151_1_D: :"VATEX-EU-151-1D"
+        VATEX_EU_151_1_E: :"VATEX-EU-151-1E"
+        VATEX_EU_159: :"VATEX-EU-159"
+        VATEX_EU_309: :"VATEX-EU-309"
+        VATEX_EU_AE: :"VATEX-EU-AE"
+        VATEX_EU_D: :"VATEX-EU-D"
+        VATEX_EU_F: :"VATEX-EU-F"
+        VATEX_EU_G: :"VATEX-EU-G"
+        VATEX_EU_I: :"VATEX-EU-I"
+        VATEX_EU_IC: :"VATEX-EU-IC"
+        VATEX_EU_O: :"VATEX-EU-O"
+        VATEX_EU_J: :"VATEX-EU-J"
+        VATEX_FR_FRANCHISE: :"VATEX-FR-FRANCHISE"
+        VATEX_FR_CNWVAT: :"VATEX-FR-CNWVAT"
+
+        def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentResponse::vatex]
       end
     end
   end
