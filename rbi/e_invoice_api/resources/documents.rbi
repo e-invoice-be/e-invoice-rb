@@ -162,6 +162,30 @@ module EInvoiceAPI
       def delete(document_id, request_options: {})
       end
 
+      # Create a new invoice or credit note from a PDF file. If the 'ubl_document' field
+      # is set in the response, it indicates that sufficient details were extracted from
+      # the PDF to automatically generate a valid UBL document ready for sending. If
+      # 'ubl_document' is not set, human intervention may be required to ensure
+      # compliance.
+      sig do
+        params(
+          file: EInvoiceAPI::Internal::FileInput,
+          customer_tax_id: T.nilable(String),
+          vendor_tax_id: T.nilable(String),
+          request_options: EInvoiceAPI::RequestOptions::OrHash
+        ).returns(EInvoiceAPI::Models::DocumentCreateFromPdfResponse)
+      end
+      def create_from_pdf(
+        # Body param:
+        file:,
+        # Query param:
+        customer_tax_id: nil,
+        # Query param:
+        vendor_tax_id: nil,
+        request_options: {}
+      )
+      end
+
       # Send an invoice or credit note via Peppol
       sig do
         params(
@@ -183,6 +207,16 @@ module EInvoiceAPI
         sender_peppol_scheme: nil,
         request_options: {}
       )
+      end
+
+      # Validate a UBL document according to Peppol BIS Billing 3.0
+      sig do
+        params(
+          document_id: String,
+          request_options: EInvoiceAPI::RequestOptions::OrHash
+        ).returns(EInvoiceAPI::UblDocumentValidation)
+      end
+      def validate(document_id, request_options: {})
       end
 
       # @api private

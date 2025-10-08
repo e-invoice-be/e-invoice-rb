@@ -2,18 +2,16 @@
 
 module EInvoiceAPI
   module Models
-    class DocumentResponse < EInvoiceAPI::Internal::Type::BaseModel
+    class DocumentCreateFromPdfResponse < EInvoiceAPI::Internal::Type::BaseModel
       OrHash =
         T.type_alias do
-          T.any(EInvoiceAPI::DocumentResponse, EInvoiceAPI::Internal::AnyHash)
+          T.any(
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse,
+            EInvoiceAPI::Internal::AnyHash
+          )
         end
 
-      sig { returns(String) }
-      attr_accessor :id
-
-      sig do
-        returns(T.nilable(T::Array[EInvoiceAPI::DocumentResponse::Allowance]))
-      end
+      sig { returns(T.nilable(T::Array[EInvoiceAPI::Allowance])) }
       attr_accessor :allowances
 
       # The amount due of the invoice. Must be positive and rounded to maximum 2
@@ -22,7 +20,7 @@ module EInvoiceAPI
       attr_accessor :amount_due
 
       sig do
-        returns(T.nilable(T::Array[EInvoiceAPI::Documents::DocumentAttachment]))
+        returns(T.nilable(T::Array[EInvoiceAPI::DocumentAttachmentCreate]))
       end
       attr_accessor :attachments
 
@@ -32,9 +30,7 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :billing_address_recipient
 
-      sig do
-        returns(T.nilable(T::Array[EInvoiceAPI::DocumentResponse::Charge]))
-      end
+      sig { returns(T.nilable(T::Array[EInvoiceAPI::Charge])) }
       attr_accessor :charges
 
       # Currency of the invoice
@@ -88,17 +84,30 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :invoice_total
 
-      sig { returns(T.nilable(T::Array[EInvoiceAPI::DocumentResponse::Item])) }
-      attr_accessor :items
+      # At least one line item is required
+      sig do
+        returns(
+          T.nilable(
+            T::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item]
+          )
+        )
+      end
+      attr_reader :items
+
+      sig do
+        params(
+          items:
+            T::Array[
+              EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item::OrHash
+            ]
+        ).void
+      end
+      attr_writer :items
 
       sig { returns(T.nilable(String)) }
       attr_accessor :note
 
-      sig do
-        returns(
-          T.nilable(T::Array[EInvoiceAPI::DocumentResponse::PaymentDetail])
-        )
-      end
+      sig { returns(T.nilable(T::Array[EInvoiceAPI::PaymentDetailCreate])) }
       attr_accessor :payment_details
 
       sig { returns(T.nilable(String)) }
@@ -148,19 +157,39 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :subtotal
 
+      # Whether the PDF was successfully converted into a compliant e-invoice
+      sig { returns(T.nilable(T::Boolean)) }
+      attr_reader :success
+
+      sig { params(success: T::Boolean).void }
+      attr_writer :success
+
       # Tax category code of the invoice
       sig do
-        returns(T.nilable(EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol))
+        returns(
+          T.nilable(
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode::TaggedSymbol
+          )
+        )
       end
       attr_reader :tax_code
 
       sig do
-        params(tax_code: EInvoiceAPI::DocumentResponse::TaxCode::OrSymbol).void
+        params(
+          tax_code:
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode::OrSymbol
+        ).void
       end
       attr_writer :tax_code
 
       sig do
-        returns(T.nilable(T::Array[EInvoiceAPI::DocumentResponse::TaxDetail]))
+        returns(
+          T.nilable(
+            T::Array[
+              EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxDetail
+            ]
+          )
+        )
       end
       attr_accessor :tax_details
 
@@ -173,11 +202,19 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :total_tax
 
+      # The UBL document as an XML string
+      sig { returns(T.nilable(String)) }
+      attr_accessor :ubl_document
+
       # VATEX code list for VAT exemption reasons
       #
       # Agency: CEF Identifier: vatex
       sig do
-        returns(T.nilable(EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol))
+        returns(
+          T.nilable(
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        )
       end
       attr_accessor :vatex
 
@@ -202,20 +239,13 @@ module EInvoiceAPI
 
       sig do
         params(
-          id: String,
-          allowances:
-            T.nilable(
-              T::Array[EInvoiceAPI::DocumentResponse::Allowance::OrHash]
-            ),
+          allowances: T.nilable(T::Array[EInvoiceAPI::Allowance::OrHash]),
           amount_due: T.nilable(String),
           attachments:
-            T.nilable(
-              T::Array[EInvoiceAPI::Documents::DocumentAttachment::OrHash]
-            ),
+            T.nilable(T::Array[EInvoiceAPI::DocumentAttachmentCreate::OrHash]),
           billing_address: T.nilable(String),
           billing_address_recipient: T.nilable(String),
-          charges:
-            T.nilable(T::Array[EInvoiceAPI::DocumentResponse::Charge::OrHash]),
+          charges: T.nilable(T::Array[EInvoiceAPI::Charge::OrHash]),
           currency: EInvoiceAPI::CurrencyCode::OrSymbol,
           customer_address: T.nilable(String),
           customer_address_recipient: T.nilable(String),
@@ -230,12 +260,12 @@ module EInvoiceAPI
           invoice_id: T.nilable(String),
           invoice_total: T.nilable(String),
           items:
-            T.nilable(T::Array[EInvoiceAPI::DocumentResponse::Item::OrHash]),
+            T::Array[
+              EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item::OrHash
+            ],
           note: T.nilable(String),
           payment_details:
-            T.nilable(
-              T::Array[EInvoiceAPI::DocumentResponse::PaymentDetail::OrHash]
-            ),
+            T.nilable(T::Array[EInvoiceAPI::PaymentDetailCreate::OrHash]),
           payment_term: T.nilable(String),
           previous_unpaid_balance: T.nilable(String),
           purchase_order: T.nilable(String),
@@ -249,14 +279,22 @@ module EInvoiceAPI
           shipping_address_recipient: T.nilable(String),
           state: EInvoiceAPI::DocumentState::OrSymbol,
           subtotal: T.nilable(String),
-          tax_code: EInvoiceAPI::DocumentResponse::TaxCode::OrSymbol,
+          success: T::Boolean,
+          tax_code:
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode::OrSymbol,
           tax_details:
             T.nilable(
-              T::Array[EInvoiceAPI::DocumentResponse::TaxDetail::OrHash]
+              T::Array[
+                EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxDetail::OrHash
+              ]
             ),
           total_discount: T.nilable(String),
           total_tax: T.nilable(String),
-          vatex: T.nilable(EInvoiceAPI::DocumentResponse::Vatex::OrSymbol),
+          ubl_document: T.nilable(String),
+          vatex:
+            T.nilable(
+              EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::OrSymbol
+            ),
           vatex_note: T.nilable(String),
           vendor_address: T.nilable(String),
           vendor_address_recipient: T.nilable(String),
@@ -266,7 +304,6 @@ module EInvoiceAPI
         ).returns(T.attached_class)
       end
       def self.new(
-        id:,
         allowances: nil,
         # The amount due of the invoice. Must be positive and rounded to maximum 2
         # decimals
@@ -291,6 +328,7 @@ module EInvoiceAPI
         # The total amount of the invoice (so invoice_total = subtotal + total_tax +
         # total_discount). Must be positive and rounded to maximum 2 decimals
         invoice_total: nil,
+        # At least one line item is required
         items: nil,
         note: nil,
         payment_details: nil,
@@ -312,6 +350,8 @@ module EInvoiceAPI
         # allowances (for example commercial discounts) + charges with impact on VAT. Must
         # be positive and rounded to maximum 2 decimals
         subtotal: nil,
+        # Whether the PDF was successfully converted into a compliant e-invoice
+        success: nil,
         # Tax category code of the invoice
         tax_code: nil,
         tax_details: nil,
@@ -320,6 +360,8 @@ module EInvoiceAPI
         total_discount: nil,
         # The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
         total_tax: nil,
+        # The UBL document as an XML string
+        ubl_document: nil,
         # VATEX code list for VAT exemption reasons
         #
         # Agency: CEF Identifier: vatex
@@ -337,15 +379,13 @@ module EInvoiceAPI
       sig do
         override.returns(
           {
-            id: String,
-            allowances:
-              T.nilable(T::Array[EInvoiceAPI::DocumentResponse::Allowance]),
+            allowances: T.nilable(T::Array[EInvoiceAPI::Allowance]),
             amount_due: T.nilable(String),
             attachments:
-              T.nilable(T::Array[EInvoiceAPI::Documents::DocumentAttachment]),
+              T.nilable(T::Array[EInvoiceAPI::DocumentAttachmentCreate]),
             billing_address: T.nilable(String),
             billing_address_recipient: T.nilable(String),
-            charges: T.nilable(T::Array[EInvoiceAPI::DocumentResponse::Charge]),
+            charges: T.nilable(T::Array[EInvoiceAPI::Charge]),
             currency: EInvoiceAPI::CurrencyCode::TaggedSymbol,
             customer_address: T.nilable(String),
             customer_address_recipient: T.nilable(String),
@@ -359,10 +399,13 @@ module EInvoiceAPI
             invoice_date: T.nilable(Date),
             invoice_id: T.nilable(String),
             invoice_total: T.nilable(String),
-            items: T.nilable(T::Array[EInvoiceAPI::DocumentResponse::Item]),
+            items:
+              T::Array[
+                EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item
+              ],
             note: T.nilable(String),
             payment_details:
-              T.nilable(T::Array[EInvoiceAPI::DocumentResponse::PaymentDetail]),
+              T.nilable(T::Array[EInvoiceAPI::PaymentDetailCreate]),
             payment_term: T.nilable(String),
             previous_unpaid_balance: T.nilable(String),
             purchase_order: T.nilable(String),
@@ -376,13 +419,22 @@ module EInvoiceAPI
             shipping_address_recipient: T.nilable(String),
             state: EInvoiceAPI::DocumentState::TaggedSymbol,
             subtotal: T.nilable(String),
-            tax_code: EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol,
+            success: T::Boolean,
+            tax_code:
+              EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode::TaggedSymbol,
             tax_details:
-              T.nilable(T::Array[EInvoiceAPI::DocumentResponse::TaxDetail]),
+              T.nilable(
+                T::Array[
+                  EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxDetail
+                ]
+              ),
             total_discount: T.nilable(String),
             total_tax: T.nilable(String),
+            ubl_document: T.nilable(String),
             vatex:
-              T.nilable(EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol),
+              T.nilable(
+                EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+              ),
             vatex_note: T.nilable(String),
             vendor_address: T.nilable(String),
             vendor_address_recipient: T.nilable(String),
@@ -395,365 +447,11 @@ module EInvoiceAPI
       def to_hash
       end
 
-      class Allowance < EInvoiceAPI::Internal::Type::BaseModel
-        OrHash =
-          T.type_alias do
-            T.any(
-              EInvoiceAPI::DocumentResponse::Allowance,
-              EInvoiceAPI::Internal::AnyHash
-            )
-          end
-
-        # The allowance amount, without VAT. Must be rounded to maximum 2 decimals
-        sig { returns(T.nilable(String)) }
-        attr_accessor :amount
-
-        # The base amount that may be used, in conjunction with the allowance percentage,
-        # to calculate the allowance amount. Must be rounded to maximum 2 decimals
-        sig { returns(T.nilable(String)) }
-        attr_accessor :base_amount
-
-        # The percentage that may be used, in conjunction with the allowance base amount,
-        # to calculate the allowance amount. To state 20%, use value 20
-        sig { returns(T.nilable(String)) }
-        attr_accessor :multiplier_factor
-
-        # The reason for the allowance
-        sig { returns(T.nilable(String)) }
-        attr_accessor :reason
-
-        # The code for the allowance reason
-        sig { returns(T.nilable(String)) }
-        attr_accessor :reason_code
-
-        # Duty or tax or fee category codes (Subset of UNCL5305)
-        #
-        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
-        sig do
-          returns(
-            T.nilable(
-              EInvoiceAPI::DocumentResponse::Allowance::TaxCode::TaggedSymbol
-            )
-          )
-        end
-        attr_accessor :tax_code
-
-        # The VAT rate, represented as percentage that applies to the allowance
-        sig { returns(T.nilable(String)) }
-        attr_accessor :tax_rate
-
-        sig do
-          params(
-            amount: T.nilable(String),
-            base_amount: T.nilable(String),
-            multiplier_factor: T.nilable(String),
-            reason: T.nilable(String),
-            reason_code: T.nilable(String),
-            tax_code:
-              T.nilable(
-                EInvoiceAPI::DocumentResponse::Allowance::TaxCode::OrSymbol
-              ),
-            tax_rate: T.nilable(String)
-          ).returns(T.attached_class)
-        end
-        def self.new(
-          # The allowance amount, without VAT. Must be rounded to maximum 2 decimals
-          amount: nil,
-          # The base amount that may be used, in conjunction with the allowance percentage,
-          # to calculate the allowance amount. Must be rounded to maximum 2 decimals
-          base_amount: nil,
-          # The percentage that may be used, in conjunction with the allowance base amount,
-          # to calculate the allowance amount. To state 20%, use value 20
-          multiplier_factor: nil,
-          # The reason for the allowance
-          reason: nil,
-          # The code for the allowance reason
-          reason_code: nil,
-          # Duty or tax or fee category codes (Subset of UNCL5305)
-          #
-          # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
-          tax_code: nil,
-          # The VAT rate, represented as percentage that applies to the allowance
-          tax_rate: nil
-        )
-        end
-
-        sig do
-          override.returns(
-            {
-              amount: T.nilable(String),
-              base_amount: T.nilable(String),
-              multiplier_factor: T.nilable(String),
-              reason: T.nilable(String),
-              reason_code: T.nilable(String),
-              tax_code:
-                T.nilable(
-                  EInvoiceAPI::DocumentResponse::Allowance::TaxCode::TaggedSymbol
-                ),
-              tax_rate: T.nilable(String)
-            }
-          )
-        end
-        def to_hash
-        end
-
-        # Duty or tax or fee category codes (Subset of UNCL5305)
-        #
-        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
-        module TaxCode
-          extend EInvoiceAPI::Internal::Type::Enum
-
-          TaggedSymbol =
-            T.type_alias do
-              T.all(Symbol, EInvoiceAPI::DocumentResponse::Allowance::TaxCode)
-            end
-          OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-          AE =
-            T.let(
-              :AE,
-              EInvoiceAPI::DocumentResponse::Allowance::TaxCode::TaggedSymbol
-            )
-          E =
-            T.let(
-              :E,
-              EInvoiceAPI::DocumentResponse::Allowance::TaxCode::TaggedSymbol
-            )
-          S =
-            T.let(
-              :S,
-              EInvoiceAPI::DocumentResponse::Allowance::TaxCode::TaggedSymbol
-            )
-          Z =
-            T.let(
-              :Z,
-              EInvoiceAPI::DocumentResponse::Allowance::TaxCode::TaggedSymbol
-            )
-          G =
-            T.let(
-              :G,
-              EInvoiceAPI::DocumentResponse::Allowance::TaxCode::TaggedSymbol
-            )
-          O =
-            T.let(
-              :O,
-              EInvoiceAPI::DocumentResponse::Allowance::TaxCode::TaggedSymbol
-            )
-          K =
-            T.let(
-              :K,
-              EInvoiceAPI::DocumentResponse::Allowance::TaxCode::TaggedSymbol
-            )
-          L =
-            T.let(
-              :L,
-              EInvoiceAPI::DocumentResponse::Allowance::TaxCode::TaggedSymbol
-            )
-          M =
-            T.let(
-              :M,
-              EInvoiceAPI::DocumentResponse::Allowance::TaxCode::TaggedSymbol
-            )
-          B =
-            T.let(
-              :B,
-              EInvoiceAPI::DocumentResponse::Allowance::TaxCode::TaggedSymbol
-            )
-
-          sig do
-            override.returns(
-              T::Array[
-                EInvoiceAPI::DocumentResponse::Allowance::TaxCode::TaggedSymbol
-              ]
-            )
-          end
-          def self.values
-          end
-        end
-      end
-
-      class Charge < EInvoiceAPI::Internal::Type::BaseModel
-        OrHash =
-          T.type_alias do
-            T.any(
-              EInvoiceAPI::DocumentResponse::Charge,
-              EInvoiceAPI::Internal::AnyHash
-            )
-          end
-
-        # The charge amount, without VAT. Must be rounded to maximum 2 decimals
-        sig { returns(T.nilable(String)) }
-        attr_accessor :amount
-
-        # The base amount that may be used, in conjunction with the charge percentage, to
-        # calculate the charge amount. Must be rounded to maximum 2 decimals
-        sig { returns(T.nilable(String)) }
-        attr_accessor :base_amount
-
-        # The percentage that may be used, in conjunction with the charge base amount, to
-        # calculate the charge amount. To state 20%, use value 20
-        sig { returns(T.nilable(String)) }
-        attr_accessor :multiplier_factor
-
-        # The reason for the charge
-        sig { returns(T.nilable(String)) }
-        attr_accessor :reason
-
-        # The code for the charge reason
-        sig { returns(T.nilable(String)) }
-        attr_accessor :reason_code
-
-        # Duty or tax or fee category codes (Subset of UNCL5305)
-        #
-        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
-        sig do
-          returns(
-            T.nilable(
-              EInvoiceAPI::DocumentResponse::Charge::TaxCode::TaggedSymbol
-            )
-          )
-        end
-        attr_accessor :tax_code
-
-        # The VAT rate, represented as percentage that applies to the charge
-        sig { returns(T.nilable(String)) }
-        attr_accessor :tax_rate
-
-        sig do
-          params(
-            amount: T.nilable(String),
-            base_amount: T.nilable(String),
-            multiplier_factor: T.nilable(String),
-            reason: T.nilable(String),
-            reason_code: T.nilable(String),
-            tax_code:
-              T.nilable(
-                EInvoiceAPI::DocumentResponse::Charge::TaxCode::OrSymbol
-              ),
-            tax_rate: T.nilable(String)
-          ).returns(T.attached_class)
-        end
-        def self.new(
-          # The charge amount, without VAT. Must be rounded to maximum 2 decimals
-          amount: nil,
-          # The base amount that may be used, in conjunction with the charge percentage, to
-          # calculate the charge amount. Must be rounded to maximum 2 decimals
-          base_amount: nil,
-          # The percentage that may be used, in conjunction with the charge base amount, to
-          # calculate the charge amount. To state 20%, use value 20
-          multiplier_factor: nil,
-          # The reason for the charge
-          reason: nil,
-          # The code for the charge reason
-          reason_code: nil,
-          # Duty or tax or fee category codes (Subset of UNCL5305)
-          #
-          # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
-          tax_code: nil,
-          # The VAT rate, represented as percentage that applies to the charge
-          tax_rate: nil
-        )
-        end
-
-        sig do
-          override.returns(
-            {
-              amount: T.nilable(String),
-              base_amount: T.nilable(String),
-              multiplier_factor: T.nilable(String),
-              reason: T.nilable(String),
-              reason_code: T.nilable(String),
-              tax_code:
-                T.nilable(
-                  EInvoiceAPI::DocumentResponse::Charge::TaxCode::TaggedSymbol
-                ),
-              tax_rate: T.nilable(String)
-            }
-          )
-        end
-        def to_hash
-        end
-
-        # Duty or tax or fee category codes (Subset of UNCL5305)
-        #
-        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
-        module TaxCode
-          extend EInvoiceAPI::Internal::Type::Enum
-
-          TaggedSymbol =
-            T.type_alias do
-              T.all(Symbol, EInvoiceAPI::DocumentResponse::Charge::TaxCode)
-            end
-          OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-          AE =
-            T.let(
-              :AE,
-              EInvoiceAPI::DocumentResponse::Charge::TaxCode::TaggedSymbol
-            )
-          E =
-            T.let(
-              :E,
-              EInvoiceAPI::DocumentResponse::Charge::TaxCode::TaggedSymbol
-            )
-          S =
-            T.let(
-              :S,
-              EInvoiceAPI::DocumentResponse::Charge::TaxCode::TaggedSymbol
-            )
-          Z =
-            T.let(
-              :Z,
-              EInvoiceAPI::DocumentResponse::Charge::TaxCode::TaggedSymbol
-            )
-          G =
-            T.let(
-              :G,
-              EInvoiceAPI::DocumentResponse::Charge::TaxCode::TaggedSymbol
-            )
-          O =
-            T.let(
-              :O,
-              EInvoiceAPI::DocumentResponse::Charge::TaxCode::TaggedSymbol
-            )
-          K =
-            T.let(
-              :K,
-              EInvoiceAPI::DocumentResponse::Charge::TaxCode::TaggedSymbol
-            )
-          L =
-            T.let(
-              :L,
-              EInvoiceAPI::DocumentResponse::Charge::TaxCode::TaggedSymbol
-            )
-          M =
-            T.let(
-              :M,
-              EInvoiceAPI::DocumentResponse::Charge::TaxCode::TaggedSymbol
-            )
-          B =
-            T.let(
-              :B,
-              EInvoiceAPI::DocumentResponse::Charge::TaxCode::TaggedSymbol
-            )
-
-          sig do
-            override.returns(
-              T::Array[
-                EInvoiceAPI::DocumentResponse::Charge::TaxCode::TaggedSymbol
-              ]
-            )
-          end
-          def self.values
-          end
-        end
-      end
-
       class Item < EInvoiceAPI::Internal::Type::BaseModel
         OrHash =
           T.type_alias do
             T.any(
-              EInvoiceAPI::DocumentResponse::Item,
+              EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item,
               EInvoiceAPI::Internal::AnyHash
             )
           end
@@ -868,79 +566,75 @@ module EInvoiceAPI
         end
       end
 
-      class PaymentDetail < EInvoiceAPI::Internal::Type::BaseModel
-        OrHash =
-          T.type_alias do
-            T.any(
-              EInvoiceAPI::DocumentResponse::PaymentDetail,
-              EInvoiceAPI::Internal::AnyHash
-            )
-          end
-
-        sig { returns(T.nilable(String)) }
-        attr_accessor :bank_account_number
-
-        sig { returns(T.nilable(String)) }
-        attr_accessor :iban
-
-        sig { returns(T.nilable(String)) }
-        attr_accessor :payment_reference
-
-        sig { returns(T.nilable(String)) }
-        attr_accessor :swift
-
-        sig do
-          params(
-            bank_account_number: T.nilable(String),
-            iban: T.nilable(String),
-            payment_reference: T.nilable(String),
-            swift: T.nilable(String)
-          ).returns(T.attached_class)
-        end
-        def self.new(
-          bank_account_number: nil,
-          iban: nil,
-          payment_reference: nil,
-          swift: nil
-        )
-        end
-
-        sig do
-          override.returns(
-            {
-              bank_account_number: T.nilable(String),
-              iban: T.nilable(String),
-              payment_reference: T.nilable(String),
-              swift: T.nilable(String)
-            }
-          )
-        end
-        def to_hash
-        end
-      end
-
       # Tax category code of the invoice
       module TaxCode
         extend EInvoiceAPI::Internal::Type::Enum
 
         TaggedSymbol =
-          T.type_alias { T.all(Symbol, EInvoiceAPI::DocumentResponse::TaxCode) }
+          T.type_alias do
+            T.all(
+              Symbol,
+              EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode
+            )
+          end
         OrSymbol = T.type_alias { T.any(Symbol, String) }
 
-        AE = T.let(:AE, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
-        E = T.let(:E, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
-        S = T.let(:S, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
-        Z = T.let(:Z, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
-        G = T.let(:G, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
-        O = T.let(:O, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
-        K = T.let(:K, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
-        L = T.let(:L, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
-        M = T.let(:M, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
-        B = T.let(:B, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
+        AE =
+          T.let(
+            :AE,
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode::TaggedSymbol
+          )
+        E =
+          T.let(
+            :E,
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode::TaggedSymbol
+          )
+        S =
+          T.let(
+            :S,
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode::TaggedSymbol
+          )
+        Z =
+          T.let(
+            :Z,
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode::TaggedSymbol
+          )
+        G =
+          T.let(
+            :G,
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode::TaggedSymbol
+          )
+        O =
+          T.let(
+            :O,
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode::TaggedSymbol
+          )
+        K =
+          T.let(
+            :K,
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode::TaggedSymbol
+          )
+        L =
+          T.let(
+            :L,
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode::TaggedSymbol
+          )
+        M =
+          T.let(
+            :M,
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode::TaggedSymbol
+          )
+        B =
+          T.let(
+            :B,
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode::TaggedSymbol
+          )
 
         sig do
           override.returns(
-            T::Array[EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol]
+            T::Array[
+              EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode::TaggedSymbol
+            ]
           )
         end
         def self.values
@@ -951,7 +645,7 @@ module EInvoiceAPI
         OrHash =
           T.type_alias do
             T.any(
-              EInvoiceAPI::DocumentResponse::TaxDetail,
+              EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxDetail,
               EInvoiceAPI::Internal::AnyHash
             )
           end
@@ -986,323 +680,330 @@ module EInvoiceAPI
         extend EInvoiceAPI::Internal::Type::Enum
 
         TaggedSymbol =
-          T.type_alias { T.all(Symbol, EInvoiceAPI::DocumentResponse::Vatex) }
+          T.type_alias do
+            T.all(
+              Symbol,
+              EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex
+            )
+          end
         OrSymbol = T.type_alias { T.any(Symbol, String) }
 
         VATEX_EU_79_C =
           T.let(
             :"VATEX-EU-79-C",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132 =
           T.let(
             :"VATEX-EU-132",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_A =
           T.let(
             :"VATEX-EU-132-1A",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_B =
           T.let(
             :"VATEX-EU-132-1B",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_C =
           T.let(
             :"VATEX-EU-132-1C",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_D =
           T.let(
             :"VATEX-EU-132-1D",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_E =
           T.let(
             :"VATEX-EU-132-1E",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_F =
           T.let(
             :"VATEX-EU-132-1F",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_G =
           T.let(
             :"VATEX-EU-132-1G",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_H =
           T.let(
             :"VATEX-EU-132-1H",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_I =
           T.let(
             :"VATEX-EU-132-1I",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_J =
           T.let(
             :"VATEX-EU-132-1J",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_K =
           T.let(
             :"VATEX-EU-132-1K",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_L =
           T.let(
             :"VATEX-EU-132-1L",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_M =
           T.let(
             :"VATEX-EU-132-1M",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_N =
           T.let(
             :"VATEX-EU-132-1N",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_O =
           T.let(
             :"VATEX-EU-132-1O",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_P =
           T.let(
             :"VATEX-EU-132-1P",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_132_1_Q =
           T.let(
             :"VATEX-EU-132-1Q",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_143 =
           T.let(
             :"VATEX-EU-143",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_143_1_A =
           T.let(
             :"VATEX-EU-143-1A",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_143_1_B =
           T.let(
             :"VATEX-EU-143-1B",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_143_1_C =
           T.let(
             :"VATEX-EU-143-1C",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_143_1_D =
           T.let(
             :"VATEX-EU-143-1D",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_143_1_E =
           T.let(
             :"VATEX-EU-143-1E",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_143_1_F =
           T.let(
             :"VATEX-EU-143-1F",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_143_1_FA =
           T.let(
             :"VATEX-EU-143-1FA",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_143_1_G =
           T.let(
             :"VATEX-EU-143-1G",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_143_1_H =
           T.let(
             :"VATEX-EU-143-1H",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_143_1_I =
           T.let(
             :"VATEX-EU-143-1I",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_143_1_J =
           T.let(
             :"VATEX-EU-143-1J",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_143_1_K =
           T.let(
             :"VATEX-EU-143-1K",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_143_1_L =
           T.let(
             :"VATEX-EU-143-1L",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_144 =
           T.let(
             :"VATEX-EU-144",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_146_1_E =
           T.let(
             :"VATEX-EU-146-1E",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_148 =
           T.let(
             :"VATEX-EU-148",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_148_A =
           T.let(
             :"VATEX-EU-148-A",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_148_B =
           T.let(
             :"VATEX-EU-148-B",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_148_C =
           T.let(
             :"VATEX-EU-148-C",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_148_D =
           T.let(
             :"VATEX-EU-148-D",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_148_E =
           T.let(
             :"VATEX-EU-148-E",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_148_F =
           T.let(
             :"VATEX-EU-148-F",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_148_G =
           T.let(
             :"VATEX-EU-148-G",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_151 =
           T.let(
             :"VATEX-EU-151",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_151_1_A =
           T.let(
             :"VATEX-EU-151-1A",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_151_1_AA =
           T.let(
             :"VATEX-EU-151-1AA",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_151_1_B =
           T.let(
             :"VATEX-EU-151-1B",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_151_1_C =
           T.let(
             :"VATEX-EU-151-1C",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_151_1_D =
           T.let(
             :"VATEX-EU-151-1D",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_151_1_E =
           T.let(
             :"VATEX-EU-151-1E",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_159 =
           T.let(
             :"VATEX-EU-159",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_309 =
           T.let(
             :"VATEX-EU-309",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_AE =
           T.let(
             :"VATEX-EU-AE",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_D =
           T.let(
             :"VATEX-EU-D",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_F =
           T.let(
             :"VATEX-EU-F",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_G =
           T.let(
             :"VATEX-EU-G",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_I =
           T.let(
             :"VATEX-EU-I",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_IC =
           T.let(
             :"VATEX-EU-IC",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_O =
           T.let(
             :"VATEX-EU-O",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_EU_J =
           T.let(
             :"VATEX-EU-J",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_FR_FRANCHISE =
           T.let(
             :"VATEX-FR-FRANCHISE",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_FR_CNWVAT =
           T.let(
             :"VATEX-FR-CNWVAT",
-            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
 
         sig do
           override.returns(
-            T::Array[EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol]
+            T::Array[
+              EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+            ]
           )
         end
         def self.values

@@ -438,11 +438,11 @@ module EInvoiceAPI
         # @return [Hash{Symbol=>Object}]
         #
         # @example
-        #   # `document_attachment_create` is a `EInvoiceAPI::DocumentAttachmentCreate`
-        #   document_attachment_create => {
-        #     file_name: file_name,
-        #     file_data: file_data,
-        #     file_size: file_size
+        #   # `allowance` is a `EInvoiceAPI::Allowance`
+        #   allowance => {
+        #     amount: amount,
+        #     base_amount: base_amount,
+        #     multiplier_factor: multiplier_factor
         #   }
         def deconstruct_keys(keys)
           (keys || self.class.known_fields.keys)

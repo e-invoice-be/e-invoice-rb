@@ -33,6 +33,9 @@ module EInvoiceAPI
     # @return [EInvoiceAPI::Resources::Lookup]
     attr_reader :lookup
 
+    # @return [EInvoiceAPI::Resources::Me]
+    attr_reader :me
+
     # @return [EInvoiceAPI::Resources::Webhooks]
     attr_reader :webhooks
 
@@ -88,6 +91,7 @@ module EInvoiceAPI
       @outbox = EInvoiceAPI::Resources::Outbox.new(client: self)
       @validate = EInvoiceAPI::Resources::Validate.new(client: self)
       @lookup = EInvoiceAPI::Resources::Lookup.new(client: self)
+      @me = EInvoiceAPI::Resources::Me.new(client: self)
       @webhooks = EInvoiceAPI::Resources::Webhooks.new(client: self)
     end
   end

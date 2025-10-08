@@ -65,6 +65,13 @@ module EInvoiceAPI
         ?request_options: EInvoiceAPI::request_opts
       ) -> EInvoiceAPI::Models::DocumentDeleteResponse
 
+      def create_from_pdf: (
+        file: EInvoiceAPI::Internal::file_input,
+        ?customer_tax_id: String?,
+        ?vendor_tax_id: String?,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> EInvoiceAPI::Models::DocumentCreateFromPdfResponse
+
       def send_: (
         String document_id,
         ?email: String?,
@@ -74,6 +81,11 @@ module EInvoiceAPI
         ?sender_peppol_scheme: String?,
         ?request_options: EInvoiceAPI::request_opts
       ) -> EInvoiceAPI::DocumentResponse
+
+      def validate: (
+        String document_id,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> EInvoiceAPI::UblDocumentValidation
 
       def initialize: (client: EInvoiceAPI::Client) -> void
     end
