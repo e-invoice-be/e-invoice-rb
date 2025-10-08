@@ -152,6 +152,17 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :subtotal
 
+      # Tax category code of the invoice
+      sig do
+        returns(T.nilable(EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol))
+      end
+      attr_reader :tax_code
+
+      sig do
+        params(tax_code: EInvoiceAPI::DocumentResponse::TaxCode::OrSymbol).void
+      end
+      attr_writer :tax_code
+
       sig do
         returns(T.nilable(T::Array[EInvoiceAPI::DocumentResponse::TaxDetail]))
       end
@@ -170,6 +181,18 @@ module EInvoiceAPI
 
       sig { returns(T.nilable(String)) }
       attr_accessor :total_tax
+
+      # VATEX code list for VAT exemption reasons
+      #
+      # Agency: CEF Identifier: vatex
+      sig do
+        returns(T.nilable(EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol))
+      end
+      attr_accessor :vatex
+
+      # VAT exemption note of the invoice
+      sig { returns(T.nilable(String)) }
+      attr_accessor :vatex_note
 
       sig { returns(T.nilable(String)) }
       attr_accessor :vendor_address
@@ -224,10 +247,13 @@ module EInvoiceAPI
           shipping_address_recipient: T.nilable(String),
           state: EInvoiceAPI::DocumentState::OrSymbol,
           subtotal: T.nilable(String),
+          tax_code: EInvoiceAPI::DocumentResponse::TaxCode::OrSymbol,
           tax_details:
             T::Array[EInvoiceAPI::DocumentResponse::TaxDetail::OrHash],
           total_discount: T.nilable(String),
           total_tax: T.nilable(String),
+          vatex: T.nilable(EInvoiceAPI::DocumentResponse::Vatex::OrSymbol),
+          vatex_note: T.nilable(String),
           vendor_address: T.nilable(String),
           vendor_address_recipient: T.nilable(String),
           vendor_email: T.nilable(String),
@@ -271,9 +297,17 @@ module EInvoiceAPI
         shipping_address_recipient: nil,
         state: nil,
         subtotal: nil,
+        # Tax category code of the invoice
+        tax_code: nil,
         tax_details: nil,
         total_discount: nil,
         total_tax: nil,
+        # VATEX code list for VAT exemption reasons
+        #
+        # Agency: CEF Identifier: vatex
+        vatex: nil,
+        # VAT exemption note of the invoice
+        vatex_note: nil,
         vendor_address: nil,
         vendor_address_recipient: nil,
         vendor_email: nil,
@@ -320,9 +354,13 @@ module EInvoiceAPI
             shipping_address_recipient: T.nilable(String),
             state: EInvoiceAPI::DocumentState::TaggedSymbol,
             subtotal: T.nilable(String),
+            tax_code: EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol,
             tax_details: T::Array[EInvoiceAPI::DocumentResponse::TaxDetail],
             total_discount: T.nilable(String),
             total_tax: T.nilable(String),
+            vatex:
+              T.nilable(EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol),
+            vatex_note: T.nilable(String),
             vendor_address: T.nilable(String),
             vendor_address_recipient: T.nilable(String),
             vendor_email: T.nilable(String),
@@ -468,6 +506,34 @@ module EInvoiceAPI
         end
       end
 
+      # Tax category code of the invoice
+      module TaxCode
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias { T.all(Symbol, EInvoiceAPI::DocumentResponse::TaxCode) }
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        AE = T.let(:AE, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
+        E = T.let(:E, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
+        S = T.let(:S, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
+        Z = T.let(:Z, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
+        G = T.let(:G, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
+        O = T.let(:O, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
+        K = T.let(:K, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
+        L = T.let(:L, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
+        M = T.let(:M, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
+        B = T.let(:B, EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol)
+
+        sig do
+          override.returns(
+            T::Array[EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol]
+          )
+        end
+        def self.values
+        end
+      end
+
       class TaxDetail < EInvoiceAPI::Internal::Type::BaseModel
         OrHash =
           T.type_alias do
@@ -497,6 +563,336 @@ module EInvoiceAPI
           )
         end
         def to_hash
+        end
+      end
+
+      # VATEX code list for VAT exemption reasons
+      #
+      # Agency: CEF Identifier: vatex
+      module Vatex
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias { T.all(Symbol, EInvoiceAPI::DocumentResponse::Vatex) }
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        VATEX_EU_79_C =
+          T.let(
+            :"VATEX-EU-79-C",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132 =
+          T.let(
+            :"VATEX-EU-132",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_A =
+          T.let(
+            :"VATEX-EU-132-1A",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_B =
+          T.let(
+            :"VATEX-EU-132-1B",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_C =
+          T.let(
+            :"VATEX-EU-132-1C",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_D =
+          T.let(
+            :"VATEX-EU-132-1D",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_E =
+          T.let(
+            :"VATEX-EU-132-1E",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_F =
+          T.let(
+            :"VATEX-EU-132-1F",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_G =
+          T.let(
+            :"VATEX-EU-132-1G",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_H =
+          T.let(
+            :"VATEX-EU-132-1H",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_I =
+          T.let(
+            :"VATEX-EU-132-1I",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_J =
+          T.let(
+            :"VATEX-EU-132-1J",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_K =
+          T.let(
+            :"VATEX-EU-132-1K",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_L =
+          T.let(
+            :"VATEX-EU-132-1L",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_M =
+          T.let(
+            :"VATEX-EU-132-1M",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_N =
+          T.let(
+            :"VATEX-EU-132-1N",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_O =
+          T.let(
+            :"VATEX-EU-132-1O",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_P =
+          T.let(
+            :"VATEX-EU-132-1P",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_132_1_Q =
+          T.let(
+            :"VATEX-EU-132-1Q",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_143 =
+          T.let(
+            :"VATEX-EU-143",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_143_1_A =
+          T.let(
+            :"VATEX-EU-143-1A",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_143_1_B =
+          T.let(
+            :"VATEX-EU-143-1B",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_143_1_C =
+          T.let(
+            :"VATEX-EU-143-1C",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_143_1_D =
+          T.let(
+            :"VATEX-EU-143-1D",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_143_1_E =
+          T.let(
+            :"VATEX-EU-143-1E",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_143_1_F =
+          T.let(
+            :"VATEX-EU-143-1F",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_143_1_FA =
+          T.let(
+            :"VATEX-EU-143-1FA",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_143_1_G =
+          T.let(
+            :"VATEX-EU-143-1G",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_143_1_H =
+          T.let(
+            :"VATEX-EU-143-1H",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_143_1_I =
+          T.let(
+            :"VATEX-EU-143-1I",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_143_1_J =
+          T.let(
+            :"VATEX-EU-143-1J",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_143_1_K =
+          T.let(
+            :"VATEX-EU-143-1K",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_143_1_L =
+          T.let(
+            :"VATEX-EU-143-1L",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_144 =
+          T.let(
+            :"VATEX-EU-144",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_146_1_E =
+          T.let(
+            :"VATEX-EU-146-1E",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_148 =
+          T.let(
+            :"VATEX-EU-148",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_148_A =
+          T.let(
+            :"VATEX-EU-148-A",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_148_B =
+          T.let(
+            :"VATEX-EU-148-B",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_148_C =
+          T.let(
+            :"VATEX-EU-148-C",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_148_D =
+          T.let(
+            :"VATEX-EU-148-D",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_148_E =
+          T.let(
+            :"VATEX-EU-148-E",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_148_F =
+          T.let(
+            :"VATEX-EU-148-F",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_148_G =
+          T.let(
+            :"VATEX-EU-148-G",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_151 =
+          T.let(
+            :"VATEX-EU-151",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_151_1_A =
+          T.let(
+            :"VATEX-EU-151-1A",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_151_1_AA =
+          T.let(
+            :"VATEX-EU-151-1AA",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_151_1_B =
+          T.let(
+            :"VATEX-EU-151-1B",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_151_1_C =
+          T.let(
+            :"VATEX-EU-151-1C",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_151_1_D =
+          T.let(
+            :"VATEX-EU-151-1D",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_151_1_E =
+          T.let(
+            :"VATEX-EU-151-1E",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_159 =
+          T.let(
+            :"VATEX-EU-159",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_309 =
+          T.let(
+            :"VATEX-EU-309",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_AE =
+          T.let(
+            :"VATEX-EU-AE",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_D =
+          T.let(
+            :"VATEX-EU-D",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_F =
+          T.let(
+            :"VATEX-EU-F",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_G =
+          T.let(
+            :"VATEX-EU-G",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_I =
+          T.let(
+            :"VATEX-EU-I",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_IC =
+          T.let(
+            :"VATEX-EU-IC",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_O =
+          T.let(
+            :"VATEX-EU-O",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_EU_J =
+          T.let(
+            :"VATEX-EU-J",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_FRANCHISE =
+          T.let(
+            :"VATEX-FR-FRANCHISE",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CNWVAT =
+          T.let(
+            :"VATEX-FR-CNWVAT",
+            EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol
+          )
+
+        sig do
+          override.returns(
+            T::Array[EInvoiceAPI::DocumentResponse::Vatex::TaggedSymbol]
+          )
+        end
+        def self.values
         end
       end
     end

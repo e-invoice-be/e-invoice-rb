@@ -177,6 +177,12 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :subtotal, String, nil?: true
 
+      # @!attribute tax_code
+      #   Tax category code of the invoice
+      #
+      #   @return [Symbol, EInvoiceAPI::Models::DocumentResponse::TaxCode, nil]
+      optional :tax_code, enum: -> { EInvoiceAPI::DocumentResponse::TaxCode }
+
       # @!attribute tax_details
       #
       #   @return [Array<EInvoiceAPI::Models::DocumentResponse::TaxDetail>, nil]
@@ -192,6 +198,20 @@ module EInvoiceAPI
       #
       #   @return [String, nil]
       optional :total_tax, String, nil?: true
+
+      # @!attribute vatex
+      #   VATEX code list for VAT exemption reasons
+      #
+      #   Agency: CEF Identifier: vatex
+      #
+      #   @return [Symbol, EInvoiceAPI::Models::DocumentResponse::Vatex, nil]
+      optional :vatex, enum: -> { EInvoiceAPI::DocumentResponse::Vatex }, nil?: true
+
+      # @!attribute vatex_note
+      #   VAT exemption note of the invoice
+      #
+      #   @return [String, nil]
+      optional :vatex_note, String, nil?: true
 
       # @!attribute vendor_address
       #
@@ -218,7 +238,10 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :vendor_tax_id, String, nil?: true
 
-      # @!method initialize(id:, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, previous_unpaid_balance: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, tax_details: nil, total_discount: nil, total_tax: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil)
+      # @!method initialize(id:, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, previous_unpaid_balance: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil)
+      #   Some parameter documentations has been truncated, see
+      #   {EInvoiceAPI::Models::DocumentResponse} for more details.
+      #
       #   @param id [String]
       #
       #   @param amount_due [String, nil]
@@ -287,11 +310,17 @@ module EInvoiceAPI
       #
       #   @param subtotal [String, nil]
       #
+      #   @param tax_code [Symbol, EInvoiceAPI::Models::DocumentResponse::TaxCode] Tax category code of the invoice
+      #
       #   @param tax_details [Array<EInvoiceAPI::Models::DocumentResponse::TaxDetail>]
       #
       #   @param total_discount [String, nil]
       #
       #   @param total_tax [String, nil]
+      #
+      #   @param vatex [Symbol, EInvoiceAPI::Models::DocumentResponse::Vatex, nil] VATEX code list for VAT exemption reasons
+      #
+      #   @param vatex_note [String, nil] VAT exemption note of the invoice
       #
       #   @param vendor_address [String, nil]
       #
@@ -398,6 +427,27 @@ module EInvoiceAPI
         #   @param swift [String, nil]
       end
 
+      # Tax category code of the invoice
+      #
+      # @see EInvoiceAPI::Models::DocumentResponse#tax_code
+      module TaxCode
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        AE = :AE
+        E = :E
+        S = :S
+        Z = :Z
+        G = :G
+        O = :O
+        K = :K
+        L = :L
+        M = :M
+        B = :B
+
+        # @!method self.values
+        #   @return [Array<Symbol>]
+      end
+
       class TaxDetail < EInvoiceAPI::Internal::Type::BaseModel
         # @!attribute amount
         #
@@ -412,6 +462,81 @@ module EInvoiceAPI
         # @!method initialize(amount: nil, rate: nil)
         #   @param amount [String, nil]
         #   @param rate [String, nil]
+      end
+
+      # VATEX code list for VAT exemption reasons
+      #
+      # Agency: CEF Identifier: vatex
+      #
+      # @see EInvoiceAPI::Models::DocumentResponse#vatex
+      module Vatex
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        VATEX_EU_79_C = :"VATEX-EU-79-C"
+        VATEX_EU_132 = :"VATEX-EU-132"
+        VATEX_EU_132_1_A = :"VATEX-EU-132-1A"
+        VATEX_EU_132_1_B = :"VATEX-EU-132-1B"
+        VATEX_EU_132_1_C = :"VATEX-EU-132-1C"
+        VATEX_EU_132_1_D = :"VATEX-EU-132-1D"
+        VATEX_EU_132_1_E = :"VATEX-EU-132-1E"
+        VATEX_EU_132_1_F = :"VATEX-EU-132-1F"
+        VATEX_EU_132_1_G = :"VATEX-EU-132-1G"
+        VATEX_EU_132_1_H = :"VATEX-EU-132-1H"
+        VATEX_EU_132_1_I = :"VATEX-EU-132-1I"
+        VATEX_EU_132_1_J = :"VATEX-EU-132-1J"
+        VATEX_EU_132_1_K = :"VATEX-EU-132-1K"
+        VATEX_EU_132_1_L = :"VATEX-EU-132-1L"
+        VATEX_EU_132_1_M = :"VATEX-EU-132-1M"
+        VATEX_EU_132_1_N = :"VATEX-EU-132-1N"
+        VATEX_EU_132_1_O = :"VATEX-EU-132-1O"
+        VATEX_EU_132_1_P = :"VATEX-EU-132-1P"
+        VATEX_EU_132_1_Q = :"VATEX-EU-132-1Q"
+        VATEX_EU_143 = :"VATEX-EU-143"
+        VATEX_EU_143_1_A = :"VATEX-EU-143-1A"
+        VATEX_EU_143_1_B = :"VATEX-EU-143-1B"
+        VATEX_EU_143_1_C = :"VATEX-EU-143-1C"
+        VATEX_EU_143_1_D = :"VATEX-EU-143-1D"
+        VATEX_EU_143_1_E = :"VATEX-EU-143-1E"
+        VATEX_EU_143_1_F = :"VATEX-EU-143-1F"
+        VATEX_EU_143_1_FA = :"VATEX-EU-143-1FA"
+        VATEX_EU_143_1_G = :"VATEX-EU-143-1G"
+        VATEX_EU_143_1_H = :"VATEX-EU-143-1H"
+        VATEX_EU_143_1_I = :"VATEX-EU-143-1I"
+        VATEX_EU_143_1_J = :"VATEX-EU-143-1J"
+        VATEX_EU_143_1_K = :"VATEX-EU-143-1K"
+        VATEX_EU_143_1_L = :"VATEX-EU-143-1L"
+        VATEX_EU_144 = :"VATEX-EU-144"
+        VATEX_EU_146_1_E = :"VATEX-EU-146-1E"
+        VATEX_EU_148 = :"VATEX-EU-148"
+        VATEX_EU_148_A = :"VATEX-EU-148-A"
+        VATEX_EU_148_B = :"VATEX-EU-148-B"
+        VATEX_EU_148_C = :"VATEX-EU-148-C"
+        VATEX_EU_148_D = :"VATEX-EU-148-D"
+        VATEX_EU_148_E = :"VATEX-EU-148-E"
+        VATEX_EU_148_F = :"VATEX-EU-148-F"
+        VATEX_EU_148_G = :"VATEX-EU-148-G"
+        VATEX_EU_151 = :"VATEX-EU-151"
+        VATEX_EU_151_1_A = :"VATEX-EU-151-1A"
+        VATEX_EU_151_1_AA = :"VATEX-EU-151-1AA"
+        VATEX_EU_151_1_B = :"VATEX-EU-151-1B"
+        VATEX_EU_151_1_C = :"VATEX-EU-151-1C"
+        VATEX_EU_151_1_D = :"VATEX-EU-151-1D"
+        VATEX_EU_151_1_E = :"VATEX-EU-151-1E"
+        VATEX_EU_159 = :"VATEX-EU-159"
+        VATEX_EU_309 = :"VATEX-EU-309"
+        VATEX_EU_AE = :"VATEX-EU-AE"
+        VATEX_EU_D = :"VATEX-EU-D"
+        VATEX_EU_F = :"VATEX-EU-F"
+        VATEX_EU_G = :"VATEX-EU-G"
+        VATEX_EU_I = :"VATEX-EU-I"
+        VATEX_EU_IC = :"VATEX-EU-IC"
+        VATEX_EU_O = :"VATEX-EU-O"
+        VATEX_EU_J = :"VATEX-EU-J"
+        VATEX_FR_FRANCHISE = :"VATEX-FR-FRANCHISE"
+        VATEX_FR_CNWVAT = :"VATEX-FR-CNWVAT"
+
+        # @!method self.values
+        #   @return [Array<Symbol>]
       end
     end
   end

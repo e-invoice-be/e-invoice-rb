@@ -52,11 +52,14 @@ module EInvoiceAPI
           shipping_address_recipient: T.nilable(String),
           state: EInvoiceAPI::DocumentState::OrSymbol,
           subtotal: T.nilable(EInvoiceAPI::DocumentCreate::Subtotal::Variants),
+          tax_code: EInvoiceAPI::DocumentCreate::TaxCode::OrSymbol,
           tax_details:
             T.nilable(T::Array[EInvoiceAPI::DocumentCreate::TaxDetail::OrHash]),
           total_discount:
             T.nilable(EInvoiceAPI::DocumentCreate::TotalDiscount::Variants),
           total_tax: T.nilable(EInvoiceAPI::DocumentCreate::TotalTax::Variants),
+          vatex: T.nilable(EInvoiceAPI::DocumentCreate::Vatex::OrSymbol),
+          vatex_note: T.nilable(String),
           vendor_address: T.nilable(String),
           vendor_address_recipient: T.nilable(String),
           vendor_email: T.nilable(String),
@@ -100,9 +103,17 @@ module EInvoiceAPI
         shipping_address_recipient: nil,
         state: nil,
         subtotal: nil,
+        # Tax category code of the invoice
+        tax_code: nil,
         tax_details: nil,
         total_discount: nil,
         total_tax: nil,
+        # VATEX code list for VAT exemption reasons
+        #
+        # Agency: CEF Identifier: vatex
+        vatex: nil,
+        # VAT exemption note of the invoice
+        vatex_note: nil,
         vendor_address: nil,
         vendor_address_recipient: nil,
         vendor_email: nil,
