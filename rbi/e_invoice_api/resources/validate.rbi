@@ -6,12 +6,16 @@ module EInvoiceAPI
       # Validate if the JSON document can be converted to a valid UBL document
       sig do
         params(
+          allowances:
+            T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Allowance::OrHash]),
           amount_due:
             T.nilable(EInvoiceAPI::DocumentCreate::AmountDue::Variants),
           attachments:
             T.nilable(T::Array[EInvoiceAPI::DocumentAttachmentCreate::OrHash]),
           billing_address: T.nilable(String),
           billing_address_recipient: T.nilable(String),
+          charges:
+            T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Charge::OrHash]),
           currency: EInvoiceAPI::CurrencyCode::OrSymbol,
           customer_address: T.nilable(String),
           customer_address_recipient: T.nilable(String),
@@ -26,7 +30,7 @@ module EInvoiceAPI
           invoice_id: T.nilable(String),
           invoice_total:
             T.nilable(EInvoiceAPI::DocumentCreate::InvoiceTotal::Variants),
-          items: T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Item::OrHash]),
+          items: T::Array[EInvoiceAPI::DocumentCreate::Item::OrHash],
           note: T.nilable(String),
           payment_details:
             T.nilable(T::Array[EInvoiceAPI::PaymentDetailCreate::OrHash]),
@@ -63,10 +67,14 @@ module EInvoiceAPI
         ).returns(EInvoiceAPI::UblDocumentValidation)
       end
       def validate_json(
+        allowances: nil,
+        # The amount due of the invoice. Must be positive and rounded to maximum 2
+        # decimals
         amount_due: nil,
         attachments: nil,
         billing_address: nil,
         billing_address_recipient: nil,
+        charges: nil,
         # Currency of the invoice
         currency: nil,
         customer_address: nil,
@@ -80,11 +88,16 @@ module EInvoiceAPI
         due_date: nil,
         invoice_date: nil,
         invoice_id: nil,
+        # The total amount of the invoice (so invoice_total = subtotal + total_tax +
+        # total_discount). Must be positive and rounded to maximum 2 decimals
         invoice_total: nil,
+        # At least one line item is required
         items: nil,
         note: nil,
         payment_details: nil,
         payment_term: nil,
+        # The previous unpaid balance of the invoice, if any. Must be positive and rounded
+        # to maximum 2 decimals
         previous_unpaid_balance: nil,
         purchase_order: nil,
         remittance_address: nil,
@@ -96,11 +109,17 @@ module EInvoiceAPI
         shipping_address: nil,
         shipping_address_recipient: nil,
         state: nil,
+        # The taxable base of the invoice. Should be the sum of all line items -
+        # allowances (for example commercial discounts) + charges with impact on VAT. Must
+        # be positive and rounded to maximum 2 decimals
         subtotal: nil,
         # Tax category code of the invoice
         tax_code: nil,
         tax_details: nil,
+        # The total financial discount of the invoice (so discounts not subject to VAT).
+        # Must be positive and rounded to maximum 2 decimals
         total_discount: nil,
+        # The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
         total_tax: nil,
         # VATEX code list for VAT exemption reasons
         #

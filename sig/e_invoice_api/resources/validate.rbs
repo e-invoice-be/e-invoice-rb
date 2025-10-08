@@ -2,10 +2,12 @@ module EInvoiceAPI
   module Resources
     class Validate
       def validate_json: (
+        ?allowances: ::Array[EInvoiceAPI::DocumentCreate::Allowance]?,
         ?amount_due: EInvoiceAPI::Models::DocumentCreate::amount_due?,
         ?attachments: ::Array[EInvoiceAPI::DocumentAttachmentCreate]?,
         ?billing_address: String?,
         ?billing_address_recipient: String?,
+        ?charges: ::Array[EInvoiceAPI::DocumentCreate::Charge]?,
         ?currency: EInvoiceAPI::Models::currency_code,
         ?customer_address: String?,
         ?customer_address_recipient: String?,
@@ -19,7 +21,7 @@ module EInvoiceAPI
         ?invoice_date: Date?,
         ?invoice_id: String?,
         ?invoice_total: EInvoiceAPI::Models::DocumentCreate::invoice_total?,
-        ?items: ::Array[EInvoiceAPI::DocumentCreate::Item]?,
+        ?items: ::Array[EInvoiceAPI::DocumentCreate::Item],
         ?note: String?,
         ?payment_details: ::Array[EInvoiceAPI::PaymentDetailCreate]?,
         ?payment_term: String?,

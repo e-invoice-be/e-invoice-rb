@@ -9,6 +9,13 @@ module EInvoiceAPI
         end
 
       sig do
+        returns(T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Allowance]))
+      end
+      attr_accessor :allowances
+
+      # The amount due of the invoice. Must be positive and rounded to maximum 2
+      # decimals
+      sig do
         returns(T.nilable(EInvoiceAPI::DocumentCreate::AmountDue::Variants))
       end
       attr_accessor :amount_due
@@ -23,6 +30,9 @@ module EInvoiceAPI
 
       sig { returns(T.nilable(String)) }
       attr_accessor :billing_address_recipient
+
+      sig { returns(T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Charge])) }
+      attr_accessor :charges
 
       # Currency of the invoice
       sig { returns(T.nilable(EInvoiceAPI::CurrencyCode::OrSymbol)) }
@@ -70,13 +80,21 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :invoice_id
 
+      # The total amount of the invoice (so invoice_total = subtotal + total_tax +
+      # total_discount). Must be positive and rounded to maximum 2 decimals
       sig do
         returns(T.nilable(EInvoiceAPI::DocumentCreate::InvoiceTotal::Variants))
       end
       attr_accessor :invoice_total
 
+      # At least one line item is required
       sig { returns(T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Item])) }
-      attr_accessor :items
+      attr_reader :items
+
+      sig do
+        params(items: T::Array[EInvoiceAPI::DocumentCreate::Item::OrHash]).void
+      end
+      attr_writer :items
 
       sig { returns(T.nilable(String)) }
       attr_accessor :note
@@ -87,6 +105,8 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :payment_term
 
+      # The previous unpaid balance of the invoice, if any. Must be positive and rounded
+      # to maximum 2 decimals
       sig do
         returns(
           T.nilable(
@@ -129,6 +149,9 @@ module EInvoiceAPI
       sig { params(state: EInvoiceAPI::DocumentState::OrSymbol).void }
       attr_writer :state
 
+      # The taxable base of the invoice. Should be the sum of all line items -
+      # allowances (for example commercial discounts) + charges with impact on VAT. Must
+      # be positive and rounded to maximum 2 decimals
       sig do
         returns(T.nilable(EInvoiceAPI::DocumentCreate::Subtotal::Variants))
       end
@@ -148,11 +171,14 @@ module EInvoiceAPI
       end
       attr_accessor :tax_details
 
+      # The total financial discount of the invoice (so discounts not subject to VAT).
+      # Must be positive and rounded to maximum 2 decimals
       sig do
         returns(T.nilable(EInvoiceAPI::DocumentCreate::TotalDiscount::Variants))
       end
       attr_accessor :total_discount
 
+      # The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
       sig do
         returns(T.nilable(EInvoiceAPI::DocumentCreate::TotalTax::Variants))
       end
@@ -185,12 +211,16 @@ module EInvoiceAPI
 
       sig do
         params(
+          allowances:
+            T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Allowance::OrHash]),
           amount_due:
             T.nilable(EInvoiceAPI::DocumentCreate::AmountDue::Variants),
           attachments:
             T.nilable(T::Array[EInvoiceAPI::DocumentAttachmentCreate::OrHash]),
           billing_address: T.nilable(String),
           billing_address_recipient: T.nilable(String),
+          charges:
+            T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Charge::OrHash]),
           currency: EInvoiceAPI::CurrencyCode::OrSymbol,
           customer_address: T.nilable(String),
           customer_address_recipient: T.nilable(String),
@@ -205,7 +235,7 @@ module EInvoiceAPI
           invoice_id: T.nilable(String),
           invoice_total:
             T.nilable(EInvoiceAPI::DocumentCreate::InvoiceTotal::Variants),
-          items: T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Item::OrHash]),
+          items: T::Array[EInvoiceAPI::DocumentCreate::Item::OrHash],
           note: T.nilable(String),
           payment_details:
             T.nilable(T::Array[EInvoiceAPI::PaymentDetailCreate::OrHash]),
@@ -241,10 +271,14 @@ module EInvoiceAPI
         ).returns(T.attached_class)
       end
       def self.new(
+        allowances: nil,
+        # The amount due of the invoice. Must be positive and rounded to maximum 2
+        # decimals
         amount_due: nil,
         attachments: nil,
         billing_address: nil,
         billing_address_recipient: nil,
+        charges: nil,
         # Currency of the invoice
         currency: nil,
         customer_address: nil,
@@ -258,11 +292,16 @@ module EInvoiceAPI
         due_date: nil,
         invoice_date: nil,
         invoice_id: nil,
+        # The total amount of the invoice (so invoice_total = subtotal + total_tax +
+        # total_discount). Must be positive and rounded to maximum 2 decimals
         invoice_total: nil,
+        # At least one line item is required
         items: nil,
         note: nil,
         payment_details: nil,
         payment_term: nil,
+        # The previous unpaid balance of the invoice, if any. Must be positive and rounded
+        # to maximum 2 decimals
         previous_unpaid_balance: nil,
         purchase_order: nil,
         remittance_address: nil,
@@ -274,11 +313,17 @@ module EInvoiceAPI
         shipping_address: nil,
         shipping_address_recipient: nil,
         state: nil,
+        # The taxable base of the invoice. Should be the sum of all line items -
+        # allowances (for example commercial discounts) + charges with impact on VAT. Must
+        # be positive and rounded to maximum 2 decimals
         subtotal: nil,
         # Tax category code of the invoice
         tax_code: nil,
         tax_details: nil,
+        # The total financial discount of the invoice (so discounts not subject to VAT).
+        # Must be positive and rounded to maximum 2 decimals
         total_discount: nil,
+        # The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
         total_tax: nil,
         # VATEX code list for VAT exemption reasons
         #
@@ -297,12 +342,15 @@ module EInvoiceAPI
       sig do
         override.returns(
           {
+            allowances:
+              T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Allowance]),
             amount_due:
               T.nilable(EInvoiceAPI::DocumentCreate::AmountDue::Variants),
             attachments:
               T.nilable(T::Array[EInvoiceAPI::DocumentAttachmentCreate]),
             billing_address: T.nilable(String),
             billing_address_recipient: T.nilable(String),
+            charges: T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Charge]),
             currency: EInvoiceAPI::CurrencyCode::OrSymbol,
             customer_address: T.nilable(String),
             customer_address_recipient: T.nilable(String),
@@ -317,7 +365,7 @@ module EInvoiceAPI
             invoice_id: T.nilable(String),
             invoice_total:
               T.nilable(EInvoiceAPI::DocumentCreate::InvoiceTotal::Variants),
-            items: T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Item]),
+            items: T::Array[EInvoiceAPI::DocumentCreate::Item],
             note: T.nilable(String),
             payment_details:
               T.nilable(T::Array[EInvoiceAPI::PaymentDetailCreate]),
@@ -358,6 +406,269 @@ module EInvoiceAPI
       def to_hash
       end
 
+      class Allowance < EInvoiceAPI::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              EInvoiceAPI::DocumentCreate::Allowance,
+              EInvoiceAPI::Internal::AnyHash
+            )
+          end
+
+        # The allowance amount, without VAT. Must be rounded to maximum 2 decimals
+        sig do
+          returns(
+            T.nilable(EInvoiceAPI::DocumentCreate::Allowance::Amount::Variants)
+          )
+        end
+        attr_accessor :amount
+
+        # The base amount that may be used, in conjunction with the allowance percentage,
+        # to calculate the allowance amount. Must be rounded to maximum 2 decimals
+        sig do
+          returns(
+            T.nilable(
+              EInvoiceAPI::DocumentCreate::Allowance::BaseAmount::Variants
+            )
+          )
+        end
+        attr_accessor :base_amount
+
+        # The percentage that may be used, in conjunction with the allowance base amount,
+        # to calculate the allowance amount. To state 20%, use value 20
+        sig do
+          returns(
+            T.nilable(
+              EInvoiceAPI::DocumentCreate::Allowance::MultiplierFactor::Variants
+            )
+          )
+        end
+        attr_accessor :multiplier_factor
+
+        # The reason for the allowance
+        sig { returns(T.nilable(String)) }
+        attr_accessor :reason
+
+        # The code for the allowance reason
+        sig { returns(T.nilable(String)) }
+        attr_accessor :reason_code
+
+        # Duty or tax or fee category codes (Subset of UNCL5305)
+        #
+        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+        sig do
+          returns(
+            T.nilable(EInvoiceAPI::DocumentCreate::Allowance::TaxCode::OrSymbol)
+          )
+        end
+        attr_accessor :tax_code
+
+        # The VAT rate, represented as percentage that applies to the allowance
+        sig { returns(T.nilable(String)) }
+        attr_accessor :tax_rate
+
+        # An allowance is a discount for example for early payment, volume discount, etc.
+        sig do
+          params(
+            amount:
+              T.nilable(
+                EInvoiceAPI::DocumentCreate::Allowance::Amount::Variants
+              ),
+            base_amount:
+              T.nilable(
+                EInvoiceAPI::DocumentCreate::Allowance::BaseAmount::Variants
+              ),
+            multiplier_factor:
+              T.nilable(
+                EInvoiceAPI::DocumentCreate::Allowance::MultiplierFactor::Variants
+              ),
+            reason: T.nilable(String),
+            reason_code: T.nilable(String),
+            tax_code:
+              T.nilable(
+                EInvoiceAPI::DocumentCreate::Allowance::TaxCode::OrSymbol
+              ),
+            tax_rate: T.nilable(String)
+          ).returns(T.attached_class)
+        end
+        def self.new(
+          # The allowance amount, without VAT. Must be rounded to maximum 2 decimals
+          amount: nil,
+          # The base amount that may be used, in conjunction with the allowance percentage,
+          # to calculate the allowance amount. Must be rounded to maximum 2 decimals
+          base_amount: nil,
+          # The percentage that may be used, in conjunction with the allowance base amount,
+          # to calculate the allowance amount. To state 20%, use value 20
+          multiplier_factor: nil,
+          # The reason for the allowance
+          reason: nil,
+          # The code for the allowance reason
+          reason_code: nil,
+          # Duty or tax or fee category codes (Subset of UNCL5305)
+          #
+          # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+          tax_code: nil,
+          # The VAT rate, represented as percentage that applies to the allowance
+          tax_rate: nil
+        )
+        end
+
+        sig do
+          override.returns(
+            {
+              amount:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Allowance::Amount::Variants
+                ),
+              base_amount:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Allowance::BaseAmount::Variants
+                ),
+              multiplier_factor:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Allowance::MultiplierFactor::Variants
+                ),
+              reason: T.nilable(String),
+              reason_code: T.nilable(String),
+              tax_code:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Allowance::TaxCode::OrSymbol
+                ),
+              tax_rate: T.nilable(String)
+            }
+          )
+        end
+        def to_hash
+        end
+
+        # The allowance amount, without VAT. Must be rounded to maximum 2 decimals
+        module Amount
+          extend EInvoiceAPI::Internal::Type::Union
+
+          Variants = T.type_alias { T.any(Float, String) }
+
+          sig do
+            override.returns(
+              T::Array[EInvoiceAPI::DocumentCreate::Allowance::Amount::Variants]
+            )
+          end
+          def self.variants
+          end
+        end
+
+        # The base amount that may be used, in conjunction with the allowance percentage,
+        # to calculate the allowance amount. Must be rounded to maximum 2 decimals
+        module BaseAmount
+          extend EInvoiceAPI::Internal::Type::Union
+
+          Variants = T.type_alias { T.any(Float, String) }
+
+          sig do
+            override.returns(
+              T::Array[
+                EInvoiceAPI::DocumentCreate::Allowance::BaseAmount::Variants
+              ]
+            )
+          end
+          def self.variants
+          end
+        end
+
+        # The percentage that may be used, in conjunction with the allowance base amount,
+        # to calculate the allowance amount. To state 20%, use value 20
+        module MultiplierFactor
+          extend EInvoiceAPI::Internal::Type::Union
+
+          Variants = T.type_alias { T.any(Float, String) }
+
+          sig do
+            override.returns(
+              T::Array[
+                EInvoiceAPI::DocumentCreate::Allowance::MultiplierFactor::Variants
+              ]
+            )
+          end
+          def self.variants
+          end
+        end
+
+        # Duty or tax or fee category codes (Subset of UNCL5305)
+        #
+        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+        module TaxCode
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(Symbol, EInvoiceAPI::DocumentCreate::Allowance::TaxCode)
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          AE =
+            T.let(
+              :AE,
+              EInvoiceAPI::DocumentCreate::Allowance::TaxCode::TaggedSymbol
+            )
+          E =
+            T.let(
+              :E,
+              EInvoiceAPI::DocumentCreate::Allowance::TaxCode::TaggedSymbol
+            )
+          S =
+            T.let(
+              :S,
+              EInvoiceAPI::DocumentCreate::Allowance::TaxCode::TaggedSymbol
+            )
+          Z =
+            T.let(
+              :Z,
+              EInvoiceAPI::DocumentCreate::Allowance::TaxCode::TaggedSymbol
+            )
+          G =
+            T.let(
+              :G,
+              EInvoiceAPI::DocumentCreate::Allowance::TaxCode::TaggedSymbol
+            )
+          O =
+            T.let(
+              :O,
+              EInvoiceAPI::DocumentCreate::Allowance::TaxCode::TaggedSymbol
+            )
+          K =
+            T.let(
+              :K,
+              EInvoiceAPI::DocumentCreate::Allowance::TaxCode::TaggedSymbol
+            )
+          L =
+            T.let(
+              :L,
+              EInvoiceAPI::DocumentCreate::Allowance::TaxCode::TaggedSymbol
+            )
+          M =
+            T.let(
+              :M,
+              EInvoiceAPI::DocumentCreate::Allowance::TaxCode::TaggedSymbol
+            )
+          B =
+            T.let(
+              :B,
+              EInvoiceAPI::DocumentCreate::Allowance::TaxCode::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                EInvoiceAPI::DocumentCreate::Allowance::TaxCode::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
+        end
+      end
+
+      # The amount due of the invoice. Must be positive and rounded to maximum 2
+      # decimals
       module AmountDue
         extend EInvoiceAPI::Internal::Type::Union
 
@@ -372,6 +683,263 @@ module EInvoiceAPI
         end
       end
 
+      class Charge < EInvoiceAPI::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              EInvoiceAPI::DocumentCreate::Charge,
+              EInvoiceAPI::Internal::AnyHash
+            )
+          end
+
+        # The charge amount, without VAT. Must be rounded to maximum 2 decimals
+        sig do
+          returns(
+            T.nilable(EInvoiceAPI::DocumentCreate::Charge::Amount::Variants)
+          )
+        end
+        attr_accessor :amount
+
+        # The base amount that may be used, in conjunction with the charge percentage, to
+        # calculate the charge amount. Must be rounded to maximum 2 decimals
+        sig do
+          returns(
+            T.nilable(EInvoiceAPI::DocumentCreate::Charge::BaseAmount::Variants)
+          )
+        end
+        attr_accessor :base_amount
+
+        # The percentage that may be used, in conjunction with the charge base amount, to
+        # calculate the charge amount. To state 20%, use value 20
+        sig do
+          returns(
+            T.nilable(
+              EInvoiceAPI::DocumentCreate::Charge::MultiplierFactor::Variants
+            )
+          )
+        end
+        attr_accessor :multiplier_factor
+
+        # The reason for the charge
+        sig { returns(T.nilable(String)) }
+        attr_accessor :reason
+
+        # The code for the charge reason
+        sig { returns(T.nilable(String)) }
+        attr_accessor :reason_code
+
+        # Duty or tax or fee category codes (Subset of UNCL5305)
+        #
+        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+        sig do
+          returns(
+            T.nilable(EInvoiceAPI::DocumentCreate::Charge::TaxCode::OrSymbol)
+          )
+        end
+        attr_accessor :tax_code
+
+        # The VAT rate, represented as percentage that applies to the charge
+        sig { returns(T.nilable(String)) }
+        attr_accessor :tax_rate
+
+        # A charge is an additional fee for example for late payment, late delivery, etc.
+        sig do
+          params(
+            amount:
+              T.nilable(EInvoiceAPI::DocumentCreate::Charge::Amount::Variants),
+            base_amount:
+              T.nilable(
+                EInvoiceAPI::DocumentCreate::Charge::BaseAmount::Variants
+              ),
+            multiplier_factor:
+              T.nilable(
+                EInvoiceAPI::DocumentCreate::Charge::MultiplierFactor::Variants
+              ),
+            reason: T.nilable(String),
+            reason_code: T.nilable(String),
+            tax_code:
+              T.nilable(EInvoiceAPI::DocumentCreate::Charge::TaxCode::OrSymbol),
+            tax_rate: T.nilable(String)
+          ).returns(T.attached_class)
+        end
+        def self.new(
+          # The charge amount, without VAT. Must be rounded to maximum 2 decimals
+          amount: nil,
+          # The base amount that may be used, in conjunction with the charge percentage, to
+          # calculate the charge amount. Must be rounded to maximum 2 decimals
+          base_amount: nil,
+          # The percentage that may be used, in conjunction with the charge base amount, to
+          # calculate the charge amount. To state 20%, use value 20
+          multiplier_factor: nil,
+          # The reason for the charge
+          reason: nil,
+          # The code for the charge reason
+          reason_code: nil,
+          # Duty or tax or fee category codes (Subset of UNCL5305)
+          #
+          # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+          tax_code: nil,
+          # The VAT rate, represented as percentage that applies to the charge
+          tax_rate: nil
+        )
+        end
+
+        sig do
+          override.returns(
+            {
+              amount:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Charge::Amount::Variants
+                ),
+              base_amount:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Charge::BaseAmount::Variants
+                ),
+              multiplier_factor:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Charge::MultiplierFactor::Variants
+                ),
+              reason: T.nilable(String),
+              reason_code: T.nilable(String),
+              tax_code:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Charge::TaxCode::OrSymbol
+                ),
+              tax_rate: T.nilable(String)
+            }
+          )
+        end
+        def to_hash
+        end
+
+        # The charge amount, without VAT. Must be rounded to maximum 2 decimals
+        module Amount
+          extend EInvoiceAPI::Internal::Type::Union
+
+          Variants = T.type_alias { T.any(Float, String) }
+
+          sig do
+            override.returns(
+              T::Array[EInvoiceAPI::DocumentCreate::Charge::Amount::Variants]
+            )
+          end
+          def self.variants
+          end
+        end
+
+        # The base amount that may be used, in conjunction with the charge percentage, to
+        # calculate the charge amount. Must be rounded to maximum 2 decimals
+        module BaseAmount
+          extend EInvoiceAPI::Internal::Type::Union
+
+          Variants = T.type_alias { T.any(Float, String) }
+
+          sig do
+            override.returns(
+              T::Array[
+                EInvoiceAPI::DocumentCreate::Charge::BaseAmount::Variants
+              ]
+            )
+          end
+          def self.variants
+          end
+        end
+
+        # The percentage that may be used, in conjunction with the charge base amount, to
+        # calculate the charge amount. To state 20%, use value 20
+        module MultiplierFactor
+          extend EInvoiceAPI::Internal::Type::Union
+
+          Variants = T.type_alias { T.any(Float, String) }
+
+          sig do
+            override.returns(
+              T::Array[
+                EInvoiceAPI::DocumentCreate::Charge::MultiplierFactor::Variants
+              ]
+            )
+          end
+          def self.variants
+          end
+        end
+
+        # Duty or tax or fee category codes (Subset of UNCL5305)
+        #
+        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+        module TaxCode
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(Symbol, EInvoiceAPI::DocumentCreate::Charge::TaxCode)
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          AE =
+            T.let(
+              :AE,
+              EInvoiceAPI::DocumentCreate::Charge::TaxCode::TaggedSymbol
+            )
+          E =
+            T.let(
+              :E,
+              EInvoiceAPI::DocumentCreate::Charge::TaxCode::TaggedSymbol
+            )
+          S =
+            T.let(
+              :S,
+              EInvoiceAPI::DocumentCreate::Charge::TaxCode::TaggedSymbol
+            )
+          Z =
+            T.let(
+              :Z,
+              EInvoiceAPI::DocumentCreate::Charge::TaxCode::TaggedSymbol
+            )
+          G =
+            T.let(
+              :G,
+              EInvoiceAPI::DocumentCreate::Charge::TaxCode::TaggedSymbol
+            )
+          O =
+            T.let(
+              :O,
+              EInvoiceAPI::DocumentCreate::Charge::TaxCode::TaggedSymbol
+            )
+          K =
+            T.let(
+              :K,
+              EInvoiceAPI::DocumentCreate::Charge::TaxCode::TaggedSymbol
+            )
+          L =
+            T.let(
+              :L,
+              EInvoiceAPI::DocumentCreate::Charge::TaxCode::TaggedSymbol
+            )
+          M =
+            T.let(
+              :M,
+              EInvoiceAPI::DocumentCreate::Charge::TaxCode::TaggedSymbol
+            )
+          B =
+            T.let(
+              :B,
+              EInvoiceAPI::DocumentCreate::Charge::TaxCode::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                EInvoiceAPI::DocumentCreate::Charge::TaxCode::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
+        end
+      end
+
+      # The total amount of the invoice (so invoice_total = subtotal + total_tax +
+      # total_discount). Must be positive and rounded to maximum 2 decimals
       module InvoiceTotal
         extend EInvoiceAPI::Internal::Type::Union
 
@@ -395,6 +963,17 @@ module EInvoiceAPI
             )
           end
 
+        # The allowances of the line item.
+        sig do
+          returns(
+            T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Item::Allowance])
+          )
+        end
+        attr_accessor :allowances
+
+        # The total amount of the line item, exclusive of VAT, after subtracting line
+        # level allowances and adding line level charges. Must be rounded to maximum 2
+        # decimals
         sig do
           returns(
             T.nilable(EInvoiceAPI::DocumentCreate::Item::Amount::Variants)
@@ -402,15 +981,27 @@ module EInvoiceAPI
         end
         attr_accessor :amount
 
+        # The charges of the line item.
+        sig do
+          returns(
+            T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Item::Charge])
+          )
+        end
+        attr_accessor :charges
+
         sig { returns(NilClass) }
         attr_accessor :date
 
+        # The description of the line item.
         sig { returns(T.nilable(String)) }
         attr_accessor :description
 
+        # The product code of the line item.
         sig { returns(T.nilable(String)) }
         attr_accessor :product_code
 
+        # The quantity of items (goods or services) that is the subject of the line item.
+        # Must be rounded to maximum 4 decimals
         sig do
           returns(
             T.nilable(EInvoiceAPI::DocumentCreate::Item::Quantity::Variants)
@@ -418,11 +1009,13 @@ module EInvoiceAPI
         end
         attr_accessor :quantity
 
+        # The total VAT amount for the line item. Must be rounded to maximum 2 decimals
         sig do
           returns(T.nilable(EInvoiceAPI::DocumentCreate::Item::Tax::Variants))
         end
         attr_accessor :tax
 
+        # The VAT rate of the line item expressed as percentage with 2 decimals
         sig { returns(T.nilable(String)) }
         attr_accessor :tax_rate
 
@@ -430,6 +1023,7 @@ module EInvoiceAPI
         sig { returns(T.nilable(EInvoiceAPI::UnitOfMeasureCode::OrSymbol)) }
         attr_accessor :unit
 
+        # The unit price of the line item. Must be rounded to maximum 2 decimals
         sig do
           returns(
             T.nilable(EInvoiceAPI::DocumentCreate::Item::UnitPrice::Variants)
@@ -439,8 +1033,16 @@ module EInvoiceAPI
 
         sig do
           params(
+            allowances:
+              T.nilable(
+                T::Array[EInvoiceAPI::DocumentCreate::Item::Allowance::OrHash]
+              ),
             amount:
               T.nilable(EInvoiceAPI::DocumentCreate::Item::Amount::Variants),
+            charges:
+              T.nilable(
+                T::Array[EInvoiceAPI::DocumentCreate::Item::Charge::OrHash]
+              ),
             date: NilClass,
             description: T.nilable(String),
             product_code: T.nilable(String),
@@ -454,15 +1056,29 @@ module EInvoiceAPI
           ).returns(T.attached_class)
         end
         def self.new(
+          # The allowances of the line item.
+          allowances: nil,
+          # The total amount of the line item, exclusive of VAT, after subtracting line
+          # level allowances and adding line level charges. Must be rounded to maximum 2
+          # decimals
           amount: nil,
+          # The charges of the line item.
+          charges: nil,
           date: nil,
+          # The description of the line item.
           description: nil,
+          # The product code of the line item.
           product_code: nil,
+          # The quantity of items (goods or services) that is the subject of the line item.
+          # Must be rounded to maximum 4 decimals
           quantity: nil,
+          # The total VAT amount for the line item. Must be rounded to maximum 2 decimals
           tax: nil,
+          # The VAT rate of the line item expressed as percentage with 2 decimals
           tax_rate: nil,
           # Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
           unit: nil,
+          # The unit price of the line item. Must be rounded to maximum 2 decimals
           unit_price: nil
         )
         end
@@ -470,8 +1086,14 @@ module EInvoiceAPI
         sig do
           override.returns(
             {
+              allowances:
+                T.nilable(
+                  T::Array[EInvoiceAPI::DocumentCreate::Item::Allowance]
+                ),
               amount:
                 T.nilable(EInvoiceAPI::DocumentCreate::Item::Amount::Variants),
+              charges:
+                T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Item::Charge]),
               date: NilClass,
               description: T.nilable(String),
               product_code: T.nilable(String),
@@ -492,6 +1114,279 @@ module EInvoiceAPI
         def to_hash
         end
 
+        class Allowance < EInvoiceAPI::Internal::Type::BaseModel
+          OrHash =
+            T.type_alias do
+              T.any(
+                EInvoiceAPI::DocumentCreate::Item::Allowance,
+                EInvoiceAPI::Internal::AnyHash
+              )
+            end
+
+          # The allowance amount, without VAT. Must be rounded to maximum 2 decimals
+          sig do
+            returns(
+              T.nilable(
+                EInvoiceAPI::DocumentCreate::Item::Allowance::Amount::Variants
+              )
+            )
+          end
+          attr_accessor :amount
+
+          # The base amount that may be used, in conjunction with the allowance percentage,
+          # to calculate the allowance amount. Must be rounded to maximum 2 decimals
+          sig do
+            returns(
+              T.nilable(
+                EInvoiceAPI::DocumentCreate::Item::Allowance::BaseAmount::Variants
+              )
+            )
+          end
+          attr_accessor :base_amount
+
+          # The percentage that may be used, in conjunction with the allowance base amount,
+          # to calculate the allowance amount. To state 20%, use value 20
+          sig do
+            returns(
+              T.nilable(
+                EInvoiceAPI::DocumentCreate::Item::Allowance::MultiplierFactor::Variants
+              )
+            )
+          end
+          attr_accessor :multiplier_factor
+
+          # The reason for the allowance
+          sig { returns(T.nilable(String)) }
+          attr_accessor :reason
+
+          # The code for the allowance reason
+          sig { returns(T.nilable(String)) }
+          attr_accessor :reason_code
+
+          # Duty or tax or fee category codes (Subset of UNCL5305)
+          #
+          # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+          sig do
+            returns(
+              T.nilable(
+                EInvoiceAPI::DocumentCreate::Item::Allowance::TaxCode::OrSymbol
+              )
+            )
+          end
+          attr_accessor :tax_code
+
+          # The VAT rate, represented as percentage that applies to the allowance
+          sig { returns(T.nilable(String)) }
+          attr_accessor :tax_rate
+
+          # An allowance is a discount for example for early payment, volume discount, etc.
+          sig do
+            params(
+              amount:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Item::Allowance::Amount::Variants
+                ),
+              base_amount:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Item::Allowance::BaseAmount::Variants
+                ),
+              multiplier_factor:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Item::Allowance::MultiplierFactor::Variants
+                ),
+              reason: T.nilable(String),
+              reason_code: T.nilable(String),
+              tax_code:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Item::Allowance::TaxCode::OrSymbol
+                ),
+              tax_rate: T.nilable(String)
+            ).returns(T.attached_class)
+          end
+          def self.new(
+            # The allowance amount, without VAT. Must be rounded to maximum 2 decimals
+            amount: nil,
+            # The base amount that may be used, in conjunction with the allowance percentage,
+            # to calculate the allowance amount. Must be rounded to maximum 2 decimals
+            base_amount: nil,
+            # The percentage that may be used, in conjunction with the allowance base amount,
+            # to calculate the allowance amount. To state 20%, use value 20
+            multiplier_factor: nil,
+            # The reason for the allowance
+            reason: nil,
+            # The code for the allowance reason
+            reason_code: nil,
+            # Duty or tax or fee category codes (Subset of UNCL5305)
+            #
+            # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+            tax_code: nil,
+            # The VAT rate, represented as percentage that applies to the allowance
+            tax_rate: nil
+          )
+          end
+
+          sig do
+            override.returns(
+              {
+                amount:
+                  T.nilable(
+                    EInvoiceAPI::DocumentCreate::Item::Allowance::Amount::Variants
+                  ),
+                base_amount:
+                  T.nilable(
+                    EInvoiceAPI::DocumentCreate::Item::Allowance::BaseAmount::Variants
+                  ),
+                multiplier_factor:
+                  T.nilable(
+                    EInvoiceAPI::DocumentCreate::Item::Allowance::MultiplierFactor::Variants
+                  ),
+                reason: T.nilable(String),
+                reason_code: T.nilable(String),
+                tax_code:
+                  T.nilable(
+                    EInvoiceAPI::DocumentCreate::Item::Allowance::TaxCode::OrSymbol
+                  ),
+                tax_rate: T.nilable(String)
+              }
+            )
+          end
+          def to_hash
+          end
+
+          # The allowance amount, without VAT. Must be rounded to maximum 2 decimals
+          module Amount
+            extend EInvoiceAPI::Internal::Type::Union
+
+            Variants = T.type_alias { T.any(Float, String) }
+
+            sig do
+              override.returns(
+                T::Array[
+                  EInvoiceAPI::DocumentCreate::Item::Allowance::Amount::Variants
+                ]
+              )
+            end
+            def self.variants
+            end
+          end
+
+          # The base amount that may be used, in conjunction with the allowance percentage,
+          # to calculate the allowance amount. Must be rounded to maximum 2 decimals
+          module BaseAmount
+            extend EInvoiceAPI::Internal::Type::Union
+
+            Variants = T.type_alias { T.any(Float, String) }
+
+            sig do
+              override.returns(
+                T::Array[
+                  EInvoiceAPI::DocumentCreate::Item::Allowance::BaseAmount::Variants
+                ]
+              )
+            end
+            def self.variants
+            end
+          end
+
+          # The percentage that may be used, in conjunction with the allowance base amount,
+          # to calculate the allowance amount. To state 20%, use value 20
+          module MultiplierFactor
+            extend EInvoiceAPI::Internal::Type::Union
+
+            Variants = T.type_alias { T.any(Float, String) }
+
+            sig do
+              override.returns(
+                T::Array[
+                  EInvoiceAPI::DocumentCreate::Item::Allowance::MultiplierFactor::Variants
+                ]
+              )
+            end
+            def self.variants
+            end
+          end
+
+          # Duty or tax or fee category codes (Subset of UNCL5305)
+          #
+          # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+          module TaxCode
+            extend EInvoiceAPI::Internal::Type::Enum
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  EInvoiceAPI::DocumentCreate::Item::Allowance::TaxCode
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            AE =
+              T.let(
+                :AE,
+                EInvoiceAPI::DocumentCreate::Item::Allowance::TaxCode::TaggedSymbol
+              )
+            E =
+              T.let(
+                :E,
+                EInvoiceAPI::DocumentCreate::Item::Allowance::TaxCode::TaggedSymbol
+              )
+            S =
+              T.let(
+                :S,
+                EInvoiceAPI::DocumentCreate::Item::Allowance::TaxCode::TaggedSymbol
+              )
+            Z =
+              T.let(
+                :Z,
+                EInvoiceAPI::DocumentCreate::Item::Allowance::TaxCode::TaggedSymbol
+              )
+            G =
+              T.let(
+                :G,
+                EInvoiceAPI::DocumentCreate::Item::Allowance::TaxCode::TaggedSymbol
+              )
+            O =
+              T.let(
+                :O,
+                EInvoiceAPI::DocumentCreate::Item::Allowance::TaxCode::TaggedSymbol
+              )
+            K =
+              T.let(
+                :K,
+                EInvoiceAPI::DocumentCreate::Item::Allowance::TaxCode::TaggedSymbol
+              )
+            L =
+              T.let(
+                :L,
+                EInvoiceAPI::DocumentCreate::Item::Allowance::TaxCode::TaggedSymbol
+              )
+            M =
+              T.let(
+                :M,
+                EInvoiceAPI::DocumentCreate::Item::Allowance::TaxCode::TaggedSymbol
+              )
+            B =
+              T.let(
+                :B,
+                EInvoiceAPI::DocumentCreate::Item::Allowance::TaxCode::TaggedSymbol
+              )
+
+            sig do
+              override.returns(
+                T::Array[
+                  EInvoiceAPI::DocumentCreate::Item::Allowance::TaxCode::TaggedSymbol
+                ]
+              )
+            end
+            def self.values
+            end
+          end
+        end
+
+        # The total amount of the line item, exclusive of VAT, after subtracting line
+        # level allowances and adding line level charges. Must be rounded to maximum 2
+        # decimals
         module Amount
           extend EInvoiceAPI::Internal::Type::Union
 
@@ -506,6 +1401,278 @@ module EInvoiceAPI
           end
         end
 
+        class Charge < EInvoiceAPI::Internal::Type::BaseModel
+          OrHash =
+            T.type_alias do
+              T.any(
+                EInvoiceAPI::DocumentCreate::Item::Charge,
+                EInvoiceAPI::Internal::AnyHash
+              )
+            end
+
+          # The charge amount, without VAT. Must be rounded to maximum 2 decimals
+          sig do
+            returns(
+              T.nilable(
+                EInvoiceAPI::DocumentCreate::Item::Charge::Amount::Variants
+              )
+            )
+          end
+          attr_accessor :amount
+
+          # The base amount that may be used, in conjunction with the charge percentage, to
+          # calculate the charge amount. Must be rounded to maximum 2 decimals
+          sig do
+            returns(
+              T.nilable(
+                EInvoiceAPI::DocumentCreate::Item::Charge::BaseAmount::Variants
+              )
+            )
+          end
+          attr_accessor :base_amount
+
+          # The percentage that may be used, in conjunction with the charge base amount, to
+          # calculate the charge amount. To state 20%, use value 20
+          sig do
+            returns(
+              T.nilable(
+                EInvoiceAPI::DocumentCreate::Item::Charge::MultiplierFactor::Variants
+              )
+            )
+          end
+          attr_accessor :multiplier_factor
+
+          # The reason for the charge
+          sig { returns(T.nilable(String)) }
+          attr_accessor :reason
+
+          # The code for the charge reason
+          sig { returns(T.nilable(String)) }
+          attr_accessor :reason_code
+
+          # Duty or tax or fee category codes (Subset of UNCL5305)
+          #
+          # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+          sig do
+            returns(
+              T.nilable(
+                EInvoiceAPI::DocumentCreate::Item::Charge::TaxCode::OrSymbol
+              )
+            )
+          end
+          attr_accessor :tax_code
+
+          # The VAT rate, represented as percentage that applies to the charge
+          sig { returns(T.nilable(String)) }
+          attr_accessor :tax_rate
+
+          # A charge is an additional fee for example for late payment, late delivery, etc.
+          sig do
+            params(
+              amount:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Item::Charge::Amount::Variants
+                ),
+              base_amount:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Item::Charge::BaseAmount::Variants
+                ),
+              multiplier_factor:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Item::Charge::MultiplierFactor::Variants
+                ),
+              reason: T.nilable(String),
+              reason_code: T.nilable(String),
+              tax_code:
+                T.nilable(
+                  EInvoiceAPI::DocumentCreate::Item::Charge::TaxCode::OrSymbol
+                ),
+              tax_rate: T.nilable(String)
+            ).returns(T.attached_class)
+          end
+          def self.new(
+            # The charge amount, without VAT. Must be rounded to maximum 2 decimals
+            amount: nil,
+            # The base amount that may be used, in conjunction with the charge percentage, to
+            # calculate the charge amount. Must be rounded to maximum 2 decimals
+            base_amount: nil,
+            # The percentage that may be used, in conjunction with the charge base amount, to
+            # calculate the charge amount. To state 20%, use value 20
+            multiplier_factor: nil,
+            # The reason for the charge
+            reason: nil,
+            # The code for the charge reason
+            reason_code: nil,
+            # Duty or tax or fee category codes (Subset of UNCL5305)
+            #
+            # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+            tax_code: nil,
+            # The VAT rate, represented as percentage that applies to the charge
+            tax_rate: nil
+          )
+          end
+
+          sig do
+            override.returns(
+              {
+                amount:
+                  T.nilable(
+                    EInvoiceAPI::DocumentCreate::Item::Charge::Amount::Variants
+                  ),
+                base_amount:
+                  T.nilable(
+                    EInvoiceAPI::DocumentCreate::Item::Charge::BaseAmount::Variants
+                  ),
+                multiplier_factor:
+                  T.nilable(
+                    EInvoiceAPI::DocumentCreate::Item::Charge::MultiplierFactor::Variants
+                  ),
+                reason: T.nilable(String),
+                reason_code: T.nilable(String),
+                tax_code:
+                  T.nilable(
+                    EInvoiceAPI::DocumentCreate::Item::Charge::TaxCode::OrSymbol
+                  ),
+                tax_rate: T.nilable(String)
+              }
+            )
+          end
+          def to_hash
+          end
+
+          # The charge amount, without VAT. Must be rounded to maximum 2 decimals
+          module Amount
+            extend EInvoiceAPI::Internal::Type::Union
+
+            Variants = T.type_alias { T.any(Float, String) }
+
+            sig do
+              override.returns(
+                T::Array[
+                  EInvoiceAPI::DocumentCreate::Item::Charge::Amount::Variants
+                ]
+              )
+            end
+            def self.variants
+            end
+          end
+
+          # The base amount that may be used, in conjunction with the charge percentage, to
+          # calculate the charge amount. Must be rounded to maximum 2 decimals
+          module BaseAmount
+            extend EInvoiceAPI::Internal::Type::Union
+
+            Variants = T.type_alias { T.any(Float, String) }
+
+            sig do
+              override.returns(
+                T::Array[
+                  EInvoiceAPI::DocumentCreate::Item::Charge::BaseAmount::Variants
+                ]
+              )
+            end
+            def self.variants
+            end
+          end
+
+          # The percentage that may be used, in conjunction with the charge base amount, to
+          # calculate the charge amount. To state 20%, use value 20
+          module MultiplierFactor
+            extend EInvoiceAPI::Internal::Type::Union
+
+            Variants = T.type_alias { T.any(Float, String) }
+
+            sig do
+              override.returns(
+                T::Array[
+                  EInvoiceAPI::DocumentCreate::Item::Charge::MultiplierFactor::Variants
+                ]
+              )
+            end
+            def self.variants
+            end
+          end
+
+          # Duty or tax or fee category codes (Subset of UNCL5305)
+          #
+          # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+          module TaxCode
+            extend EInvoiceAPI::Internal::Type::Enum
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  EInvoiceAPI::DocumentCreate::Item::Charge::TaxCode
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            AE =
+              T.let(
+                :AE,
+                EInvoiceAPI::DocumentCreate::Item::Charge::TaxCode::TaggedSymbol
+              )
+            E =
+              T.let(
+                :E,
+                EInvoiceAPI::DocumentCreate::Item::Charge::TaxCode::TaggedSymbol
+              )
+            S =
+              T.let(
+                :S,
+                EInvoiceAPI::DocumentCreate::Item::Charge::TaxCode::TaggedSymbol
+              )
+            Z =
+              T.let(
+                :Z,
+                EInvoiceAPI::DocumentCreate::Item::Charge::TaxCode::TaggedSymbol
+              )
+            G =
+              T.let(
+                :G,
+                EInvoiceAPI::DocumentCreate::Item::Charge::TaxCode::TaggedSymbol
+              )
+            O =
+              T.let(
+                :O,
+                EInvoiceAPI::DocumentCreate::Item::Charge::TaxCode::TaggedSymbol
+              )
+            K =
+              T.let(
+                :K,
+                EInvoiceAPI::DocumentCreate::Item::Charge::TaxCode::TaggedSymbol
+              )
+            L =
+              T.let(
+                :L,
+                EInvoiceAPI::DocumentCreate::Item::Charge::TaxCode::TaggedSymbol
+              )
+            M =
+              T.let(
+                :M,
+                EInvoiceAPI::DocumentCreate::Item::Charge::TaxCode::TaggedSymbol
+              )
+            B =
+              T.let(
+                :B,
+                EInvoiceAPI::DocumentCreate::Item::Charge::TaxCode::TaggedSymbol
+              )
+
+            sig do
+              override.returns(
+                T::Array[
+                  EInvoiceAPI::DocumentCreate::Item::Charge::TaxCode::TaggedSymbol
+                ]
+              )
+            end
+            def self.values
+            end
+          end
+        end
+
+        # The quantity of items (goods or services) that is the subject of the line item.
+        # Must be rounded to maximum 4 decimals
         module Quantity
           extend EInvoiceAPI::Internal::Type::Union
 
@@ -520,6 +1687,7 @@ module EInvoiceAPI
           end
         end
 
+        # The total VAT amount for the line item. Must be rounded to maximum 2 decimals
         module Tax
           extend EInvoiceAPI::Internal::Type::Union
 
@@ -534,6 +1702,7 @@ module EInvoiceAPI
           end
         end
 
+        # The unit price of the line item. Must be rounded to maximum 2 decimals
         module UnitPrice
           extend EInvoiceAPI::Internal::Type::Union
 
@@ -549,6 +1718,8 @@ module EInvoiceAPI
         end
       end
 
+      # The previous unpaid balance of the invoice, if any. Must be positive and rounded
+      # to maximum 2 decimals
       module PreviousUnpaidBalance
         extend EInvoiceAPI::Internal::Type::Union
 
@@ -565,6 +1736,9 @@ module EInvoiceAPI
         end
       end
 
+      # The taxable base of the invoice. Should be the sum of all line items -
+      # allowances (for example commercial discounts) + charges with impact on VAT. Must
+      # be positive and rounded to maximum 2 decimals
       module Subtotal
         extend EInvoiceAPI::Internal::Type::Union
 
@@ -667,6 +1841,8 @@ module EInvoiceAPI
         end
       end
 
+      # The total financial discount of the invoice (so discounts not subject to VAT).
+      # Must be positive and rounded to maximum 2 decimals
       module TotalDiscount
         extend EInvoiceAPI::Internal::Type::Union
 
@@ -681,6 +1857,7 @@ module EInvoiceAPI
         end
       end
 
+      # The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
       module TotalTax
         extend EInvoiceAPI::Internal::Type::Union
 
