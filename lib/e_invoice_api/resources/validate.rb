@@ -3,9 +3,12 @@
 module EInvoiceAPI
   module Resources
     class Validate
+      # Some parameter documentations has been truncated, see
+      # {EInvoiceAPI::Models::ValidateValidateJsonParams} for more details.
+      #
       # Validate if the JSON document can be converted to a valid UBL document
       #
-      # @overload validate_json(amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, previous_unpaid_balance: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, tax_details: nil, total_discount: nil, total_tax: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil, request_options: {})
+      # @overload validate_json(amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, previous_unpaid_balance: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil, request_options: {})
       #
       # @param amount_due [Float, String, nil]
       #
@@ -73,11 +76,17 @@ module EInvoiceAPI
       #
       # @param subtotal [Float, String, nil]
       #
+      # @param tax_code [Symbol, EInvoiceAPI::Models::DocumentCreate::TaxCode] Tax category code of the invoice
+      #
       # @param tax_details [Array<EInvoiceAPI::Models::DocumentCreate::TaxDetail>, nil]
       #
       # @param total_discount [Float, String, nil]
       #
       # @param total_tax [Float, String, nil]
+      #
+      # @param vatex [Symbol, EInvoiceAPI::Models::DocumentCreate::Vatex, nil] VATEX code list for VAT exemption reasons
+      #
+      # @param vatex_note [String, nil] VAT exemption note of the invoice
       #
       # @param vendor_address [String, nil]
       #
