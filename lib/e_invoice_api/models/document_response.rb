@@ -9,7 +9,16 @@ module EInvoiceAPI
       #   @return [String]
       required :id, String
 
+      # @!attribute allowances
+      #
+      #   @return [Array<EInvoiceAPI::Models::DocumentResponse::Allowance>, nil]
+      optional :allowances,
+               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Allowance] },
+               nil?: true
+
       # @!attribute amount_due
+      #   The amount due of the invoice. Must be positive and rounded to maximum 2
+      #   decimals
       #
       #   @return [String, nil]
       optional :amount_due, String, nil?: true
@@ -18,7 +27,8 @@ module EInvoiceAPI
       #
       #   @return [Array<EInvoiceAPI::Models::Documents::DocumentAttachment>, nil]
       optional :attachments,
-               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Documents::DocumentAttachment] }
+               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Documents::DocumentAttachment] },
+               nil?: true
 
       # @!attribute billing_address
       #
@@ -29,6 +39,13 @@ module EInvoiceAPI
       #
       #   @return [String, nil]
       optional :billing_address_recipient, String, nil?: true
+
+      # @!attribute charges
+      #
+      #   @return [Array<EInvoiceAPI::Models::DocumentResponse::Charge>, nil]
+      optional :charges,
+               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Charge] },
+               nil?: true
 
       # @!attribute currency
       #   Currency of the invoice
@@ -92,6 +109,8 @@ module EInvoiceAPI
       optional :invoice_id, String, nil?: true
 
       # @!attribute invoice_total
+      #   The total amount of the invoice (so invoice_total = subtotal + total_tax +
+      #   total_discount). Must be positive and rounded to maximum 2 decimals
       #
       #   @return [String, nil]
       optional :invoice_total, String, nil?: true
@@ -99,7 +118,9 @@ module EInvoiceAPI
       # @!attribute items
       #
       #   @return [Array<EInvoiceAPI::Models::DocumentResponse::Item>, nil]
-      optional :items, -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Item] }
+      optional :items,
+               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Item] },
+               nil?: true
 
       # @!attribute note
       #
@@ -110,7 +131,8 @@ module EInvoiceAPI
       #
       #   @return [Array<EInvoiceAPI::Models::DocumentResponse::PaymentDetail>, nil]
       optional :payment_details,
-               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::PaymentDetail] }
+               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::PaymentDetail] },
+               nil?: true
 
       # @!attribute payment_term
       #
@@ -118,6 +140,8 @@ module EInvoiceAPI
       optional :payment_term, String, nil?: true
 
       # @!attribute previous_unpaid_balance
+      #   The previous unpaid balance of the invoice, if any. Must be positive and rounded
+      #   to maximum 2 decimals
       #
       #   @return [String, nil]
       optional :previous_unpaid_balance, String, nil?: true
@@ -173,6 +197,9 @@ module EInvoiceAPI
       optional :state, enum: -> { EInvoiceAPI::DocumentState }
 
       # @!attribute subtotal
+      #   The taxable base of the invoice. Should be the sum of all line items -
+      #   allowances (for example commercial discounts) + charges with impact on VAT. Must
+      #   be positive and rounded to maximum 2 decimals
       #
       #   @return [String, nil]
       optional :subtotal, String, nil?: true
@@ -187,14 +214,18 @@ module EInvoiceAPI
       #
       #   @return [Array<EInvoiceAPI::Models::DocumentResponse::TaxDetail>, nil]
       optional :tax_details,
-               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::TaxDetail] }
+               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::TaxDetail] },
+               nil?: true
 
       # @!attribute total_discount
+      #   The total financial discount of the invoice (so discounts not subject to VAT).
+      #   Must be positive and rounded to maximum 2 decimals
       #
       #   @return [String, nil]
       optional :total_discount, String, nil?: true
 
       # @!attribute total_tax
+      #   The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
       #
       #   @return [String, nil]
       optional :total_tax, String, nil?: true
@@ -238,19 +269,23 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :vendor_tax_id, String, nil?: true
 
-      # @!method initialize(id:, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, previous_unpaid_balance: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil)
+      # @!method initialize(id:, allowances: nil, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, charges: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, previous_unpaid_balance: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil)
       #   Some parameter documentations has been truncated, see
       #   {EInvoiceAPI::Models::DocumentResponse} for more details.
       #
       #   @param id [String]
       #
-      #   @param amount_due [String, nil]
+      #   @param allowances [Array<EInvoiceAPI::Models::DocumentResponse::Allowance>, nil]
       #
-      #   @param attachments [Array<EInvoiceAPI::Models::Documents::DocumentAttachment>]
+      #   @param amount_due [String, nil] The amount due of the invoice. Must be positive and rounded to maximum 2 decimal
+      #
+      #   @param attachments [Array<EInvoiceAPI::Models::Documents::DocumentAttachment>, nil]
       #
       #   @param billing_address [String, nil]
       #
       #   @param billing_address_recipient [String, nil]
+      #
+      #   @param charges [Array<EInvoiceAPI::Models::DocumentResponse::Charge>, nil]
       #
       #   @param currency [Symbol, EInvoiceAPI::Models::CurrencyCode] Currency of the invoice
       #
@@ -276,17 +311,17 @@ module EInvoiceAPI
       #
       #   @param invoice_id [String, nil]
       #
-      #   @param invoice_total [String, nil]
+      #   @param invoice_total [String, nil] The total amount of the invoice (so invoice_total = subtotal + total_tax + total
       #
-      #   @param items [Array<EInvoiceAPI::Models::DocumentResponse::Item>]
+      #   @param items [Array<EInvoiceAPI::Models::DocumentResponse::Item>, nil]
       #
       #   @param note [String, nil]
       #
-      #   @param payment_details [Array<EInvoiceAPI::Models::DocumentResponse::PaymentDetail>]
+      #   @param payment_details [Array<EInvoiceAPI::Models::DocumentResponse::PaymentDetail>, nil]
       #
       #   @param payment_term [String, nil]
       #
-      #   @param previous_unpaid_balance [String, nil]
+      #   @param previous_unpaid_balance [String, nil] The previous unpaid balance of the invoice, if any. Must be positive and rounded
       #
       #   @param purchase_order [String, nil]
       #
@@ -308,15 +343,15 @@ module EInvoiceAPI
       #
       #   @param state [Symbol, EInvoiceAPI::Models::DocumentState]
       #
-      #   @param subtotal [String, nil]
+      #   @param subtotal [String, nil] The taxable base of the invoice. Should be the sum of all line items - allowance
       #
       #   @param tax_code [Symbol, EInvoiceAPI::Models::DocumentResponse::TaxCode] Tax category code of the invoice
       #
-      #   @param tax_details [Array<EInvoiceAPI::Models::DocumentResponse::TaxDetail>]
+      #   @param tax_details [Array<EInvoiceAPI::Models::DocumentResponse::TaxDetail>, nil]
       #
-      #   @param total_discount [String, nil]
+      #   @param total_discount [String, nil] The total financial discount of the invoice (so discounts not subject to VAT). M
       #
-      #   @param total_tax [String, nil]
+      #   @param total_tax [String, nil] The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
       #
       #   @param vatex [Symbol, EInvoiceAPI::Models::DocumentResponse::Vatex, nil] VATEX code list for VAT exemption reasons
       #
@@ -332,11 +367,208 @@ module EInvoiceAPI
       #
       #   @param vendor_tax_id [String, nil]
 
-      class Item < EInvoiceAPI::Internal::Type::BaseModel
+      class Allowance < EInvoiceAPI::Internal::Type::BaseModel
         # @!attribute amount
+        #   The allowance amount, without VAT. Must be rounded to maximum 2 decimals
         #
         #   @return [String, nil]
         optional :amount, String, nil?: true
+
+        # @!attribute base_amount
+        #   The base amount that may be used, in conjunction with the allowance percentage,
+        #   to calculate the allowance amount. Must be rounded to maximum 2 decimals
+        #
+        #   @return [String, nil]
+        optional :base_amount, String, nil?: true
+
+        # @!attribute multiplier_factor
+        #   The percentage that may be used, in conjunction with the allowance base amount,
+        #   to calculate the allowance amount. To state 20%, use value 20
+        #
+        #   @return [String, nil]
+        optional :multiplier_factor, String, nil?: true
+
+        # @!attribute reason
+        #   The reason for the allowance
+        #
+        #   @return [String, nil]
+        optional :reason, String, nil?: true
+
+        # @!attribute reason_code
+        #   The code for the allowance reason
+        #
+        #   @return [String, nil]
+        optional :reason_code, String, nil?: true
+
+        # @!attribute tax_code
+        #   Duty or tax or fee category codes (Subset of UNCL5305)
+        #
+        #   Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+        #
+        #   @return [Symbol, EInvoiceAPI::Models::DocumentResponse::Allowance::TaxCode, nil]
+        optional :tax_code, enum: -> { EInvoiceAPI::DocumentResponse::Allowance::TaxCode }, nil?: true
+
+        # @!attribute tax_rate
+        #   The VAT rate, represented as percentage that applies to the allowance
+        #
+        #   @return [String, nil]
+        optional :tax_rate, String, nil?: true
+
+        # @!method initialize(amount: nil, base_amount: nil, multiplier_factor: nil, reason: nil, reason_code: nil, tax_code: nil, tax_rate: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {EInvoiceAPI::Models::DocumentResponse::Allowance} for more details.
+        #
+        #   @param amount [String, nil] The allowance amount, without VAT. Must be rounded to maximum 2 decimals
+        #
+        #   @param base_amount [String, nil] The base amount that may be used, in conjunction with the allowance percentage,
+        #
+        #   @param multiplier_factor [String, nil] The percentage that may be used, in conjunction with the allowance base amount,
+        #
+        #   @param reason [String, nil] The reason for the allowance
+        #
+        #   @param reason_code [String, nil] The code for the allowance reason
+        #
+        #   @param tax_code [Symbol, EInvoiceAPI::Models::DocumentResponse::Allowance::TaxCode, nil] Duty or tax or fee category codes (Subset of UNCL5305)
+        #
+        #   @param tax_rate [String, nil] The VAT rate, represented as percentage that applies to the allowance
+
+        # Duty or tax or fee category codes (Subset of UNCL5305)
+        #
+        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+        #
+        # @see EInvoiceAPI::Models::DocumentResponse::Allowance#tax_code
+        module TaxCode
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          AE = :AE
+          E = :E
+          S = :S
+          Z = :Z
+          G = :G
+          O = :O
+          K = :K
+          L = :L
+          M = :M
+          B = :B
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+      end
+
+      class Charge < EInvoiceAPI::Internal::Type::BaseModel
+        # @!attribute amount
+        #   The charge amount, without VAT. Must be rounded to maximum 2 decimals
+        #
+        #   @return [String, nil]
+        optional :amount, String, nil?: true
+
+        # @!attribute base_amount
+        #   The base amount that may be used, in conjunction with the charge percentage, to
+        #   calculate the charge amount. Must be rounded to maximum 2 decimals
+        #
+        #   @return [String, nil]
+        optional :base_amount, String, nil?: true
+
+        # @!attribute multiplier_factor
+        #   The percentage that may be used, in conjunction with the charge base amount, to
+        #   calculate the charge amount. To state 20%, use value 20
+        #
+        #   @return [String, nil]
+        optional :multiplier_factor, String, nil?: true
+
+        # @!attribute reason
+        #   The reason for the charge
+        #
+        #   @return [String, nil]
+        optional :reason, String, nil?: true
+
+        # @!attribute reason_code
+        #   The code for the charge reason
+        #
+        #   @return [String, nil]
+        optional :reason_code, String, nil?: true
+
+        # @!attribute tax_code
+        #   Duty or tax or fee category codes (Subset of UNCL5305)
+        #
+        #   Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+        #
+        #   @return [Symbol, EInvoiceAPI::Models::DocumentResponse::Charge::TaxCode, nil]
+        optional :tax_code, enum: -> { EInvoiceAPI::DocumentResponse::Charge::TaxCode }, nil?: true
+
+        # @!attribute tax_rate
+        #   The VAT rate, represented as percentage that applies to the charge
+        #
+        #   @return [String, nil]
+        optional :tax_rate, String, nil?: true
+
+        # @!method initialize(amount: nil, base_amount: nil, multiplier_factor: nil, reason: nil, reason_code: nil, tax_code: nil, tax_rate: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {EInvoiceAPI::Models::DocumentResponse::Charge} for more details.
+        #
+        #   @param amount [String, nil] The charge amount, without VAT. Must be rounded to maximum 2 decimals
+        #
+        #   @param base_amount [String, nil] The base amount that may be used, in conjunction with the charge percentage, to
+        #
+        #   @param multiplier_factor [String, nil] The percentage that may be used, in conjunction with the charge base amount, to
+        #
+        #   @param reason [String, nil] The reason for the charge
+        #
+        #   @param reason_code [String, nil] The code for the charge reason
+        #
+        #   @param tax_code [Symbol, EInvoiceAPI::Models::DocumentResponse::Charge::TaxCode, nil] Duty or tax or fee category codes (Subset of UNCL5305)
+        #
+        #   @param tax_rate [String, nil] The VAT rate, represented as percentage that applies to the charge
+
+        # Duty or tax or fee category codes (Subset of UNCL5305)
+        #
+        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+        #
+        # @see EInvoiceAPI::Models::DocumentResponse::Charge#tax_code
+        module TaxCode
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          AE = :AE
+          E = :E
+          S = :S
+          Z = :Z
+          G = :G
+          O = :O
+          K = :K
+          L = :L
+          M = :M
+          B = :B
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+      end
+
+      class Item < EInvoiceAPI::Internal::Type::BaseModel
+        # @!attribute allowances
+        #   The allowances of the line item.
+        #
+        #   @return [Array<EInvoiceAPI::Models::DocumentResponse::Item::Allowance>, nil]
+        optional :allowances,
+                 -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Item::Allowance] },
+                 nil?: true
+
+        # @!attribute amount
+        #   The total amount of the line item, exclusive of VAT, after subtracting line
+        #   level allowances and adding line level charges. Must be rounded to maximum 2
+        #   decimals
+        #
+        #   @return [String, nil]
+        optional :amount, String, nil?: true
+
+        # @!attribute charges
+        #   The charges of the line item.
+        #
+        #   @return [Array<EInvoiceAPI::Models::DocumentResponse::Item::Charge>, nil]
+        optional :charges,
+                 -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Item::Charge] },
+                 nil?: true
 
         # @!attribute date
         #
@@ -344,26 +576,32 @@ module EInvoiceAPI
         optional :date, NilClass
 
         # @!attribute description
+        #   The description of the line item.
         #
         #   @return [String, nil]
         optional :description, String, nil?: true
 
         # @!attribute product_code
+        #   The product code of the line item.
         #
         #   @return [String, nil]
         optional :product_code, String, nil?: true
 
         # @!attribute quantity
+        #   The quantity of items (goods or services) that is the subject of the line item.
+        #   Must be rounded to maximum 4 decimals
         #
         #   @return [String, nil]
         optional :quantity, String, nil?: true
 
         # @!attribute tax
+        #   The total VAT amount for the line item. Must be rounded to maximum 2 decimals
         #
         #   @return [String, nil]
         optional :tax, String, nil?: true
 
         # @!attribute tax_rate
+        #   The VAT rate of the line item expressed as percentage with 2 decimals
         #
         #   @return [String, nil]
         optional :tax_rate, String, nil?: true
@@ -375,28 +613,218 @@ module EInvoiceAPI
         optional :unit, enum: -> { EInvoiceAPI::UnitOfMeasureCode }, nil?: true
 
         # @!attribute unit_price
+        #   The unit price of the line item. Must be rounded to maximum 2 decimals
         #
         #   @return [String, nil]
         optional :unit_price, String, nil?: true
 
-        # @!method initialize(amount: nil, date: nil, description: nil, product_code: nil, quantity: nil, tax: nil, tax_rate: nil, unit: nil, unit_price: nil)
-        #   @param amount [String, nil]
+        # @!method initialize(allowances: nil, amount: nil, charges: nil, date: nil, description: nil, product_code: nil, quantity: nil, tax: nil, tax_rate: nil, unit: nil, unit_price: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {EInvoiceAPI::Models::DocumentResponse::Item} for more details.
+        #
+        #   @param allowances [Array<EInvoiceAPI::Models::DocumentResponse::Item::Allowance>, nil] The allowances of the line item.
+        #
+        #   @param amount [String, nil] The total amount of the line item, exclusive of VAT, after subtracting line leve
+        #
+        #   @param charges [Array<EInvoiceAPI::Models::DocumentResponse::Item::Charge>, nil] The charges of the line item.
         #
         #   @param date [nil]
         #
-        #   @param description [String, nil]
+        #   @param description [String, nil] The description of the line item.
         #
-        #   @param product_code [String, nil]
+        #   @param product_code [String, nil] The product code of the line item.
         #
-        #   @param quantity [String, nil]
+        #   @param quantity [String, nil] The quantity of items (goods or services) that is the subject of the line item.
         #
-        #   @param tax [String, nil]
+        #   @param tax [String, nil] The total VAT amount for the line item. Must be rounded to maximum 2 decimals
         #
-        #   @param tax_rate [String, nil]
+        #   @param tax_rate [String, nil] The VAT rate of the line item expressed as percentage with 2 decimals
         #
         #   @param unit [Symbol, EInvoiceAPI::Models::UnitOfMeasureCode, nil] Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
         #
-        #   @param unit_price [String, nil]
+        #   @param unit_price [String, nil] The unit price of the line item. Must be rounded to maximum 2 decimals
+
+        class Allowance < EInvoiceAPI::Internal::Type::BaseModel
+          # @!attribute amount
+          #   The allowance amount, without VAT. Must be rounded to maximum 2 decimals
+          #
+          #   @return [String, nil]
+          optional :amount, String, nil?: true
+
+          # @!attribute base_amount
+          #   The base amount that may be used, in conjunction with the allowance percentage,
+          #   to calculate the allowance amount. Must be rounded to maximum 2 decimals
+          #
+          #   @return [String, nil]
+          optional :base_amount, String, nil?: true
+
+          # @!attribute multiplier_factor
+          #   The percentage that may be used, in conjunction with the allowance base amount,
+          #   to calculate the allowance amount. To state 20%, use value 20
+          #
+          #   @return [String, nil]
+          optional :multiplier_factor, String, nil?: true
+
+          # @!attribute reason
+          #   The reason for the allowance
+          #
+          #   @return [String, nil]
+          optional :reason, String, nil?: true
+
+          # @!attribute reason_code
+          #   The code for the allowance reason
+          #
+          #   @return [String, nil]
+          optional :reason_code, String, nil?: true
+
+          # @!attribute tax_code
+          #   Duty or tax or fee category codes (Subset of UNCL5305)
+          #
+          #   Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+          #
+          #   @return [Symbol, EInvoiceAPI::Models::DocumentResponse::Item::Allowance::TaxCode, nil]
+          optional :tax_code, enum: -> { EInvoiceAPI::DocumentResponse::Item::Allowance::TaxCode }, nil?: true
+
+          # @!attribute tax_rate
+          #   The VAT rate, represented as percentage that applies to the allowance
+          #
+          #   @return [String, nil]
+          optional :tax_rate, String, nil?: true
+
+          # @!method initialize(amount: nil, base_amount: nil, multiplier_factor: nil, reason: nil, reason_code: nil, tax_code: nil, tax_rate: nil)
+          #   Some parameter documentations has been truncated, see
+          #   {EInvoiceAPI::Models::DocumentResponse::Item::Allowance} for more details.
+          #
+          #   An allowance is a discount for example for early payment, volume discount, etc.
+          #
+          #   @param amount [String, nil] The allowance amount, without VAT. Must be rounded to maximum 2 decimals
+          #
+          #   @param base_amount [String, nil] The base amount that may be used, in conjunction with the allowance percentage,
+          #
+          #   @param multiplier_factor [String, nil] The percentage that may be used, in conjunction with the allowance base amount,
+          #
+          #   @param reason [String, nil] The reason for the allowance
+          #
+          #   @param reason_code [String, nil] The code for the allowance reason
+          #
+          #   @param tax_code [Symbol, EInvoiceAPI::Models::DocumentResponse::Item::Allowance::TaxCode, nil] Duty or tax or fee category codes (Subset of UNCL5305)
+          #
+          #   @param tax_rate [String, nil] The VAT rate, represented as percentage that applies to the allowance
+
+          # Duty or tax or fee category codes (Subset of UNCL5305)
+          #
+          # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+          #
+          # @see EInvoiceAPI::Models::DocumentResponse::Item::Allowance#tax_code
+          module TaxCode
+            extend EInvoiceAPI::Internal::Type::Enum
+
+            AE = :AE
+            E = :E
+            S = :S
+            Z = :Z
+            G = :G
+            O = :O
+            K = :K
+            L = :L
+            M = :M
+            B = :B
+
+            # @!method self.values
+            #   @return [Array<Symbol>]
+          end
+        end
+
+        class Charge < EInvoiceAPI::Internal::Type::BaseModel
+          # @!attribute amount
+          #   The charge amount, without VAT. Must be rounded to maximum 2 decimals
+          #
+          #   @return [String, nil]
+          optional :amount, String, nil?: true
+
+          # @!attribute base_amount
+          #   The base amount that may be used, in conjunction with the charge percentage, to
+          #   calculate the charge amount. Must be rounded to maximum 2 decimals
+          #
+          #   @return [String, nil]
+          optional :base_amount, String, nil?: true
+
+          # @!attribute multiplier_factor
+          #   The percentage that may be used, in conjunction with the charge base amount, to
+          #   calculate the charge amount. To state 20%, use value 20
+          #
+          #   @return [String, nil]
+          optional :multiplier_factor, String, nil?: true
+
+          # @!attribute reason
+          #   The reason for the charge
+          #
+          #   @return [String, nil]
+          optional :reason, String, nil?: true
+
+          # @!attribute reason_code
+          #   The code for the charge reason
+          #
+          #   @return [String, nil]
+          optional :reason_code, String, nil?: true
+
+          # @!attribute tax_code
+          #   Duty or tax or fee category codes (Subset of UNCL5305)
+          #
+          #   Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+          #
+          #   @return [Symbol, EInvoiceAPI::Models::DocumentResponse::Item::Charge::TaxCode, nil]
+          optional :tax_code, enum: -> { EInvoiceAPI::DocumentResponse::Item::Charge::TaxCode }, nil?: true
+
+          # @!attribute tax_rate
+          #   The VAT rate, represented as percentage that applies to the charge
+          #
+          #   @return [String, nil]
+          optional :tax_rate, String, nil?: true
+
+          # @!method initialize(amount: nil, base_amount: nil, multiplier_factor: nil, reason: nil, reason_code: nil, tax_code: nil, tax_rate: nil)
+          #   Some parameter documentations has been truncated, see
+          #   {EInvoiceAPI::Models::DocumentResponse::Item::Charge} for more details.
+          #
+          #   A charge is an additional fee for example for late payment, late delivery, etc.
+          #
+          #   @param amount [String, nil] The charge amount, without VAT. Must be rounded to maximum 2 decimals
+          #
+          #   @param base_amount [String, nil] The base amount that may be used, in conjunction with the charge percentage, to
+          #
+          #   @param multiplier_factor [String, nil] The percentage that may be used, in conjunction with the charge base amount, to
+          #
+          #   @param reason [String, nil] The reason for the charge
+          #
+          #   @param reason_code [String, nil] The code for the charge reason
+          #
+          #   @param tax_code [Symbol, EInvoiceAPI::Models::DocumentResponse::Item::Charge::TaxCode, nil] Duty or tax or fee category codes (Subset of UNCL5305)
+          #
+          #   @param tax_rate [String, nil] The VAT rate, represented as percentage that applies to the charge
+
+          # Duty or tax or fee category codes (Subset of UNCL5305)
+          #
+          # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+          #
+          # @see EInvoiceAPI::Models::DocumentResponse::Item::Charge#tax_code
+          module TaxCode
+            extend EInvoiceAPI::Internal::Type::Enum
+
+            AE = :AE
+            E = :E
+            S = :S
+            Z = :Z
+            G = :G
+            O = :O
+            K = :K
+            L = :L
+            M = :M
+            B = :B
+
+            # @!method self.values
+            #   @return [Array<Symbol>]
+          end
+        end
       end
 
       class PaymentDetail < EInvoiceAPI::Internal::Type::BaseModel
