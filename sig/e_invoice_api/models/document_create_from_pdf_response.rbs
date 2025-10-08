@@ -1,14 +1,13 @@
 module EInvoiceAPI
   module Models
-    type document_response =
+    type document_create_from_pdf_response =
       {
-        id: String,
-        allowances: ::Array[EInvoiceAPI::DocumentResponse::Allowance]?,
+        allowances: ::Array[EInvoiceAPI::Allowance]?,
         amount_due: String?,
-        attachments: ::Array[EInvoiceAPI::Documents::DocumentAttachment]?,
+        attachments: ::Array[EInvoiceAPI::DocumentAttachmentCreate]?,
         billing_address: String?,
         billing_address_recipient: String?,
-        charges: ::Array[EInvoiceAPI::DocumentResponse::Charge]?,
+        charges: ::Array[EInvoiceAPI::Charge]?,
         currency: EInvoiceAPI::Models::currency_code,
         customer_address: String?,
         customer_address_recipient: String?,
@@ -22,9 +21,9 @@ module EInvoiceAPI
         invoice_date: Date?,
         invoice_id: String?,
         invoice_total: String?,
-        items: ::Array[EInvoiceAPI::DocumentResponse::Item]?,
+        items: ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item],
         note: String?,
-        payment_details: ::Array[EInvoiceAPI::DocumentResponse::PaymentDetail]?,
+        payment_details: ::Array[EInvoiceAPI::PaymentDetailCreate]?,
         payment_term: String?,
         previous_unpaid_balance: String?,
         purchase_order: String?,
@@ -38,11 +37,13 @@ module EInvoiceAPI
         shipping_address_recipient: String?,
         state: EInvoiceAPI::Models::document_state,
         subtotal: String?,
-        tax_code: EInvoiceAPI::Models::DocumentResponse::tax_code,
-        tax_details: ::Array[EInvoiceAPI::DocumentResponse::TaxDetail]?,
+        success: bool,
+        tax_code: EInvoiceAPI::Models::DocumentCreateFromPdfResponse::tax_code,
+        tax_details: ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxDetail]?,
         total_discount: String?,
         total_tax: String?,
-        vatex: EInvoiceAPI::Models::DocumentResponse::vatex?,
+        ubl_document: String?,
+        vatex: EInvoiceAPI::Models::DocumentCreateFromPdfResponse::vatex?,
         vatex_note: String?,
         vendor_address: String?,
         vendor_address_recipient: String?,
@@ -51,20 +52,18 @@ module EInvoiceAPI
         vendor_tax_id: String?
       }
 
-    class DocumentResponse < EInvoiceAPI::Internal::Type::BaseModel
-      attr_accessor id: String
-
-      attr_accessor allowances: ::Array[EInvoiceAPI::DocumentResponse::Allowance]?
+    class DocumentCreateFromPdfResponse < EInvoiceAPI::Internal::Type::BaseModel
+      attr_accessor allowances: ::Array[EInvoiceAPI::Allowance]?
 
       attr_accessor amount_due: String?
 
-      attr_accessor attachments: ::Array[EInvoiceAPI::Documents::DocumentAttachment]?
+      attr_accessor attachments: ::Array[EInvoiceAPI::DocumentAttachmentCreate]?
 
       attr_accessor billing_address: String?
 
       attr_accessor billing_address_recipient: String?
 
-      attr_accessor charges: ::Array[EInvoiceAPI::DocumentResponse::Charge]?
+      attr_accessor charges: ::Array[EInvoiceAPI::Charge]?
 
       attr_reader currency: EInvoiceAPI::Models::currency_code?
 
@@ -104,11 +103,15 @@ module EInvoiceAPI
 
       attr_accessor invoice_total: String?
 
-      attr_accessor items: ::Array[EInvoiceAPI::DocumentResponse::Item]?
+      attr_reader items: ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item]?
+
+      def items=: (
+        ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item]
+      ) -> ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item]
 
       attr_accessor note: String?
 
-      attr_accessor payment_details: ::Array[EInvoiceAPI::DocumentResponse::PaymentDetail]?
+      attr_accessor payment_details: ::Array[EInvoiceAPI::PaymentDetailCreate]?
 
       attr_accessor payment_term: String?
 
@@ -140,19 +143,25 @@ module EInvoiceAPI
 
       attr_accessor subtotal: String?
 
-      attr_reader tax_code: EInvoiceAPI::Models::DocumentResponse::tax_code?
+      attr_reader success: bool?
+
+      def success=: (bool) -> bool
+
+      attr_reader tax_code: EInvoiceAPI::Models::DocumentCreateFromPdfResponse::tax_code?
 
       def tax_code=: (
-        EInvoiceAPI::Models::DocumentResponse::tax_code
-      ) -> EInvoiceAPI::Models::DocumentResponse::tax_code
+        EInvoiceAPI::Models::DocumentCreateFromPdfResponse::tax_code
+      ) -> EInvoiceAPI::Models::DocumentCreateFromPdfResponse::tax_code
 
-      attr_accessor tax_details: ::Array[EInvoiceAPI::DocumentResponse::TaxDetail]?
+      attr_accessor tax_details: ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxDetail]?
 
       attr_accessor total_discount: String?
 
       attr_accessor total_tax: String?
 
-      attr_accessor vatex: EInvoiceAPI::Models::DocumentResponse::vatex?
+      attr_accessor ubl_document: String?
+
+      attr_accessor vatex: EInvoiceAPI::Models::DocumentCreateFromPdfResponse::vatex?
 
       attr_accessor vatex_note: String?
 
@@ -167,13 +176,12 @@ module EInvoiceAPI
       attr_accessor vendor_tax_id: String?
 
       def initialize: (
-        id: String,
-        ?allowances: ::Array[EInvoiceAPI::DocumentResponse::Allowance]?,
+        ?allowances: ::Array[EInvoiceAPI::Allowance]?,
         ?amount_due: String?,
-        ?attachments: ::Array[EInvoiceAPI::Documents::DocumentAttachment]?,
+        ?attachments: ::Array[EInvoiceAPI::DocumentAttachmentCreate]?,
         ?billing_address: String?,
         ?billing_address_recipient: String?,
-        ?charges: ::Array[EInvoiceAPI::DocumentResponse::Charge]?,
+        ?charges: ::Array[EInvoiceAPI::Charge]?,
         ?currency: EInvoiceAPI::Models::currency_code,
         ?customer_address: String?,
         ?customer_address_recipient: String?,
@@ -187,9 +195,9 @@ module EInvoiceAPI
         ?invoice_date: Date?,
         ?invoice_id: String?,
         ?invoice_total: String?,
-        ?items: ::Array[EInvoiceAPI::DocumentResponse::Item]?,
+        ?items: ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item],
         ?note: String?,
-        ?payment_details: ::Array[EInvoiceAPI::DocumentResponse::PaymentDetail]?,
+        ?payment_details: ::Array[EInvoiceAPI::PaymentDetailCreate]?,
         ?payment_term: String?,
         ?previous_unpaid_balance: String?,
         ?purchase_order: String?,
@@ -203,11 +211,13 @@ module EInvoiceAPI
         ?shipping_address_recipient: String?,
         ?state: EInvoiceAPI::Models::document_state,
         ?subtotal: String?,
-        ?tax_code: EInvoiceAPI::Models::DocumentResponse::tax_code,
-        ?tax_details: ::Array[EInvoiceAPI::DocumentResponse::TaxDetail]?,
+        ?success: bool,
+        ?tax_code: EInvoiceAPI::Models::DocumentCreateFromPdfResponse::tax_code,
+        ?tax_details: ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxDetail]?,
         ?total_discount: String?,
         ?total_tax: String?,
-        ?vatex: EInvoiceAPI::Models::DocumentResponse::vatex?,
+        ?ubl_document: String?,
+        ?vatex: EInvoiceAPI::Models::DocumentCreateFromPdfResponse::vatex?,
         ?vatex_note: String?,
         ?vendor_address: String?,
         ?vendor_address_recipient: String?,
@@ -217,13 +227,12 @@ module EInvoiceAPI
       ) -> void
 
       def to_hash: -> {
-        id: String,
-        allowances: ::Array[EInvoiceAPI::DocumentResponse::Allowance]?,
+        allowances: ::Array[EInvoiceAPI::Allowance]?,
         amount_due: String?,
-        attachments: ::Array[EInvoiceAPI::Documents::DocumentAttachment]?,
+        attachments: ::Array[EInvoiceAPI::DocumentAttachmentCreate]?,
         billing_address: String?,
         billing_address_recipient: String?,
-        charges: ::Array[EInvoiceAPI::DocumentResponse::Charge]?,
+        charges: ::Array[EInvoiceAPI::Charge]?,
         currency: EInvoiceAPI::Models::currency_code,
         customer_address: String?,
         customer_address_recipient: String?,
@@ -237,9 +246,9 @@ module EInvoiceAPI
         invoice_date: Date?,
         invoice_id: String?,
         invoice_total: String?,
-        items: ::Array[EInvoiceAPI::DocumentResponse::Item]?,
+        items: ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item],
         note: String?,
-        payment_details: ::Array[EInvoiceAPI::DocumentResponse::PaymentDetail]?,
+        payment_details: ::Array[EInvoiceAPI::PaymentDetailCreate]?,
         payment_term: String?,
         previous_unpaid_balance: String?,
         purchase_order: String?,
@@ -253,11 +262,13 @@ module EInvoiceAPI
         shipping_address_recipient: String?,
         state: EInvoiceAPI::Models::document_state,
         subtotal: String?,
-        tax_code: EInvoiceAPI::Models::DocumentResponse::tax_code,
-        tax_details: ::Array[EInvoiceAPI::DocumentResponse::TaxDetail]?,
+        success: bool,
+        tax_code: EInvoiceAPI::Models::DocumentCreateFromPdfResponse::tax_code,
+        tax_details: ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxDetail]?,
         total_discount: String?,
         total_tax: String?,
-        vatex: EInvoiceAPI::Models::DocumentResponse::vatex?,
+        ubl_document: String?,
+        vatex: EInvoiceAPI::Models::DocumentCreateFromPdfResponse::vatex?,
         vatex_note: String?,
         vendor_address: String?,
         vendor_address_recipient: String?,
@@ -265,138 +276,6 @@ module EInvoiceAPI
         vendor_name: String?,
         vendor_tax_id: String?
       }
-
-      type allowance =
-        {
-          amount: String?,
-          base_amount: String?,
-          multiplier_factor: String?,
-          reason: String?,
-          reason_code: String?,
-          tax_code: EInvoiceAPI::Models::DocumentResponse::Allowance::tax_code?,
-          tax_rate: String?
-        }
-
-      class Allowance < EInvoiceAPI::Internal::Type::BaseModel
-        attr_accessor amount: String?
-
-        attr_accessor base_amount: String?
-
-        attr_accessor multiplier_factor: String?
-
-        attr_accessor reason: String?
-
-        attr_accessor reason_code: String?
-
-        attr_accessor tax_code: EInvoiceAPI::Models::DocumentResponse::Allowance::tax_code?
-
-        attr_accessor tax_rate: String?
-
-        def initialize: (
-          ?amount: String?,
-          ?base_amount: String?,
-          ?multiplier_factor: String?,
-          ?reason: String?,
-          ?reason_code: String?,
-          ?tax_code: EInvoiceAPI::Models::DocumentResponse::Allowance::tax_code?,
-          ?tax_rate: String?
-        ) -> void
-
-        def to_hash: -> {
-          amount: String?,
-          base_amount: String?,
-          multiplier_factor: String?,
-          reason: String?,
-          reason_code: String?,
-          tax_code: EInvoiceAPI::Models::DocumentResponse::Allowance::tax_code?,
-          tax_rate: String?
-        }
-
-        type tax_code = :AE | :E | :S | :Z | :G | :O | :K | :L | :M | :B
-
-        module TaxCode
-          extend EInvoiceAPI::Internal::Type::Enum
-
-          AE: :AE
-          E: :E
-          S: :S
-          Z: :Z
-          G: :G
-          O: :O
-          K: :K
-          L: :L
-          M: :M
-          B: :B
-
-          def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentResponse::Allowance::tax_code]
-        end
-      end
-
-      type charge =
-        {
-          amount: String?,
-          base_amount: String?,
-          multiplier_factor: String?,
-          reason: String?,
-          reason_code: String?,
-          tax_code: EInvoiceAPI::Models::DocumentResponse::Charge::tax_code?,
-          tax_rate: String?
-        }
-
-      class Charge < EInvoiceAPI::Internal::Type::BaseModel
-        attr_accessor amount: String?
-
-        attr_accessor base_amount: String?
-
-        attr_accessor multiplier_factor: String?
-
-        attr_accessor reason: String?
-
-        attr_accessor reason_code: String?
-
-        attr_accessor tax_code: EInvoiceAPI::Models::DocumentResponse::Charge::tax_code?
-
-        attr_accessor tax_rate: String?
-
-        def initialize: (
-          ?amount: String?,
-          ?base_amount: String?,
-          ?multiplier_factor: String?,
-          ?reason: String?,
-          ?reason_code: String?,
-          ?tax_code: EInvoiceAPI::Models::DocumentResponse::Charge::tax_code?,
-          ?tax_rate: String?
-        ) -> void
-
-        def to_hash: -> {
-          amount: String?,
-          base_amount: String?,
-          multiplier_factor: String?,
-          reason: String?,
-          reason_code: String?,
-          tax_code: EInvoiceAPI::Models::DocumentResponse::Charge::tax_code?,
-          tax_rate: String?
-        }
-
-        type tax_code = :AE | :E | :S | :Z | :G | :O | :K | :L | :M | :B
-
-        module TaxCode
-          extend EInvoiceAPI::Internal::Type::Enum
-
-          AE: :AE
-          E: :E
-          S: :S
-          Z: :Z
-          G: :G
-          O: :O
-          K: :K
-          L: :L
-          M: :M
-          B: :B
-
-          def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentResponse::Charge::tax_code]
-        end
-      end
 
       type item =
         {
@@ -465,38 +344,6 @@ module EInvoiceAPI
         }
       end
 
-      type payment_detail =
-        {
-          bank_account_number: String?,
-          iban: String?,
-          payment_reference: String?,
-          swift: String?
-        }
-
-      class PaymentDetail < EInvoiceAPI::Internal::Type::BaseModel
-        attr_accessor bank_account_number: String?
-
-        attr_accessor iban: String?
-
-        attr_accessor payment_reference: String?
-
-        attr_accessor swift: String?
-
-        def initialize: (
-          ?bank_account_number: String?,
-          ?iban: String?,
-          ?payment_reference: String?,
-          ?swift: String?
-        ) -> void
-
-        def to_hash: -> {
-          bank_account_number: String?,
-          iban: String?,
-          payment_reference: String?,
-          swift: String?
-        }
-      end
-
       type tax_code = :AE | :E | :S | :Z | :G | :O | :K | :L | :M | :B
 
       module TaxCode
@@ -513,7 +360,7 @@ module EInvoiceAPI
         M: :M
         B: :B
 
-        def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentResponse::tax_code]
+        def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::tax_code]
       end
 
       type tax_detail = { amount: String?, rate: String? }
@@ -658,7 +505,7 @@ module EInvoiceAPI
         VATEX_FR_FRANCHISE: :"VATEX-FR-FRANCHISE"
         VATEX_FR_CNWVAT: :"VATEX-FR-CNWVAT"
 
-        def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentResponse::vatex]
+        def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::vatex]
       end
     end
   end

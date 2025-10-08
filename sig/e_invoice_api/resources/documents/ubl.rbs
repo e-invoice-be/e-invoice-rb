@@ -2,6 +2,11 @@ module EInvoiceAPI
   module Resources
     class Documents
       class Ubl
+        def create_from_ubl: (
+          file: EInvoiceAPI::Internal::file_input,
+          ?request_options: EInvoiceAPI::request_opts
+        ) -> EInvoiceAPI::DocumentResponse
+
         def get: (
           String document_id,
           ?request_options: EInvoiceAPI::request_opts

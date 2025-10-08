@@ -39,13 +39,19 @@ module EInvoiceAPI
     mod.define_sorbet_constant!(const) { T.type_alias { mod.to_sorbet_type } }
   end
 
+  Allowance = EInvoiceAPI::Models::Allowance
+
   Certificate = EInvoiceAPI::Models::Certificate
+
+  Charge = EInvoiceAPI::Models::Charge
 
   CurrencyCode = EInvoiceAPI::Models::CurrencyCode
 
   DocumentAttachmentCreate = EInvoiceAPI::Models::DocumentAttachmentCreate
 
   DocumentCreate = EInvoiceAPI::Models::DocumentCreate
+
+  DocumentCreateFromPdfParams = EInvoiceAPI::Models::DocumentCreateFromPdfParams
 
   DocumentCreateParams = EInvoiceAPI::Models::DocumentCreateParams
 
@@ -65,6 +71,8 @@ module EInvoiceAPI
 
   DocumentType = EInvoiceAPI::Models::DocumentType
 
+  DocumentValidateParams = EInvoiceAPI::Models::DocumentValidateParams
+
   InboxListCreditNotesParams = EInvoiceAPI::Models::InboxListCreditNotesParams
 
   InboxListInvoicesParams = EInvoiceAPI::Models::InboxListInvoicesParams
@@ -74,6 +82,8 @@ module EInvoiceAPI
   LookupRetrieveParams = EInvoiceAPI::Models::LookupRetrieveParams
 
   LookupRetrieveParticipantsParams = EInvoiceAPI::Models::LookupRetrieveParticipantsParams
+
+  MeRetrieveParams = EInvoiceAPI::Models::MeRetrieveParams
 
   OutboxListDraftDocumentsParams = EInvoiceAPI::Models::OutboxListDraftDocumentsParams
 

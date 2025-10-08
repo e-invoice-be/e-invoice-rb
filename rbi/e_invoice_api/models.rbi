@@ -1,13 +1,19 @@
 # typed: strong
 
 module EInvoiceAPI
+  Allowance = EInvoiceAPI::Models::Allowance
+
   Certificate = EInvoiceAPI::Models::Certificate
+
+  Charge = EInvoiceAPI::Models::Charge
 
   CurrencyCode = EInvoiceAPI::Models::CurrencyCode
 
   DocumentAttachmentCreate = EInvoiceAPI::Models::DocumentAttachmentCreate
 
   DocumentCreate = EInvoiceAPI::Models::DocumentCreate
+
+  DocumentCreateFromPdfParams = EInvoiceAPI::Models::DocumentCreateFromPdfParams
 
   DocumentCreateParams = EInvoiceAPI::Models::DocumentCreateParams
 
@@ -27,6 +33,8 @@ module EInvoiceAPI
 
   DocumentType = EInvoiceAPI::Models::DocumentType
 
+  DocumentValidateParams = EInvoiceAPI::Models::DocumentValidateParams
+
   InboxListCreditNotesParams = EInvoiceAPI::Models::InboxListCreditNotesParams
 
   InboxListInvoicesParams = EInvoiceAPI::Models::InboxListInvoicesParams
@@ -37,6 +45,8 @@ module EInvoiceAPI
 
   LookupRetrieveParticipantsParams =
     EInvoiceAPI::Models::LookupRetrieveParticipantsParams
+
+  MeRetrieveParams = EInvoiceAPI::Models::MeRetrieveParams
 
   OutboxListDraftDocumentsParams =
     EInvoiceAPI::Models::OutboxListDraftDocumentsParams

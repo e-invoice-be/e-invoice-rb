@@ -1,0 +1,26 @@
+module EInvoiceAPI
+  module Models
+    module Documents
+      type ubl_create_from_ubl_params =
+        { file: EInvoiceAPI::Internal::file_input }
+        & EInvoiceAPI::Internal::Type::request_parameters
+
+      class UblCreateFromUblParams < EInvoiceAPI::Internal::Type::BaseModel
+        extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
+        include EInvoiceAPI::Internal::Type::RequestParameters
+
+        attr_accessor file: EInvoiceAPI::Internal::file_input
+
+        def initialize: (
+          file: EInvoiceAPI::Internal::file_input,
+          ?request_options: EInvoiceAPI::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          file: EInvoiceAPI::Internal::file_input,
+          request_options: EInvoiceAPI::RequestOptions
+        }
+      end
+    end
+  end
+end

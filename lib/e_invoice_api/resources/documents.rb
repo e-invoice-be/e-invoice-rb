@@ -162,6 +162,39 @@ module EInvoiceAPI
         )
       end
 
+      # Create a new invoice or credit note from a PDF file. If the 'ubl_document' field
+      # is set in the response, it indicates that sufficient details were extracted from
+      # the PDF to automatically generate a valid UBL document ready for sending. If
+      # 'ubl_document' is not set, human intervention may be required to ensure
+      # compliance.
+      #
+      # @overload create_from_pdf(file:, customer_tax_id: nil, vendor_tax_id: nil, request_options: {})
+      #
+      # @param file [Pathname, StringIO, IO, String, EInvoiceAPI::FilePart] Body param:
+      #
+      # @param customer_tax_id [String, nil] Query param:
+      #
+      # @param vendor_tax_id [String, nil] Query param:
+      #
+      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [EInvoiceAPI::Models::DocumentCreateFromPdfResponse]
+      #
+      # @see EInvoiceAPI::Models::DocumentCreateFromPdfParams
+      def create_from_pdf(params)
+        parsed, options = EInvoiceAPI::DocumentCreateFromPdfParams.dump_request(params)
+        query_params = [:customer_tax_id, :vendor_tax_id]
+        @client.request(
+          method: :post,
+          path: "api/documents/pdf",
+          query: parsed.slice(*query_params),
+          headers: {"content-type" => "multipart/form-data"},
+          body: parsed.except(*query_params),
+          model: EInvoiceAPI::Models::DocumentCreateFromPdfResponse,
+          options: options
+        )
+      end
+
       # Send an invoice or credit note via Peppol
       #
       # @overload send_(document_id, email: nil, receiver_peppol_id: nil, receiver_peppol_scheme: nil, sender_peppol_id: nil, sender_peppol_scheme: nil, request_options: {})
@@ -185,6 +218,25 @@ module EInvoiceAPI
           query: parsed,
           model: EInvoiceAPI::DocumentResponse,
           options: options
+        )
+      end
+
+      # Validate a UBL document according to Peppol BIS Billing 3.0
+      #
+      # @overload validate(document_id, request_options: {})
+      #
+      # @param document_id [String]
+      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [EInvoiceAPI::Models::UblDocumentValidation]
+      #
+      # @see EInvoiceAPI::Models::DocumentValidateParams
+      def validate(document_id, params = {})
+        @client.request(
+          method: :post,
+          path: ["api/documents/%1$s/validate", document_id],
+          model: EInvoiceAPI::UblDocumentValidation,
+          options: params[:request_options]
         )
       end
 
