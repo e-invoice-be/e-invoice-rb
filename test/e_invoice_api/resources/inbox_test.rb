@@ -22,10 +22,12 @@ class EInvoiceAPI::Test::Resources::InboxTest < EInvoiceAPI::Test::ResourceTest
     assert_pattern do
       row => {
         id: String,
+        allowances: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Allowance]) | nil,
         amount_due: String | nil,
         attachments: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Documents::DocumentAttachment]) | nil,
         billing_address: String | nil,
         billing_address_recipient: String | nil,
+        charges: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Charge]) | nil,
         currency: EInvoiceAPI::CurrencyCode | nil,
         customer_address: String | nil,
         customer_address_recipient: String | nil,
@@ -89,10 +91,12 @@ class EInvoiceAPI::Test::Resources::InboxTest < EInvoiceAPI::Test::ResourceTest
     assert_pattern do
       row => {
         id: String,
+        allowances: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Allowance]) | nil,
         amount_due: String | nil,
         attachments: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Documents::DocumentAttachment]) | nil,
         billing_address: String | nil,
         billing_address_recipient: String | nil,
+        charges: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Charge]) | nil,
         currency: EInvoiceAPI::CurrencyCode | nil,
         customer_address: String | nil,
         customer_address_recipient: String | nil,
@@ -156,10 +160,12 @@ class EInvoiceAPI::Test::Resources::InboxTest < EInvoiceAPI::Test::ResourceTest
     assert_pattern do
       row => {
         id: String,
+        allowances: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Allowance]) | nil,
         amount_due: String | nil,
         attachments: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Documents::DocumentAttachment]) | nil,
         billing_address: String | nil,
         billing_address_recipient: String | nil,
+        charges: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Charge]) | nil,
         currency: EInvoiceAPI::CurrencyCode | nil,
         customer_address: String | nil,
         customer_address_recipient: String | nil,
