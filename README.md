@@ -73,17 +73,17 @@ Request parameters that correspond to file uploads can be passed as raw contents
 require "pathname"
 
 # Use `Pathname` to send the filename and/or avoid paging a large file into memory:
-document_attachment = e_invoice.documents.attachments.add(file: Pathname("/path/to/file"))
+response = e_invoice.documents.create_from_pdf(file: Pathname("/path/to/file"))
 
 # Alternatively, pass file contents or a `StringIO` directly:
-document_attachment = e_invoice.documents.attachments.add(file: File.read("/path/to/file"))
+response = e_invoice.documents.create_from_pdf(file: File.read("/path/to/file"))
 
 # Or, to control the filename and/or content type:
 file =
   EInvoiceAPI::FilePart.new(File.read("/path/to/file"), filename: "/path/to/file", content_type: "…")
-document_attachment = e_invoice.documents.attachments.add(file: file)
+response = e_invoice.documents.create_from_pdf(file: file)
 
-puts(document_attachment.id)
+puts(response.customer_id)
 ```
 
 Note that you can also pass a raw `IO` descriptor, but this disables retries, as the library can't be sure if the descriptor is a file or pipe (which cannot be rewound).

@@ -1,0 +1,69 @@
+module EInvoiceAPI
+  module Models
+    type allowance =
+      {
+        amount: String?,
+        base_amount: String?,
+        multiplier_factor: String?,
+        reason: String?,
+        reason_code: String?,
+        tax_code: EInvoiceAPI::Models::Allowance::tax_code?,
+        tax_rate: String?
+      }
+
+    class Allowance < EInvoiceAPI::Internal::Type::BaseModel
+      attr_accessor amount: String?
+
+      attr_accessor base_amount: String?
+
+      attr_accessor multiplier_factor: String?
+
+      attr_accessor reason: String?
+
+      attr_accessor reason_code: String?
+
+      attr_accessor tax_code: EInvoiceAPI::Models::Allowance::tax_code?
+
+      attr_accessor tax_rate: String?
+
+      def initialize: (
+        ?amount: String?,
+        ?base_amount: String?,
+        ?multiplier_factor: String?,
+        ?reason: String?,
+        ?reason_code: String?,
+        ?tax_code: EInvoiceAPI::Models::Allowance::tax_code?,
+        ?tax_rate: String?
+      ) -> void
+
+      def to_hash: -> {
+        amount: String?,
+        base_amount: String?,
+        multiplier_factor: String?,
+        reason: String?,
+        reason_code: String?,
+        tax_code: EInvoiceAPI::Models::Allowance::tax_code?,
+        tax_rate: String?
+      }
+
+      type tax_code = :AE | :E | :S | :Z | :G | :O | :K | :L | :M | :B
+
+      module TaxCode
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        AE: :AE
+        E: :E
+        S: :S
+        Z: :Z
+        G: :G
+        O: :O
+        K: :K
+        L: :L
+        M: :M
+        B: :B
+
+        def self?.values: -> ::Array[EInvoiceAPI::Models::Allowance::tax_code]
+      end
+    end
+  end
+end

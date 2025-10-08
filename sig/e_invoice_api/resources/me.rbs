@@ -1,0 +1,11 @@
+module EInvoiceAPI
+  module Resources
+    class Me
+      def retrieve: (
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> EInvoiceAPI::Models::MeRetrieveResponse
+
+      def initialize: (client: EInvoiceAPI::Client) -> void
+    end
+  end
+end

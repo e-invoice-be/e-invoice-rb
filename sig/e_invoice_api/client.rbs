@@ -20,6 +20,8 @@ module EInvoiceAPI
 
     attr_reader lookup: EInvoiceAPI::Resources::Lookup
 
+    attr_reader me: EInvoiceAPI::Resources::Me
+
     attr_reader webhooks: EInvoiceAPI::Resources::Webhooks
 
     private def auth_headers: -> ::Hash[String, String]

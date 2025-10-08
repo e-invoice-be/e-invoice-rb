@@ -1,0 +1,36 @@
+module EInvoiceAPI
+  module Models
+    type document_create_from_pdf_params =
+      {
+        file: EInvoiceAPI::Internal::file_input,
+        customer_tax_id: String?,
+        vendor_tax_id: String?
+      }
+      & EInvoiceAPI::Internal::Type::request_parameters
+
+    class DocumentCreateFromPdfParams < EInvoiceAPI::Internal::Type::BaseModel
+      extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
+      include EInvoiceAPI::Internal::Type::RequestParameters
+
+      attr_accessor file: EInvoiceAPI::Internal::file_input
+
+      attr_accessor customer_tax_id: String?
+
+      attr_accessor vendor_tax_id: String?
+
+      def initialize: (
+        file: EInvoiceAPI::Internal::file_input,
+        ?customer_tax_id: String?,
+        ?vendor_tax_id: String?,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        file: EInvoiceAPI::Internal::file_input,
+        customer_tax_id: String?,
+        vendor_tax_id: String?,
+        request_options: EInvoiceAPI::RequestOptions
+      }
+    end
+  end
+end

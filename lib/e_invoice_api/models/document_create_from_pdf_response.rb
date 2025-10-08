@@ -2,19 +2,12 @@
 
 module EInvoiceAPI
   module Models
-    # @see EInvoiceAPI::Resources::Documents#create
-    class DocumentResponse < EInvoiceAPI::Internal::Type::BaseModel
-      # @!attribute id
-      #
-      #   @return [String]
-      required :id, String
-
+    # @see EInvoiceAPI::Resources::Documents#create_from_pdf
+    class DocumentCreateFromPdfResponse < EInvoiceAPI::Internal::Type::BaseModel
       # @!attribute allowances
       #
-      #   @return [Array<EInvoiceAPI::Models::DocumentResponse::Allowance>, nil]
-      optional :allowances,
-               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Allowance] },
-               nil?: true
+      #   @return [Array<EInvoiceAPI::Models::Allowance>, nil]
+      optional :allowances, -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Allowance] }, nil?: true
 
       # @!attribute amount_due
       #   The amount due of the invoice. Must be positive and rounded to maximum 2
@@ -25,9 +18,9 @@ module EInvoiceAPI
 
       # @!attribute attachments
       #
-      #   @return [Array<EInvoiceAPI::Models::Documents::DocumentAttachment>, nil]
+      #   @return [Array<EInvoiceAPI::Models::DocumentAttachmentCreate>, nil]
       optional :attachments,
-               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Documents::DocumentAttachment] },
+               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentAttachmentCreate] },
                nil?: true
 
       # @!attribute billing_address
@@ -42,10 +35,8 @@ module EInvoiceAPI
 
       # @!attribute charges
       #
-      #   @return [Array<EInvoiceAPI::Models::DocumentResponse::Charge>, nil]
-      optional :charges,
-               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Charge] },
-               nil?: true
+      #   @return [Array<EInvoiceAPI::Models::Charge>, nil]
+      optional :charges, -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Charge] }, nil?: true
 
       # @!attribute currency
       #   Currency of the invoice
@@ -116,11 +107,11 @@ module EInvoiceAPI
       optional :invoice_total, String, nil?: true
 
       # @!attribute items
+      #   At least one line item is required
       #
-      #   @return [Array<EInvoiceAPI::Models::DocumentResponse::Item>, nil]
+      #   @return [Array<EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item>, nil]
       optional :items,
-               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Item] },
-               nil?: true
+               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item] }
 
       # @!attribute note
       #
@@ -129,9 +120,9 @@ module EInvoiceAPI
 
       # @!attribute payment_details
       #
-      #   @return [Array<EInvoiceAPI::Models::DocumentResponse::PaymentDetail>, nil]
+      #   @return [Array<EInvoiceAPI::Models::PaymentDetailCreate>, nil]
       optional :payment_details,
-               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::PaymentDetail] },
+               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::PaymentDetailCreate] },
                nil?: true
 
       # @!attribute payment_term
@@ -204,17 +195,23 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :subtotal, String, nil?: true
 
+      # @!attribute success
+      #   Whether the PDF was successfully converted into a compliant e-invoice
+      #
+      #   @return [Boolean, nil]
+      optional :success, EInvoiceAPI::Internal::Type::Boolean
+
       # @!attribute tax_code
       #   Tax category code of the invoice
       #
-      #   @return [Symbol, EInvoiceAPI::Models::DocumentResponse::TaxCode, nil]
-      optional :tax_code, enum: -> { EInvoiceAPI::DocumentResponse::TaxCode }
+      #   @return [Symbol, EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode, nil]
+      optional :tax_code, enum: -> { EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode }
 
       # @!attribute tax_details
       #
-      #   @return [Array<EInvoiceAPI::Models::DocumentResponse::TaxDetail>, nil]
+      #   @return [Array<EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxDetail>, nil]
       optional :tax_details,
-               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::TaxDetail] },
+               -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxDetail] },
                nil?: true
 
       # @!attribute total_discount
@@ -230,13 +227,19 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :total_tax, String, nil?: true
 
+      # @!attribute ubl_document
+      #   The UBL document as an XML string
+      #
+      #   @return [String, nil]
+      optional :ubl_document, String, nil?: true
+
       # @!attribute vatex
       #   VATEX code list for VAT exemption reasons
       #
       #   Agency: CEF Identifier: vatex
       #
-      #   @return [Symbol, EInvoiceAPI::Models::DocumentResponse::Vatex, nil]
-      optional :vatex, enum: -> { EInvoiceAPI::DocumentResponse::Vatex }, nil?: true
+      #   @return [Symbol, EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex, nil]
+      optional :vatex, enum: -> { EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex }, nil?: true
 
       # @!attribute vatex_note
       #   VAT exemption note of the invoice
@@ -269,23 +272,21 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :vendor_tax_id, String, nil?: true
 
-      # @!method initialize(id:, allowances: nil, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, charges: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, previous_unpaid_balance: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil)
+      # @!method initialize(allowances: nil, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, charges: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, previous_unpaid_balance: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, success: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, ubl_document: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil)
       #   Some parameter documentations has been truncated, see
-      #   {EInvoiceAPI::Models::DocumentResponse} for more details.
+      #   {EInvoiceAPI::Models::DocumentCreateFromPdfResponse} for more details.
       #
-      #   @param id [String]
-      #
-      #   @param allowances [Array<EInvoiceAPI::Models::DocumentResponse::Allowance>, nil]
+      #   @param allowances [Array<EInvoiceAPI::Models::Allowance>, nil]
       #
       #   @param amount_due [String, nil] The amount due of the invoice. Must be positive and rounded to maximum 2 decimal
       #
-      #   @param attachments [Array<EInvoiceAPI::Models::Documents::DocumentAttachment>, nil]
+      #   @param attachments [Array<EInvoiceAPI::Models::DocumentAttachmentCreate>, nil]
       #
       #   @param billing_address [String, nil]
       #
       #   @param billing_address_recipient [String, nil]
       #
-      #   @param charges [Array<EInvoiceAPI::Models::DocumentResponse::Charge>, nil]
+      #   @param charges [Array<EInvoiceAPI::Models::Charge>, nil]
       #
       #   @param currency [Symbol, EInvoiceAPI::Models::CurrencyCode] Currency of the invoice
       #
@@ -313,11 +314,11 @@ module EInvoiceAPI
       #
       #   @param invoice_total [String, nil] The total amount of the invoice (so invoice_total = subtotal + total_tax + total
       #
-      #   @param items [Array<EInvoiceAPI::Models::DocumentResponse::Item>, nil]
+      #   @param items [Array<EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item>] At least one line item is required
       #
       #   @param note [String, nil]
       #
-      #   @param payment_details [Array<EInvoiceAPI::Models::DocumentResponse::PaymentDetail>, nil]
+      #   @param payment_details [Array<EInvoiceAPI::Models::PaymentDetailCreate>, nil]
       #
       #   @param payment_term [String, nil]
       #
@@ -345,15 +346,19 @@ module EInvoiceAPI
       #
       #   @param subtotal [String, nil] The taxable base of the invoice. Should be the sum of all line items - allowance
       #
-      #   @param tax_code [Symbol, EInvoiceAPI::Models::DocumentResponse::TaxCode] Tax category code of the invoice
+      #   @param success [Boolean] Whether the PDF was successfully converted into a compliant e-invoice
       #
-      #   @param tax_details [Array<EInvoiceAPI::Models::DocumentResponse::TaxDetail>, nil]
+      #   @param tax_code [Symbol, EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode] Tax category code of the invoice
+      #
+      #   @param tax_details [Array<EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxDetail>, nil]
       #
       #   @param total_discount [String, nil] The total financial discount of the invoice (so discounts not subject to VAT). M
       #
       #   @param total_tax [String, nil] The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
       #
-      #   @param vatex [Symbol, EInvoiceAPI::Models::DocumentResponse::Vatex, nil] VATEX code list for VAT exemption reasons
+      #   @param ubl_document [String, nil] The UBL document as an XML string
+      #
+      #   @param vatex [Symbol, EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex, nil] VATEX code list for VAT exemption reasons
       #
       #   @param vatex_note [String, nil] VAT exemption note of the invoice
       #
@@ -366,184 +371,6 @@ module EInvoiceAPI
       #   @param vendor_name [String, nil]
       #
       #   @param vendor_tax_id [String, nil]
-
-      class Allowance < EInvoiceAPI::Internal::Type::BaseModel
-        # @!attribute amount
-        #   The allowance amount, without VAT. Must be rounded to maximum 2 decimals
-        #
-        #   @return [String, nil]
-        optional :amount, String, nil?: true
-
-        # @!attribute base_amount
-        #   The base amount that may be used, in conjunction with the allowance percentage,
-        #   to calculate the allowance amount. Must be rounded to maximum 2 decimals
-        #
-        #   @return [String, nil]
-        optional :base_amount, String, nil?: true
-
-        # @!attribute multiplier_factor
-        #   The percentage that may be used, in conjunction with the allowance base amount,
-        #   to calculate the allowance amount. To state 20%, use value 20
-        #
-        #   @return [String, nil]
-        optional :multiplier_factor, String, nil?: true
-
-        # @!attribute reason
-        #   The reason for the allowance
-        #
-        #   @return [String, nil]
-        optional :reason, String, nil?: true
-
-        # @!attribute reason_code
-        #   The code for the allowance reason
-        #
-        #   @return [String, nil]
-        optional :reason_code, String, nil?: true
-
-        # @!attribute tax_code
-        #   Duty or tax or fee category codes (Subset of UNCL5305)
-        #
-        #   Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
-        #
-        #   @return [Symbol, EInvoiceAPI::Models::DocumentResponse::Allowance::TaxCode, nil]
-        optional :tax_code, enum: -> { EInvoiceAPI::DocumentResponse::Allowance::TaxCode }, nil?: true
-
-        # @!attribute tax_rate
-        #   The VAT rate, represented as percentage that applies to the allowance
-        #
-        #   @return [String, nil]
-        optional :tax_rate, String, nil?: true
-
-        # @!method initialize(amount: nil, base_amount: nil, multiplier_factor: nil, reason: nil, reason_code: nil, tax_code: nil, tax_rate: nil)
-        #   Some parameter documentations has been truncated, see
-        #   {EInvoiceAPI::Models::DocumentResponse::Allowance} for more details.
-        #
-        #   @param amount [String, nil] The allowance amount, without VAT. Must be rounded to maximum 2 decimals
-        #
-        #   @param base_amount [String, nil] The base amount that may be used, in conjunction with the allowance percentage,
-        #
-        #   @param multiplier_factor [String, nil] The percentage that may be used, in conjunction with the allowance base amount,
-        #
-        #   @param reason [String, nil] The reason for the allowance
-        #
-        #   @param reason_code [String, nil] The code for the allowance reason
-        #
-        #   @param tax_code [Symbol, EInvoiceAPI::Models::DocumentResponse::Allowance::TaxCode, nil] Duty or tax or fee category codes (Subset of UNCL5305)
-        #
-        #   @param tax_rate [String, nil] The VAT rate, represented as percentage that applies to the allowance
-
-        # Duty or tax or fee category codes (Subset of UNCL5305)
-        #
-        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
-        #
-        # @see EInvoiceAPI::Models::DocumentResponse::Allowance#tax_code
-        module TaxCode
-          extend EInvoiceAPI::Internal::Type::Enum
-
-          AE = :AE
-          E = :E
-          S = :S
-          Z = :Z
-          G = :G
-          O = :O
-          K = :K
-          L = :L
-          M = :M
-          B = :B
-
-          # @!method self.values
-          #   @return [Array<Symbol>]
-        end
-      end
-
-      class Charge < EInvoiceAPI::Internal::Type::BaseModel
-        # @!attribute amount
-        #   The charge amount, without VAT. Must be rounded to maximum 2 decimals
-        #
-        #   @return [String, nil]
-        optional :amount, String, nil?: true
-
-        # @!attribute base_amount
-        #   The base amount that may be used, in conjunction with the charge percentage, to
-        #   calculate the charge amount. Must be rounded to maximum 2 decimals
-        #
-        #   @return [String, nil]
-        optional :base_amount, String, nil?: true
-
-        # @!attribute multiplier_factor
-        #   The percentage that may be used, in conjunction with the charge base amount, to
-        #   calculate the charge amount. To state 20%, use value 20
-        #
-        #   @return [String, nil]
-        optional :multiplier_factor, String, nil?: true
-
-        # @!attribute reason
-        #   The reason for the charge
-        #
-        #   @return [String, nil]
-        optional :reason, String, nil?: true
-
-        # @!attribute reason_code
-        #   The code for the charge reason
-        #
-        #   @return [String, nil]
-        optional :reason_code, String, nil?: true
-
-        # @!attribute tax_code
-        #   Duty or tax or fee category codes (Subset of UNCL5305)
-        #
-        #   Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
-        #
-        #   @return [Symbol, EInvoiceAPI::Models::DocumentResponse::Charge::TaxCode, nil]
-        optional :tax_code, enum: -> { EInvoiceAPI::DocumentResponse::Charge::TaxCode }, nil?: true
-
-        # @!attribute tax_rate
-        #   The VAT rate, represented as percentage that applies to the charge
-        #
-        #   @return [String, nil]
-        optional :tax_rate, String, nil?: true
-
-        # @!method initialize(amount: nil, base_amount: nil, multiplier_factor: nil, reason: nil, reason_code: nil, tax_code: nil, tax_rate: nil)
-        #   Some parameter documentations has been truncated, see
-        #   {EInvoiceAPI::Models::DocumentResponse::Charge} for more details.
-        #
-        #   @param amount [String, nil] The charge amount, without VAT. Must be rounded to maximum 2 decimals
-        #
-        #   @param base_amount [String, nil] The base amount that may be used, in conjunction with the charge percentage, to
-        #
-        #   @param multiplier_factor [String, nil] The percentage that may be used, in conjunction with the charge base amount, to
-        #
-        #   @param reason [String, nil] The reason for the charge
-        #
-        #   @param reason_code [String, nil] The code for the charge reason
-        #
-        #   @param tax_code [Symbol, EInvoiceAPI::Models::DocumentResponse::Charge::TaxCode, nil] Duty or tax or fee category codes (Subset of UNCL5305)
-        #
-        #   @param tax_rate [String, nil] The VAT rate, represented as percentage that applies to the charge
-
-        # Duty or tax or fee category codes (Subset of UNCL5305)
-        #
-        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
-        #
-        # @see EInvoiceAPI::Models::DocumentResponse::Charge#tax_code
-        module TaxCode
-          extend EInvoiceAPI::Internal::Type::Enum
-
-          AE = :AE
-          E = :E
-          S = :S
-          Z = :Z
-          G = :G
-          O = :O
-          K = :K
-          L = :L
-          M = :M
-          B = :B
-
-          # @!method self.values
-          #   @return [Array<Symbol>]
-        end
-      end
 
       class Item < EInvoiceAPI::Internal::Type::BaseModel
         # @!attribute allowances
@@ -616,7 +443,7 @@ module EInvoiceAPI
 
         # @!method initialize(allowances: nil, amount: nil, charges: nil, date: nil, description: nil, product_code: nil, quantity: nil, tax: nil, tax_rate: nil, unit: nil, unit_price: nil)
         #   Some parameter documentations has been truncated, see
-        #   {EInvoiceAPI::Models::DocumentResponse::Item} for more details.
+        #   {EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item} for more details.
         #
         #   @param allowances [Array<EInvoiceAPI::Models::Allowance>, nil] The allowances of the line item.
         #
@@ -641,37 +468,9 @@ module EInvoiceAPI
         #   @param unit_price [String, nil] The unit price of the line item. Must be rounded to maximum 2 decimals
       end
 
-      class PaymentDetail < EInvoiceAPI::Internal::Type::BaseModel
-        # @!attribute bank_account_number
-        #
-        #   @return [String, nil]
-        optional :bank_account_number, String, nil?: true
-
-        # @!attribute iban
-        #
-        #   @return [String, nil]
-        optional :iban, String, nil?: true
-
-        # @!attribute payment_reference
-        #
-        #   @return [String, nil]
-        optional :payment_reference, String, nil?: true
-
-        # @!attribute swift
-        #
-        #   @return [String, nil]
-        optional :swift, String, nil?: true
-
-        # @!method initialize(bank_account_number: nil, iban: nil, payment_reference: nil, swift: nil)
-        #   @param bank_account_number [String, nil]
-        #   @param iban [String, nil]
-        #   @param payment_reference [String, nil]
-        #   @param swift [String, nil]
-      end
-
       # Tax category code of the invoice
       #
-      # @see EInvoiceAPI::Models::DocumentResponse#tax_code
+      # @see EInvoiceAPI::Models::DocumentCreateFromPdfResponse#tax_code
       module TaxCode
         extend EInvoiceAPI::Internal::Type::Enum
 
@@ -710,7 +509,7 @@ module EInvoiceAPI
       #
       # Agency: CEF Identifier: vatex
       #
-      # @see EInvoiceAPI::Models::DocumentResponse#vatex
+      # @see EInvoiceAPI::Models::DocumentCreateFromPdfResponse#vatex
       module Vatex
         extend EInvoiceAPI::Internal::Type::Enum
 

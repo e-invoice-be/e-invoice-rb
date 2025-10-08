@@ -28,6 +28,9 @@ module EInvoiceAPI
     sig { returns(EInvoiceAPI::Resources::Lookup) }
     attr_reader :lookup
 
+    sig { returns(EInvoiceAPI::Resources::Me) }
+    attr_reader :me
+
     sig { returns(EInvoiceAPI::Resources::Webhooks) }
     attr_reader :webhooks
 
