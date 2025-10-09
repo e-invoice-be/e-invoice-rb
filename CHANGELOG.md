@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.9.0 (2025-10-09)
+
+Full Changelog: [v0.8.0...v0.9.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.8.0...v0.9.0)
+
+### Features
+
+* **api:** api update ([f2d31c0](https://github.com/e-invoice-be/e-invoice-rb/commit/f2d31c08eebbcaf486f81c3d8071a2c3434bd626))
+
+
+### Chores
+
+* ignore linter error for tests having large collections ([1e4007f](https://github.com/e-invoice-be/e-invoice-rb/commit/1e4007f6f86a1a15bba07468fc920bccd4566f8b))
+
 ## 0.8.0 (2025-10-08)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.7.0...v0.8.0)
