@@ -391,7 +391,6 @@ module EInvoiceAPI
       C59 = :C59
       C60 = :C60
       C61 = :C61
-      C62 = :C62
       C63 = :C63
       C64 = :C64
       C65 = :C65
@@ -1036,6 +1035,7 @@ module EInvoiceAPI
       XZZ = :XZZ
       ZZ = :ZZ
       NAR = :NAR
+      C62 = :C62
       LTR = :LTR
 
       # @!method self.values

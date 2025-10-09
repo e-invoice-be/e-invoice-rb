@@ -469,7 +469,6 @@ module EInvoiceAPI
       C59 = T.let(:C59, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
       C60 = T.let(:C60, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
       C61 = T.let(:C61, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
-      C62 = T.let(:C62, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
       C63 = T.let(:C63, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
       C64 = T.let(:C64, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
       C65 = T.let(:C65, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
@@ -1114,6 +1113,7 @@ module EInvoiceAPI
       XZZ = T.let(:XZZ, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
       ZZ = T.let(:ZZ, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
       NAR = T.let(:NAR, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
+      C62 = T.let(:C62, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
       LTR = T.let(:LTR, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
 
       sig do
