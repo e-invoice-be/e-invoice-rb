@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.1 (2025-10-15)
+
+Full Changelog: [v0.9.0...v0.9.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.9.0...v0.9.1)
+
+### Bug Fixes
+
+* should not reuse buffers for `IO.copy_stream` interop ([c7b6adb](https://github.com/e-invoice-be/e-invoice-rb/commit/c7b6adb0ee1e0d71d786215f580c95faa6ef2492))
+
 ## 0.9.0 (2025-10-09)
 
 Full Changelog: [v0.8.0...v0.9.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.8.0...v0.9.0)
