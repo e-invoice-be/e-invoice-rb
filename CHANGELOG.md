@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.2 (2025-10-16)
+
+Full Changelog: [v0.9.1...v0.9.2](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.9.1...v0.9.2)
+
+### Bug Fixes
+
+* absolutely qualified uris should always override the default ([cb73257](https://github.com/e-invoice-be/e-invoice-rb/commit/cb732572da1cc6675c2b2cd3a41029223feddf7f))
+
 ## 0.9.1 (2025-10-15)
 
 Full Changelog: [v0.9.0...v0.9.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.9.0...v0.9.1)
