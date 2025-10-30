@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.10.0 (2025-10-24)
+
+Full Changelog: [v0.9.2...v0.10.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.9.2...v0.10.0)
+
+### Features
+
+* handle thread interrupts in the core HTTP client ([b750be8](https://github.com/e-invoice-be/e-invoice-rb/commit/b750be88c216cf4a73032b249684e0219942f3f7))
+
 ## 0.9.2 (2025-10-16)
 
 Full Changelog: [v0.9.1...v0.9.2](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.9.1...v0.9.2)
