@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.10.1 (2025-11-05)
+
+Full Changelog: [v0.10.0...v0.10.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.10.0...v0.10.1)
+
+### Bug Fixes
+
+* better thread safety via early initializing SSL store during HTTP client creation ([d085426](https://github.com/e-invoice-be/e-invoice-rb/commit/d08542612d127f1914ed20172441cfe64f4c2ba6))
+
+
+### Chores
+
+* bump dependency version and update sorbet types ([82b7467](https://github.com/e-invoice-be/e-invoice-rb/commit/82b74674056783e820aad541764b54808c3a80ce))
+
 ## 0.10.0 (2025-10-24)
 
 Full Changelog: [v0.9.2...v0.10.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.9.2...v0.10.0)
