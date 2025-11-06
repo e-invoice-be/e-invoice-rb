@@ -84,7 +84,7 @@ module EInvoiceAPI
       #
       # @param tax_details [Array<EInvoiceAPI::Models::DocumentCreate::TaxDetail>, nil]
       #
-      # @param total_discount [Float, String, nil] The total financial discount of the invoice (so discounts not subject to VAT). M
+      # @param total_discount [Float, String, nil] The net financial discount/charge of the invoice (non-VAT charges minus non-VAT
       #
       # @param total_tax [Float, String, nil] The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
       #
