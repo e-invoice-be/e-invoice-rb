@@ -215,8 +215,9 @@ module EInvoiceAPI
                nil?: true
 
       # @!attribute total_discount
-      #   The total financial discount of the invoice (so discounts not subject to VAT).
-      #   Must be positive and rounded to maximum 2 decimals
+      #   The net financial discount/charge of the invoice (non-VAT charges minus non-VAT
+      #   allowances). Can be positive (net charge), negative (net discount), or zero.
+      #   Must be rounded to maximum 2 decimals
       #
       #   @return [String, nil]
       optional :total_discount, String, nil?: true
@@ -352,7 +353,7 @@ module EInvoiceAPI
       #
       #   @param tax_details [Array<EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxDetail>, nil]
       #
-      #   @param total_discount [String, nil] The total financial discount of the invoice (so discounts not subject to VAT). M
+      #   @param total_discount [String, nil] The net financial discount/charge of the invoice (non-VAT charges minus non-VAT
       #
       #   @param total_tax [String, nil] The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
       #
