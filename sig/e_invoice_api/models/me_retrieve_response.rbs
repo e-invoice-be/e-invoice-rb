@@ -12,6 +12,7 @@ module EInvoiceAPI
         company_email: String?,
         company_name: String?,
         company_number: String?,
+        company_tax_id: String?,
         company_zip: String?,
         description: String?,
         ibans: ::Array[String]?,
@@ -41,6 +42,8 @@ module EInvoiceAPI
 
       attr_accessor company_number: String?
 
+      attr_accessor company_tax_id: String?
+
       attr_accessor company_zip: String?
 
       attr_accessor description: String?
@@ -64,6 +67,7 @@ module EInvoiceAPI
         ?company_email: String?,
         ?company_name: String?,
         ?company_number: String?,
+        ?company_tax_id: String?,
         ?company_zip: String?,
         ?description: String?,
         ?ibans: ::Array[String]?,
@@ -83,6 +87,7 @@ module EInvoiceAPI
         company_email: String?,
         company_name: String?,
         company_number: String?,
+        company_tax_id: String?,
         company_zip: String?,
         description: String?,
         ibans: ::Array[String]?,

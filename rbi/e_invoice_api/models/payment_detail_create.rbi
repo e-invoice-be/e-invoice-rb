@@ -11,15 +11,20 @@ module EInvoiceAPI
           )
         end
 
+      # Bank account number (for non-IBAN accounts)
       sig { returns(T.nilable(String)) }
       attr_accessor :bank_account_number
 
+      # International Bank Account Number for payment transfers
       sig { returns(T.nilable(String)) }
       attr_accessor :iban
 
+      # Structured payment reference or communication (e.g., structured communication
+      # for Belgian bank transfers)
       sig { returns(T.nilable(String)) }
       attr_accessor :payment_reference
 
+      # SWIFT/BIC code of the bank
       sig { returns(T.nilable(String)) }
       attr_accessor :swift
 
@@ -32,9 +37,14 @@ module EInvoiceAPI
         ).returns(T.attached_class)
       end
       def self.new(
+        # Bank account number (for non-IBAN accounts)
         bank_account_number: nil,
+        # International Bank Account Number for payment transfers
         iban: nil,
+        # Structured payment reference or communication (e.g., structured communication
+        # for Belgian bank transfers)
         payment_reference: nil,
+        # SWIFT/BIC code of the bank
         swift: nil
       )
       end
