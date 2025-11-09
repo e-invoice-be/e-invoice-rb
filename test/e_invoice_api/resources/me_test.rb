@@ -24,6 +24,7 @@ class EInvoiceAPI::Test::Resources::MeTest < EInvoiceAPI::Test::ResourceTest
         company_email: String | nil,
         company_name: String | nil,
         company_number: String | nil,
+        company_tax_id: String | nil,
         company_zip: String | nil,
         description: String | nil,
         ibans: ^(EInvoiceAPI::Internal::Type::ArrayOf[String]) | nil,

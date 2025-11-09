@@ -24,6 +24,7 @@ class EInvoiceAPI::Test::Resources::Documents::UblTest < EInvoiceAPI::Test::Reso
         currency: EInvoiceAPI::CurrencyCode | nil,
         customer_address: String | nil,
         customer_address_recipient: String | nil,
+        customer_company_id: String | nil,
         customer_email: String | nil,
         customer_id: String | nil,
         customer_name: String | nil,
@@ -58,6 +59,7 @@ class EInvoiceAPI::Test::Resources::Documents::UblTest < EInvoiceAPI::Test::Reso
         vatex_note: String | nil,
         vendor_address: String | nil,
         vendor_address_recipient: String | nil,
+        vendor_company_id: String | nil,
         vendor_email: String | nil,
         vendor_name: String | nil,
         vendor_tax_id: String | nil

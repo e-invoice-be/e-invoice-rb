@@ -16,8 +16,7 @@ module EInvoiceAPI
       end
       attr_accessor :allowances
 
-      # The amount due of the invoice. Must be positive and rounded to maximum 2
-      # decimals
+      # The amount due for payment. Must be positive and rounded to maximum 2 decimals
       sig { returns(T.nilable(String)) }
       attr_accessor :amount_due
 
@@ -26,9 +25,11 @@ module EInvoiceAPI
       end
       attr_accessor :attachments
 
+      # The billing address (if different from customer address)
       sig { returns(T.nilable(String)) }
       attr_accessor :billing_address
 
+      # The recipient name at the billing address
       sig { returns(T.nilable(String)) }
       attr_accessor :billing_address_recipient
 
@@ -37,60 +38,78 @@ module EInvoiceAPI
       end
       attr_accessor :charges
 
-      # Currency of the invoice
+      # Currency of the invoice (ISO 4217 currency code)
       sig { returns(T.nilable(EInvoiceAPI::CurrencyCode::TaggedSymbol)) }
       attr_reader :currency
 
       sig { params(currency: EInvoiceAPI::CurrencyCode::OrSymbol).void }
       attr_writer :currency
 
+      # The address of the customer/buyer
       sig { returns(T.nilable(String)) }
       attr_accessor :customer_address
 
+      # The recipient name at the customer address
       sig { returns(T.nilable(String)) }
       attr_accessor :customer_address_recipient
 
+      # Customer company ID. For Belgium this is the CBE number or their EUID (European
+      # Unique Identifier) number. In the Netherlands this is the KVK number.
+      sig { returns(T.nilable(String)) }
+      attr_accessor :customer_company_id
+
+      # The email address of the customer
       sig { returns(T.nilable(String)) }
       attr_accessor :customer_email
 
+      # The unique identifier for the customer in your system
       sig { returns(T.nilable(String)) }
       attr_accessor :customer_id
 
+      # The company name of the customer/buyer
       sig { returns(T.nilable(String)) }
       attr_accessor :customer_name
 
+      # Customer tax ID. For Belgium this is the VAT number. Must include the country
+      # prefix
       sig { returns(T.nilable(String)) }
       attr_accessor :customer_tax_id
 
+      # The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
       sig { returns(T.nilable(EInvoiceAPI::DocumentDirection::TaggedSymbol)) }
       attr_reader :direction
 
       sig { params(direction: EInvoiceAPI::DocumentDirection::OrSymbol).void }
       attr_writer :direction
 
+      # The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
       sig { returns(T.nilable(EInvoiceAPI::DocumentType::TaggedSymbol)) }
       attr_reader :document_type
 
       sig { params(document_type: EInvoiceAPI::DocumentType::OrSymbol).void }
       attr_writer :document_type
 
+      # The date when payment is due
       sig { returns(T.nilable(Date)) }
       attr_accessor :due_date
 
+      # The date when the invoice was issued
       sig { returns(T.nilable(Date)) }
       attr_accessor :invoice_date
 
+      # The unique invoice identifier/number
       sig { returns(T.nilable(String)) }
       attr_accessor :invoice_id
 
-      # The total amount of the invoice (so invoice_total = subtotal + total_tax +
-      # total_discount). Must be positive and rounded to maximum 2 decimals
+      # The total amount of the invoice including tax (invoice_total = subtotal +
+      # total_tax + total_discount). Must be positive and rounded to maximum 2 decimals
       sig { returns(T.nilable(String)) }
       attr_accessor :invoice_total
 
       sig { returns(T.nilable(T::Array[EInvoiceAPI::DocumentResponse::Item])) }
       attr_accessor :items
 
+      # Additional notes or comments for the invoice
       sig { returns(T.nilable(String)) }
       attr_accessor :note
 
@@ -101,41 +120,52 @@ module EInvoiceAPI
       end
       attr_accessor :payment_details
 
+      # The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
       sig { returns(T.nilable(String)) }
       attr_accessor :payment_term
 
-      # The previous unpaid balance of the invoice, if any. Must be positive and rounded
-      # to maximum 2 decimals
+      # The previous unpaid balance from prior invoices, if any. Must be positive and
+      # rounded to maximum 2 decimals
       sig { returns(T.nilable(String)) }
       attr_accessor :previous_unpaid_balance
 
+      # The purchase order reference number
       sig { returns(T.nilable(String)) }
       attr_accessor :purchase_order
 
+      # The address where payment should be sent or remitted to
       sig { returns(T.nilable(String)) }
       attr_accessor :remittance_address
 
+      # The recipient name at the remittance address
       sig { returns(T.nilable(String)) }
       attr_accessor :remittance_address_recipient
 
+      # The address where services were performed or goods were delivered
       sig { returns(T.nilable(String)) }
       attr_accessor :service_address
 
+      # The recipient name at the service address
       sig { returns(T.nilable(String)) }
       attr_accessor :service_address_recipient
 
+      # The end date of the service period or delivery period
       sig { returns(T.nilable(Date)) }
       attr_accessor :service_end_date
 
+      # The start date of the service period or delivery period
       sig { returns(T.nilable(Date)) }
       attr_accessor :service_start_date
 
+      # The shipping/delivery address
       sig { returns(T.nilable(String)) }
       attr_accessor :shipping_address
 
+      # The recipient name at the shipping address
       sig { returns(T.nilable(String)) }
       attr_accessor :shipping_address_recipient
 
+      # The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
       sig { returns(T.nilable(EInvoiceAPI::DocumentState::TaggedSymbol)) }
       attr_reader :state
 
@@ -148,7 +178,8 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :subtotal
 
-      # Tax category code of the invoice
+      # Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E
+      # for exempt)
       sig do
         returns(T.nilable(EInvoiceAPI::DocumentResponse::TaxCode::TaggedSymbol))
       end
@@ -170,7 +201,8 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :total_discount
 
-      # The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
+      # The total tax amount of the invoice. Must be positive and rounded to maximum 2
+      # decimals
       sig { returns(T.nilable(String)) }
       attr_accessor :total_tax
 
@@ -182,22 +214,33 @@ module EInvoiceAPI
       end
       attr_accessor :vatex
 
-      # VAT exemption note of the invoice
+      # Textual explanation for VAT exemption
       sig { returns(T.nilable(String)) }
       attr_accessor :vatex_note
 
+      # The address of the vendor/seller
       sig { returns(T.nilable(String)) }
       attr_accessor :vendor_address
 
+      # The recipient name at the vendor address
       sig { returns(T.nilable(String)) }
       attr_accessor :vendor_address_recipient
 
+      # Vendor company ID. For Belgium this is the CBE number or their EUID (European
+      # Unique Identifier) number. In the Netherlands this is the KVK number.
+      sig { returns(T.nilable(String)) }
+      attr_accessor :vendor_company_id
+
+      # The email address of the vendor
       sig { returns(T.nilable(String)) }
       attr_accessor :vendor_email
 
+      # The name of the vendor/seller/supplier
       sig { returns(T.nilable(String)) }
       attr_accessor :vendor_name
 
+      # Vendor tax ID. For Belgium this is the VAT number. Must include the country
+      # prefix
       sig { returns(T.nilable(String)) }
       attr_accessor :vendor_tax_id
 
@@ -220,6 +263,7 @@ module EInvoiceAPI
           currency: EInvoiceAPI::CurrencyCode::OrSymbol,
           customer_address: T.nilable(String),
           customer_address_recipient: T.nilable(String),
+          customer_company_id: T.nilable(String),
           customer_email: T.nilable(String),
           customer_id: T.nilable(String),
           customer_name: T.nilable(String),
@@ -261,6 +305,7 @@ module EInvoiceAPI
           vatex_note: T.nilable(String),
           vendor_address: T.nilable(String),
           vendor_address_recipient: T.nilable(String),
+          vendor_company_id: T.nilable(String),
           vendor_email: T.nilable(String),
           vendor_name: T.nilable(String),
           vendor_tax_id: T.nilable(String)
@@ -269,69 +314,108 @@ module EInvoiceAPI
       def self.new(
         id:,
         allowances: nil,
-        # The amount due of the invoice. Must be positive and rounded to maximum 2
-        # decimals
+        # The amount due for payment. Must be positive and rounded to maximum 2 decimals
         amount_due: nil,
         attachments: nil,
+        # The billing address (if different from customer address)
         billing_address: nil,
+        # The recipient name at the billing address
         billing_address_recipient: nil,
         charges: nil,
-        # Currency of the invoice
+        # Currency of the invoice (ISO 4217 currency code)
         currency: nil,
+        # The address of the customer/buyer
         customer_address: nil,
+        # The recipient name at the customer address
         customer_address_recipient: nil,
+        # Customer company ID. For Belgium this is the CBE number or their EUID (European
+        # Unique Identifier) number. In the Netherlands this is the KVK number.
+        customer_company_id: nil,
+        # The email address of the customer
         customer_email: nil,
+        # The unique identifier for the customer in your system
         customer_id: nil,
+        # The company name of the customer/buyer
         customer_name: nil,
+        # Customer tax ID. For Belgium this is the VAT number. Must include the country
+        # prefix
         customer_tax_id: nil,
+        # The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
         direction: nil,
+        # The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
         document_type: nil,
+        # The date when payment is due
         due_date: nil,
+        # The date when the invoice was issued
         invoice_date: nil,
+        # The unique invoice identifier/number
         invoice_id: nil,
-        # The total amount of the invoice (so invoice_total = subtotal + total_tax +
-        # total_discount). Must be positive and rounded to maximum 2 decimals
+        # The total amount of the invoice including tax (invoice_total = subtotal +
+        # total_tax + total_discount). Must be positive and rounded to maximum 2 decimals
         invoice_total: nil,
         items: nil,
+        # Additional notes or comments for the invoice
         note: nil,
         payment_details: nil,
+        # The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
         payment_term: nil,
-        # The previous unpaid balance of the invoice, if any. Must be positive and rounded
-        # to maximum 2 decimals
+        # The previous unpaid balance from prior invoices, if any. Must be positive and
+        # rounded to maximum 2 decimals
         previous_unpaid_balance: nil,
+        # The purchase order reference number
         purchase_order: nil,
+        # The address where payment should be sent or remitted to
         remittance_address: nil,
+        # The recipient name at the remittance address
         remittance_address_recipient: nil,
+        # The address where services were performed or goods were delivered
         service_address: nil,
+        # The recipient name at the service address
         service_address_recipient: nil,
+        # The end date of the service period or delivery period
         service_end_date: nil,
+        # The start date of the service period or delivery period
         service_start_date: nil,
+        # The shipping/delivery address
         shipping_address: nil,
+        # The recipient name at the shipping address
         shipping_address_recipient: nil,
+        # The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
         state: nil,
         # The taxable base of the invoice. Should be the sum of all line items -
         # allowances (for example commercial discounts) + charges with impact on VAT. Must
         # be positive and rounded to maximum 2 decimals
         subtotal: nil,
-        # Tax category code of the invoice
+        # Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E
+        # for exempt)
         tax_code: nil,
         tax_details: nil,
         # The net financial discount/charge of the invoice (non-VAT charges minus non-VAT
         # allowances). Can be positive (net charge), negative (net discount), or zero.
         # Must be rounded to maximum 2 decimals
         total_discount: nil,
-        # The total tax of the invoice. Must be positive and rounded to maximum 2 decimals
+        # The total tax amount of the invoice. Must be positive and rounded to maximum 2
+        # decimals
         total_tax: nil,
         # VATEX code list for VAT exemption reasons
         #
         # Agency: CEF Identifier: vatex
         vatex: nil,
-        # VAT exemption note of the invoice
+        # Textual explanation for VAT exemption
         vatex_note: nil,
+        # The address of the vendor/seller
         vendor_address: nil,
+        # The recipient name at the vendor address
         vendor_address_recipient: nil,
+        # Vendor company ID. For Belgium this is the CBE number or their EUID (European
+        # Unique Identifier) number. In the Netherlands this is the KVK number.
+        vendor_company_id: nil,
+        # The email address of the vendor
         vendor_email: nil,
+        # The name of the vendor/seller/supplier
         vendor_name: nil,
+        # Vendor tax ID. For Belgium this is the VAT number. Must include the country
+        # prefix
         vendor_tax_id: nil
       )
       end
@@ -351,6 +435,7 @@ module EInvoiceAPI
             currency: EInvoiceAPI::CurrencyCode::TaggedSymbol,
             customer_address: T.nilable(String),
             customer_address_recipient: T.nilable(String),
+            customer_company_id: T.nilable(String),
             customer_email: T.nilable(String),
             customer_id: T.nilable(String),
             customer_name: T.nilable(String),
@@ -388,6 +473,7 @@ module EInvoiceAPI
             vatex_note: T.nilable(String),
             vendor_address: T.nilable(String),
             vendor_address_recipient: T.nilable(String),
+            vendor_company_id: T.nilable(String),
             vendor_email: T.nilable(String),
             vendor_name: T.nilable(String),
             vendor_tax_id: T.nilable(String)
@@ -879,15 +965,20 @@ module EInvoiceAPI
             )
           end
 
+        # Bank account number (for non-IBAN accounts)
         sig { returns(T.nilable(String)) }
         attr_accessor :bank_account_number
 
+        # International Bank Account Number for payment transfers
         sig { returns(T.nilable(String)) }
         attr_accessor :iban
 
+        # Structured payment reference or communication (e.g., structured communication
+        # for Belgian bank transfers)
         sig { returns(T.nilable(String)) }
         attr_accessor :payment_reference
 
+        # SWIFT/BIC code of the bank
         sig { returns(T.nilable(String)) }
         attr_accessor :swift
 
@@ -900,9 +991,14 @@ module EInvoiceAPI
           ).returns(T.attached_class)
         end
         def self.new(
+          # Bank account number (for non-IBAN accounts)
           bank_account_number: nil,
+          # International Bank Account Number for payment transfers
           iban: nil,
+          # Structured payment reference or communication (e.g., structured communication
+          # for Belgian bank transfers)
           payment_reference: nil,
+          # SWIFT/BIC code of the bank
           swift: nil
         )
         end
@@ -921,7 +1017,8 @@ module EInvoiceAPI
         end
       end
 
-      # Tax category code of the invoice
+      # Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E
+      # for exempt)
       module TaxCode
         extend EInvoiceAPI::Internal::Type::Enum
 
@@ -958,9 +1055,11 @@ module EInvoiceAPI
             )
           end
 
+        # The tax amount for this tax category. Must be rounded to maximum 2 decimals
         sig { returns(T.nilable(String)) }
         attr_accessor :amount
 
+        # The tax rate as a percentage (e.g., '21.00', '6.00', '0.00')
         sig { returns(T.nilable(String)) }
         attr_accessor :rate
 
@@ -969,7 +1068,12 @@ module EInvoiceAPI
             T.attached_class
           )
         end
-        def self.new(amount: nil, rate: nil)
+        def self.new(
+          # The tax amount for this tax category. Must be rounded to maximum 2 decimals
+          amount: nil,
+          # The tax rate as a percentage (e.g., '21.00', '6.00', '0.00')
+          rate: nil
+        )
         end
 
         sig do

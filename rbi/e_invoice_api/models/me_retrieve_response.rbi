@@ -28,7 +28,7 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :bcc_recipient_email
 
-      # Address of the company
+      # Address of the company. Must be in the form of `Street Name Street Number`
       sig { returns(T.nilable(String)) }
       attr_accessor :company_address
 
@@ -44,13 +44,20 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :company_email
 
-      # Name of the company
+      # Name of the company. Must include the company type. For example: `BV`, `NV`,
+      # `CVBA`, `VOF`
       sig { returns(T.nilable(String)) }
       attr_accessor :company_name
 
-      # Company number
+      # Company number. For Belgium this is the CBE number or their EUID (European
+      # Unique Identifier) number
       sig { returns(T.nilable(String)) }
       attr_accessor :company_number
+
+      # Company tax ID. For Belgium this is the VAT number. Must include the country
+      # prefix
+      sig { returns(T.nilable(String)) }
+      attr_accessor :company_tax_id
 
       # Zip code of the company
       sig { returns(T.nilable(String)) }
@@ -87,6 +94,7 @@ module EInvoiceAPI
           company_email: T.nilable(String),
           company_name: T.nilable(String),
           company_number: T.nilable(String),
+          company_tax_id: T.nilable(String),
           company_zip: T.nilable(String),
           description: T.nilable(String),
           ibans: T.nilable(T::Array[String]),
@@ -103,7 +111,7 @@ module EInvoiceAPI
         plan:,
         # BCC recipient email to deliver documents
         bcc_recipient_email: nil,
-        # Address of the company
+        # Address of the company. Must be in the form of `Street Name Street Number`
         company_address: nil,
         # City of the company
         company_city: nil,
@@ -111,10 +119,15 @@ module EInvoiceAPI
         company_country: nil,
         # Email of the company
         company_email: nil,
-        # Name of the company
+        # Name of the company. Must include the company type. For example: `BV`, `NV`,
+        # `CVBA`, `VOF`
         company_name: nil,
-        # Company number
+        # Company number. For Belgium this is the CBE number or their EUID (European
+        # Unique Identifier) number
         company_number: nil,
+        # Company tax ID. For Belgium this is the VAT number. Must include the country
+        # prefix
+        company_tax_id: nil,
         # Zip code of the company
         company_zip: nil,
         description: nil,
@@ -142,6 +155,7 @@ module EInvoiceAPI
             company_email: T.nilable(String),
             company_name: T.nilable(String),
             company_number: T.nilable(String),
+            company_tax_id: T.nilable(String),
             company_zip: T.nilable(String),
             description: T.nilable(String),
             ibans: T.nilable(T::Array[String]),
