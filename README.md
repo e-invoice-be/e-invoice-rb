@@ -83,7 +83,7 @@ file =
   EInvoiceAPI::FilePart.new(File.read("/path/to/file"), filename: "/path/to/file", content_type: "…")
 response = e_invoice.documents.create_from_pdf(file: file)
 
-puts(response.customer_id)
+puts(response.customer_company_id)
 ```
 
 Note that you can also pass a raw `IO` descriptor, but this disables retries, as the library can't be sure if the descriptor is a file or pipe (which cannot be rewound).

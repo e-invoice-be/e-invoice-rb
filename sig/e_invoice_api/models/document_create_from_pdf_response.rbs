@@ -11,6 +11,7 @@ module EInvoiceAPI
         currency: EInvoiceAPI::Models::currency_code,
         customer_address: String?,
         customer_address_recipient: String?,
+        customer_company_id: String?,
         customer_email: String?,
         customer_id: String?,
         customer_name: String?,
@@ -47,6 +48,7 @@ module EInvoiceAPI
         vatex_note: String?,
         vendor_address: String?,
         vendor_address_recipient: String?,
+        vendor_company_id: String?,
         vendor_email: String?,
         vendor_name: String?,
         vendor_tax_id: String?
@@ -74,6 +76,8 @@ module EInvoiceAPI
       attr_accessor customer_address: String?
 
       attr_accessor customer_address_recipient: String?
+
+      attr_accessor customer_company_id: String?
 
       attr_accessor customer_email: String?
 
@@ -169,6 +173,8 @@ module EInvoiceAPI
 
       attr_accessor vendor_address_recipient: String?
 
+      attr_accessor vendor_company_id: String?
+
       attr_accessor vendor_email: String?
 
       attr_accessor vendor_name: String?
@@ -185,6 +191,7 @@ module EInvoiceAPI
         ?currency: EInvoiceAPI::Models::currency_code,
         ?customer_address: String?,
         ?customer_address_recipient: String?,
+        ?customer_company_id: String?,
         ?customer_email: String?,
         ?customer_id: String?,
         ?customer_name: String?,
@@ -221,6 +228,7 @@ module EInvoiceAPI
         ?vatex_note: String?,
         ?vendor_address: String?,
         ?vendor_address_recipient: String?,
+        ?vendor_company_id: String?,
         ?vendor_email: String?,
         ?vendor_name: String?,
         ?vendor_tax_id: String?
@@ -236,6 +244,7 @@ module EInvoiceAPI
         currency: EInvoiceAPI::Models::currency_code,
         customer_address: String?,
         customer_address_recipient: String?,
+        customer_company_id: String?,
         customer_email: String?,
         customer_id: String?,
         customer_name: String?,
@@ -272,6 +281,7 @@ module EInvoiceAPI
         vatex_note: String?,
         vendor_address: String?,
         vendor_address_recipient: String?,
+        vendor_company_id: String?,
         vendor_email: String?,
         vendor_name: String?,
         vendor_tax_id: String?

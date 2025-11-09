@@ -28,7 +28,7 @@ module EInvoiceAPI
       optional :bcc_recipient_email, String, nil?: true
 
       # @!attribute company_address
-      #   Address of the company
+      #   Address of the company. Must be in the form of `Street Name Street Number`
       #
       #   @return [String, nil]
       optional :company_address, String, nil?: true
@@ -52,16 +52,25 @@ module EInvoiceAPI
       optional :company_email, String, nil?: true
 
       # @!attribute company_name
-      #   Name of the company
+      #   Name of the company. Must include the company type. For example: `BV`, `NV`,
+      #   `CVBA`, `VOF`
       #
       #   @return [String, nil]
       optional :company_name, String, nil?: true
 
       # @!attribute company_number
-      #   Company number
+      #   Company number. For Belgium this is the CBE number or their EUID (European
+      #   Unique Identifier) number
       #
       #   @return [String, nil]
       optional :company_number, String, nil?: true
+
+      # @!attribute company_tax_id
+      #   Company tax ID. For Belgium this is the VAT number. Must include the country
+      #   prefix
+      #
+      #   @return [String, nil]
+      optional :company_tax_id, String, nil?: true
 
       # @!attribute company_zip
       #   Zip code of the company
@@ -98,7 +107,10 @@ module EInvoiceAPI
       #   @return [Time, nil]
       optional :smp_registration_date, Time, nil?: true
 
-      # @!method initialize(credit_balance:, name:, plan:, bcc_recipient_email: nil, company_address: nil, company_city: nil, company_country: nil, company_email: nil, company_name: nil, company_number: nil, company_zip: nil, description: nil, ibans: nil, peppol_ids: nil, smp_registration: nil, smp_registration_date: nil)
+      # @!method initialize(credit_balance:, name:, plan:, bcc_recipient_email: nil, company_address: nil, company_city: nil, company_country: nil, company_email: nil, company_name: nil, company_number: nil, company_tax_id: nil, company_zip: nil, description: nil, ibans: nil, peppol_ids: nil, smp_registration: nil, smp_registration_date: nil)
+      #   Some parameter documentations has been truncated, see
+      #   {EInvoiceAPI::Models::MeRetrieveResponse} for more details.
+      #
       #   @param credit_balance [Integer] Credit balance of the tenant
       #
       #   @param name [String]
@@ -107,7 +119,7 @@ module EInvoiceAPI
       #
       #   @param bcc_recipient_email [String, nil] BCC recipient email to deliver documents
       #
-      #   @param company_address [String, nil] Address of the company
+      #   @param company_address [String, nil] Address of the company. Must be in the form of `Street Name Street Number`
       #
       #   @param company_city [String, nil] City of the company
       #
@@ -115,9 +127,11 @@ module EInvoiceAPI
       #
       #   @param company_email [String, nil] Email of the company
       #
-      #   @param company_name [String, nil] Name of the company
+      #   @param company_name [String, nil] Name of the company. Must include the company type. For example: `BV`, `NV`, `CV
       #
-      #   @param company_number [String, nil] Company number
+      #   @param company_number [String, nil] Company number. For Belgium this is the CBE number or their EUID (European Uniqu
+      #
+      #   @param company_tax_id [String, nil] Company tax ID. For Belgium this is the VAT number. Must include the country pre
       #
       #   @param company_zip [String, nil] Zip code of the company
       #
