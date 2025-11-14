@@ -39,7 +39,6 @@ class EInvoiceAPI::Test::Resources::Documents::UblTest < EInvoiceAPI::Test::Reso
         note: String | nil,
         payment_details: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::PaymentDetail]) | nil,
         payment_term: String | nil,
-        previous_unpaid_balance: String | nil,
         purchase_order: String | nil,
         remittance_address: String | nil,
         remittance_address_recipient: String | nil,

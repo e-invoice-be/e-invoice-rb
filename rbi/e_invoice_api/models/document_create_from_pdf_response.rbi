@@ -133,11 +133,6 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :payment_term
 
-      # The previous unpaid balance from prior invoices, if any. Must be positive and
-      # rounded to maximum 2 decimals
-      sig { returns(T.nilable(String)) }
-      attr_accessor :previous_unpaid_balance
-
       # The purchase order reference number
       sig { returns(T.nilable(String)) }
       attr_accessor :purchase_order
@@ -312,7 +307,6 @@ module EInvoiceAPI
           payment_details:
             T.nilable(T::Array[EInvoiceAPI::PaymentDetailCreate::OrHash]),
           payment_term: T.nilable(String),
-          previous_unpaid_balance: T.nilable(String),
           purchase_order: T.nilable(String),
           remittance_address: T.nilable(String),
           remittance_address_recipient: T.nilable(String),
@@ -397,9 +391,6 @@ module EInvoiceAPI
         payment_details: nil,
         # The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
         payment_term: nil,
-        # The previous unpaid balance from prior invoices, if any. Must be positive and
-        # rounded to maximum 2 decimals
-        previous_unpaid_balance: nil,
         # The purchase order reference number
         purchase_order: nil,
         # The address where payment should be sent or remitted to
@@ -494,7 +485,6 @@ module EInvoiceAPI
             payment_details:
               T.nilable(T::Array[EInvoiceAPI::PaymentDetailCreate]),
             payment_term: T.nilable(String),
-            previous_unpaid_balance: T.nilable(String),
             purchase_order: T.nilable(String),
             remittance_address: T.nilable(String),
             remittance_address_recipient: T.nilable(String),
@@ -548,9 +538,10 @@ module EInvoiceAPI
         sig { returns(T.nilable(T::Array[EInvoiceAPI::Allowance])) }
         attr_accessor :allowances
 
-        # The total amount of the line item, exclusive of VAT, after subtracting line
-        # level allowances and adding line level charges. Must be rounded to maximum 2
-        # decimals
+        # The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
+        # allowances and charges. Calculated as: ((unit_price / price_base_quantity) \*
+        # quantity) - allowances + charges. Must be rounded to maximum 2 decimals. Can be
+        # negative for credit notes or corrections.
         sig { returns(T.nilable(String)) }
         attr_accessor :amount
 
@@ -570,11 +561,13 @@ module EInvoiceAPI
         attr_accessor :product_code
 
         # The quantity of items (goods or services) that is the subject of the line item.
-        # Must be rounded to maximum 4 decimals
+        # Must be rounded to maximum 4 decimals. Can be negative for credit notes or
+        # corrections.
         sig { returns(T.nilable(String)) }
         attr_accessor :quantity
 
-        # The total VAT amount for the line item. Must be rounded to maximum 2 decimals
+        # The total VAT amount for the line item. Must be rounded to maximum 2 decimals.
+        # Can be negative for credit notes or corrections.
         sig { returns(T.nilable(String)) }
         attr_accessor :tax
 
@@ -586,7 +579,8 @@ module EInvoiceAPI
         sig { returns(T.nilable(EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)) }
         attr_accessor :unit
 
-        # The unit price of the line item. Must be rounded to maximum 2 decimals
+        # The item net price (BT-146). The price of an item, exclusive of VAT, after
+        # subtracting item price discount. Must be rounded to maximum 4 decimals
         sig { returns(T.nilable(String)) }
         attr_accessor :unit_price
 
@@ -608,9 +602,10 @@ module EInvoiceAPI
         def self.new(
           # The allowances of the line item.
           allowances: nil,
-          # The total amount of the line item, exclusive of VAT, after subtracting line
-          # level allowances and adding line level charges. Must be rounded to maximum 2
-          # decimals
+          # The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
+          # allowances and charges. Calculated as: ((unit_price / price_base_quantity) \*
+          # quantity) - allowances + charges. Must be rounded to maximum 2 decimals. Can be
+          # negative for credit notes or corrections.
           amount: nil,
           # The charges of the line item.
           charges: nil,
@@ -620,15 +615,18 @@ module EInvoiceAPI
           # The product code of the line item.
           product_code: nil,
           # The quantity of items (goods or services) that is the subject of the line item.
-          # Must be rounded to maximum 4 decimals
+          # Must be rounded to maximum 4 decimals. Can be negative for credit notes or
+          # corrections.
           quantity: nil,
-          # The total VAT amount for the line item. Must be rounded to maximum 2 decimals
+          # The total VAT amount for the line item. Must be rounded to maximum 2 decimals.
+          # Can be negative for credit notes or corrections.
           tax: nil,
           # The VAT rate of the line item expressed as percentage with 2 decimals
           tax_rate: nil,
           # Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
           unit: nil,
-          # The unit price of the line item. Must be rounded to maximum 2 decimals
+          # The item net price (BT-146). The price of an item, exclusive of VAT, after
+          # subtracting item price discount. Must be rounded to maximum 4 decimals
           unit_price: nil
         )
         end

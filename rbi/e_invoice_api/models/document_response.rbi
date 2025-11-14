@@ -124,11 +124,6 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :payment_term
 
-      # The previous unpaid balance from prior invoices, if any. Must be positive and
-      # rounded to maximum 2 decimals
-      sig { returns(T.nilable(String)) }
-      attr_accessor :previous_unpaid_balance
-
       # The purchase order reference number
       sig { returns(T.nilable(String)) }
       attr_accessor :purchase_order
@@ -282,7 +277,6 @@ module EInvoiceAPI
               T::Array[EInvoiceAPI::DocumentResponse::PaymentDetail::OrHash]
             ),
           payment_term: T.nilable(String),
-          previous_unpaid_balance: T.nilable(String),
           purchase_order: T.nilable(String),
           remittance_address: T.nilable(String),
           remittance_address_recipient: T.nilable(String),
@@ -359,9 +353,6 @@ module EInvoiceAPI
         payment_details: nil,
         # The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
         payment_term: nil,
-        # The previous unpaid balance from prior invoices, if any. Must be positive and
-        # rounded to maximum 2 decimals
-        previous_unpaid_balance: nil,
         # The purchase order reference number
         purchase_order: nil,
         # The address where payment should be sent or remitted to
@@ -451,7 +442,6 @@ module EInvoiceAPI
             payment_details:
               T.nilable(T::Array[EInvoiceAPI::DocumentResponse::PaymentDetail]),
             payment_term: T.nilable(String),
-            previous_unpaid_balance: T.nilable(String),
             purchase_order: T.nilable(String),
             remittance_address: T.nilable(String),
             remittance_address_recipient: T.nilable(String),
@@ -502,7 +492,8 @@ module EInvoiceAPI
         attr_accessor :base_amount
 
         # The percentage that may be used, in conjunction with the allowance base amount,
-        # to calculate the allowance amount. To state 20%, use value 20
+        # to calculate the allowance amount. To state 20%, use value 20. Must be rounded
+        # to maximum 2 decimals
         sig { returns(T.nilable(String)) }
         attr_accessor :multiplier_factor
 
@@ -510,13 +501,17 @@ module EInvoiceAPI
         sig { returns(T.nilable(String)) }
         attr_accessor :reason
 
-        # The code for the allowance reason
-        sig { returns(T.nilable(String)) }
+        # Allowance reason codes for invoice discounts and charges
+        sig do
+          returns(
+            T.nilable(
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          )
+        end
         attr_accessor :reason_code
 
-        # Duty or tax or fee category codes (Subset of UNCL5305)
-        #
-        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+        # The VAT category code that applies to the allowance
         sig do
           returns(
             T.nilable(
@@ -524,9 +519,18 @@ module EInvoiceAPI
             )
           )
         end
-        attr_accessor :tax_code
+        attr_reader :tax_code
 
-        # The VAT rate, represented as percentage that applies to the allowance
+        sig do
+          params(
+            tax_code:
+              EInvoiceAPI::DocumentResponse::Allowance::TaxCode::OrSymbol
+          ).void
+        end
+        attr_writer :tax_code
+
+        # The VAT rate, represented as percentage that applies to the allowance. Must be
+        # rounded to maximum 2 decimals
         sig { returns(T.nilable(String)) }
         attr_accessor :tax_rate
 
@@ -536,11 +540,12 @@ module EInvoiceAPI
             base_amount: T.nilable(String),
             multiplier_factor: T.nilable(String),
             reason: T.nilable(String),
-            reason_code: T.nilable(String),
-            tax_code:
+            reason_code:
               T.nilable(
-                EInvoiceAPI::DocumentResponse::Allowance::TaxCode::OrSymbol
+                EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::OrSymbol
               ),
+            tax_code:
+              EInvoiceAPI::DocumentResponse::Allowance::TaxCode::OrSymbol,
             tax_rate: T.nilable(String)
           ).returns(T.attached_class)
         end
@@ -551,17 +556,17 @@ module EInvoiceAPI
           # to calculate the allowance amount. Must be rounded to maximum 2 decimals
           base_amount: nil,
           # The percentage that may be used, in conjunction with the allowance base amount,
-          # to calculate the allowance amount. To state 20%, use value 20
+          # to calculate the allowance amount. To state 20%, use value 20. Must be rounded
+          # to maximum 2 decimals
           multiplier_factor: nil,
           # The reason for the allowance
           reason: nil,
-          # The code for the allowance reason
+          # Allowance reason codes for invoice discounts and charges
           reason_code: nil,
-          # Duty or tax or fee category codes (Subset of UNCL5305)
-          #
-          # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+          # The VAT category code that applies to the allowance
           tax_code: nil,
-          # The VAT rate, represented as percentage that applies to the allowance
+          # The VAT rate, represented as percentage that applies to the allowance. Must be
+          # rounded to maximum 2 decimals
           tax_rate: nil
         )
         end
@@ -573,11 +578,12 @@ module EInvoiceAPI
               base_amount: T.nilable(String),
               multiplier_factor: T.nilable(String),
               reason: T.nilable(String),
-              reason_code: T.nilable(String),
-              tax_code:
+              reason_code:
                 T.nilable(
-                  EInvoiceAPI::DocumentResponse::Allowance::TaxCode::TaggedSymbol
+                  EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
                 ),
+              tax_code:
+                EInvoiceAPI::DocumentResponse::Allowance::TaxCode::TaggedSymbol,
               tax_rate: T.nilable(String)
             }
           )
@@ -585,9 +591,127 @@ module EInvoiceAPI
         def to_hash
         end
 
-        # Duty or tax or fee category codes (Subset of UNCL5305)
-        #
-        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+        # Allowance reason codes for invoice discounts and charges
+        module ReasonCode
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(
+                Symbol,
+                EInvoiceAPI::DocumentResponse::Allowance::ReasonCode
+              )
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          REASON_CODE_41 =
+            T.let(
+              :"41",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_42 =
+            T.let(
+              :"42",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_60 =
+            T.let(
+              :"60",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_62 =
+            T.let(
+              :"62",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_63 =
+            T.let(
+              :"63",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_64 =
+            T.let(
+              :"64",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_65 =
+            T.let(
+              :"65",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_66 =
+            T.let(
+              :"66",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_67 =
+            T.let(
+              :"67",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_68 =
+            T.let(
+              :"68",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_70 =
+            T.let(
+              :"70",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_71 =
+            T.let(
+              :"71",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_88 =
+            T.let(
+              :"88",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_95 =
+            T.let(
+              :"95",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_100 =
+            T.let(
+              :"100",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_102 =
+            T.let(
+              :"102",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_103 =
+            T.let(
+              :"103",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_104 =
+            T.let(
+              :"104",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+          REASON_CODE_105 =
+            T.let(
+              :"105",
+              EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                EInvoiceAPI::DocumentResponse::Allowance::ReasonCode::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
+        end
+
+        # The VAT category code that applies to the allowance
         module TaxCode
           extend EInvoiceAPI::Internal::Type::Enum
 
@@ -687,8 +811,14 @@ module EInvoiceAPI
         sig { returns(T.nilable(String)) }
         attr_accessor :reason
 
-        # The code for the charge reason
-        sig { returns(T.nilable(String)) }
+        # Charge reason codes for invoice charges and fees
+        sig do
+          returns(
+            T.nilable(
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          )
+        end
         attr_accessor :reason_code
 
         # Duty or tax or fee category codes (Subset of UNCL5305)
@@ -713,7 +843,10 @@ module EInvoiceAPI
             base_amount: T.nilable(String),
             multiplier_factor: T.nilable(String),
             reason: T.nilable(String),
-            reason_code: T.nilable(String),
+            reason_code:
+              T.nilable(
+                EInvoiceAPI::DocumentResponse::Charge::ReasonCode::OrSymbol
+              ),
             tax_code:
               T.nilable(
                 EInvoiceAPI::DocumentResponse::Charge::TaxCode::OrSymbol
@@ -732,7 +865,7 @@ module EInvoiceAPI
           multiplier_factor: nil,
           # The reason for the charge
           reason: nil,
-          # The code for the charge reason
+          # Charge reason codes for invoice charges and fees
           reason_code: nil,
           # Duty or tax or fee category codes (Subset of UNCL5305)
           #
@@ -750,7 +883,10 @@ module EInvoiceAPI
               base_amount: T.nilable(String),
               multiplier_factor: T.nilable(String),
               reason: T.nilable(String),
-              reason_code: T.nilable(String),
+              reason_code:
+                T.nilable(
+                  EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+                ),
               tax_code:
                 T.nilable(
                   EInvoiceAPI::DocumentResponse::Charge::TaxCode::TaggedSymbol
@@ -760,6 +896,918 @@ module EInvoiceAPI
           )
         end
         def to_hash
+        end
+
+        # Charge reason codes for invoice charges and fees
+        module ReasonCode
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(Symbol, EInvoiceAPI::DocumentResponse::Charge::ReasonCode)
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          AA =
+            T.let(
+              :AA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AAA =
+            T.let(
+              :AAA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AAC =
+            T.let(
+              :AAC,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AAD =
+            T.let(
+              :AAD,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AAE =
+            T.let(
+              :AAE,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AAF =
+            T.let(
+              :AAF,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AAH =
+            T.let(
+              :AAH,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AAI =
+            T.let(
+              :AAI,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AAS =
+            T.let(
+              :AAS,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AAT =
+            T.let(
+              :AAT,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AAV =
+            T.let(
+              :AAV,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AAY =
+            T.let(
+              :AAY,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AAZ =
+            T.let(
+              :AAZ,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ABA =
+            T.let(
+              :ABA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ABB =
+            T.let(
+              :ABB,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ABC =
+            T.let(
+              :ABC,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ABD =
+            T.let(
+              :ABD,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ABF =
+            T.let(
+              :ABF,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ABK =
+            T.let(
+              :ABK,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ABL =
+            T.let(
+              :ABL,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ABN =
+            T.let(
+              :ABN,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ABR =
+            T.let(
+              :ABR,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ABS =
+            T.let(
+              :ABS,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ABT =
+            T.let(
+              :ABT,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ABU =
+            T.let(
+              :ABU,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ACF =
+            T.let(
+              :ACF,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ACG =
+            T.let(
+              :ACG,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ACH =
+            T.let(
+              :ACH,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ACI =
+            T.let(
+              :ACI,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ACJ =
+            T.let(
+              :ACJ,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ACK =
+            T.let(
+              :ACK,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ACL =
+            T.let(
+              :ACL,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ACM =
+            T.let(
+              :ACM,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ACS =
+            T.let(
+              :ACS,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ADC =
+            T.let(
+              :ADC,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ADE =
+            T.let(
+              :ADE,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ADJ =
+            T.let(
+              :ADJ,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ADK =
+            T.let(
+              :ADK,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ADL =
+            T.let(
+              :ADL,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ADM =
+            T.let(
+              :ADM,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ADN =
+            T.let(
+              :ADN,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ADO =
+            T.let(
+              :ADO,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ADP =
+            T.let(
+              :ADP,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ADQ =
+            T.let(
+              :ADQ,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ADR =
+            T.let(
+              :ADR,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ADT =
+            T.let(
+              :ADT,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ADW =
+            T.let(
+              :ADW,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ADY =
+            T.let(
+              :ADY,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ADZ =
+            T.let(
+              :ADZ,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEA =
+            T.let(
+              :AEA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEB =
+            T.let(
+              :AEB,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEC =
+            T.let(
+              :AEC,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AED =
+            T.let(
+              :AED,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEF =
+            T.let(
+              :AEF,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEH =
+            T.let(
+              :AEH,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEI =
+            T.let(
+              :AEI,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEJ =
+            T.let(
+              :AEJ,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEK =
+            T.let(
+              :AEK,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEL =
+            T.let(
+              :AEL,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEM =
+            T.let(
+              :AEM,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEN =
+            T.let(
+              :AEN,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEO =
+            T.let(
+              :AEO,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEP =
+            T.let(
+              :AEP,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AES =
+            T.let(
+              :AES,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AET =
+            T.let(
+              :AET,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEU =
+            T.let(
+              :AEU,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEV =
+            T.let(
+              :AEV,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEW =
+            T.let(
+              :AEW,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEX =
+            T.let(
+              :AEX,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEY =
+            T.let(
+              :AEY,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AEZ =
+            T.let(
+              :AEZ,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AJ =
+            T.let(
+              :AJ,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          AU =
+            T.let(
+              :AU,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CA =
+            T.let(
+              :CA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAB =
+            T.let(
+              :CAB,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAD =
+            T.let(
+              :CAD,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAE =
+            T.let(
+              :CAE,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAF =
+            T.let(
+              :CAF,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAI =
+            T.let(
+              :CAI,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAJ =
+            T.let(
+              :CAJ,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAK =
+            T.let(
+              :CAK,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAL =
+            T.let(
+              :CAL,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAM =
+            T.let(
+              :CAM,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAN =
+            T.let(
+              :CAN,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAO =
+            T.let(
+              :CAO,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAP =
+            T.let(
+              :CAP,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAQ =
+            T.let(
+              :CAQ,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAR =
+            T.let(
+              :CAR,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAS =
+            T.let(
+              :CAS,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAT =
+            T.let(
+              :CAT,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAU =
+            T.let(
+              :CAU,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAV =
+            T.let(
+              :CAV,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAW =
+            T.let(
+              :CAW,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAX =
+            T.let(
+              :CAX,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAY =
+            T.let(
+              :CAY,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CAZ =
+            T.let(
+              :CAZ,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CD =
+            T.let(
+              :CD,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CG =
+            T.let(
+              :CG,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CS =
+            T.let(
+              :CS,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          CT =
+            T.let(
+              :CT,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DAB =
+            T.let(
+              :DAB,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DAC =
+            T.let(
+              :DAC,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DAD =
+            T.let(
+              :DAD,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DAF =
+            T.let(
+              :DAF,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DAG =
+            T.let(
+              :DAG,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DAH =
+            T.let(
+              :DAH,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DAI =
+            T.let(
+              :DAI,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DAJ =
+            T.let(
+              :DAJ,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DAK =
+            T.let(
+              :DAK,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DAL =
+            T.let(
+              :DAL,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DAM =
+            T.let(
+              :DAM,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DAN =
+            T.let(
+              :DAN,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DAO =
+            T.let(
+              :DAO,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DAP =
+            T.let(
+              :DAP,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DAQ =
+            T.let(
+              :DAQ,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          DL =
+            T.let(
+              :DL,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          EG =
+            T.let(
+              :EG,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          EP =
+            T.let(
+              :EP,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ER =
+            T.let(
+              :ER,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          FAA =
+            T.let(
+              :FAA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          FAB =
+            T.let(
+              :FAB,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          FAC =
+            T.let(
+              :FAC,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          FC =
+            T.let(
+              :FC,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          FH =
+            T.let(
+              :FH,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          FI =
+            T.let(
+              :FI,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          GAA =
+            T.let(
+              :GAA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          HAA =
+            T.let(
+              :HAA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          HD =
+            T.let(
+              :HD,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          HH =
+            T.let(
+              :HH,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          IAA =
+            T.let(
+              :IAA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          IAB =
+            T.let(
+              :IAB,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ID =
+            T.let(
+              :ID,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          IF =
+            T.let(
+              :IF,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          IR =
+            T.let(
+              :IR,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          IS =
+            T.let(
+              :IS,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          KO =
+            T.let(
+              :KO,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          L1 =
+            T.let(
+              :L1,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          LA =
+            T.let(
+              :LA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          LAA =
+            T.let(
+              :LAA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          LAB =
+            T.let(
+              :LAB,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          LF =
+            T.let(
+              :LF,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          MAE =
+            T.let(
+              :MAE,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          MI =
+            T.let(
+              :MI,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ML =
+            T.let(
+              :ML,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          NAA =
+            T.let(
+              :NAA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          OA =
+            T.let(
+              :OA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          PA =
+            T.let(
+              :PA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          PAA =
+            T.let(
+              :PAA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          PC =
+            T.let(
+              :PC,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          PL =
+            T.let(
+              :PL,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          PRV =
+            T.let(
+              :PRV,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          RAB =
+            T.let(
+              :RAB,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          RAC =
+            T.let(
+              :RAC,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          RAD =
+            T.let(
+              :RAD,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          RAF =
+            T.let(
+              :RAF,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          RE =
+            T.let(
+              :RE,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          RF =
+            T.let(
+              :RF,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          RH =
+            T.let(
+              :RH,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          RV =
+            T.let(
+              :RV,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          SA =
+            T.let(
+              :SA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          SAA =
+            T.let(
+              :SAA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          SAD =
+            T.let(
+              :SAD,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          SAE =
+            T.let(
+              :SAE,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          SAI =
+            T.let(
+              :SAI,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          SG =
+            T.let(
+              :SG,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          SH =
+            T.let(
+              :SH,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          SM =
+            T.let(
+              :SM,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          SU =
+            T.let(
+              :SU,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          TAB =
+            T.let(
+              :TAB,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          TAC =
+            T.let(
+              :TAC,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          TT =
+            T.let(
+              :TT,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          TV =
+            T.let(
+              :TV,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          V1 =
+            T.let(
+              :V1,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          V2 =
+            T.let(
+              :V2,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          WH =
+            T.let(
+              :WH,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          XAA =
+            T.let(
+              :XAA,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          YY =
+            T.let(
+              :YY,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+          ZZZ =
+            T.let(
+              :ZZZ,
+              EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                EInvoiceAPI::DocumentResponse::Charge::ReasonCode::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
         end
 
         # Duty or tax or fee category codes (Subset of UNCL5305)
@@ -850,9 +1898,10 @@ module EInvoiceAPI
         sig { returns(T.nilable(T::Array[EInvoiceAPI::Allowance])) }
         attr_accessor :allowances
 
-        # The total amount of the line item, exclusive of VAT, after subtracting line
-        # level allowances and adding line level charges. Must be rounded to maximum 2
-        # decimals
+        # The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
+        # allowances and charges. Calculated as: ((unit_price / price_base_quantity) \*
+        # quantity) - allowances + charges. Must be rounded to maximum 2 decimals. Can be
+        # negative for credit notes or corrections.
         sig { returns(T.nilable(String)) }
         attr_accessor :amount
 
@@ -872,11 +1921,13 @@ module EInvoiceAPI
         attr_accessor :product_code
 
         # The quantity of items (goods or services) that is the subject of the line item.
-        # Must be rounded to maximum 4 decimals
+        # Must be rounded to maximum 4 decimals. Can be negative for credit notes or
+        # corrections.
         sig { returns(T.nilable(String)) }
         attr_accessor :quantity
 
-        # The total VAT amount for the line item. Must be rounded to maximum 2 decimals
+        # The total VAT amount for the line item. Must be rounded to maximum 2 decimals.
+        # Can be negative for credit notes or corrections.
         sig { returns(T.nilable(String)) }
         attr_accessor :tax
 
@@ -888,7 +1939,8 @@ module EInvoiceAPI
         sig { returns(T.nilable(EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)) }
         attr_accessor :unit
 
-        # The unit price of the line item. Must be rounded to maximum 2 decimals
+        # The item net price (BT-146). The price of an item, exclusive of VAT, after
+        # subtracting item price discount. Must be rounded to maximum 4 decimals
         sig { returns(T.nilable(String)) }
         attr_accessor :unit_price
 
@@ -910,9 +1962,10 @@ module EInvoiceAPI
         def self.new(
           # The allowances of the line item.
           allowances: nil,
-          # The total amount of the line item, exclusive of VAT, after subtracting line
-          # level allowances and adding line level charges. Must be rounded to maximum 2
-          # decimals
+          # The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
+          # allowances and charges. Calculated as: ((unit_price / price_base_quantity) \*
+          # quantity) - allowances + charges. Must be rounded to maximum 2 decimals. Can be
+          # negative for credit notes or corrections.
           amount: nil,
           # The charges of the line item.
           charges: nil,
@@ -922,15 +1975,18 @@ module EInvoiceAPI
           # The product code of the line item.
           product_code: nil,
           # The quantity of items (goods or services) that is the subject of the line item.
-          # Must be rounded to maximum 4 decimals
+          # Must be rounded to maximum 4 decimals. Can be negative for credit notes or
+          # corrections.
           quantity: nil,
-          # The total VAT amount for the line item. Must be rounded to maximum 2 decimals
+          # The total VAT amount for the line item. Must be rounded to maximum 2 decimals.
+          # Can be negative for credit notes or corrections.
           tax: nil,
           # The VAT rate of the line item expressed as percentage with 2 decimals
           tax_rate: nil,
           # Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
           unit: nil,
-          # The unit price of the line item. Must be rounded to maximum 2 decimals
+          # The item net price (BT-146). The price of an item, exclusive of VAT, after
+          # subtracting item price discount. Must be rounded to maximum 4 decimals
           unit_price: nil
         )
         end
