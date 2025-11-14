@@ -281,9 +281,9 @@ module EInvoiceAPI
           base_amount: EInvoiceAPI::Models::DocumentCreate::Allowance::base_amount?,
           multiplier_factor: EInvoiceAPI::Models::DocumentCreate::Allowance::multiplier_factor?,
           reason: String?,
-          reason_code: String?,
-          tax_code: EInvoiceAPI::Models::DocumentCreate::Allowance::tax_code?,
-          tax_rate: String?
+          reason_code: EInvoiceAPI::Models::DocumentCreate::Allowance::reason_code?,
+          tax_code: EInvoiceAPI::Models::DocumentCreate::Allowance::tax_code,
+          tax_rate: EInvoiceAPI::Models::DocumentCreate::Allowance::tax_rate?
         }
 
       class Allowance < EInvoiceAPI::Internal::Type::BaseModel
@@ -295,20 +295,24 @@ module EInvoiceAPI
 
         attr_accessor reason: String?
 
-        attr_accessor reason_code: String?
+        attr_accessor reason_code: EInvoiceAPI::Models::DocumentCreate::Allowance::reason_code?
 
-        attr_accessor tax_code: EInvoiceAPI::Models::DocumentCreate::Allowance::tax_code?
+        attr_reader tax_code: EInvoiceAPI::Models::DocumentCreate::Allowance::tax_code?
 
-        attr_accessor tax_rate: String?
+        def tax_code=: (
+          EInvoiceAPI::Models::DocumentCreate::Allowance::tax_code
+        ) -> EInvoiceAPI::Models::DocumentCreate::Allowance::tax_code
+
+        attr_accessor tax_rate: EInvoiceAPI::Models::DocumentCreate::Allowance::tax_rate?
 
         def initialize: (
           ?amount: EInvoiceAPI::Models::DocumentCreate::Allowance::amount?,
           ?base_amount: EInvoiceAPI::Models::DocumentCreate::Allowance::base_amount?,
           ?multiplier_factor: EInvoiceAPI::Models::DocumentCreate::Allowance::multiplier_factor?,
           ?reason: String?,
-          ?reason_code: String?,
-          ?tax_code: EInvoiceAPI::Models::DocumentCreate::Allowance::tax_code?,
-          ?tax_rate: String?
+          ?reason_code: EInvoiceAPI::Models::DocumentCreate::Allowance::reason_code?,
+          ?tax_code: EInvoiceAPI::Models::DocumentCreate::Allowance::tax_code,
+          ?tax_rate: EInvoiceAPI::Models::DocumentCreate::Allowance::tax_rate?
         ) -> void
 
         def to_hash: -> {
@@ -316,9 +320,9 @@ module EInvoiceAPI
           base_amount: EInvoiceAPI::Models::DocumentCreate::Allowance::base_amount?,
           multiplier_factor: EInvoiceAPI::Models::DocumentCreate::Allowance::multiplier_factor?,
           reason: String?,
-          reason_code: String?,
-          tax_code: EInvoiceAPI::Models::DocumentCreate::Allowance::tax_code?,
-          tax_rate: String?
+          reason_code: EInvoiceAPI::Models::DocumentCreate::Allowance::reason_code?,
+          tax_code: EInvoiceAPI::Models::DocumentCreate::Allowance::tax_code,
+          tax_rate: EInvoiceAPI::Models::DocumentCreate::Allowance::tax_rate?
         }
 
         type amount = Float | String
@@ -345,6 +349,53 @@ module EInvoiceAPI
           def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Allowance::multiplier_factor]
         end
 
+        type reason_code =
+          :"41"
+          | :"42"
+          | :"60"
+          | :"62"
+          | :"63"
+          | :"64"
+          | :"65"
+          | :"66"
+          | :"67"
+          | :"68"
+          | :"70"
+          | :"71"
+          | :"88"
+          | :"95"
+          | :"100"
+          | :"102"
+          | :"103"
+          | :"104"
+          | :"105"
+
+        module ReasonCode
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          REASON_CODE_41: :"41"
+          REASON_CODE_42: :"42"
+          REASON_CODE_60: :"60"
+          REASON_CODE_62: :"62"
+          REASON_CODE_63: :"63"
+          REASON_CODE_64: :"64"
+          REASON_CODE_65: :"65"
+          REASON_CODE_66: :"66"
+          REASON_CODE_67: :"67"
+          REASON_CODE_68: :"68"
+          REASON_CODE_70: :"70"
+          REASON_CODE_71: :"71"
+          REASON_CODE_88: :"88"
+          REASON_CODE_95: :"95"
+          REASON_CODE_100: :"100"
+          REASON_CODE_102: :"102"
+          REASON_CODE_103: :"103"
+          REASON_CODE_104: :"104"
+          REASON_CODE_105: :"105"
+
+          def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Allowance::reason_code]
+        end
+
         type tax_code = :AE | :E | :S | :Z | :G | :O | :K | :L | :M | :B
 
         module TaxCode
@@ -363,6 +414,14 @@ module EInvoiceAPI
 
           def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Allowance::tax_code]
         end
+
+        type tax_rate = Float | String
+
+        module TaxRate
+          extend EInvoiceAPI::Internal::Type::Union
+
+          def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Allowance::tax_rate]
+        end
       end
 
       type amount_due = Float | String
@@ -379,9 +438,9 @@ module EInvoiceAPI
           base_amount: EInvoiceAPI::Models::DocumentCreate::Charge::base_amount?,
           multiplier_factor: EInvoiceAPI::Models::DocumentCreate::Charge::multiplier_factor?,
           reason: String?,
-          reason_code: String?,
+          reason_code: EInvoiceAPI::Models::DocumentCreate::Charge::reason_code?,
           tax_code: EInvoiceAPI::Models::DocumentCreate::Charge::tax_code?,
-          tax_rate: String?
+          tax_rate: EInvoiceAPI::Models::DocumentCreate::Charge::tax_rate?
         }
 
       class Charge < EInvoiceAPI::Internal::Type::BaseModel
@@ -393,20 +452,20 @@ module EInvoiceAPI
 
         attr_accessor reason: String?
 
-        attr_accessor reason_code: String?
+        attr_accessor reason_code: EInvoiceAPI::Models::DocumentCreate::Charge::reason_code?
 
         attr_accessor tax_code: EInvoiceAPI::Models::DocumentCreate::Charge::tax_code?
 
-        attr_accessor tax_rate: String?
+        attr_accessor tax_rate: EInvoiceAPI::Models::DocumentCreate::Charge::tax_rate?
 
         def initialize: (
           ?amount: EInvoiceAPI::Models::DocumentCreate::Charge::amount?,
           ?base_amount: EInvoiceAPI::Models::DocumentCreate::Charge::base_amount?,
           ?multiplier_factor: EInvoiceAPI::Models::DocumentCreate::Charge::multiplier_factor?,
           ?reason: String?,
-          ?reason_code: String?,
+          ?reason_code: EInvoiceAPI::Models::DocumentCreate::Charge::reason_code?,
           ?tax_code: EInvoiceAPI::Models::DocumentCreate::Charge::tax_code?,
-          ?tax_rate: String?
+          ?tax_rate: EInvoiceAPI::Models::DocumentCreate::Charge::tax_rate?
         ) -> void
 
         def to_hash: -> {
@@ -414,9 +473,9 @@ module EInvoiceAPI
           base_amount: EInvoiceAPI::Models::DocumentCreate::Charge::base_amount?,
           multiplier_factor: EInvoiceAPI::Models::DocumentCreate::Charge::multiplier_factor?,
           reason: String?,
-          reason_code: String?,
+          reason_code: EInvoiceAPI::Models::DocumentCreate::Charge::reason_code?,
           tax_code: EInvoiceAPI::Models::DocumentCreate::Charge::tax_code?,
-          tax_rate: String?
+          tax_rate: EInvoiceAPI::Models::DocumentCreate::Charge::tax_rate?
         }
 
         type amount = Float | String
@@ -443,6 +502,371 @@ module EInvoiceAPI
           def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Charge::multiplier_factor]
         end
 
+        type reason_code =
+          :AA
+          | :AAA
+          | :AAC
+          | :AAD
+          | :AAE
+          | :AAF
+          | :AAH
+          | :AAI
+          | :AAS
+          | :AAT
+          | :AAV
+          | :AAY
+          | :AAZ
+          | :ABA
+          | :ABB
+          | :ABC
+          | :ABD
+          | :ABF
+          | :ABK
+          | :ABL
+          | :ABN
+          | :ABR
+          | :ABS
+          | :ABT
+          | :ABU
+          | :ACF
+          | :ACG
+          | :ACH
+          | :ACI
+          | :ACJ
+          | :ACK
+          | :ACL
+          | :ACM
+          | :ACS
+          | :ADC
+          | :ADE
+          | :ADJ
+          | :ADK
+          | :ADL
+          | :ADM
+          | :ADN
+          | :ADO
+          | :ADP
+          | :ADQ
+          | :ADR
+          | :ADT
+          | :ADW
+          | :ADY
+          | :ADZ
+          | :AEA
+          | :AEB
+          | :AEC
+          | :AED
+          | :AEF
+          | :AEH
+          | :AEI
+          | :AEJ
+          | :AEK
+          | :AEL
+          | :AEM
+          | :AEN
+          | :AEO
+          | :AEP
+          | :AES
+          | :AET
+          | :AEU
+          | :AEV
+          | :AEW
+          | :AEX
+          | :AEY
+          | :AEZ
+          | :AJ
+          | :AU
+          | :CA
+          | :CAB
+          | :CAD
+          | :CAE
+          | :CAF
+          | :CAI
+          | :CAJ
+          | :CAK
+          | :CAL
+          | :CAM
+          | :CAN
+          | :CAO
+          | :CAP
+          | :CAQ
+          | :CAR
+          | :CAS
+          | :CAT
+          | :CAU
+          | :CAV
+          | :CAW
+          | :CAX
+          | :CAY
+          | :CAZ
+          | :CD
+          | :CG
+          | :CS
+          | :CT
+          | :DAB
+          | :DAC
+          | :DAD
+          | :DAF
+          | :DAG
+          | :DAH
+          | :DAI
+          | :DAJ
+          | :DAK
+          | :DAL
+          | :DAM
+          | :DAN
+          | :DAO
+          | :DAP
+          | :DAQ
+          | :DL
+          | :EG
+          | :EP
+          | :ER
+          | :FAA
+          | :FAB
+          | :FAC
+          | :FC
+          | :FH
+          | :FI
+          | :GAA
+          | :HAA
+          | :HD
+          | :HH
+          | :IAA
+          | :IAB
+          | :ID
+          | :IF
+          | :IR
+          | :IS
+          | :KO
+          | :L1
+          | :LA
+          | :LAA
+          | :LAB
+          | :LF
+          | :MAE
+          | :MI
+          | :ML
+          | :NAA
+          | :OA
+          | :PA
+          | :PAA
+          | :PC
+          | :PL
+          | :PRV
+          | :RAB
+          | :RAC
+          | :RAD
+          | :RAF
+          | :RE
+          | :RF
+          | :RH
+          | :RV
+          | :SA
+          | :SAA
+          | :SAD
+          | :SAE
+          | :SAI
+          | :SG
+          | :SH
+          | :SM
+          | :SU
+          | :TAB
+          | :TAC
+          | :TT
+          | :TV
+          | :V1
+          | :V2
+          | :WH
+          | :XAA
+          | :YY
+          | :ZZZ
+
+        module ReasonCode
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          AA: :AA
+          AAA: :AAA
+          AAC: :AAC
+          AAD: :AAD
+          AAE: :AAE
+          AAF: :AAF
+          AAH: :AAH
+          AAI: :AAI
+          AAS: :AAS
+          AAT: :AAT
+          AAV: :AAV
+          AAY: :AAY
+          AAZ: :AAZ
+          ABA: :ABA
+          ABB: :ABB
+          ABC: :ABC
+          ABD: :ABD
+          ABF: :ABF
+          ABK: :ABK
+          ABL: :ABL
+          ABN: :ABN
+          ABR: :ABR
+          ABS: :ABS
+          ABT: :ABT
+          ABU: :ABU
+          ACF: :ACF
+          ACG: :ACG
+          ACH: :ACH
+          ACI: :ACI
+          ACJ: :ACJ
+          ACK: :ACK
+          ACL: :ACL
+          ACM: :ACM
+          ACS: :ACS
+          ADC: :ADC
+          ADE: :ADE
+          ADJ: :ADJ
+          ADK: :ADK
+          ADL: :ADL
+          ADM: :ADM
+          ADN: :ADN
+          ADO: :ADO
+          ADP: :ADP
+          ADQ: :ADQ
+          ADR: :ADR
+          ADT: :ADT
+          ADW: :ADW
+          ADY: :ADY
+          ADZ: :ADZ
+          AEA: :AEA
+          AEB: :AEB
+          AEC: :AEC
+          AED: :AED
+          AEF: :AEF
+          AEH: :AEH
+          AEI: :AEI
+          AEJ: :AEJ
+          AEK: :AEK
+          AEL: :AEL
+          AEM: :AEM
+          AEN: :AEN
+          AEO: :AEO
+          AEP: :AEP
+          AES: :AES
+          AET: :AET
+          AEU: :AEU
+          AEV: :AEV
+          AEW: :AEW
+          AEX: :AEX
+          AEY: :AEY
+          AEZ: :AEZ
+          AJ: :AJ
+          AU: :AU
+          CA: :CA
+          CAB: :CAB
+          CAD: :CAD
+          CAE: :CAE
+          CAF: :CAF
+          CAI: :CAI
+          CAJ: :CAJ
+          CAK: :CAK
+          CAL: :CAL
+          CAM: :CAM
+          CAN: :CAN
+          CAO: :CAO
+          CAP: :CAP
+          CAQ: :CAQ
+          CAR: :CAR
+          CAS: :CAS
+          CAT: :CAT
+          CAU: :CAU
+          CAV: :CAV
+          CAW: :CAW
+          CAX: :CAX
+          CAY: :CAY
+          CAZ: :CAZ
+          CD: :CD
+          CG: :CG
+          CS: :CS
+          CT: :CT
+          DAB: :DAB
+          DAC: :DAC
+          DAD: :DAD
+          DAF: :DAF
+          DAG: :DAG
+          DAH: :DAH
+          DAI: :DAI
+          DAJ: :DAJ
+          DAK: :DAK
+          DAL: :DAL
+          DAM: :DAM
+          DAN: :DAN
+          DAO: :DAO
+          DAP: :DAP
+          DAQ: :DAQ
+          DL: :DL
+          EG: :EG
+          EP: :EP
+          ER: :ER
+          FAA: :FAA
+          FAB: :FAB
+          FAC: :FAC
+          FC: :FC
+          FH: :FH
+          FI: :FI
+          GAA: :GAA
+          HAA: :HAA
+          HD: :HD
+          HH: :HH
+          IAA: :IAA
+          IAB: :IAB
+          ID: :ID
+          IF: :IF
+          IR: :IR
+          IS: :IS
+          KO: :KO
+          L1: :L1
+          LA: :LA
+          LAA: :LAA
+          LAB: :LAB
+          LF: :LF
+          MAE: :MAE
+          MI: :MI
+          ML: :ML
+          NAA: :NAA
+          OA: :OA
+          PA: :PA
+          PAA: :PAA
+          PC: :PC
+          PL: :PL
+          PRV: :PRV
+          RAB: :RAB
+          RAC: :RAC
+          RAD: :RAD
+          RAF: :RAF
+          RE: :RE
+          RF: :RF
+          RH: :RH
+          RV: :RV
+          SA: :SA
+          SAA: :SAA
+          SAD: :SAD
+          SAE: :SAE
+          SAI: :SAI
+          SG: :SG
+          SH: :SH
+          SM: :SM
+          SU: :SU
+          TAB: :TAB
+          TAC: :TAC
+          TT: :TT
+          TV: :TV
+          V1: :V1
+          V2: :V2
+          WH: :WH
+          XAA: :XAA
+          YY: :YY
+          ZZZ: :ZZZ
+
+          def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Charge::reason_code]
+        end
+
         type tax_code = :AE | :E | :S | :Z | :G | :O | :K | :L | :M | :B
 
         module TaxCode
@@ -461,6 +885,14 @@ module EInvoiceAPI
 
           def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Charge::tax_code]
         end
+
+        type tax_rate = Float | String
+
+        module TaxRate
+          extend EInvoiceAPI::Internal::Type::Union
+
+          def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Charge::tax_rate]
+        end
       end
 
       type invoice_total = Float | String
@@ -478,10 +910,11 @@ module EInvoiceAPI
           charges: ::Array[EInvoiceAPI::DocumentCreate::Item::Charge]?,
           date: nil,
           description: String?,
+          price_base_quantity: EInvoiceAPI::Models::DocumentCreate::Item::price_base_quantity?,
           product_code: String?,
           quantity: EInvoiceAPI::Models::DocumentCreate::Item::quantity?,
           tax: EInvoiceAPI::Models::DocumentCreate::Item::tax?,
-          tax_rate: String?,
+          tax_rate: EInvoiceAPI::Models::DocumentCreate::Item::tax_rate?,
           unit: EInvoiceAPI::Models::unit_of_measure_code?,
           unit_price: EInvoiceAPI::Models::DocumentCreate::Item::unit_price?
         }
@@ -497,13 +930,15 @@ module EInvoiceAPI
 
         attr_accessor description: String?
 
+        attr_accessor price_base_quantity: EInvoiceAPI::Models::DocumentCreate::Item::price_base_quantity?
+
         attr_accessor product_code: String?
 
         attr_accessor quantity: EInvoiceAPI::Models::DocumentCreate::Item::quantity?
 
         attr_accessor tax: EInvoiceAPI::Models::DocumentCreate::Item::tax?
 
-        attr_accessor tax_rate: String?
+        attr_accessor tax_rate: EInvoiceAPI::Models::DocumentCreate::Item::tax_rate?
 
         attr_accessor unit: EInvoiceAPI::Models::unit_of_measure_code?
 
@@ -515,10 +950,11 @@ module EInvoiceAPI
           ?charges: ::Array[EInvoiceAPI::DocumentCreate::Item::Charge]?,
           ?date: nil,
           ?description: String?,
+          ?price_base_quantity: EInvoiceAPI::Models::DocumentCreate::Item::price_base_quantity?,
           ?product_code: String?,
           ?quantity: EInvoiceAPI::Models::DocumentCreate::Item::quantity?,
           ?tax: EInvoiceAPI::Models::DocumentCreate::Item::tax?,
-          ?tax_rate: String?,
+          ?tax_rate: EInvoiceAPI::Models::DocumentCreate::Item::tax_rate?,
           ?unit: EInvoiceAPI::Models::unit_of_measure_code?,
           ?unit_price: EInvoiceAPI::Models::DocumentCreate::Item::unit_price?
         ) -> void
@@ -529,10 +965,11 @@ module EInvoiceAPI
           charges: ::Array[EInvoiceAPI::DocumentCreate::Item::Charge]?,
           date: nil,
           description: String?,
+          price_base_quantity: EInvoiceAPI::Models::DocumentCreate::Item::price_base_quantity?,
           product_code: String?,
           quantity: EInvoiceAPI::Models::DocumentCreate::Item::quantity?,
           tax: EInvoiceAPI::Models::DocumentCreate::Item::tax?,
-          tax_rate: String?,
+          tax_rate: EInvoiceAPI::Models::DocumentCreate::Item::tax_rate?,
           unit: EInvoiceAPI::Models::unit_of_measure_code?,
           unit_price: EInvoiceAPI::Models::DocumentCreate::Item::unit_price?
         }
@@ -543,9 +980,9 @@ module EInvoiceAPI
             base_amount: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::base_amount?,
             multiplier_factor: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::multiplier_factor?,
             reason: String?,
-            reason_code: String?,
-            tax_code: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_code?,
-            tax_rate: String?
+            reason_code: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::reason_code?,
+            tax_code: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_code,
+            tax_rate: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_rate?
           }
 
         class Allowance < EInvoiceAPI::Internal::Type::BaseModel
@@ -557,20 +994,24 @@ module EInvoiceAPI
 
           attr_accessor reason: String?
 
-          attr_accessor reason_code: String?
+          attr_accessor reason_code: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::reason_code?
 
-          attr_accessor tax_code: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_code?
+          attr_reader tax_code: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_code?
 
-          attr_accessor tax_rate: String?
+          def tax_code=: (
+            EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_code
+          ) -> EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_code
+
+          attr_accessor tax_rate: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_rate?
 
           def initialize: (
             ?amount: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::amount?,
             ?base_amount: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::base_amount?,
             ?multiplier_factor: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::multiplier_factor?,
             ?reason: String?,
-            ?reason_code: String?,
-            ?tax_code: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_code?,
-            ?tax_rate: String?
+            ?reason_code: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::reason_code?,
+            ?tax_code: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_code,
+            ?tax_rate: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_rate?
           ) -> void
 
           def to_hash: -> {
@@ -578,9 +1019,9 @@ module EInvoiceAPI
             base_amount: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::base_amount?,
             multiplier_factor: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::multiplier_factor?,
             reason: String?,
-            reason_code: String?,
-            tax_code: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_code?,
-            tax_rate: String?
+            reason_code: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::reason_code?,
+            tax_code: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_code,
+            tax_rate: EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_rate?
           }
 
           type amount = Float | String
@@ -607,6 +1048,53 @@ module EInvoiceAPI
             def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Item::Allowance::multiplier_factor]
           end
 
+          type reason_code =
+            :"41"
+            | :"42"
+            | :"60"
+            | :"62"
+            | :"63"
+            | :"64"
+            | :"65"
+            | :"66"
+            | :"67"
+            | :"68"
+            | :"70"
+            | :"71"
+            | :"88"
+            | :"95"
+            | :"100"
+            | :"102"
+            | :"103"
+            | :"104"
+            | :"105"
+
+          module ReasonCode
+            extend EInvoiceAPI::Internal::Type::Enum
+
+            REASON_CODE_41: :"41"
+            REASON_CODE_42: :"42"
+            REASON_CODE_60: :"60"
+            REASON_CODE_62: :"62"
+            REASON_CODE_63: :"63"
+            REASON_CODE_64: :"64"
+            REASON_CODE_65: :"65"
+            REASON_CODE_66: :"66"
+            REASON_CODE_67: :"67"
+            REASON_CODE_68: :"68"
+            REASON_CODE_70: :"70"
+            REASON_CODE_71: :"71"
+            REASON_CODE_88: :"88"
+            REASON_CODE_95: :"95"
+            REASON_CODE_100: :"100"
+            REASON_CODE_102: :"102"
+            REASON_CODE_103: :"103"
+            REASON_CODE_104: :"104"
+            REASON_CODE_105: :"105"
+
+            def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Item::Allowance::reason_code]
+          end
+
           type tax_code = :AE | :E | :S | :Z | :G | :O | :K | :L | :M | :B
 
           module TaxCode
@@ -625,6 +1113,14 @@ module EInvoiceAPI
 
             def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_code]
           end
+
+          type tax_rate = Float | String
+
+          module TaxRate
+            extend EInvoiceAPI::Internal::Type::Union
+
+            def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Item::Allowance::tax_rate]
+          end
         end
 
         type amount = Float | String
@@ -641,9 +1137,9 @@ module EInvoiceAPI
             base_amount: EInvoiceAPI::Models::DocumentCreate::Item::Charge::base_amount?,
             multiplier_factor: EInvoiceAPI::Models::DocumentCreate::Item::Charge::multiplier_factor?,
             reason: String?,
-            reason_code: String?,
+            reason_code: EInvoiceAPI::Models::DocumentCreate::Item::Charge::reason_code?,
             tax_code: EInvoiceAPI::Models::DocumentCreate::Item::Charge::tax_code?,
-            tax_rate: String?
+            tax_rate: EInvoiceAPI::Models::DocumentCreate::Item::Charge::tax_rate?
           }
 
         class Charge < EInvoiceAPI::Internal::Type::BaseModel
@@ -655,20 +1151,20 @@ module EInvoiceAPI
 
           attr_accessor reason: String?
 
-          attr_accessor reason_code: String?
+          attr_accessor reason_code: EInvoiceAPI::Models::DocumentCreate::Item::Charge::reason_code?
 
           attr_accessor tax_code: EInvoiceAPI::Models::DocumentCreate::Item::Charge::tax_code?
 
-          attr_accessor tax_rate: String?
+          attr_accessor tax_rate: EInvoiceAPI::Models::DocumentCreate::Item::Charge::tax_rate?
 
           def initialize: (
             ?amount: EInvoiceAPI::Models::DocumentCreate::Item::Charge::amount?,
             ?base_amount: EInvoiceAPI::Models::DocumentCreate::Item::Charge::base_amount?,
             ?multiplier_factor: EInvoiceAPI::Models::DocumentCreate::Item::Charge::multiplier_factor?,
             ?reason: String?,
-            ?reason_code: String?,
+            ?reason_code: EInvoiceAPI::Models::DocumentCreate::Item::Charge::reason_code?,
             ?tax_code: EInvoiceAPI::Models::DocumentCreate::Item::Charge::tax_code?,
-            ?tax_rate: String?
+            ?tax_rate: EInvoiceAPI::Models::DocumentCreate::Item::Charge::tax_rate?
           ) -> void
 
           def to_hash: -> {
@@ -676,9 +1172,9 @@ module EInvoiceAPI
             base_amount: EInvoiceAPI::Models::DocumentCreate::Item::Charge::base_amount?,
             multiplier_factor: EInvoiceAPI::Models::DocumentCreate::Item::Charge::multiplier_factor?,
             reason: String?,
-            reason_code: String?,
+            reason_code: EInvoiceAPI::Models::DocumentCreate::Item::Charge::reason_code?,
             tax_code: EInvoiceAPI::Models::DocumentCreate::Item::Charge::tax_code?,
-            tax_rate: String?
+            tax_rate: EInvoiceAPI::Models::DocumentCreate::Item::Charge::tax_rate?
           }
 
           type amount = Float | String
@@ -705,6 +1201,371 @@ module EInvoiceAPI
             def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Item::Charge::multiplier_factor]
           end
 
+          type reason_code =
+            :AA
+            | :AAA
+            | :AAC
+            | :AAD
+            | :AAE
+            | :AAF
+            | :AAH
+            | :AAI
+            | :AAS
+            | :AAT
+            | :AAV
+            | :AAY
+            | :AAZ
+            | :ABA
+            | :ABB
+            | :ABC
+            | :ABD
+            | :ABF
+            | :ABK
+            | :ABL
+            | :ABN
+            | :ABR
+            | :ABS
+            | :ABT
+            | :ABU
+            | :ACF
+            | :ACG
+            | :ACH
+            | :ACI
+            | :ACJ
+            | :ACK
+            | :ACL
+            | :ACM
+            | :ACS
+            | :ADC
+            | :ADE
+            | :ADJ
+            | :ADK
+            | :ADL
+            | :ADM
+            | :ADN
+            | :ADO
+            | :ADP
+            | :ADQ
+            | :ADR
+            | :ADT
+            | :ADW
+            | :ADY
+            | :ADZ
+            | :AEA
+            | :AEB
+            | :AEC
+            | :AED
+            | :AEF
+            | :AEH
+            | :AEI
+            | :AEJ
+            | :AEK
+            | :AEL
+            | :AEM
+            | :AEN
+            | :AEO
+            | :AEP
+            | :AES
+            | :AET
+            | :AEU
+            | :AEV
+            | :AEW
+            | :AEX
+            | :AEY
+            | :AEZ
+            | :AJ
+            | :AU
+            | :CA
+            | :CAB
+            | :CAD
+            | :CAE
+            | :CAF
+            | :CAI
+            | :CAJ
+            | :CAK
+            | :CAL
+            | :CAM
+            | :CAN
+            | :CAO
+            | :CAP
+            | :CAQ
+            | :CAR
+            | :CAS
+            | :CAT
+            | :CAU
+            | :CAV
+            | :CAW
+            | :CAX
+            | :CAY
+            | :CAZ
+            | :CD
+            | :CG
+            | :CS
+            | :CT
+            | :DAB
+            | :DAC
+            | :DAD
+            | :DAF
+            | :DAG
+            | :DAH
+            | :DAI
+            | :DAJ
+            | :DAK
+            | :DAL
+            | :DAM
+            | :DAN
+            | :DAO
+            | :DAP
+            | :DAQ
+            | :DL
+            | :EG
+            | :EP
+            | :ER
+            | :FAA
+            | :FAB
+            | :FAC
+            | :FC
+            | :FH
+            | :FI
+            | :GAA
+            | :HAA
+            | :HD
+            | :HH
+            | :IAA
+            | :IAB
+            | :ID
+            | :IF
+            | :IR
+            | :IS
+            | :KO
+            | :L1
+            | :LA
+            | :LAA
+            | :LAB
+            | :LF
+            | :MAE
+            | :MI
+            | :ML
+            | :NAA
+            | :OA
+            | :PA
+            | :PAA
+            | :PC
+            | :PL
+            | :PRV
+            | :RAB
+            | :RAC
+            | :RAD
+            | :RAF
+            | :RE
+            | :RF
+            | :RH
+            | :RV
+            | :SA
+            | :SAA
+            | :SAD
+            | :SAE
+            | :SAI
+            | :SG
+            | :SH
+            | :SM
+            | :SU
+            | :TAB
+            | :TAC
+            | :TT
+            | :TV
+            | :V1
+            | :V2
+            | :WH
+            | :XAA
+            | :YY
+            | :ZZZ
+
+          module ReasonCode
+            extend EInvoiceAPI::Internal::Type::Enum
+
+            AA: :AA
+            AAA: :AAA
+            AAC: :AAC
+            AAD: :AAD
+            AAE: :AAE
+            AAF: :AAF
+            AAH: :AAH
+            AAI: :AAI
+            AAS: :AAS
+            AAT: :AAT
+            AAV: :AAV
+            AAY: :AAY
+            AAZ: :AAZ
+            ABA: :ABA
+            ABB: :ABB
+            ABC: :ABC
+            ABD: :ABD
+            ABF: :ABF
+            ABK: :ABK
+            ABL: :ABL
+            ABN: :ABN
+            ABR: :ABR
+            ABS: :ABS
+            ABT: :ABT
+            ABU: :ABU
+            ACF: :ACF
+            ACG: :ACG
+            ACH: :ACH
+            ACI: :ACI
+            ACJ: :ACJ
+            ACK: :ACK
+            ACL: :ACL
+            ACM: :ACM
+            ACS: :ACS
+            ADC: :ADC
+            ADE: :ADE
+            ADJ: :ADJ
+            ADK: :ADK
+            ADL: :ADL
+            ADM: :ADM
+            ADN: :ADN
+            ADO: :ADO
+            ADP: :ADP
+            ADQ: :ADQ
+            ADR: :ADR
+            ADT: :ADT
+            ADW: :ADW
+            ADY: :ADY
+            ADZ: :ADZ
+            AEA: :AEA
+            AEB: :AEB
+            AEC: :AEC
+            AED: :AED
+            AEF: :AEF
+            AEH: :AEH
+            AEI: :AEI
+            AEJ: :AEJ
+            AEK: :AEK
+            AEL: :AEL
+            AEM: :AEM
+            AEN: :AEN
+            AEO: :AEO
+            AEP: :AEP
+            AES: :AES
+            AET: :AET
+            AEU: :AEU
+            AEV: :AEV
+            AEW: :AEW
+            AEX: :AEX
+            AEY: :AEY
+            AEZ: :AEZ
+            AJ: :AJ
+            AU: :AU
+            CA: :CA
+            CAB: :CAB
+            CAD: :CAD
+            CAE: :CAE
+            CAF: :CAF
+            CAI: :CAI
+            CAJ: :CAJ
+            CAK: :CAK
+            CAL: :CAL
+            CAM: :CAM
+            CAN: :CAN
+            CAO: :CAO
+            CAP: :CAP
+            CAQ: :CAQ
+            CAR: :CAR
+            CAS: :CAS
+            CAT: :CAT
+            CAU: :CAU
+            CAV: :CAV
+            CAW: :CAW
+            CAX: :CAX
+            CAY: :CAY
+            CAZ: :CAZ
+            CD: :CD
+            CG: :CG
+            CS: :CS
+            CT: :CT
+            DAB: :DAB
+            DAC: :DAC
+            DAD: :DAD
+            DAF: :DAF
+            DAG: :DAG
+            DAH: :DAH
+            DAI: :DAI
+            DAJ: :DAJ
+            DAK: :DAK
+            DAL: :DAL
+            DAM: :DAM
+            DAN: :DAN
+            DAO: :DAO
+            DAP: :DAP
+            DAQ: :DAQ
+            DL: :DL
+            EG: :EG
+            EP: :EP
+            ER: :ER
+            FAA: :FAA
+            FAB: :FAB
+            FAC: :FAC
+            FC: :FC
+            FH: :FH
+            FI: :FI
+            GAA: :GAA
+            HAA: :HAA
+            HD: :HD
+            HH: :HH
+            IAA: :IAA
+            IAB: :IAB
+            ID: :ID
+            IF: :IF
+            IR: :IR
+            IS: :IS
+            KO: :KO
+            L1: :L1
+            LA: :LA
+            LAA: :LAA
+            LAB: :LAB
+            LF: :LF
+            MAE: :MAE
+            MI: :MI
+            ML: :ML
+            NAA: :NAA
+            OA: :OA
+            PA: :PA
+            PAA: :PAA
+            PC: :PC
+            PL: :PL
+            PRV: :PRV
+            RAB: :RAB
+            RAC: :RAC
+            RAD: :RAD
+            RAF: :RAF
+            RE: :RE
+            RF: :RF
+            RH: :RH
+            RV: :RV
+            SA: :SA
+            SAA: :SAA
+            SAD: :SAD
+            SAE: :SAE
+            SAI: :SAI
+            SG: :SG
+            SH: :SH
+            SM: :SM
+            SU: :SU
+            TAB: :TAB
+            TAC: :TAC
+            TT: :TT
+            TV: :TV
+            V1: :V1
+            V2: :V2
+            WH: :WH
+            XAA: :XAA
+            YY: :YY
+            ZZZ: :ZZZ
+
+            def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Item::Charge::reason_code]
+          end
+
           type tax_code = :AE | :E | :S | :Z | :G | :O | :K | :L | :M | :B
 
           module TaxCode
@@ -723,6 +1584,22 @@ module EInvoiceAPI
 
             def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Item::Charge::tax_code]
           end
+
+          type tax_rate = Float | String
+
+          module TaxRate
+            extend EInvoiceAPI::Internal::Type::Union
+
+            def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Item::Charge::tax_rate]
+          end
+        end
+
+        type price_base_quantity = Float | String
+
+        module PriceBaseQuantity
+          extend EInvoiceAPI::Internal::Type::Union
+
+          def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Item::price_base_quantity]
         end
 
         type quantity = Float | String
@@ -739,6 +1616,14 @@ module EInvoiceAPI
           extend EInvoiceAPI::Internal::Type::Union
 
           def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Item::tax]
+        end
+
+        type tax_rate = Float | String
+
+        module TaxRate
+          extend EInvoiceAPI::Internal::Type::Union
+
+          def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Item::tax_rate]
         end
 
         type unit_price = Float | String
