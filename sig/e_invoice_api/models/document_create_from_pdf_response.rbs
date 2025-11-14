@@ -26,7 +26,6 @@ module EInvoiceAPI
         note: String?,
         payment_details: ::Array[EInvoiceAPI::PaymentDetailCreate]?,
         payment_term: String?,
-        previous_unpaid_balance: String?,
         purchase_order: String?,
         remittance_address: String?,
         remittance_address_recipient: String?,
@@ -119,8 +118,6 @@ module EInvoiceAPI
 
       attr_accessor payment_term: String?
 
-      attr_accessor previous_unpaid_balance: String?
-
       attr_accessor purchase_order: String?
 
       attr_accessor remittance_address: String?
@@ -206,7 +203,6 @@ module EInvoiceAPI
         ?note: String?,
         ?payment_details: ::Array[EInvoiceAPI::PaymentDetailCreate]?,
         ?payment_term: String?,
-        ?previous_unpaid_balance: String?,
         ?purchase_order: String?,
         ?remittance_address: String?,
         ?remittance_address_recipient: String?,
@@ -259,7 +255,6 @@ module EInvoiceAPI
         note: String?,
         payment_details: ::Array[EInvoiceAPI::PaymentDetailCreate]?,
         payment_term: String?,
-        previous_unpaid_balance: String?,
         purchase_order: String?,
         remittance_address: String?,
         remittance_address_recipient: String?,
