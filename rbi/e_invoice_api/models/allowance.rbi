@@ -18,8 +18,7 @@ module EInvoiceAPI
       attr_accessor :base_amount
 
       # The percentage that may be used, in conjunction with the allowance base amount,
-      # to calculate the allowance amount. To state 20%, use value 20. Must be rounded
-      # to maximum 2 decimals
+      # to calculate the allowance amount. To state 20%, use value 20
       sig { returns(T.nilable(String)) }
       attr_accessor :multiplier_factor
 
@@ -27,21 +26,17 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :reason
 
-      # Allowance reason codes for invoice discounts and charges
-      sig do
-        returns(T.nilable(EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol))
-      end
+      # The code for the allowance reason
+      sig { returns(T.nilable(String)) }
       attr_accessor :reason_code
 
-      # The VAT category code that applies to the allowance
+      # Duty or tax or fee category codes (Subset of UNCL5305)
+      #
+      # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
       sig { returns(T.nilable(EInvoiceAPI::Allowance::TaxCode::TaggedSymbol)) }
-      attr_reader :tax_code
+      attr_accessor :tax_code
 
-      sig { params(tax_code: EInvoiceAPI::Allowance::TaxCode::OrSymbol).void }
-      attr_writer :tax_code
-
-      # The VAT rate, represented as percentage that applies to the allowance. Must be
-      # rounded to maximum 2 decimals
+      # The VAT rate, represented as percentage that applies to the allowance
       sig { returns(T.nilable(String)) }
       attr_accessor :tax_rate
 
@@ -52,8 +47,8 @@ module EInvoiceAPI
           base_amount: T.nilable(String),
           multiplier_factor: T.nilable(String),
           reason: T.nilable(String),
-          reason_code: T.nilable(EInvoiceAPI::Allowance::ReasonCode::OrSymbol),
-          tax_code: EInvoiceAPI::Allowance::TaxCode::OrSymbol,
+          reason_code: T.nilable(String),
+          tax_code: T.nilable(EInvoiceAPI::Allowance::TaxCode::OrSymbol),
           tax_rate: T.nilable(String)
         ).returns(T.attached_class)
       end
@@ -64,17 +59,17 @@ module EInvoiceAPI
         # to calculate the allowance amount. Must be rounded to maximum 2 decimals
         base_amount: nil,
         # The percentage that may be used, in conjunction with the allowance base amount,
-        # to calculate the allowance amount. To state 20%, use value 20. Must be rounded
-        # to maximum 2 decimals
+        # to calculate the allowance amount. To state 20%, use value 20
         multiplier_factor: nil,
         # The reason for the allowance
         reason: nil,
-        # Allowance reason codes for invoice discounts and charges
+        # The code for the allowance reason
         reason_code: nil,
-        # The VAT category code that applies to the allowance
+        # Duty or tax or fee category codes (Subset of UNCL5305)
+        #
+        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
         tax_code: nil,
-        # The VAT rate, represented as percentage that applies to the allowance. Must be
-        # rounded to maximum 2 decimals
+        # The VAT rate, represented as percentage that applies to the allowance
         tax_rate: nil
       )
       end
@@ -86,9 +81,8 @@ module EInvoiceAPI
             base_amount: T.nilable(String),
             multiplier_factor: T.nilable(String),
             reason: T.nilable(String),
-            reason_code:
-              T.nilable(EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol),
-            tax_code: EInvoiceAPI::Allowance::TaxCode::TaggedSymbol,
+            reason_code: T.nilable(String),
+            tax_code: T.nilable(EInvoiceAPI::Allowance::TaxCode::TaggedSymbol),
             tax_rate: T.nilable(String)
           }
         )
@@ -96,63 +90,9 @@ module EInvoiceAPI
       def to_hash
       end
 
-      # Allowance reason codes for invoice discounts and charges
-      module ReasonCode
-        extend EInvoiceAPI::Internal::Type::Enum
-
-        TaggedSymbol =
-          T.type_alias { T.all(Symbol, EInvoiceAPI::Allowance::ReasonCode) }
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        REASON_CODE_41 =
-          T.let(:"41", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_42 =
-          T.let(:"42", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_60 =
-          T.let(:"60", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_62 =
-          T.let(:"62", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_63 =
-          T.let(:"63", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_64 =
-          T.let(:"64", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_65 =
-          T.let(:"65", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_66 =
-          T.let(:"66", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_67 =
-          T.let(:"67", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_68 =
-          T.let(:"68", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_70 =
-          T.let(:"70", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_71 =
-          T.let(:"71", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_88 =
-          T.let(:"88", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_95 =
-          T.let(:"95", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_100 =
-          T.let(:"100", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_102 =
-          T.let(:"102", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_103 =
-          T.let(:"103", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_104 =
-          T.let(:"104", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-        REASON_CODE_105 =
-          T.let(:"105", EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol)
-
-        sig do
-          override.returns(
-            T::Array[EInvoiceAPI::Allowance::ReasonCode::TaggedSymbol]
-          )
-        end
-        def self.values
-        end
-      end
-
-      # The VAT category code that applies to the allowance
+      # Duty or tax or fee category codes (Subset of UNCL5305)
+      #
+      # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
       module TaxCode
         extend EInvoiceAPI::Internal::Type::Enum
 
