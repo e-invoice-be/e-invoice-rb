@@ -435,7 +435,8 @@ module EInvoiceAPI
 
         # @!attribute multiplier_factor
         #   The percentage that may be used, in conjunction with the allowance base amount,
-        #   to calculate the allowance amount. To state 20%, use value 20
+        #   to calculate the allowance amount. To state 20%, use value 20. Must be rounded
+        #   to maximum 2 decimals
         #
         #   @return [String, nil]
         optional :multiplier_factor, String, nil?: true
@@ -447,21 +448,20 @@ module EInvoiceAPI
         optional :reason, String, nil?: true
 
         # @!attribute reason_code
-        #   The code for the allowance reason
+        #   Allowance reason codes for invoice discounts and charges
         #
-        #   @return [String, nil]
-        optional :reason_code, String, nil?: true
+        #   @return [Symbol, EInvoiceAPI::Models::DocumentResponse::Allowance::ReasonCode, nil]
+        optional :reason_code, enum: -> { EInvoiceAPI::DocumentResponse::Allowance::ReasonCode }, nil?: true
 
         # @!attribute tax_code
-        #   Duty or tax or fee category codes (Subset of UNCL5305)
-        #
-        #   Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+        #   The VAT category code that applies to the allowance
         #
         #   @return [Symbol, EInvoiceAPI::Models::DocumentResponse::Allowance::TaxCode, nil]
-        optional :tax_code, enum: -> { EInvoiceAPI::DocumentResponse::Allowance::TaxCode }, nil?: true
+        optional :tax_code, enum: -> { EInvoiceAPI::DocumentResponse::Allowance::TaxCode }
 
         # @!attribute tax_rate
-        #   The VAT rate, represented as percentage that applies to the allowance
+        #   The VAT rate, represented as percentage that applies to the allowance. Must be
+        #   rounded to maximum 2 decimals
         #
         #   @return [String, nil]
         optional :tax_rate, String, nil?: true
@@ -478,15 +478,43 @@ module EInvoiceAPI
         #
         #   @param reason [String, nil] The reason for the allowance
         #
-        #   @param reason_code [String, nil] The code for the allowance reason
+        #   @param reason_code [Symbol, EInvoiceAPI::Models::DocumentResponse::Allowance::ReasonCode, nil] Allowance reason codes for invoice discounts and charges
         #
-        #   @param tax_code [Symbol, EInvoiceAPI::Models::DocumentResponse::Allowance::TaxCode, nil] Duty or tax or fee category codes (Subset of UNCL5305)
+        #   @param tax_code [Symbol, EInvoiceAPI::Models::DocumentResponse::Allowance::TaxCode] The VAT category code that applies to the allowance
         #
-        #   @param tax_rate [String, nil] The VAT rate, represented as percentage that applies to the allowance
+        #   @param tax_rate [String, nil] The VAT rate, represented as percentage that applies to the allowance. Must be r
 
-        # Duty or tax or fee category codes (Subset of UNCL5305)
+        # Allowance reason codes for invoice discounts and charges
         #
-        # Agency: UN/CEFACT Version: D.16B Subset: OpenPEPPOL
+        # @see EInvoiceAPI::Models::DocumentResponse::Allowance#reason_code
+        module ReasonCode
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          REASON_CODE_41 = :"41"
+          REASON_CODE_42 = :"42"
+          REASON_CODE_60 = :"60"
+          REASON_CODE_62 = :"62"
+          REASON_CODE_63 = :"63"
+          REASON_CODE_64 = :"64"
+          REASON_CODE_65 = :"65"
+          REASON_CODE_66 = :"66"
+          REASON_CODE_67 = :"67"
+          REASON_CODE_68 = :"68"
+          REASON_CODE_70 = :"70"
+          REASON_CODE_71 = :"71"
+          REASON_CODE_88 = :"88"
+          REASON_CODE_95 = :"95"
+          REASON_CODE_100 = :"100"
+          REASON_CODE_102 = :"102"
+          REASON_CODE_103 = :"103"
+          REASON_CODE_104 = :"104"
+          REASON_CODE_105 = :"105"
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+
+        # The VAT category code that applies to the allowance
         #
         # @see EInvoiceAPI::Models::DocumentResponse::Allowance#tax_code
         module TaxCode
@@ -536,10 +564,10 @@ module EInvoiceAPI
         optional :reason, String, nil?: true
 
         # @!attribute reason_code
-        #   The code for the charge reason
+        #   Charge reason codes for invoice charges and fees
         #
-        #   @return [String, nil]
-        optional :reason_code, String, nil?: true
+        #   @return [Symbol, EInvoiceAPI::Models::DocumentResponse::Charge::ReasonCode, nil]
+        optional :reason_code, enum: -> { EInvoiceAPI::DocumentResponse::Charge::ReasonCode }, nil?: true
 
         # @!attribute tax_code
         #   Duty or tax or fee category codes (Subset of UNCL5305)
@@ -567,11 +595,200 @@ module EInvoiceAPI
         #
         #   @param reason [String, nil] The reason for the charge
         #
-        #   @param reason_code [String, nil] The code for the charge reason
+        #   @param reason_code [Symbol, EInvoiceAPI::Models::DocumentResponse::Charge::ReasonCode, nil] Charge reason codes for invoice charges and fees
         #
         #   @param tax_code [Symbol, EInvoiceAPI::Models::DocumentResponse::Charge::TaxCode, nil] Duty or tax or fee category codes (Subset of UNCL5305)
         #
         #   @param tax_rate [String, nil] The VAT rate, represented as percentage that applies to the charge
+
+        # Charge reason codes for invoice charges and fees
+        #
+        # @see EInvoiceAPI::Models::DocumentResponse::Charge#reason_code
+        module ReasonCode
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          AA = :AA
+          AAA = :AAA
+          AAC = :AAC
+          AAD = :AAD
+          AAE = :AAE
+          AAF = :AAF
+          AAH = :AAH
+          AAI = :AAI
+          AAS = :AAS
+          AAT = :AAT
+          AAV = :AAV
+          AAY = :AAY
+          AAZ = :AAZ
+          ABA = :ABA
+          ABB = :ABB
+          ABC = :ABC
+          ABD = :ABD
+          ABF = :ABF
+          ABK = :ABK
+          ABL = :ABL
+          ABN = :ABN
+          ABR = :ABR
+          ABS = :ABS
+          ABT = :ABT
+          ABU = :ABU
+          ACF = :ACF
+          ACG = :ACG
+          ACH = :ACH
+          ACI = :ACI
+          ACJ = :ACJ
+          ACK = :ACK
+          ACL = :ACL
+          ACM = :ACM
+          ACS = :ACS
+          ADC = :ADC
+          ADE = :ADE
+          ADJ = :ADJ
+          ADK = :ADK
+          ADL = :ADL
+          ADM = :ADM
+          ADN = :ADN
+          ADO = :ADO
+          ADP = :ADP
+          ADQ = :ADQ
+          ADR = :ADR
+          ADT = :ADT
+          ADW = :ADW
+          ADY = :ADY
+          ADZ = :ADZ
+          AEA = :AEA
+          AEB = :AEB
+          AEC = :AEC
+          AED = :AED
+          AEF = :AEF
+          AEH = :AEH
+          AEI = :AEI
+          AEJ = :AEJ
+          AEK = :AEK
+          AEL = :AEL
+          AEM = :AEM
+          AEN = :AEN
+          AEO = :AEO
+          AEP = :AEP
+          AES = :AES
+          AET = :AET
+          AEU = :AEU
+          AEV = :AEV
+          AEW = :AEW
+          AEX = :AEX
+          AEY = :AEY
+          AEZ = :AEZ
+          AJ = :AJ
+          AU = :AU
+          CA = :CA
+          CAB = :CAB
+          CAD = :CAD
+          CAE = :CAE
+          CAF = :CAF
+          CAI = :CAI
+          CAJ = :CAJ
+          CAK = :CAK
+          CAL = :CAL
+          CAM = :CAM
+          CAN = :CAN
+          CAO = :CAO
+          CAP = :CAP
+          CAQ = :CAQ
+          CAR = :CAR
+          CAS = :CAS
+          CAT = :CAT
+          CAU = :CAU
+          CAV = :CAV
+          CAW = :CAW
+          CAX = :CAX
+          CAY = :CAY
+          CAZ = :CAZ
+          CD = :CD
+          CG = :CG
+          CS = :CS
+          CT = :CT
+          DAB = :DAB
+          DAC = :DAC
+          DAD = :DAD
+          DAF = :DAF
+          DAG = :DAG
+          DAH = :DAH
+          DAI = :DAI
+          DAJ = :DAJ
+          DAK = :DAK
+          DAL = :DAL
+          DAM = :DAM
+          DAN = :DAN
+          DAO = :DAO
+          DAP = :DAP
+          DAQ = :DAQ
+          DL = :DL
+          EG = :EG
+          EP = :EP
+          ER = :ER
+          FAA = :FAA
+          FAB = :FAB
+          FAC = :FAC
+          FC = :FC
+          FH = :FH
+          FI = :FI
+          GAA = :GAA
+          HAA = :HAA
+          HD = :HD
+          HH = :HH
+          IAA = :IAA
+          IAB = :IAB
+          ID = :ID
+          IF = :IF
+          IR = :IR
+          IS = :IS
+          KO = :KO
+          L1 = :L1
+          LA = :LA
+          LAA = :LAA
+          LAB = :LAB
+          LF = :LF
+          MAE = :MAE
+          MI = :MI
+          ML = :ML
+          NAA = :NAA
+          OA = :OA
+          PA = :PA
+          PAA = :PAA
+          PC = :PC
+          PL = :PL
+          PRV = :PRV
+          RAB = :RAB
+          RAC = :RAC
+          RAD = :RAD
+          RAF = :RAF
+          RE = :RE
+          RF = :RF
+          RH = :RH
+          RV = :RV
+          SA = :SA
+          SAA = :SAA
+          SAD = :SAD
+          SAE = :SAE
+          SAI = :SAI
+          SG = :SG
+          SH = :SH
+          SM = :SM
+          SU = :SU
+          TAB = :TAB
+          TAC = :TAC
+          TT = :TT
+          TV = :TV
+          V1 = :V1
+          V2 = :V2
+          WH = :WH
+          XAA = :XAA
+          YY = :YY
+          ZZZ = :ZZZ
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
 
         # Duty or tax or fee category codes (Subset of UNCL5305)
         #
@@ -605,9 +822,9 @@ module EInvoiceAPI
         optional :allowances, -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Allowance] }, nil?: true
 
         # @!attribute amount
-        #   The total amount of the line item, exclusive of VAT, after subtracting line
-        #   level allowances and adding line level charges. Must be rounded to maximum 2
-        #   decimals
+        #   The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
+        #   allowances and charges. Calculated as: ((unit_price / price_base_quantity) \*
+        #   quantity) - allowances + charges. Must be rounded to maximum 2 decimals
         #
         #   @return [String, nil]
         optional :amount, String, nil?: true
@@ -628,6 +845,13 @@ module EInvoiceAPI
         #
         #   @return [String, nil]
         optional :description, String, nil?: true
+
+        # @!attribute price_base_quantity
+        #   The item price base quantity (BT-149). The number of item units to which the
+        #   price applies. Defaults to 1. Must be rounded to maximum 4 decimals
+        #
+        #   @return [String, nil]
+        optional :price_base_quantity, String, nil?: true
 
         # @!attribute product_code
         #   The product code of the line item.
@@ -661,24 +885,27 @@ module EInvoiceAPI
         optional :unit, enum: -> { EInvoiceAPI::UnitOfMeasureCode }, nil?: true
 
         # @!attribute unit_price
-        #   The unit price of the line item. Must be rounded to maximum 2 decimals
+        #   The item net price (BT-146). The price of an item, exclusive of VAT, after
+        #   subtracting item price discount. Must be rounded to maximum 4 decimals
         #
         #   @return [String, nil]
         optional :unit_price, String, nil?: true
 
-        # @!method initialize(allowances: nil, amount: nil, charges: nil, date: nil, description: nil, product_code: nil, quantity: nil, tax: nil, tax_rate: nil, unit: nil, unit_price: nil)
+        # @!method initialize(allowances: nil, amount: nil, charges: nil, date: nil, description: nil, price_base_quantity: nil, product_code: nil, quantity: nil, tax: nil, tax_rate: nil, unit: nil, unit_price: nil)
         #   Some parameter documentations has been truncated, see
         #   {EInvoiceAPI::Models::DocumentResponse::Item} for more details.
         #
         #   @param allowances [Array<EInvoiceAPI::Models::Allowance>, nil] The allowances of the line item.
         #
-        #   @param amount [String, nil] The total amount of the line item, exclusive of VAT, after subtracting line leve
+        #   @param amount [String, nil] The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
         #
         #   @param charges [Array<EInvoiceAPI::Models::Charge>, nil] The charges of the line item.
         #
         #   @param date [nil]
         #
         #   @param description [String, nil] The description of the line item.
+        #
+        #   @param price_base_quantity [String, nil] The item price base quantity (BT-149). The number of item units to which the pri
         #
         #   @param product_code [String, nil] The product code of the line item.
         #
@@ -690,7 +917,7 @@ module EInvoiceAPI
         #
         #   @param unit [Symbol, EInvoiceAPI::Models::UnitOfMeasureCode, nil] Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
         #
-        #   @param unit_price [String, nil] The unit price of the line item. Must be rounded to maximum 2 decimals
+        #   @param unit_price [String, nil] The item net price (BT-146). The price of an item, exclusive of VAT, after subtr
       end
 
       class PaymentDetail < EInvoiceAPI::Internal::Type::BaseModel

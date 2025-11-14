@@ -432,9 +432,9 @@ module EInvoiceAPI
         optional :allowances, -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Allowance] }, nil?: true
 
         # @!attribute amount
-        #   The total amount of the line item, exclusive of VAT, after subtracting line
-        #   level allowances and adding line level charges. Must be rounded to maximum 2
-        #   decimals
+        #   The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
+        #   allowances and charges. Calculated as: ((unit_price / price_base_quantity) \*
+        #   quantity) - allowances + charges. Must be rounded to maximum 2 decimals
         #
         #   @return [String, nil]
         optional :amount, String, nil?: true
@@ -455,6 +455,13 @@ module EInvoiceAPI
         #
         #   @return [String, nil]
         optional :description, String, nil?: true
+
+        # @!attribute price_base_quantity
+        #   The item price base quantity (BT-149). The number of item units to which the
+        #   price applies. Defaults to 1. Must be rounded to maximum 4 decimals
+        #
+        #   @return [String, nil]
+        optional :price_base_quantity, String, nil?: true
 
         # @!attribute product_code
         #   The product code of the line item.
@@ -488,24 +495,27 @@ module EInvoiceAPI
         optional :unit, enum: -> { EInvoiceAPI::UnitOfMeasureCode }, nil?: true
 
         # @!attribute unit_price
-        #   The unit price of the line item. Must be rounded to maximum 2 decimals
+        #   The item net price (BT-146). The price of an item, exclusive of VAT, after
+        #   subtracting item price discount. Must be rounded to maximum 4 decimals
         #
         #   @return [String, nil]
         optional :unit_price, String, nil?: true
 
-        # @!method initialize(allowances: nil, amount: nil, charges: nil, date: nil, description: nil, product_code: nil, quantity: nil, tax: nil, tax_rate: nil, unit: nil, unit_price: nil)
+        # @!method initialize(allowances: nil, amount: nil, charges: nil, date: nil, description: nil, price_base_quantity: nil, product_code: nil, quantity: nil, tax: nil, tax_rate: nil, unit: nil, unit_price: nil)
         #   Some parameter documentations has been truncated, see
         #   {EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item} for more details.
         #
         #   @param allowances [Array<EInvoiceAPI::Models::Allowance>, nil] The allowances of the line item.
         #
-        #   @param amount [String, nil] The total amount of the line item, exclusive of VAT, after subtracting line leve
+        #   @param amount [String, nil] The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
         #
         #   @param charges [Array<EInvoiceAPI::Models::Charge>, nil] The charges of the line item.
         #
         #   @param date [nil]
         #
         #   @param description [String, nil] The description of the line item.
+        #
+        #   @param price_base_quantity [String, nil] The item price base quantity (BT-149). The number of item units to which the pri
         #
         #   @param product_code [String, nil] The product code of the line item.
         #
@@ -517,7 +527,7 @@ module EInvoiceAPI
         #
         #   @param unit [Symbol, EInvoiceAPI::Models::UnitOfMeasureCode, nil] Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
         #
-        #   @param unit_price [String, nil] The unit price of the line item. Must be rounded to maximum 2 decimals
+        #   @param unit_price [String, nil] The item net price (BT-146). The price of an item, exclusive of VAT, after subtr
       end
 
       # Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E

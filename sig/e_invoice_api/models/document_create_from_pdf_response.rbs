@@ -294,6 +294,7 @@ module EInvoiceAPI
           charges: ::Array[EInvoiceAPI::Charge]?,
           date: nil,
           description: String?,
+          price_base_quantity: String?,
           product_code: String?,
           quantity: String?,
           tax: String?,
@@ -313,6 +314,8 @@ module EInvoiceAPI
 
         attr_accessor description: String?
 
+        attr_accessor price_base_quantity: String?
+
         attr_accessor product_code: String?
 
         attr_accessor quantity: String?
@@ -331,6 +334,7 @@ module EInvoiceAPI
           ?charges: ::Array[EInvoiceAPI::Charge]?,
           ?date: nil,
           ?description: String?,
+          ?price_base_quantity: String?,
           ?product_code: String?,
           ?quantity: String?,
           ?tax: String?,
@@ -345,6 +349,7 @@ module EInvoiceAPI
           charges: ::Array[EInvoiceAPI::Charge]?,
           date: nil,
           description: String?,
+          price_base_quantity: String?,
           product_code: String?,
           quantity: String?,
           tax: String?,
