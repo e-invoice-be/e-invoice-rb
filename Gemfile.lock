@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    e-invoice-api (0.11.0)
+    e-invoice-api (0.12.0)
       connection_pool
 
 GEM
