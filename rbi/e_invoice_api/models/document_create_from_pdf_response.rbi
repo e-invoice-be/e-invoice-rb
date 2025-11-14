@@ -548,9 +548,9 @@ module EInvoiceAPI
         sig { returns(T.nilable(T::Array[EInvoiceAPI::Allowance])) }
         attr_accessor :allowances
 
-        # The total amount of the line item, exclusive of VAT, after subtracting line
-        # level allowances and adding line level charges. Must be rounded to maximum 2
-        # decimals
+        # The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
+        # allowances and charges. Calculated as: ((unit_price / price_base_quantity) \*
+        # quantity) - allowances + charges. Must be rounded to maximum 2 decimals
         sig { returns(T.nilable(String)) }
         attr_accessor :amount
 
@@ -564,6 +564,11 @@ module EInvoiceAPI
         # The description of the line item.
         sig { returns(T.nilable(String)) }
         attr_accessor :description
+
+        # The item price base quantity (BT-149). The number of item units to which the
+        # price applies. Defaults to 1. Must be rounded to maximum 4 decimals
+        sig { returns(T.nilable(String)) }
+        attr_accessor :price_base_quantity
 
         # The product code of the line item.
         sig { returns(T.nilable(String)) }
@@ -586,7 +591,8 @@ module EInvoiceAPI
         sig { returns(T.nilable(EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)) }
         attr_accessor :unit
 
-        # The unit price of the line item. Must be rounded to maximum 2 decimals
+        # The item net price (BT-146). The price of an item, exclusive of VAT, after
+        # subtracting item price discount. Must be rounded to maximum 4 decimals
         sig { returns(T.nilable(String)) }
         attr_accessor :unit_price
 
@@ -597,6 +603,7 @@ module EInvoiceAPI
             charges: T.nilable(T::Array[EInvoiceAPI::Charge::OrHash]),
             date: NilClass,
             description: T.nilable(String),
+            price_base_quantity: T.nilable(String),
             product_code: T.nilable(String),
             quantity: T.nilable(String),
             tax: T.nilable(String),
@@ -608,15 +615,18 @@ module EInvoiceAPI
         def self.new(
           # The allowances of the line item.
           allowances: nil,
-          # The total amount of the line item, exclusive of VAT, after subtracting line
-          # level allowances and adding line level charges. Must be rounded to maximum 2
-          # decimals
+          # The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
+          # allowances and charges. Calculated as: ((unit_price / price_base_quantity) \*
+          # quantity) - allowances + charges. Must be rounded to maximum 2 decimals
           amount: nil,
           # The charges of the line item.
           charges: nil,
           date: nil,
           # The description of the line item.
           description: nil,
+          # The item price base quantity (BT-149). The number of item units to which the
+          # price applies. Defaults to 1. Must be rounded to maximum 4 decimals
+          price_base_quantity: nil,
           # The product code of the line item.
           product_code: nil,
           # The quantity of items (goods or services) that is the subject of the line item.
@@ -628,7 +638,8 @@ module EInvoiceAPI
           tax_rate: nil,
           # Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
           unit: nil,
-          # The unit price of the line item. Must be rounded to maximum 2 decimals
+          # The item net price (BT-146). The price of an item, exclusive of VAT, after
+          # subtracting item price discount. Must be rounded to maximum 4 decimals
           unit_price: nil
         )
         end
@@ -641,6 +652,7 @@ module EInvoiceAPI
               charges: T.nilable(T::Array[EInvoiceAPI::Charge]),
               date: NilClass,
               description: T.nilable(String),
+              price_base_quantity: T.nilable(String),
               product_code: T.nilable(String),
               quantity: T.nilable(String),
               tax: T.nilable(String),
