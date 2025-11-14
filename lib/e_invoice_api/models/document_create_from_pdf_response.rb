@@ -152,13 +152,6 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :payment_term, String, nil?: true
 
-      # @!attribute previous_unpaid_balance
-      #   The previous unpaid balance from prior invoices, if any. Must be positive and
-      #   rounded to maximum 2 decimals
-      #
-      #   @return [String, nil]
-      optional :previous_unpaid_balance, String, nil?: true
-
       # @!attribute purchase_order
       #   The purchase order reference number
       #
@@ -320,7 +313,7 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :vendor_tax_id, String, nil?: true
 
-      # @!method initialize(allowances: nil, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, charges: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_company_id: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, previous_unpaid_balance: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, success: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, ubl_document: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_company_id: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil)
+      # @!method initialize(allowances: nil, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, charges: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_company_id: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, success: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, ubl_document: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_company_id: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil)
       #   Some parameter documentations has been truncated, see
       #   {EInvoiceAPI::Models::DocumentCreateFromPdfResponse} for more details.
       #
@@ -371,8 +364,6 @@ module EInvoiceAPI
       #   @param payment_details [Array<EInvoiceAPI::Models::PaymentDetailCreate>, nil]
       #
       #   @param payment_term [String, nil] The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
-      #
-      #   @param previous_unpaid_balance [String, nil] The previous unpaid balance from prior invoices, if any. Must be positive and ro
       #
       #   @param purchase_order [String, nil] The purchase order reference number
       #
@@ -432,9 +423,10 @@ module EInvoiceAPI
         optional :allowances, -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Allowance] }, nil?: true
 
         # @!attribute amount
-        #   The total amount of the line item, exclusive of VAT, after subtracting line
-        #   level allowances and adding line level charges. Must be rounded to maximum 2
-        #   decimals
+        #   The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
+        #   allowances and charges. Calculated as: ((unit_price / price_base_quantity) \*
+        #   quantity) - allowances + charges. Must be rounded to maximum 2 decimals. Can be
+        #   negative for credit notes or corrections.
         #
         #   @return [String, nil]
         optional :amount, String, nil?: true
@@ -464,13 +456,15 @@ module EInvoiceAPI
 
         # @!attribute quantity
         #   The quantity of items (goods or services) that is the subject of the line item.
-        #   Must be rounded to maximum 4 decimals
+        #   Must be rounded to maximum 4 decimals. Can be negative for credit notes or
+        #   corrections.
         #
         #   @return [String, nil]
         optional :quantity, String, nil?: true
 
         # @!attribute tax
-        #   The total VAT amount for the line item. Must be rounded to maximum 2 decimals
+        #   The total VAT amount for the line item. Must be rounded to maximum 2 decimals.
+        #   Can be negative for credit notes or corrections.
         #
         #   @return [String, nil]
         optional :tax, String, nil?: true
@@ -488,7 +482,8 @@ module EInvoiceAPI
         optional :unit, enum: -> { EInvoiceAPI::UnitOfMeasureCode }, nil?: true
 
         # @!attribute unit_price
-        #   The unit price of the line item. Must be rounded to maximum 2 decimals
+        #   The item net price (BT-146). The price of an item, exclusive of VAT, after
+        #   subtracting item price discount. Must be rounded to maximum 4 decimals
         #
         #   @return [String, nil]
         optional :unit_price, String, nil?: true
@@ -499,7 +494,7 @@ module EInvoiceAPI
         #
         #   @param allowances [Array<EInvoiceAPI::Models::Allowance>, nil] The allowances of the line item.
         #
-        #   @param amount [String, nil] The total amount of the line item, exclusive of VAT, after subtracting line leve
+        #   @param amount [String, nil] The invoice line net amount (BT-131), exclusive of VAT, inclusive of line level
         #
         #   @param charges [Array<EInvoiceAPI::Models::Charge>, nil] The charges of the line item.
         #
@@ -511,13 +506,13 @@ module EInvoiceAPI
         #
         #   @param quantity [String, nil] The quantity of items (goods or services) that is the subject of the line item.
         #
-        #   @param tax [String, nil] The total VAT amount for the line item. Must be rounded to maximum 2 decimals
+        #   @param tax [String, nil] The total VAT amount for the line item. Must be rounded to maximum 2 decimals. C
         #
         #   @param tax_rate [String, nil] The VAT rate of the line item expressed as percentage with 2 decimals
         #
         #   @param unit [Symbol, EInvoiceAPI::Models::UnitOfMeasureCode, nil] Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
         #
-        #   @param unit_price [String, nil] The unit price of the line item. Must be rounded to maximum 2 decimals
+        #   @param unit_price [String, nil] The item net price (BT-146). The price of an item, exclusive of VAT, after subtr
       end
 
       # Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E

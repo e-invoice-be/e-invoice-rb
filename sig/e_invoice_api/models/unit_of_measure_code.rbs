@@ -1032,6 +1032,7 @@ module EInvoiceAPI
       | :NAR
       | :C62
       | :LTR
+      | :H87
 
     module UnitOfMeasureCode
       extend EInvoiceAPI::Internal::Type::Enum
@@ -2067,6 +2068,7 @@ module EInvoiceAPI
       NAR: :NAR
       C62: :C62
       LTR: :LTR
+      H87: :H87
 
       def self?.values: -> ::Array[EInvoiceAPI::Models::unit_of_measure_code]
     end

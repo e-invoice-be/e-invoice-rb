@@ -1037,6 +1037,7 @@ module EInvoiceAPI
       NAR = :NAR
       C62 = :C62
       LTR = :LTR
+      H87 = :H87
 
       # @!method self.values
       #   @return [Array<Symbol>]
