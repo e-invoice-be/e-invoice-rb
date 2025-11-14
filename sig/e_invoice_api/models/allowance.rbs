@@ -6,8 +6,8 @@ module EInvoiceAPI
         base_amount: String?,
         multiplier_factor: String?,
         reason: String?,
-        reason_code: EInvoiceAPI::Models::Allowance::reason_code?,
-        tax_code: EInvoiceAPI::Models::Allowance::tax_code,
+        reason_code: String?,
+        tax_code: EInvoiceAPI::Models::Allowance::tax_code?,
         tax_rate: String?
       }
 
@@ -20,13 +20,9 @@ module EInvoiceAPI
 
       attr_accessor reason: String?
 
-      attr_accessor reason_code: EInvoiceAPI::Models::Allowance::reason_code?
+      attr_accessor reason_code: String?
 
-      attr_reader tax_code: EInvoiceAPI::Models::Allowance::tax_code?
-
-      def tax_code=: (
-        EInvoiceAPI::Models::Allowance::tax_code
-      ) -> EInvoiceAPI::Models::Allowance::tax_code
+      attr_accessor tax_code: EInvoiceAPI::Models::Allowance::tax_code?
 
       attr_accessor tax_rate: String?
 
@@ -35,8 +31,8 @@ module EInvoiceAPI
         ?base_amount: String?,
         ?multiplier_factor: String?,
         ?reason: String?,
-        ?reason_code: EInvoiceAPI::Models::Allowance::reason_code?,
-        ?tax_code: EInvoiceAPI::Models::Allowance::tax_code,
+        ?reason_code: String?,
+        ?tax_code: EInvoiceAPI::Models::Allowance::tax_code?,
         ?tax_rate: String?
       ) -> void
 
@@ -45,57 +41,10 @@ module EInvoiceAPI
         base_amount: String?,
         multiplier_factor: String?,
         reason: String?,
-        reason_code: EInvoiceAPI::Models::Allowance::reason_code?,
-        tax_code: EInvoiceAPI::Models::Allowance::tax_code,
+        reason_code: String?,
+        tax_code: EInvoiceAPI::Models::Allowance::tax_code?,
         tax_rate: String?
       }
-
-      type reason_code =
-        :"41"
-        | :"42"
-        | :"60"
-        | :"62"
-        | :"63"
-        | :"64"
-        | :"65"
-        | :"66"
-        | :"67"
-        | :"68"
-        | :"70"
-        | :"71"
-        | :"88"
-        | :"95"
-        | :"100"
-        | :"102"
-        | :"103"
-        | :"104"
-        | :"105"
-
-      module ReasonCode
-        extend EInvoiceAPI::Internal::Type::Enum
-
-        REASON_CODE_41: :"41"
-        REASON_CODE_42: :"42"
-        REASON_CODE_60: :"60"
-        REASON_CODE_62: :"62"
-        REASON_CODE_63: :"63"
-        REASON_CODE_64: :"64"
-        REASON_CODE_65: :"65"
-        REASON_CODE_66: :"66"
-        REASON_CODE_67: :"67"
-        REASON_CODE_68: :"68"
-        REASON_CODE_70: :"70"
-        REASON_CODE_71: :"71"
-        REASON_CODE_88: :"88"
-        REASON_CODE_95: :"95"
-        REASON_CODE_100: :"100"
-        REASON_CODE_102: :"102"
-        REASON_CODE_103: :"103"
-        REASON_CODE_104: :"104"
-        REASON_CODE_105: :"105"
-
-        def self?.values: -> ::Array[EInvoiceAPI::Models::Allowance::reason_code]
-      end
 
       type tax_code = :AE | :E | :S | :Z | :G | :O | :K | :L | :M | :B
 

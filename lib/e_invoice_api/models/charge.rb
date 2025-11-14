@@ -30,10 +30,10 @@ module EInvoiceAPI
       optional :reason, String, nil?: true
 
       # @!attribute reason_code
-      #   Charge reason codes for invoice charges and fees
+      #   The code for the charge reason
       #
-      #   @return [Symbol, EInvoiceAPI::Models::Charge::ReasonCode, nil]
-      optional :reason_code, enum: -> { EInvoiceAPI::Charge::ReasonCode }, nil?: true
+      #   @return [String, nil]
+      optional :reason_code, String, nil?: true
 
       # @!attribute tax_code
       #   Duty or tax or fee category codes (Subset of UNCL5305)
@@ -63,200 +63,11 @@ module EInvoiceAPI
       #
       #   @param reason [String, nil] The reason for the charge
       #
-      #   @param reason_code [Symbol, EInvoiceAPI::Models::Charge::ReasonCode, nil] Charge reason codes for invoice charges and fees
+      #   @param reason_code [String, nil] The code for the charge reason
       #
       #   @param tax_code [Symbol, EInvoiceAPI::Models::Charge::TaxCode, nil] Duty or tax or fee category codes (Subset of UNCL5305)
       #
       #   @param tax_rate [String, nil] The VAT rate, represented as percentage that applies to the charge
-
-      # Charge reason codes for invoice charges and fees
-      #
-      # @see EInvoiceAPI::Models::Charge#reason_code
-      module ReasonCode
-        extend EInvoiceAPI::Internal::Type::Enum
-
-        AA = :AA
-        AAA = :AAA
-        AAC = :AAC
-        AAD = :AAD
-        AAE = :AAE
-        AAF = :AAF
-        AAH = :AAH
-        AAI = :AAI
-        AAS = :AAS
-        AAT = :AAT
-        AAV = :AAV
-        AAY = :AAY
-        AAZ = :AAZ
-        ABA = :ABA
-        ABB = :ABB
-        ABC = :ABC
-        ABD = :ABD
-        ABF = :ABF
-        ABK = :ABK
-        ABL = :ABL
-        ABN = :ABN
-        ABR = :ABR
-        ABS = :ABS
-        ABT = :ABT
-        ABU = :ABU
-        ACF = :ACF
-        ACG = :ACG
-        ACH = :ACH
-        ACI = :ACI
-        ACJ = :ACJ
-        ACK = :ACK
-        ACL = :ACL
-        ACM = :ACM
-        ACS = :ACS
-        ADC = :ADC
-        ADE = :ADE
-        ADJ = :ADJ
-        ADK = :ADK
-        ADL = :ADL
-        ADM = :ADM
-        ADN = :ADN
-        ADO = :ADO
-        ADP = :ADP
-        ADQ = :ADQ
-        ADR = :ADR
-        ADT = :ADT
-        ADW = :ADW
-        ADY = :ADY
-        ADZ = :ADZ
-        AEA = :AEA
-        AEB = :AEB
-        AEC = :AEC
-        AED = :AED
-        AEF = :AEF
-        AEH = :AEH
-        AEI = :AEI
-        AEJ = :AEJ
-        AEK = :AEK
-        AEL = :AEL
-        AEM = :AEM
-        AEN = :AEN
-        AEO = :AEO
-        AEP = :AEP
-        AES = :AES
-        AET = :AET
-        AEU = :AEU
-        AEV = :AEV
-        AEW = :AEW
-        AEX = :AEX
-        AEY = :AEY
-        AEZ = :AEZ
-        AJ = :AJ
-        AU = :AU
-        CA = :CA
-        CAB = :CAB
-        CAD = :CAD
-        CAE = :CAE
-        CAF = :CAF
-        CAI = :CAI
-        CAJ = :CAJ
-        CAK = :CAK
-        CAL = :CAL
-        CAM = :CAM
-        CAN = :CAN
-        CAO = :CAO
-        CAP = :CAP
-        CAQ = :CAQ
-        CAR = :CAR
-        CAS = :CAS
-        CAT = :CAT
-        CAU = :CAU
-        CAV = :CAV
-        CAW = :CAW
-        CAX = :CAX
-        CAY = :CAY
-        CAZ = :CAZ
-        CD = :CD
-        CG = :CG
-        CS = :CS
-        CT = :CT
-        DAB = :DAB
-        DAC = :DAC
-        DAD = :DAD
-        DAF = :DAF
-        DAG = :DAG
-        DAH = :DAH
-        DAI = :DAI
-        DAJ = :DAJ
-        DAK = :DAK
-        DAL = :DAL
-        DAM = :DAM
-        DAN = :DAN
-        DAO = :DAO
-        DAP = :DAP
-        DAQ = :DAQ
-        DL = :DL
-        EG = :EG
-        EP = :EP
-        ER = :ER
-        FAA = :FAA
-        FAB = :FAB
-        FAC = :FAC
-        FC = :FC
-        FH = :FH
-        FI = :FI
-        GAA = :GAA
-        HAA = :HAA
-        HD = :HD
-        HH = :HH
-        IAA = :IAA
-        IAB = :IAB
-        ID = :ID
-        IF = :IF
-        IR = :IR
-        IS = :IS
-        KO = :KO
-        L1 = :L1
-        LA = :LA
-        LAA = :LAA
-        LAB = :LAB
-        LF = :LF
-        MAE = :MAE
-        MI = :MI
-        ML = :ML
-        NAA = :NAA
-        OA = :OA
-        PA = :PA
-        PAA = :PAA
-        PC = :PC
-        PL = :PL
-        PRV = :PRV
-        RAB = :RAB
-        RAC = :RAC
-        RAD = :RAD
-        RAF = :RAF
-        RE = :RE
-        RF = :RF
-        RH = :RH
-        RV = :RV
-        SA = :SA
-        SAA = :SAA
-        SAD = :SAD
-        SAE = :SAE
-        SAI = :SAI
-        SG = :SG
-        SH = :SH
-        SM = :SM
-        SU = :SU
-        TAB = :TAB
-        TAC = :TAC
-        TT = :TT
-        TV = :TV
-        V1 = :V1
-        V2 = :V2
-        WH = :WH
-        XAA = :XAA
-        YY = :YY
-        ZZZ = :ZZZ
-
-        # @!method self.values
-        #   @return [Array<Symbol>]
-      end
 
       # Duty or tax or fee category codes (Subset of UNCL5305)
       #
