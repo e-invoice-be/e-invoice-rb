@@ -552,7 +552,6 @@ module EInvoiceAPI
       MIN = T.let(:MIN, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
       MON = T.let(:MON, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
       ONZ = T.let(:ONZ, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
-      PCE = T.let(:PCE, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
       LBR = T.let(:LBR, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
       QT = T.let(:QT, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)
       SEC = T.let(:SEC, EInvoiceAPI::UnitOfMeasureCode::TaggedSymbol)

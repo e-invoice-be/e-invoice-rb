@@ -474,7 +474,6 @@ module EInvoiceAPI
       MIN = :MIN
       MON = :MON
       ONZ = :ONZ
-      PCE = :PCE
       LBR = :LBR
       QT = :QT
       SEC = :SEC
