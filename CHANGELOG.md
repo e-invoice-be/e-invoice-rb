@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.15.1 (2025-11-21)
+
+Full Changelog: [v0.15.0...v0.15.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.15.0...v0.15.1)
+
+### Chores
+
+* explicitly require "base64" gem ([3f44730](https://github.com/e-invoice-be/e-invoice-rb/commit/3f4473046beeea219a87f4d03f003c66410ba86c))
+
 ## 0.15.0 (2025-11-18)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.14.0...v0.15.0)
