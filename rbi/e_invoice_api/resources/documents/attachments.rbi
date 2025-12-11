@@ -37,7 +37,8 @@ module EInvoiceAPI
         def delete(attachment_id, document_id:, request_options: {})
         end
 
-        # Add a new attachment to an invoice or credit note
+        # Add one or more attachments when creating a new invoice or credit note via POST
+        # /api/documents/
         sig do
           params(
             document_id: String,
