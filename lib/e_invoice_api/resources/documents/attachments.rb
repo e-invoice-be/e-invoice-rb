@@ -74,7 +74,10 @@ module EInvoiceAPI
           )
         end
 
-        # Add a new attachment to an invoice or credit note
+        # @deprecated
+        #
+        # Add one or more attachments when creating a new invoice or credit note via POST
+        # /api/documents/
         #
         # @overload add(document_id, file:, request_options: {})
         #
