@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.16.1 (2025-12-17)
+
+Full Changelog: [v0.16.0...v0.16.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.16.0...v0.16.1)
+
+### Bug Fixes
+
+* calling `break` out of streams should be instantaneous ([5b43b59](https://github.com/e-invoice-be/e-invoice-rb/commit/5b43b592fb1a63697ca274ba89b25c12d67083d5))
+
 ## 0.16.0 (2025-12-11)
 
 Full Changelog: [v0.15.0...v0.16.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.15.0...v0.16.0)
