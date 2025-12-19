@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.16.2 (2025-12-19)
+
+Full Changelog: [v0.16.1...v0.16.2](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.16.1...v0.16.2)
+
+### Bug Fixes
+
+* issue where json.parse errors when receiving HTTP 204 with nobody ([54c9e10](https://github.com/e-invoice-be/e-invoice-rb/commit/54c9e102d0dc79a9d37d21687675fcbe71b1a2c8))
+
 ## 0.16.1 (2025-12-17)
 
 Full Changelog: [v0.16.0...v0.16.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.16.0...v0.16.1)
