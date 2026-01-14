@@ -218,11 +218,11 @@ module EInvoiceAPI
         ).returns(EInvoiceAPI::Models::DocumentCreateFromPdfResponse)
       end
       def create_from_pdf(
-        # Body param:
+        # Body param
         file:,
-        # Query param:
+        # Query param
         customer_tax_id: nil,
-        # Query param:
+        # Query param
         vendor_tax_id: nil,
         request_options: {}
       )

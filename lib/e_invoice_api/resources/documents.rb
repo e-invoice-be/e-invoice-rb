@@ -174,11 +174,11 @@ module EInvoiceAPI
       #
       # @overload create_from_pdf(file:, customer_tax_id: nil, vendor_tax_id: nil, request_options: {})
       #
-      # @param file [Pathname, StringIO, IO, String, EInvoiceAPI::FilePart] Body param:
+      # @param file [Pathname, StringIO, IO, String, EInvoiceAPI::FilePart] Body param
       #
-      # @param customer_tax_id [String, nil] Query param:
+      # @param customer_tax_id [String, nil] Query param
       #
-      # @param vendor_tax_id [String, nil] Query param:
+      # @param vendor_tax_id [String, nil] Query param
       #
       # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
