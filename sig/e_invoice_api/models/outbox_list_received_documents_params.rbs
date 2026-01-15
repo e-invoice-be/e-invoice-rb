@@ -6,8 +6,11 @@ module EInvoiceAPI
         date_to: Time?,
         page: Integer,
         page_size: Integer,
+        receiver: String?,
         search: String?,
         sender: String?,
+        sort_by: EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_by,
+        sort_order: EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_order,
         state: EInvoiceAPI::Models::document_state?,
         type: EInvoiceAPI::Models::document_type?
       }
@@ -29,9 +32,23 @@ module EInvoiceAPI
 
       def page_size=: (Integer) -> Integer
 
+      attr_accessor receiver: String?
+
       attr_accessor search: String?
 
       attr_accessor sender: String?
+
+      attr_reader sort_by: EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_by?
+
+      def sort_by=: (
+        EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_by
+      ) -> EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_by
+
+      attr_reader sort_order: EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_order?
+
+      def sort_order=: (
+        EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_order
+      ) -> EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_order
 
       attr_accessor state: EInvoiceAPI::Models::document_state?
 
@@ -42,8 +59,11 @@ module EInvoiceAPI
         ?date_to: Time?,
         ?page: Integer,
         ?page_size: Integer,
+        ?receiver: String?,
         ?search: String?,
         ?sender: String?,
+        ?sort_by: EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_by,
+        ?sort_order: EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_order,
         ?state: EInvoiceAPI::Models::document_state?,
         ?type: EInvoiceAPI::Models::document_type?,
         ?request_options: EInvoiceAPI::request_opts
@@ -54,12 +74,49 @@ module EInvoiceAPI
         date_to: Time?,
         page: Integer,
         page_size: Integer,
+        receiver: String?,
         search: String?,
         sender: String?,
+        sort_by: EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_by,
+        sort_order: EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_order,
         state: EInvoiceAPI::Models::document_state?,
         type: EInvoiceAPI::Models::document_type?,
         request_options: EInvoiceAPI::RequestOptions
       }
+
+      type sort_by =
+        :created_at
+        | :invoice_date
+        | :due_date
+        | :invoice_total
+        | :customer_name
+        | :vendor_name
+        | :invoice_id
+
+      module SortBy
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        CREATED_AT: :created_at
+        INVOICE_DATE: :invoice_date
+        DUE_DATE: :due_date
+        INVOICE_TOTAL: :invoice_total
+        CUSTOMER_NAME: :customer_name
+        VENDOR_NAME: :vendor_name
+        INVOICE_ID: :invoice_id
+
+        def self?.values: -> ::Array[EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_by]
+      end
+
+      type sort_order = :asc | :desc
+
+      module SortOrder
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        ASC: :asc
+        DESC: :desc
+
+        def self?.values: -> ::Array[EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_order]
+      end
     end
   end
 end

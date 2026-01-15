@@ -11,6 +11,9 @@ module EInvoiceAPI
           )
         end
 
+      sig { returns(T::Boolean) }
+      attr_accessor :has_next_page
+
       sig { returns(T::Array[EInvoiceAPI::DocumentResponse]) }
       attr_accessor :items
 
@@ -28,6 +31,7 @@ module EInvoiceAPI
 
       sig do
         params(
+          has_next_page: T::Boolean,
           items: T::Array[EInvoiceAPI::DocumentResponse::OrHash],
           page: Integer,
           page_size: Integer,
@@ -35,12 +39,13 @@ module EInvoiceAPI
           total: Integer
         ).returns(T.attached_class)
       end
-      def self.new(items:, page:, page_size:, pages:, total:)
+      def self.new(has_next_page:, items:, page:, page_size:, pages:, total:)
       end
 
       sig do
         override.returns(
           {
+            has_next_page: T::Boolean,
             items: T::Array[EInvoiceAPI::DocumentResponse],
             page: Integer,
             page_size: Integer,

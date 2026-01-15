@@ -6,7 +6,7 @@ module EInvoiceAPI
       # Retrieve a paginated list of received documents with filtering options including
       # state, type, sender, date range, and text search.
       #
-      # @overload list(date_from: nil, date_to: nil, page: nil, page_size: nil, search: nil, sender: nil, state: nil, type: nil, request_options: {})
+      # @overload list(date_from: nil, date_to: nil, page: nil, page_size: nil, search: nil, sender: nil, sort_by: nil, sort_order: nil, state: nil, type: nil, request_options: {})
       #
       # @param date_from [Time, nil] Filter by issue date (from)
       #
@@ -18,7 +18,11 @@ module EInvoiceAPI
       #
       # @param search [String, nil] Search in invoice number, seller/buyer names
       #
-      # @param sender [String, nil] Filter by sender ID
+      # @param sender [String, nil] Filter by sender (vendor_name, vendor_email, vendor_tax_id, vendor_company_id)
+      #
+      # @param sort_by [Symbol, EInvoiceAPI::Models::InboxListParams::SortBy] Field to sort by
+      #
+      # @param sort_order [Symbol, EInvoiceAPI::Models::InboxListParams::SortOrder] Sort direction (asc/desc)
       #
       # @param state [Symbol, EInvoiceAPI::Models::DocumentState, nil] Filter by document state
       #
@@ -43,11 +47,15 @@ module EInvoiceAPI
 
       # Retrieve a paginated list of received credit notes with filtering options.
       #
-      # @overload list_credit_notes(page: nil, page_size: nil, request_options: {})
+      # @overload list_credit_notes(page: nil, page_size: nil, sort_by: nil, sort_order: nil, request_options: {})
       #
       # @param page [Integer] Page number
       #
       # @param page_size [Integer] Number of items per page
+      #
+      # @param sort_by [Symbol, EInvoiceAPI::Models::InboxListCreditNotesParams::SortBy] Field to sort by
+      #
+      # @param sort_order [Symbol, EInvoiceAPI::Models::InboxListCreditNotesParams::SortOrder] Sort direction (asc/desc)
       #
       # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -68,11 +76,15 @@ module EInvoiceAPI
 
       # Retrieve a paginated list of received invoices with filtering options.
       #
-      # @overload list_invoices(page: nil, page_size: nil, request_options: {})
+      # @overload list_invoices(page: nil, page_size: nil, sort_by: nil, sort_order: nil, request_options: {})
       #
       # @param page [Integer] Page number
       #
       # @param page_size [Integer] Number of items per page
+      #
+      # @param sort_by [Symbol, EInvoiceAPI::Models::InboxListInvoicesParams::SortBy] Field to sort by
+      #
+      # @param sort_order [Symbol, EInvoiceAPI::Models::InboxListInvoicesParams::SortOrder] Sort direction (asc/desc)
       #
       # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
