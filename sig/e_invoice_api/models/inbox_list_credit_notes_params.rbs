@@ -1,7 +1,12 @@
 module EInvoiceAPI
   module Models
     type inbox_list_credit_notes_params =
-      { page: Integer, page_size: Integer }
+      {
+        page: Integer,
+        page_size: Integer,
+        sort_by: EInvoiceAPI::Models::InboxListCreditNotesParams::sort_by,
+        sort_order: EInvoiceAPI::Models::InboxListCreditNotesParams::sort_order
+      }
       & EInvoiceAPI::Internal::Type::request_parameters
 
     class InboxListCreditNotesParams < EInvoiceAPI::Internal::Type::BaseModel
@@ -16,17 +21,67 @@ module EInvoiceAPI
 
       def page_size=: (Integer) -> Integer
 
+      attr_reader sort_by: EInvoiceAPI::Models::InboxListCreditNotesParams::sort_by?
+
+      def sort_by=: (
+        EInvoiceAPI::Models::InboxListCreditNotesParams::sort_by
+      ) -> EInvoiceAPI::Models::InboxListCreditNotesParams::sort_by
+
+      attr_reader sort_order: EInvoiceAPI::Models::InboxListCreditNotesParams::sort_order?
+
+      def sort_order=: (
+        EInvoiceAPI::Models::InboxListCreditNotesParams::sort_order
+      ) -> EInvoiceAPI::Models::InboxListCreditNotesParams::sort_order
+
       def initialize: (
         ?page: Integer,
         ?page_size: Integer,
+        ?sort_by: EInvoiceAPI::Models::InboxListCreditNotesParams::sort_by,
+        ?sort_order: EInvoiceAPI::Models::InboxListCreditNotesParams::sort_order,
         ?request_options: EInvoiceAPI::request_opts
       ) -> void
 
       def to_hash: -> {
         page: Integer,
         page_size: Integer,
+        sort_by: EInvoiceAPI::Models::InboxListCreditNotesParams::sort_by,
+        sort_order: EInvoiceAPI::Models::InboxListCreditNotesParams::sort_order,
         request_options: EInvoiceAPI::RequestOptions
       }
+
+      type sort_by =
+        :created_at
+        | :invoice_date
+        | :due_date
+        | :invoice_total
+        | :customer_name
+        | :vendor_name
+        | :invoice_id
+
+      module SortBy
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        CREATED_AT: :created_at
+        INVOICE_DATE: :invoice_date
+        DUE_DATE: :due_date
+        INVOICE_TOTAL: :invoice_total
+        CUSTOMER_NAME: :customer_name
+        VENDOR_NAME: :vendor_name
+        INVOICE_ID: :invoice_id
+
+        def self?.values: -> ::Array[EInvoiceAPI::Models::InboxListCreditNotesParams::sort_by]
+      end
+
+      type sort_order = :asc | :desc
+
+      module SortOrder
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        ASC: :asc
+        DESC: :desc
+
+        def self?.values: -> ::Array[EInvoiceAPI::Models::InboxListCreditNotesParams::sort_order]
+      end
     end
   end
 end

@@ -11,6 +11,10 @@ module EInvoiceAPI
       INVOICE = T.let(:INVOICE, EInvoiceAPI::DocumentType::TaggedSymbol)
       CREDIT_NOTE = T.let(:CREDIT_NOTE, EInvoiceAPI::DocumentType::TaggedSymbol)
       DEBIT_NOTE = T.let(:DEBIT_NOTE, EInvoiceAPI::DocumentType::TaggedSymbol)
+      SELFBILLING_INVOICE =
+        T.let(:SELFBILLING_INVOICE, EInvoiceAPI::DocumentType::TaggedSymbol)
+      SELFBILLING_CREDIT_NOTE =
+        T.let(:SELFBILLING_CREDIT_NOTE, EInvoiceAPI::DocumentType::TaggedSymbol)
 
       sig do
         override.returns(T::Array[EInvoiceAPI::DocumentType::TaggedSymbol])

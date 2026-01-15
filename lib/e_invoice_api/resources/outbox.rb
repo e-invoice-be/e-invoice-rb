@@ -3,13 +3,24 @@
 module EInvoiceAPI
   module Resources
     class Outbox
-      # Retrieve a paginated list of draft documents with filtering options.
+      # Retrieve a paginated list of draft documents with filtering options including
+      # state and text search.
       #
-      # @overload list_draft_documents(page: nil, page_size: nil, request_options: {})
+      # @overload list_draft_documents(page: nil, page_size: nil, search: nil, sort_by: nil, sort_order: nil, state: nil, type: nil, request_options: {})
       #
       # @param page [Integer] Page number
       #
       # @param page_size [Integer] Number of items per page
+      #
+      # @param search [String, nil] Search in invoice number, seller/buyer names
+      #
+      # @param sort_by [Symbol, EInvoiceAPI::Models::OutboxListDraftDocumentsParams::SortBy] Field to sort by
+      #
+      # @param sort_order [Symbol, EInvoiceAPI::Models::OutboxListDraftDocumentsParams::SortOrder] Sort direction (asc/desc)
+      #
+      # @param state [Symbol, EInvoiceAPI::Models::DocumentState, nil] Filter by document state
+      #
+      # @param type [Symbol, EInvoiceAPI::Models::DocumentType, nil] Filter by document type
       #
       # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -28,10 +39,13 @@ module EInvoiceAPI
         )
       end
 
+      # Some parameter documentations has been truncated, see
+      # {EInvoiceAPI::Models::OutboxListReceivedDocumentsParams} for more details.
+      #
       # Retrieve a paginated list of sent documents with filtering options including
       # state, type, sender, date range, and text search.
       #
-      # @overload list_received_documents(date_from: nil, date_to: nil, page: nil, page_size: nil, search: nil, sender: nil, state: nil, type: nil, request_options: {})
+      # @overload list_received_documents(date_from: nil, date_to: nil, page: nil, page_size: nil, receiver: nil, search: nil, sender: nil, sort_by: nil, sort_order: nil, state: nil, type: nil, request_options: {})
       #
       # @param date_from [Time, nil] Filter by issue date (from)
       #
@@ -41,9 +55,15 @@ module EInvoiceAPI
       #
       # @param page_size [Integer] Number of items per page
       #
+      # @param receiver [String, nil] Filter by receiver (customer_name, customer_email, customer_tax_id, customer_com
+      #
       # @param search [String, nil] Search in invoice number, seller/buyer names
       #
-      # @param sender [String, nil] Filter by sender ID
+      # @param sender [String, nil] (Deprecated) Filter by sender ID
+      #
+      # @param sort_by [Symbol, EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::SortBy] Field to sort by
+      #
+      # @param sort_order [Symbol, EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::SortOrder] Sort direction (asc/desc)
       #
       # @param state [Symbol, EInvoiceAPI::Models::DocumentState, nil] Filter by document state
       #
