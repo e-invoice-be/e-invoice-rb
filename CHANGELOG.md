@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.17.0 (2026-01-15)
+
+Full Changelog: [v0.16.2...v0.17.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.16.2...v0.17.0)
+
+### Features
+
+* **api:** api update ([98fcc82](https://github.com/e-invoice-be/e-invoice-rb/commit/98fcc8246c3284db794e81609d5ba755f3c219b7))
+
+
+### Chores
+
+* fix typo in descriptions ([8fcc06b](https://github.com/e-invoice-be/e-invoice-rb/commit/8fcc06b2c2513b0bace66a8cc022ebfb714f2c6a))
+* **internal:** codegen related update ([54574e5](https://github.com/e-invoice-be/e-invoice-rb/commit/54574e575fdacf9430a8e1eaff3faced53cd4468))
+* move `cgi` into dependencies for ruby 4 ([cd5cd05](https://github.com/e-invoice-be/e-invoice-rb/commit/cd5cd055aa0c36ff19de62fd9f22680de2243bac))
+
+
+### Documentation
+
+* prominently feature MCP server setup in root SDK readmes ([d7f0db5](https://github.com/e-invoice-be/e-invoice-rb/commit/d7f0db5aa3c51da11a8be1c3551281b47acd5b49))
+
 ## 0.16.2 (2025-12-19)
 
 Full Changelog: [v0.16.1...v0.16.2](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.16.1...v0.16.2)
