@@ -37,9 +37,31 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :search
 
-      # Filter by sender ID
+      # Filter by sender (vendor_name, vendor_email, vendor_tax_id, vendor_company_id)
       sig { returns(T.nilable(String)) }
       attr_accessor :sender
+
+      # Field to sort by
+      sig { returns(T.nilable(EInvoiceAPI::InboxListParams::SortBy::OrSymbol)) }
+      attr_reader :sort_by
+
+      sig do
+        params(sort_by: EInvoiceAPI::InboxListParams::SortBy::OrSymbol).void
+      end
+      attr_writer :sort_by
+
+      # Sort direction (asc/desc)
+      sig do
+        returns(T.nilable(EInvoiceAPI::InboxListParams::SortOrder::OrSymbol))
+      end
+      attr_reader :sort_order
+
+      sig do
+        params(
+          sort_order: EInvoiceAPI::InboxListParams::SortOrder::OrSymbol
+        ).void
+      end
+      attr_writer :sort_order
 
       # Filter by document state
       sig { returns(T.nilable(EInvoiceAPI::DocumentState::OrSymbol)) }
@@ -57,6 +79,8 @@ module EInvoiceAPI
           page_size: Integer,
           search: T.nilable(String),
           sender: T.nilable(String),
+          sort_by: EInvoiceAPI::InboxListParams::SortBy::OrSymbol,
+          sort_order: EInvoiceAPI::InboxListParams::SortOrder::OrSymbol,
           state: T.nilable(EInvoiceAPI::DocumentState::OrSymbol),
           type: T.nilable(EInvoiceAPI::DocumentType::OrSymbol),
           request_options: EInvoiceAPI::RequestOptions::OrHash
@@ -73,8 +97,12 @@ module EInvoiceAPI
         page_size: nil,
         # Search in invoice number, seller/buyer names
         search: nil,
-        # Filter by sender ID
+        # Filter by sender (vendor_name, vendor_email, vendor_tax_id, vendor_company_id)
         sender: nil,
+        # Field to sort by
+        sort_by: nil,
+        # Sort direction (asc/desc)
+        sort_order: nil,
         # Filter by document state
         state: nil,
         # Filter by document type
@@ -92,6 +120,8 @@ module EInvoiceAPI
             page_size: Integer,
             search: T.nilable(String),
             sender: T.nilable(String),
+            sort_by: EInvoiceAPI::InboxListParams::SortBy::OrSymbol,
+            sort_order: EInvoiceAPI::InboxListParams::SortOrder::OrSymbol,
             state: T.nilable(EInvoiceAPI::DocumentState::OrSymbol),
             type: T.nilable(EInvoiceAPI::DocumentType::OrSymbol),
             request_options: EInvoiceAPI::RequestOptions
@@ -99,6 +129,73 @@ module EInvoiceAPI
         )
       end
       def to_hash
+      end
+
+      # Field to sort by
+      module SortBy
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias { T.all(Symbol, EInvoiceAPI::InboxListParams::SortBy) }
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        CREATED_AT =
+          T.let(:created_at, EInvoiceAPI::InboxListParams::SortBy::TaggedSymbol)
+        INVOICE_DATE =
+          T.let(
+            :invoice_date,
+            EInvoiceAPI::InboxListParams::SortBy::TaggedSymbol
+          )
+        DUE_DATE =
+          T.let(:due_date, EInvoiceAPI::InboxListParams::SortBy::TaggedSymbol)
+        INVOICE_TOTAL =
+          T.let(
+            :invoice_total,
+            EInvoiceAPI::InboxListParams::SortBy::TaggedSymbol
+          )
+        CUSTOMER_NAME =
+          T.let(
+            :customer_name,
+            EInvoiceAPI::InboxListParams::SortBy::TaggedSymbol
+          )
+        VENDOR_NAME =
+          T.let(
+            :vendor_name,
+            EInvoiceAPI::InboxListParams::SortBy::TaggedSymbol
+          )
+        INVOICE_ID =
+          T.let(:invoice_id, EInvoiceAPI::InboxListParams::SortBy::TaggedSymbol)
+
+        sig do
+          override.returns(
+            T::Array[EInvoiceAPI::InboxListParams::SortBy::TaggedSymbol]
+          )
+        end
+        def self.values
+        end
+      end
+
+      # Sort direction (asc/desc)
+      module SortOrder
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias do
+            T.all(Symbol, EInvoiceAPI::InboxListParams::SortOrder)
+          end
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        ASC = T.let(:asc, EInvoiceAPI::InboxListParams::SortOrder::TaggedSymbol)
+        DESC =
+          T.let(:desc, EInvoiceAPI::InboxListParams::SortOrder::TaggedSymbol)
+
+        sig do
+          override.returns(
+            T::Array[EInvoiceAPI::InboxListParams::SortOrder::TaggedSymbol]
+          )
+        end
+        def self.values
+        end
       end
     end
   end

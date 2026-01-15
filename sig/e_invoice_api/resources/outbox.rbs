@@ -4,6 +4,11 @@ module EInvoiceAPI
       def list_draft_documents: (
         ?page: Integer,
         ?page_size: Integer,
+        ?search: String?,
+        ?sort_by: EInvoiceAPI::Models::OutboxListDraftDocumentsParams::sort_by,
+        ?sort_order: EInvoiceAPI::Models::OutboxListDraftDocumentsParams::sort_order,
+        ?state: EInvoiceAPI::Models::document_state?,
+        ?type: EInvoiceAPI::Models::document_type?,
         ?request_options: EInvoiceAPI::request_opts
       ) -> EInvoiceAPI::Internal::DocumentsNumberPage[EInvoiceAPI::DocumentResponse]
 
@@ -12,8 +17,11 @@ module EInvoiceAPI
         ?date_to: Time?,
         ?page: Integer,
         ?page_size: Integer,
+        ?receiver: String?,
         ?search: String?,
         ?sender: String?,
+        ?sort_by: EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_by,
+        ?sort_order: EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::sort_order,
         ?state: EInvoiceAPI::Models::document_state?,
         ?type: EInvoiceAPI::Models::document_type?,
         ?request_options: EInvoiceAPI::request_opts
