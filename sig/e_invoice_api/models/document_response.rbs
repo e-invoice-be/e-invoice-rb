@@ -3,6 +3,7 @@ module EInvoiceAPI
     type document_response =
       {
         id: String,
+        created_at: Time,
         allowances: ::Array[EInvoiceAPI::DocumentResponse::Allowance]?,
         amount_due: String?,
         attachments: ::Array[EInvoiceAPI::Documents::DocumentAttachment]?,
@@ -54,6 +55,8 @@ module EInvoiceAPI
 
     class DocumentResponse < EInvoiceAPI::Internal::Type::BaseModel
       attr_accessor id: String
+
+      attr_accessor created_at: Time
 
       attr_accessor allowances: ::Array[EInvoiceAPI::DocumentResponse::Allowance]?
 
@@ -171,6 +174,7 @@ module EInvoiceAPI
 
       def initialize: (
         id: String,
+        created_at: Time,
         ?allowances: ::Array[EInvoiceAPI::DocumentResponse::Allowance]?,
         ?amount_due: String?,
         ?attachments: ::Array[EInvoiceAPI::Documents::DocumentAttachment]?,
@@ -222,6 +226,7 @@ module EInvoiceAPI
 
       def to_hash: -> {
         id: String,
+        created_at: Time,
         allowances: ::Array[EInvoiceAPI::DocumentResponse::Allowance]?,
         amount_due: String?,
         attachments: ::Array[EInvoiceAPI::Documents::DocumentAttachment]?,
