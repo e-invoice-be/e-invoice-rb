@@ -192,7 +192,19 @@ module EInvoiceAPI
         #   @return [String, nil]
         optional :error, String, nil?: true
 
-        # @!method initialize(dns_records:, sml_hostname:, status:, error: nil)
+        # @!attribute lookup_method
+        #   DNS lookup method used: 'naptr' (new spec) or 'busdox' (legacy)
+        #
+        #   @return [String, nil]
+        optional :lookup_method, String, api_name: :lookupMethod, nil?: true
+
+        # @!attribute smp_hostname
+        #   Hostname of the SMP (Service Metadata Publisher) discovered via DNS
+        #
+        #   @return [String, nil]
+        optional :smp_hostname, String, api_name: :smpHostname, nil?: true
+
+        # @!method initialize(dns_records:, sml_hostname:, status:, error: nil, lookup_method: nil, smp_hostname: nil)
         #   Information about the DNS lookup performed
         #
         #   @param dns_records [Array<EInvoiceAPI::Models::LookupRetrieveResponse::DNSInfo::DNSRecord>] List of DNS records found for the Peppol participant
@@ -202,6 +214,10 @@ module EInvoiceAPI
         #   @param status [String] Status of the DNS lookup: 'success', 'error', or 'pending'
         #
         #   @param error [String, nil] Error message if the DNS lookup failed
+        #
+        #   @param lookup_method [String, nil] DNS lookup method used: 'naptr' (new spec) or 'busdox' (legacy)
+        #
+        #   @param smp_hostname [String, nil] Hostname of the SMP (Service Metadata Publisher) discovered via DNS
 
         class DNSRecord < EInvoiceAPI::Internal::Type::BaseModel
           # @!attribute ip

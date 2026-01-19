@@ -11,6 +11,9 @@ module EInvoiceAPI
       sig { returns(String) }
       attr_accessor :id
 
+      sig { returns(Time) }
+      attr_accessor :created_at
+
       sig do
         returns(T.nilable(T::Array[EInvoiceAPI::DocumentResponse::Allowance]))
       end
@@ -242,6 +245,7 @@ module EInvoiceAPI
       sig do
         params(
           id: String,
+          created_at: Time,
           allowances:
             T.nilable(
               T::Array[EInvoiceAPI::DocumentResponse::Allowance::OrHash]
@@ -307,6 +311,7 @@ module EInvoiceAPI
       end
       def self.new(
         id:,
+        created_at:,
         allowances: nil,
         # The amount due for payment. Must be positive and rounded to maximum 2 decimals
         amount_due: nil,
@@ -415,6 +420,7 @@ module EInvoiceAPI
         override.returns(
           {
             id: String,
+            created_at: Time,
             allowances:
               T.nilable(T::Array[EInvoiceAPI::DocumentResponse::Allowance]),
             amount_due: T.nilable(String),
