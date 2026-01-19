@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.18.0 (2026-01-19)
+
+Full Changelog: [v0.17.0...v0.18.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.17.0...v0.18.0)
+
+### Features
+
+* **api:** api update ([6d3ef3b](https://github.com/e-invoice-be/e-invoice-rb/commit/6d3ef3b773cf13e36e20cef0008ad3dc75d36cfb))
+
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([7bb6612](https://github.com/e-invoice-be/e-invoice-rb/commit/7bb661210fda31d5e2cc09db4d02a82c1b62a97c))
+
 ## 0.17.0 (2026-01-15)
 
 Full Changelog: [v0.16.2...v0.17.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.16.2...v0.17.0)
