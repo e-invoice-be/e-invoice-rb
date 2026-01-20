@@ -85,10 +85,6 @@ module EInvoiceAPI
       end
       attr_writer :sort_order
 
-      # Filter by document state. If not provided, returns all states.
-      sig { returns(T.nilable(EInvoiceAPI::DocumentState::OrSymbol)) }
-      attr_accessor :state
-
       # Filter by document type. If not provided, returns all types.
       sig { returns(T.nilable(EInvoiceAPI::DocumentType::OrSymbol)) }
       attr_accessor :type
@@ -106,7 +102,6 @@ module EInvoiceAPI
             EInvoiceAPI::OutboxListReceivedDocumentsParams::SortBy::OrSymbol,
           sort_order:
             EInvoiceAPI::OutboxListReceivedDocumentsParams::SortOrder::OrSymbol,
-          state: T.nilable(EInvoiceAPI::DocumentState::OrSymbol),
           type: T.nilable(EInvoiceAPI::DocumentType::OrSymbol),
           request_options: EInvoiceAPI::RequestOptions::OrHash
         ).returns(T.attached_class)
@@ -131,8 +126,6 @@ module EInvoiceAPI
         sort_by: nil,
         # Sort direction (asc/desc)
         sort_order: nil,
-        # Filter by document state. If not provided, returns all states.
-        state: nil,
         # Filter by document type. If not provided, returns all types.
         type: nil,
         request_options: {}
@@ -153,7 +146,6 @@ module EInvoiceAPI
               EInvoiceAPI::OutboxListReceivedDocumentsParams::SortBy::OrSymbol,
             sort_order:
               EInvoiceAPI::OutboxListReceivedDocumentsParams::SortOrder::OrSymbol,
-            state: T.nilable(EInvoiceAPI::DocumentState::OrSymbol),
             type: T.nilable(EInvoiceAPI::DocumentType::OrSymbol),
             request_options: EInvoiceAPI::RequestOptions
           }

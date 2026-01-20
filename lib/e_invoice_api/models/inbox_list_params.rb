@@ -55,19 +55,13 @@ module EInvoiceAPI
       #   @return [Symbol, EInvoiceAPI::Models::InboxListParams::SortOrder, nil]
       optional :sort_order, enum: -> { EInvoiceAPI::InboxListParams::SortOrder }
 
-      # @!attribute state
-      #   Filter by document state. If not provided, returns all states.
-      #
-      #   @return [Symbol, EInvoiceAPI::Models::DocumentState, nil]
-      optional :state, enum: -> { EInvoiceAPI::DocumentState }, nil?: true
-
       # @!attribute type
       #   Filter by document type. If not provided, returns all types.
       #
       #   @return [Symbol, EInvoiceAPI::Models::DocumentType, nil]
       optional :type, enum: -> { EInvoiceAPI::DocumentType }, nil?: true
 
-      # @!method initialize(date_from: nil, date_to: nil, page: nil, page_size: nil, search: nil, sender: nil, sort_by: nil, sort_order: nil, state: nil, type: nil, request_options: {})
+      # @!method initialize(date_from: nil, date_to: nil, page: nil, page_size: nil, search: nil, sender: nil, sort_by: nil, sort_order: nil, type: nil, request_options: {})
       #   @param date_from [Time, nil] Filter by issue date (from)
       #
       #   @param date_to [Time, nil] Filter by issue date (to)
@@ -83,8 +77,6 @@ module EInvoiceAPI
       #   @param sort_by [Symbol, EInvoiceAPI::Models::InboxListParams::SortBy] Field to sort by
       #
       #   @param sort_order [Symbol, EInvoiceAPI::Models::InboxListParams::SortOrder] Sort direction (asc/desc)
-      #
-      #   @param state [Symbol, EInvoiceAPI::Models::DocumentState, nil] Filter by document state. If not provided, returns all states.
       #
       #   @param type [Symbol, EInvoiceAPI::Models::DocumentType, nil] Filter by document type. If not provided, returns all types.
       #

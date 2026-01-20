@@ -64,19 +64,13 @@ module EInvoiceAPI
       #   @return [Symbol, EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::SortOrder, nil]
       optional :sort_order, enum: -> { EInvoiceAPI::OutboxListReceivedDocumentsParams::SortOrder }
 
-      # @!attribute state
-      #   Filter by document state. If not provided, returns all states.
-      #
-      #   @return [Symbol, EInvoiceAPI::Models::DocumentState, nil]
-      optional :state, enum: -> { EInvoiceAPI::DocumentState }, nil?: true
-
       # @!attribute type
       #   Filter by document type. If not provided, returns all types.
       #
       #   @return [Symbol, EInvoiceAPI::Models::DocumentType, nil]
       optional :type, enum: -> { EInvoiceAPI::DocumentType }, nil?: true
 
-      # @!method initialize(date_from: nil, date_to: nil, page: nil, page_size: nil, receiver: nil, search: nil, sender: nil, sort_by: nil, sort_order: nil, state: nil, type: nil, request_options: {})
+      # @!method initialize(date_from: nil, date_to: nil, page: nil, page_size: nil, receiver: nil, search: nil, sender: nil, sort_by: nil, sort_order: nil, type: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {EInvoiceAPI::Models::OutboxListReceivedDocumentsParams} for more details.
       #
@@ -97,8 +91,6 @@ module EInvoiceAPI
       #   @param sort_by [Symbol, EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::SortBy] Field to sort by
       #
       #   @param sort_order [Symbol, EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::SortOrder] Sort direction (asc/desc)
-      #
-      #   @param state [Symbol, EInvoiceAPI::Models::DocumentState, nil] Filter by document state. If not provided, returns all states.
       #
       #   @param type [Symbol, EInvoiceAPI::Models::DocumentType, nil] Filter by document type. If not provided, returns all types.
       #
