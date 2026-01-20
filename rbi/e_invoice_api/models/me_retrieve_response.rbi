@@ -11,18 +11,8 @@ module EInvoiceAPI
           )
         end
 
-      # Credit balance of the tenant
-      sig { returns(Integer) }
-      attr_accessor :credit_balance
-
       sig { returns(String) }
       attr_accessor :name
-
-      # Plan of the tenant
-      sig do
-        returns(EInvoiceAPI::Models::MeRetrieveResponse::Plan::TaggedSymbol)
-      end
-      attr_accessor :plan
 
       # BCC recipient email to deliver documents
       sig { returns(T.nilable(String)) }
@@ -63,6 +53,13 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :company_zip
 
+      # Credit balance of the tenant
+      sig { returns(T.nilable(Integer)) }
+      attr_reader :credit_balance
+
+      sig { params(credit_balance: Integer).void }
+      attr_writer :credit_balance
+
       sig { returns(T.nilable(String)) }
       attr_accessor :description
 
@@ -74,6 +71,21 @@ module EInvoiceAPI
       sig { returns(T.nilable(T::Array[String])) }
       attr_accessor :peppol_ids
 
+      # Plan of the tenant
+      sig do
+        returns(
+          T.nilable(EInvoiceAPI::Models::MeRetrieveResponse::Plan::TaggedSymbol)
+        )
+      end
+      attr_reader :plan
+
+      sig do
+        params(
+          plan: EInvoiceAPI::Models::MeRetrieveResponse::Plan::OrSymbol
+        ).void
+      end
+      attr_writer :plan
+
       # Whether the tenant is registered on our SMP
       sig { returns(T.nilable(T::Boolean)) }
       attr_accessor :smp_registration
@@ -84,9 +96,7 @@ module EInvoiceAPI
 
       sig do
         params(
-          credit_balance: Integer,
           name: String,
-          plan: EInvoiceAPI::Models::MeRetrieveResponse::Plan::OrSymbol,
           bcc_recipient_email: T.nilable(String),
           company_address: T.nilable(String),
           company_city: T.nilable(String),
@@ -96,19 +106,17 @@ module EInvoiceAPI
           company_number: T.nilable(String),
           company_tax_id: T.nilable(String),
           company_zip: T.nilable(String),
+          credit_balance: Integer,
           description: T.nilable(String),
           ibans: T.nilable(T::Array[String]),
           peppol_ids: T.nilable(T::Array[String]),
+          plan: EInvoiceAPI::Models::MeRetrieveResponse::Plan::OrSymbol,
           smp_registration: T.nilable(T::Boolean),
           smp_registration_date: T.nilable(Time)
         ).returns(T.attached_class)
       end
       def self.new(
-        # Credit balance of the tenant
-        credit_balance:,
         name:,
-        # Plan of the tenant
-        plan:,
         # BCC recipient email to deliver documents
         bcc_recipient_email: nil,
         # Address of the company. Must be in the form of `Street Name Street Number`
@@ -130,11 +138,15 @@ module EInvoiceAPI
         company_tax_id: nil,
         # Zip code of the company
         company_zip: nil,
+        # Credit balance of the tenant
+        credit_balance: nil,
         description: nil,
         # IBANs of the tenant
         ibans: nil,
         # Peppol IDs of the tenant
         peppol_ids: nil,
+        # Plan of the tenant
+        plan: nil,
         # Whether the tenant is registered on our SMP
         smp_registration: nil,
         # Date when the tenant was registered on SMP
@@ -145,9 +157,7 @@ module EInvoiceAPI
       sig do
         override.returns(
           {
-            credit_balance: Integer,
             name: String,
-            plan: EInvoiceAPI::Models::MeRetrieveResponse::Plan::TaggedSymbol,
             bcc_recipient_email: T.nilable(String),
             company_address: T.nilable(String),
             company_city: T.nilable(String),
@@ -157,9 +167,11 @@ module EInvoiceAPI
             company_number: T.nilable(String),
             company_tax_id: T.nilable(String),
             company_zip: T.nilable(String),
+            credit_balance: Integer,
             description: T.nilable(String),
             ibans: T.nilable(T::Array[String]),
             peppol_ids: T.nilable(T::Array[String]),
+            plan: EInvoiceAPI::Models::MeRetrieveResponse::Plan::TaggedSymbol,
             smp_registration: T.nilable(T::Boolean),
             smp_registration_date: T.nilable(Time)
           }

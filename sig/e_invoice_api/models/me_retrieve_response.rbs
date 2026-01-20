@@ -2,9 +2,7 @@ module EInvoiceAPI
   module Models
     type me_retrieve_response =
       {
-        credit_balance: Integer,
         name: String,
-        plan: EInvoiceAPI::Models::MeRetrieveResponse::plan,
         bcc_recipient_email: String?,
         company_address: String?,
         company_city: String?,
@@ -14,19 +12,17 @@ module EInvoiceAPI
         company_number: String?,
         company_tax_id: String?,
         company_zip: String?,
+        credit_balance: Integer,
         description: String?,
         ibans: ::Array[String]?,
         peppol_ids: ::Array[String]?,
+        plan: EInvoiceAPI::Models::MeRetrieveResponse::plan,
         smp_registration: bool?,
         smp_registration_date: Time?
       }
 
     class MeRetrieveResponse < EInvoiceAPI::Internal::Type::BaseModel
-      attr_accessor credit_balance: Integer
-
       attr_accessor name: String
-
-      attr_accessor plan: EInvoiceAPI::Models::MeRetrieveResponse::plan
 
       attr_accessor bcc_recipient_email: String?
 
@@ -46,20 +42,28 @@ module EInvoiceAPI
 
       attr_accessor company_zip: String?
 
+      attr_reader credit_balance: Integer?
+
+      def credit_balance=: (Integer) -> Integer
+
       attr_accessor description: String?
 
       attr_accessor ibans: ::Array[String]?
 
       attr_accessor peppol_ids: ::Array[String]?
 
+      attr_reader plan: EInvoiceAPI::Models::MeRetrieveResponse::plan?
+
+      def plan=: (
+        EInvoiceAPI::Models::MeRetrieveResponse::plan
+      ) -> EInvoiceAPI::Models::MeRetrieveResponse::plan
+
       attr_accessor smp_registration: bool?
 
       attr_accessor smp_registration_date: Time?
 
       def initialize: (
-        credit_balance: Integer,
         name: String,
-        plan: EInvoiceAPI::Models::MeRetrieveResponse::plan,
         ?bcc_recipient_email: String?,
         ?company_address: String?,
         ?company_city: String?,
@@ -69,17 +73,17 @@ module EInvoiceAPI
         ?company_number: String?,
         ?company_tax_id: String?,
         ?company_zip: String?,
+        ?credit_balance: Integer,
         ?description: String?,
         ?ibans: ::Array[String]?,
         ?peppol_ids: ::Array[String]?,
+        ?plan: EInvoiceAPI::Models::MeRetrieveResponse::plan,
         ?smp_registration: bool?,
         ?smp_registration_date: Time?
       ) -> void
 
       def to_hash: -> {
-        credit_balance: Integer,
         name: String,
-        plan: EInvoiceAPI::Models::MeRetrieveResponse::plan,
         bcc_recipient_email: String?,
         company_address: String?,
         company_city: String?,
@@ -89,9 +93,11 @@ module EInvoiceAPI
         company_number: String?,
         company_tax_id: String?,
         company_zip: String?,
+        credit_balance: Integer,
         description: String?,
         ibans: ::Array[String]?,
         peppol_ids: ::Array[String]?,
+        plan: EInvoiceAPI::Models::MeRetrieveResponse::plan,
         smp_registration: bool?,
         smp_registration_date: Time?
       }
