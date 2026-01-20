@@ -65,9 +65,9 @@ module EInvoiceAPI
       #
       # @param sort_order [Symbol, EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::SortOrder] Sort direction (asc/desc)
       #
-      # @param state [Symbol, EInvoiceAPI::Models::DocumentState, nil] Filter by document state
+      # @param state [Symbol, EInvoiceAPI::Models::DocumentState, nil] Filter by document state. If not provided, returns all states.
       #
-      # @param type [Symbol, EInvoiceAPI::Models::DocumentType, nil] Filter by document type
+      # @param type [Symbol, EInvoiceAPI::Models::DocumentType, nil] Filter by document type. If not provided, returns all types.
       #
       # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #

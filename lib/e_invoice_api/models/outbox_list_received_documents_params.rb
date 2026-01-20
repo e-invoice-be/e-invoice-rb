@@ -65,13 +65,13 @@ module EInvoiceAPI
       optional :sort_order, enum: -> { EInvoiceAPI::OutboxListReceivedDocumentsParams::SortOrder }
 
       # @!attribute state
-      #   Filter by document state
+      #   Filter by document state. If not provided, returns all states.
       #
       #   @return [Symbol, EInvoiceAPI::Models::DocumentState, nil]
       optional :state, enum: -> { EInvoiceAPI::DocumentState }, nil?: true
 
       # @!attribute type
-      #   Filter by document type
+      #   Filter by document type. If not provided, returns all types.
       #
       #   @return [Symbol, EInvoiceAPI::Models::DocumentType, nil]
       optional :type, enum: -> { EInvoiceAPI::DocumentType }, nil?: true
@@ -98,9 +98,9 @@ module EInvoiceAPI
       #
       #   @param sort_order [Symbol, EInvoiceAPI::Models::OutboxListReceivedDocumentsParams::SortOrder] Sort direction (asc/desc)
       #
-      #   @param state [Symbol, EInvoiceAPI::Models::DocumentState, nil] Filter by document state
+      #   @param state [Symbol, EInvoiceAPI::Models::DocumentState, nil] Filter by document state. If not provided, returns all states.
       #
-      #   @param type [Symbol, EInvoiceAPI::Models::DocumentType, nil] Filter by document type
+      #   @param type [Symbol, EInvoiceAPI::Models::DocumentType, nil] Filter by document type. If not provided, returns all types.
       #
       #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}]
 
