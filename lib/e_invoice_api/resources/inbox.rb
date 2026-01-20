@@ -6,7 +6,7 @@ module EInvoiceAPI
       # Retrieve a paginated list of received documents with filtering options including
       # state, type, sender, date range, and text search.
       #
-      # @overload list(date_from: nil, date_to: nil, page: nil, page_size: nil, search: nil, sender: nil, sort_by: nil, sort_order: nil, state: nil, type: nil, request_options: {})
+      # @overload list(date_from: nil, date_to: nil, page: nil, page_size: nil, search: nil, sender: nil, sort_by: nil, sort_order: nil, type: nil, request_options: {})
       #
       # @param date_from [Time, nil] Filter by issue date (from)
       #
@@ -23,8 +23,6 @@ module EInvoiceAPI
       # @param sort_by [Symbol, EInvoiceAPI::Models::InboxListParams::SortBy] Field to sort by
       #
       # @param sort_order [Symbol, EInvoiceAPI::Models::InboxListParams::SortOrder] Sort direction (asc/desc)
-      #
-      # @param state [Symbol, EInvoiceAPI::Models::DocumentState, nil] Filter by document state. If not provided, returns all states.
       #
       # @param type [Symbol, EInvoiceAPI::Models::DocumentType, nil] Filter by document type. If not provided, returns all types.
       #
