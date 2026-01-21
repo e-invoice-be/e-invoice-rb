@@ -45,8 +45,6 @@ module EInvoiceAPI
       optional :search, String, nil?: true
 
       # @!attribute sender
-      #   @deprecated
-      #
       #   (Deprecated) Filter by sender ID
       #
       #   @return [String, nil]
