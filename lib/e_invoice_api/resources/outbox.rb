@@ -3,6 +3,8 @@
 module EInvoiceAPI
   module Resources
     class Outbox
+      # @deprecated
+      #
       # Retrieve a paginated list of draft documents with filtering options including
       # state and text search.
       #
