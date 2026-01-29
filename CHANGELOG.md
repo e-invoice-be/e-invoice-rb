@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.20.1 (2026-01-29)
+
+Full Changelog: [v0.20.0...v0.20.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.20.0...v0.20.1)
+
+### Bug Fixes
+
+* **docs:** fix mcp installation instructions for remote servers ([31c98bc](https://github.com/e-invoice-be/e-invoice-rb/commit/31c98bc1d4a852942493173ba40edb026e1d2022))
+
 ## 0.20.0 (2026-01-22)
 
 Full Changelog: [v0.19.0...v0.20.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.19.0...v0.20.0)
