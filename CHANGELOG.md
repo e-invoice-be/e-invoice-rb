@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.20.2 (2026-02-03)
+
+Full Changelog: [v0.20.1...v0.20.2](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.20.1...v0.20.2)
+
+### Bug Fixes
+
+* **client:** always add content-length to post body, even when empty ([1d87da9](https://github.com/e-invoice-be/e-invoice-rb/commit/1d87da9a9c84714770b15a7da19d9ad058b91bcd))
+
 ## 0.20.1 (2026-01-29)
 
 Full Changelog: [v0.20.0...v0.20.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.20.0...v0.20.1)
