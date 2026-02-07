@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.20.3 (2026-02-07)
+
+Full Changelog: [v0.20.2...v0.20.3](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.20.2...v0.20.3)
+
+### Bug Fixes
+
+* **client:** loosen json header parsing ([805856a](https://github.com/e-invoice-be/e-invoice-rb/commit/805856a1550550708877d18d01e72d784a6f4382))
+
+
+### Chores
+
+* **docs:** remove www prefix ([0dced99](https://github.com/e-invoice-be/e-invoice-rb/commit/0dced99dad8386f2a9bb21787a791b76ecff6706))
+
 ## 0.20.2 (2026-02-03)
 
 Full Changelog: [v0.20.1...v0.20.2](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.20.1...v0.20.2)
