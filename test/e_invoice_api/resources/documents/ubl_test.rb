@@ -29,6 +29,7 @@ class EInvoiceAPI::Test::Resources::Documents::UblTest < EInvoiceAPI::Test::Reso
         customer_email: String | nil,
         customer_id: String | nil,
         customer_name: String | nil,
+        customer_peppol_id: String | nil,
         customer_tax_id: String | nil,
         direction: EInvoiceAPI::DocumentDirection | nil,
         document_type: EInvoiceAPI::DocumentType | nil,
