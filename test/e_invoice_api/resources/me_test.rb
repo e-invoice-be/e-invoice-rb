@@ -4,7 +4,7 @@ require_relative "../test_helper"
 
 class EInvoiceAPI::Test::Resources::MeTest < EInvoiceAPI::Test::ResourceTest
   def test_retrieve
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @e_invoice.me.retrieve
 
