@@ -4,7 +4,7 @@ require_relative "../test_helper"
 
 class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceTest
   def test_create
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @e_invoice.documents.create
 
@@ -69,7 +69,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
   end
 
   def test_retrieve
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @e_invoice.documents.retrieve("document_id")
 
@@ -134,7 +134,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
   end
 
   def test_delete
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @e_invoice.documents.delete("document_id")
 
@@ -150,7 +150,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
   end
 
   def test_create_from_pdf_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @e_invoice.documents.create_from_pdf(file: Pathname(__FILE__))
 
@@ -215,7 +215,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
   end
 
   def test_send_
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @e_invoice.documents.send_("document_id")
 
@@ -280,7 +280,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
   end
 
   def test_validate
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @e_invoice.documents.validate("document_id")
 
