@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 
 class EInvoiceAPI::Test::Resources::Documents::UblTest < EInvoiceAPI::Test::ResourceTest
   def test_create_from_ubl_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @e_invoice.documents.ubl.create_from_ubl(file: Pathname(__FILE__))
 
@@ -69,7 +69,7 @@ class EInvoiceAPI::Test::Resources::Documents::UblTest < EInvoiceAPI::Test::Reso
   end
 
   def test_get
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @e_invoice.documents.ubl.get("document_id")
 

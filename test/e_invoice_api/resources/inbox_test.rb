@@ -4,7 +4,7 @@ require_relative "../test_helper"
 
 class EInvoiceAPI::Test::Resources::InboxTest < EInvoiceAPI::Test::ResourceTest
   def test_list
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @e_invoice.inbox.list
 
@@ -76,7 +76,7 @@ class EInvoiceAPI::Test::Resources::InboxTest < EInvoiceAPI::Test::ResourceTest
   end
 
   def test_list_credit_notes
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @e_invoice.inbox.list_credit_notes
 
@@ -148,7 +148,7 @@ class EInvoiceAPI::Test::Resources::InboxTest < EInvoiceAPI::Test::ResourceTest
   end
 
   def test_list_invoices
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @e_invoice.inbox.list_invoices
 
