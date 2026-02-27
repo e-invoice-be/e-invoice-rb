@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.24.1 (2026-02-27)
+
+Full Changelog: [v0.24.0...v0.24.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.24.0...v0.24.1)
+
+### Bug Fixes
+
+* properly mock time in ruby ci tests ([52ec541](https://github.com/e-invoice-be/e-invoice-rb/commit/52ec541253abb91ffc061779a8f7023d542414b2))
+
+
+### Chores
+
+* **internal:** remove mock server code ([b32ab61](https://github.com/e-invoice-be/e-invoice-rb/commit/b32ab61227d3ebcd872f1ac9c5860628538d81a4))
+* update mock server docs ([bfae676](https://github.com/e-invoice-be/e-invoice-rb/commit/bfae6768aa2e0b22c35690209664a8973bc34077))
+
 ## 0.24.0 (2026-02-16)
 
 Full Changelog: [v0.23.0...v0.24.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.23.0...v0.24.0)
