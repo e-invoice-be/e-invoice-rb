@@ -23,10 +23,11 @@ module EInvoiceAPI
       # @see EInvoiceAPI::Models::LookupRetrieveParams
       def retrieve(params)
         parsed, options = EInvoiceAPI::LookupRetrieveParams.dump_request(params)
+        query = EInvoiceAPI::Internal::Util.encode_query_params(parsed)
         @client.request(
           method: :get,
           path: "api/lookup",
-          query: parsed,
+          query: query,
           model: EInvoiceAPI::Models::LookupRetrieveResponse,
           options: options
         )
@@ -51,10 +52,11 @@ module EInvoiceAPI
       # @see EInvoiceAPI::Models::LookupRetrieveParticipantsParams
       def retrieve_participants(params)
         parsed, options = EInvoiceAPI::LookupRetrieveParticipantsParams.dump_request(params)
+        query = EInvoiceAPI::Internal::Util.encode_query_params(parsed)
         @client.request(
           method: :get,
           path: "api/lookup/participants",
-          query: parsed,
+          query: query,
           model: EInvoiceAPI::Models::LookupRetrieveParticipantsResponse,
           options: options
         )
