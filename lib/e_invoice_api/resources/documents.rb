@@ -122,12 +122,13 @@ module EInvoiceAPI
       #
       # @see EInvoiceAPI::Models::DocumentCreateParams
       def create(params = {})
-        parsed, options = EInvoiceAPI::DocumentCreateParams.dump_request(params)
         query_params = [:construct_pdf]
+        parsed, options = EInvoiceAPI::DocumentCreateParams.dump_request(params)
+        query = EInvoiceAPI::Internal::Util.encode_query_params(parsed.slice(*query_params))
         @client.request(
           method: :post,
           path: "api/documents/",
-          query: parsed.slice(*query_params),
+          query: query,
           body: parsed.except(*query_params),
           model: EInvoiceAPI::DocumentResponse,
           options: options
@@ -192,12 +193,13 @@ module EInvoiceAPI
       #
       # @see EInvoiceAPI::Models::DocumentCreateFromPdfParams
       def create_from_pdf(params)
-        parsed, options = EInvoiceAPI::DocumentCreateFromPdfParams.dump_request(params)
         query_params = [:customer_tax_id, :vendor_tax_id]
+        parsed, options = EInvoiceAPI::DocumentCreateFromPdfParams.dump_request(params)
+        query = EInvoiceAPI::Internal::Util.encode_query_params(parsed.slice(*query_params))
         @client.request(
           method: :post,
           path: "api/documents/pdf",
-          query: parsed.slice(*query_params),
+          query: query,
           headers: {"content-type" => "multipart/form-data"},
           body: parsed.except(*query_params),
           model: EInvoiceAPI::Models::DocumentCreateFromPdfResponse,
@@ -227,10 +229,11 @@ module EInvoiceAPI
       # @see EInvoiceAPI::Models::DocumentSendParams
       def send_(document_id, params = {})
         parsed, options = EInvoiceAPI::DocumentSendParams.dump_request(params)
+        query = EInvoiceAPI::Internal::Util.encode_query_params(parsed)
         @client.request(
           method: :post,
           path: ["api/documents/%1$s/send", document_id],
-          query: parsed,
+          query: query,
           model: EInvoiceAPI::DocumentResponse,
           options: options
         )

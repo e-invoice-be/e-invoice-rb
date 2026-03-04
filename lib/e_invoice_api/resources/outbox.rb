@@ -31,10 +31,11 @@ module EInvoiceAPI
       # @see EInvoiceAPI::Models::OutboxListDraftDocumentsParams
       def list_draft_documents(params = {})
         parsed, options = EInvoiceAPI::OutboxListDraftDocumentsParams.dump_request(params)
+        query = EInvoiceAPI::Internal::Util.encode_query_params(parsed)
         @client.request(
           method: :get,
           path: "api/outbox/drafts",
-          query: parsed,
+          query: query,
           page: EInvoiceAPI::Internal::DocumentsNumberPage,
           model: EInvoiceAPI::DocumentResponse,
           options: options
@@ -76,10 +77,11 @@ module EInvoiceAPI
       # @see EInvoiceAPI::Models::OutboxListReceivedDocumentsParams
       def list_received_documents(params = {})
         parsed, options = EInvoiceAPI::OutboxListReceivedDocumentsParams.dump_request(params)
+        query = EInvoiceAPI::Internal::Util.encode_query_params(parsed)
         @client.request(
           method: :get,
           path: "api/outbox/",
-          query: parsed,
+          query: query,
           page: EInvoiceAPI::Internal::DocumentsNumberPage,
           model: EInvoiceAPI::DocumentResponse,
           options: options

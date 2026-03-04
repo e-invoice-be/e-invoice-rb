@@ -145,10 +145,11 @@ module EInvoiceAPI
       # @see EInvoiceAPI::Models::ValidateValidatePeppolIDParams
       def validate_peppol_id(params)
         parsed, options = EInvoiceAPI::ValidateValidatePeppolIDParams.dump_request(params)
+        query = EInvoiceAPI::Internal::Util.encode_query_params(parsed)
         @client.request(
           method: :get,
           path: "api/validate/peppol-id",
-          query: parsed,
+          query: query,
           model: EInvoiceAPI::Models::ValidateValidatePeppolIDResponse,
           options: options
         )

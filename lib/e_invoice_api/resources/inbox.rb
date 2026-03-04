@@ -33,10 +33,11 @@ module EInvoiceAPI
       # @see EInvoiceAPI::Models::InboxListParams
       def list(params = {})
         parsed, options = EInvoiceAPI::InboxListParams.dump_request(params)
+        query = EInvoiceAPI::Internal::Util.encode_query_params(parsed)
         @client.request(
           method: :get,
           path: "api/inbox/",
-          query: parsed,
+          query: query,
           page: EInvoiceAPI::Internal::DocumentsNumberPage,
           model: EInvoiceAPI::DocumentResponse,
           options: options
@@ -62,10 +63,11 @@ module EInvoiceAPI
       # @see EInvoiceAPI::Models::InboxListCreditNotesParams
       def list_credit_notes(params = {})
         parsed, options = EInvoiceAPI::InboxListCreditNotesParams.dump_request(params)
+        query = EInvoiceAPI::Internal::Util.encode_query_params(parsed)
         @client.request(
           method: :get,
           path: "api/inbox/credit-notes",
-          query: parsed,
+          query: query,
           page: EInvoiceAPI::Internal::DocumentsNumberPage,
           model: EInvoiceAPI::DocumentResponse,
           options: options
@@ -91,10 +93,11 @@ module EInvoiceAPI
       # @see EInvoiceAPI::Models::InboxListInvoicesParams
       def list_invoices(params = {})
         parsed, options = EInvoiceAPI::InboxListInvoicesParams.dump_request(params)
+        query = EInvoiceAPI::Internal::Util.encode_query_params(parsed)
         @client.request(
           method: :get,
           path: "api/inbox/invoices",
-          query: parsed,
+          query: query,
           page: EInvoiceAPI::Internal::DocumentsNumberPage,
           model: EInvoiceAPI::DocumentResponse,
           options: options
