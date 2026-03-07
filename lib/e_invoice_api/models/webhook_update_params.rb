@@ -7,6 +7,11 @@ module EInvoiceAPI
       extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
       include EInvoiceAPI::Internal::Type::RequestParameters
 
+      # @!attribute webhook_id
+      #
+      #   @return [String]
+      required :webhook_id, String
+
       # @!attribute enabled
       #
       #   @return [Boolean, nil]
@@ -22,7 +27,8 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :url, String, nil?: true
 
-      # @!method initialize(enabled: nil, events: nil, url: nil, request_options: {})
+      # @!method initialize(webhook_id:, enabled: nil, events: nil, url: nil, request_options: {})
+      #   @param webhook_id [String]
       #   @param enabled [Boolean, nil]
       #   @param events [Array<String>, nil]
       #   @param url [String, nil]
