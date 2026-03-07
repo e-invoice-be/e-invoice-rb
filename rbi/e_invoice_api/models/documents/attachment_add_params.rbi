@@ -15,21 +15,26 @@ module EInvoiceAPI
             )
           end
 
+        sig { returns(String) }
+        attr_accessor :document_id
+
         sig { returns(EInvoiceAPI::Internal::FileInput) }
         attr_accessor :file
 
         sig do
           params(
+            document_id: String,
             file: EInvoiceAPI::Internal::FileInput,
             request_options: EInvoiceAPI::RequestOptions::OrHash
           ).returns(T.attached_class)
         end
-        def self.new(file:, request_options: {})
+        def self.new(document_id:, file:, request_options: {})
         end
 
         sig do
           override.returns(
             {
+              document_id: String,
               file: EInvoiceAPI::Internal::FileInput,
               request_options: EInvoiceAPI::RequestOptions
             }

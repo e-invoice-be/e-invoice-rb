@@ -8,12 +8,18 @@ module EInvoiceAPI
         extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
         include EInvoiceAPI::Internal::Type::RequestParameters
 
+        # @!attribute document_id
+        #
+        #   @return [String]
+        required :document_id, String
+
         # @!attribute file
         #
         #   @return [Pathname, StringIO, IO, String, EInvoiceAPI::FilePart]
         required :file, EInvoiceAPI::Internal::Type::FileInput
 
-        # @!method initialize(file:, request_options: {})
+        # @!method initialize(document_id:, file:, request_options: {})
+        #   @param document_id [String]
         #   @param file [Pathname, StringIO, IO, String, EInvoiceAPI::FilePart]
         #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}]
       end

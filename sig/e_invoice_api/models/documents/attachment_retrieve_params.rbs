@@ -2,7 +2,7 @@ module EInvoiceAPI
   module Models
     module Documents
       type attachment_retrieve_params =
-        { document_id: String }
+        { document_id: String, attachment_id: String }
         & EInvoiceAPI::Internal::Type::request_parameters
 
       class AttachmentRetrieveParams < EInvoiceAPI::Internal::Type::BaseModel
@@ -11,13 +11,17 @@ module EInvoiceAPI
 
         attr_accessor document_id: String
 
+        attr_accessor attachment_id: String
+
         def initialize: (
           document_id: String,
+          attachment_id: String,
           ?request_options: EInvoiceAPI::request_opts
         ) -> void
 
         def to_hash: -> {
           document_id: String,
+          attachment_id: String,
           request_options: EInvoiceAPI::RequestOptions
         }
       end
