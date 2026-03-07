@@ -14,6 +14,9 @@ module EInvoiceAPI
           )
         end
 
+      sig { returns(String) }
+      attr_accessor :webhook_id
+
       sig { returns(T.nilable(T::Boolean)) }
       attr_accessor :enabled
 
@@ -25,18 +28,26 @@ module EInvoiceAPI
 
       sig do
         params(
+          webhook_id: String,
           enabled: T.nilable(T::Boolean),
           events: T.nilable(T::Array[String]),
           url: T.nilable(String),
           request_options: EInvoiceAPI::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
-      def self.new(enabled: nil, events: nil, url: nil, request_options: {})
+      def self.new(
+        webhook_id:,
+        enabled: nil,
+        events: nil,
+        url: nil,
+        request_options: {}
+      )
       end
 
       sig do
         override.returns(
           {
+            webhook_id: String,
             enabled: T.nilable(T::Boolean),
             events: T.nilable(T::Array[String]),
             url: T.nilable(String),

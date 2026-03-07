@@ -11,6 +11,9 @@ module EInvoiceAPI
           T.any(EInvoiceAPI::DocumentSendParams, EInvoiceAPI::Internal::AnyHash)
         end
 
+      sig { returns(String) }
+      attr_accessor :document_id
+
       sig { returns(T.nilable(String)) }
       attr_accessor :email
 
@@ -28,6 +31,7 @@ module EInvoiceAPI
 
       sig do
         params(
+          document_id: String,
           email: T.nilable(String),
           receiver_peppol_id: T.nilable(String),
           receiver_peppol_scheme: T.nilable(String),
@@ -37,6 +41,7 @@ module EInvoiceAPI
         ).returns(T.attached_class)
       end
       def self.new(
+        document_id:,
         email: nil,
         receiver_peppol_id: nil,
         receiver_peppol_scheme: nil,
@@ -49,6 +54,7 @@ module EInvoiceAPI
       sig do
         override.returns(
           {
+            document_id: String,
             email: T.nilable(String),
             receiver_peppol_id: T.nilable(String),
             receiver_peppol_scheme: T.nilable(String),

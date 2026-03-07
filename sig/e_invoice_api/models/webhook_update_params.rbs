@@ -1,12 +1,19 @@
 module EInvoiceAPI
   module Models
     type webhook_update_params =
-      { enabled: bool?, events: ::Array[String]?, url: String? }
+      {
+        webhook_id: String,
+        enabled: bool?,
+        events: ::Array[String]?,
+        url: String?
+      }
       & EInvoiceAPI::Internal::Type::request_parameters
 
     class WebhookUpdateParams < EInvoiceAPI::Internal::Type::BaseModel
       extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
       include EInvoiceAPI::Internal::Type::RequestParameters
+
+      attr_accessor webhook_id: String
 
       attr_accessor enabled: bool?
 
@@ -15,6 +22,7 @@ module EInvoiceAPI
       attr_accessor url: String?
 
       def initialize: (
+        webhook_id: String,
         ?enabled: bool?,
         ?events: ::Array[String]?,
         ?url: String?,
@@ -22,6 +30,7 @@ module EInvoiceAPI
       ) -> void
 
       def to_hash: -> {
+        webhook_id: String,
         enabled: bool?,
         events: ::Array[String]?,
         url: String?,
