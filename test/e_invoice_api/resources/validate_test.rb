@@ -46,7 +46,7 @@ class EInvoiceAPI::Test::Resources::ValidateTest < EInvoiceAPI::Test::ResourceTe
   def test_validate_ubl_required_params
     skip("Mock server tests are disabled")
 
-    response = @e_invoice.validate.validate_ubl(file: Pathname(__FILE__))
+    response = @e_invoice.validate.validate_ubl(file: StringIO.new("Example data"))
 
     assert_pattern do
       response => EInvoiceAPI::UblDocumentValidation
