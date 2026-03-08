@@ -6,7 +6,7 @@ class EInvoiceAPI::Test::Resources::Documents::UblTest < EInvoiceAPI::Test::Reso
   def test_create_from_ubl_required_params
     skip("Mock server tests are disabled")
 
-    response = @e_invoice.documents.ubl.create_from_ubl(file: Pathname(__FILE__))
+    response = @e_invoice.documents.ubl.create_from_ubl(file: StringIO.new("Example data"))
 
     assert_pattern do
       response => EInvoiceAPI::DocumentResponse

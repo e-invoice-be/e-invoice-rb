@@ -152,7 +152,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
   def test_create_from_pdf_required_params
     skip("Mock server tests are disabled")
 
-    response = @e_invoice.documents.create_from_pdf(file: Pathname(__FILE__))
+    response = @e_invoice.documents.create_from_pdf(file: StringIO.new("Example data"))
 
     assert_pattern do
       response => EInvoiceAPI::Models::DocumentCreateFromPdfResponse

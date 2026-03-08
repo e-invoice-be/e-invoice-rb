@@ -52,7 +52,7 @@ class EInvoiceAPI::Test::Resources::Documents::AttachmentsTest < EInvoiceAPI::Te
   def test_add_required_params
     skip("Mock server tests are disabled")
 
-    response = @e_invoice.documents.attachments.add("document_id", file: Pathname(__FILE__))
+    response = @e_invoice.documents.attachments.add("document_id", file: StringIO.new("Example data"))
 
     assert_pattern do
       response => EInvoiceAPI::Documents::DocumentAttachment
