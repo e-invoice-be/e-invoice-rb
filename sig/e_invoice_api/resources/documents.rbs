@@ -6,6 +6,7 @@ module EInvoiceAPI
       attr_reader ubl: EInvoiceAPI::Resources::Documents::Ubl
 
       def create: (
+        ?construct_pdf: bool,
         ?allowances: ::Array[EInvoiceAPI::DocumentCreate::Allowance]?,
         ?amount_due: EInvoiceAPI::Models::DocumentCreate::amount_due?,
         ?attachments: ::Array[EInvoiceAPI::DocumentAttachmentCreate]?,
@@ -19,6 +20,7 @@ module EInvoiceAPI
         ?customer_email: String?,
         ?customer_id: String?,
         ?customer_name: String?,
+        ?customer_peppol_id: String?,
         ?customer_tax_id: String?,
         ?direction: EInvoiceAPI::Models::document_direction,
         ?document_type: EInvoiceAPI::Models::document_type,

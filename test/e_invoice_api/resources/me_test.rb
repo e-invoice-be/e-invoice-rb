@@ -14,9 +14,7 @@ class EInvoiceAPI::Test::Resources::MeTest < EInvoiceAPI::Test::ResourceTest
 
     assert_pattern do
       response => {
-        credit_balance: Integer,
         name: String,
-        plan: EInvoiceAPI::Models::MeRetrieveResponse::Plan,
         bcc_recipient_email: String | nil,
         company_address: String | nil,
         company_city: String | nil,
@@ -26,9 +24,11 @@ class EInvoiceAPI::Test::Resources::MeTest < EInvoiceAPI::Test::ResourceTest
         company_number: String | nil,
         company_tax_id: String | nil,
         company_zip: String | nil,
+        credit_balance: Integer | nil,
         description: String | nil,
         ibans: ^(EInvoiceAPI::Internal::Type::ArrayOf[String]) | nil,
         peppol_ids: ^(EInvoiceAPI::Internal::Type::ArrayOf[String]) | nil,
+        plan: EInvoiceAPI::Models::MeRetrieveResponse::Plan | nil,
         smp_registration: EInvoiceAPI::Internal::Type::Boolean | nil,
         smp_registration_date: Time | nil
       }

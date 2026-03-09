@@ -13,7 +13,8 @@ module EInvoiceAPI
           page_size: Integer,
           search: T.nilable(String),
           sender: T.nilable(String),
-          state: T.nilable(EInvoiceAPI::DocumentState::OrSymbol),
+          sort_by: EInvoiceAPI::InboxListParams::SortBy::OrSymbol,
+          sort_order: EInvoiceAPI::InboxListParams::SortOrder::OrSymbol,
           type: T.nilable(EInvoiceAPI::DocumentType::OrSymbol),
           request_options: EInvoiceAPI::RequestOptions::OrHash
         ).returns(
@@ -33,11 +34,13 @@ module EInvoiceAPI
         page_size: nil,
         # Search in invoice number, seller/buyer names
         search: nil,
-        # Filter by sender ID
+        # Filter by sender (vendor_name, vendor_email, vendor_tax_id, vendor_company_id)
         sender: nil,
-        # Filter by document state
-        state: nil,
-        # Filter by document type
+        # Field to sort by
+        sort_by: nil,
+        # Sort direction (asc/desc)
+        sort_order: nil,
+        # Filter by document type. If not provided, returns all types.
         type: nil,
         request_options: {}
       )
@@ -48,6 +51,9 @@ module EInvoiceAPI
         params(
           page: Integer,
           page_size: Integer,
+          sort_by: EInvoiceAPI::InboxListCreditNotesParams::SortBy::OrSymbol,
+          sort_order:
+            EInvoiceAPI::InboxListCreditNotesParams::SortOrder::OrSymbol,
           request_options: EInvoiceAPI::RequestOptions::OrHash
         ).returns(
           EInvoiceAPI::Internal::DocumentsNumberPage[
@@ -60,6 +66,10 @@ module EInvoiceAPI
         page: nil,
         # Number of items per page
         page_size: nil,
+        # Field to sort by
+        sort_by: nil,
+        # Sort direction (asc/desc)
+        sort_order: nil,
         request_options: {}
       )
       end
@@ -69,6 +79,8 @@ module EInvoiceAPI
         params(
           page: Integer,
           page_size: Integer,
+          sort_by: EInvoiceAPI::InboxListInvoicesParams::SortBy::OrSymbol,
+          sort_order: EInvoiceAPI::InboxListInvoicesParams::SortOrder::OrSymbol,
           request_options: EInvoiceAPI::RequestOptions::OrHash
         ).returns(
           EInvoiceAPI::Internal::DocumentsNumberPage[
@@ -81,6 +93,10 @@ module EInvoiceAPI
         page: nil,
         # Number of items per page
         page_size: nil,
+        # Field to sort by
+        sort_by: nil,
+        # Sort direction (asc/desc)
+        sort_order: nil,
         request_options: {}
       )
       end

@@ -3,6 +3,7 @@ module EInvoiceAPI
     type document_response =
       {
         id: String,
+        created_at: Time,
         allowances: ::Array[EInvoiceAPI::DocumentResponse::Allowance]?,
         amount_due: String?,
         attachments: ::Array[EInvoiceAPI::Documents::DocumentAttachment]?,
@@ -16,6 +17,7 @@ module EInvoiceAPI
         customer_email: String?,
         customer_id: String?,
         customer_name: String?,
+        customer_peppol_id: String?,
         customer_tax_id: String?,
         direction: EInvoiceAPI::Models::document_direction,
         document_type: EInvoiceAPI::Models::document_type,
@@ -55,6 +57,8 @@ module EInvoiceAPI
     class DocumentResponse < EInvoiceAPI::Internal::Type::BaseModel
       attr_accessor id: String
 
+      attr_accessor created_at: Time
+
       attr_accessor allowances: ::Array[EInvoiceAPI::DocumentResponse::Allowance]?
 
       attr_accessor amount_due: String?
@@ -84,6 +88,8 @@ module EInvoiceAPI
       attr_accessor customer_id: String?
 
       attr_accessor customer_name: String?
+
+      attr_accessor customer_peppol_id: String?
 
       attr_accessor customer_tax_id: String?
 
@@ -171,6 +177,7 @@ module EInvoiceAPI
 
       def initialize: (
         id: String,
+        created_at: Time,
         ?allowances: ::Array[EInvoiceAPI::DocumentResponse::Allowance]?,
         ?amount_due: String?,
         ?attachments: ::Array[EInvoiceAPI::Documents::DocumentAttachment]?,
@@ -184,6 +191,7 @@ module EInvoiceAPI
         ?customer_email: String?,
         ?customer_id: String?,
         ?customer_name: String?,
+        ?customer_peppol_id: String?,
         ?customer_tax_id: String?,
         ?direction: EInvoiceAPI::Models::document_direction,
         ?document_type: EInvoiceAPI::Models::document_type,
@@ -222,6 +230,7 @@ module EInvoiceAPI
 
       def to_hash: -> {
         id: String,
+        created_at: Time,
         allowances: ::Array[EInvoiceAPI::DocumentResponse::Allowance]?,
         amount_due: String?,
         attachments: ::Array[EInvoiceAPI::Documents::DocumentAttachment]?,
@@ -235,6 +244,7 @@ module EInvoiceAPI
         customer_email: String?,
         customer_id: String?,
         customer_name: String?,
+        customer_peppol_id: String?,
         customer_tax_id: String?,
         direction: EInvoiceAPI::Models::document_direction,
         document_type: EInvoiceAPI::Models::document_type,
