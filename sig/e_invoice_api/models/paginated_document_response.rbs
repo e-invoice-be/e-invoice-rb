@@ -2,7 +2,6 @@ module EInvoiceAPI
   module Models
     type paginated_document_response =
       {
-        has_next_page: bool,
         items: ::Array[EInvoiceAPI::DocumentResponse],
         page: Integer,
         page_size: Integer,
@@ -11,8 +10,6 @@ module EInvoiceAPI
       }
 
     class PaginatedDocumentResponse < EInvoiceAPI::Internal::Type::BaseModel
-      attr_accessor has_next_page: bool
-
       attr_accessor items: ::Array[EInvoiceAPI::DocumentResponse]
 
       attr_accessor page: Integer
@@ -24,7 +21,6 @@ module EInvoiceAPI
       attr_accessor total: Integer
 
       def initialize: (
-        has_next_page: bool,
         items: ::Array[EInvoiceAPI::DocumentResponse],
         page: Integer,
         page_size: Integer,
@@ -33,7 +29,6 @@ module EInvoiceAPI
       ) -> void
 
       def to_hash: -> {
-        has_next_page: bool,
         items: ::Array[EInvoiceAPI::DocumentResponse],
         page: Integer,
         page_size: Integer,

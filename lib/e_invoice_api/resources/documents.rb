@@ -14,107 +14,103 @@ module EInvoiceAPI
       #
       # Create a new invoice or credit note
       #
-      # @overload create(construct_pdf: nil, allowances: nil, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, charges: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_company_id: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_peppol_id: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, previous_unpaid_balance: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_company_id: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil, request_options: {})
+      # @overload create(allowances: nil, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, charges: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_company_id: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, previous_unpaid_balance: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_company_id: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil, request_options: {})
       #
-      # @param construct_pdf [Boolean] Query param: If true, generate a constructed PDF from the document and include i
+      # @param allowances [Array<EInvoiceAPI::Models::DocumentCreate::Allowance>, nil]
       #
-      # @param allowances [Array<EInvoiceAPI::Models::DocumentCreate::Allowance>, nil] Body param
+      # @param amount_due [Float, String, nil] The amount due for payment. Must be positive and rounded to maximum 2 decimals
       #
-      # @param amount_due [Float, String, nil] Body param: The amount due for payment. Must be positive and rounded to maximum
+      # @param attachments [Array<EInvoiceAPI::Models::DocumentAttachmentCreate>, nil]
       #
-      # @param attachments [Array<EInvoiceAPI::Models::DocumentAttachmentCreate>, nil] Body param
+      # @param billing_address [String, nil] The billing address (if different from customer address)
       #
-      # @param billing_address [String, nil] Body param: The billing address (if different from customer address)
+      # @param billing_address_recipient [String, nil] The recipient name at the billing address
       #
-      # @param billing_address_recipient [String, nil] Body param: The recipient name at the billing address
+      # @param charges [Array<EInvoiceAPI::Models::DocumentCreate::Charge>, nil]
       #
-      # @param charges [Array<EInvoiceAPI::Models::DocumentCreate::Charge>, nil] Body param
+      # @param currency [Symbol, EInvoiceAPI::Models::CurrencyCode] Currency of the invoice (ISO 4217 currency code)
       #
-      # @param currency [Symbol, EInvoiceAPI::Models::CurrencyCode] Body param: Currency of the invoice (ISO 4217 currency code)
+      # @param customer_address [String, nil] The address of the customer/buyer
       #
-      # @param customer_address [String, nil] Body param: The address of the customer/buyer
+      # @param customer_address_recipient [String, nil] The recipient name at the customer address
       #
-      # @param customer_address_recipient [String, nil] Body param: The recipient name at the customer address
+      # @param customer_company_id [String, nil] Customer company ID. For Belgium this is the CBE number or their EUID (European
       #
-      # @param customer_company_id [String, nil] Body param: Customer company ID. For Belgium this is the CBE number or their EUI
+      # @param customer_email [String, nil] The email address of the customer
       #
-      # @param customer_email [String, nil] Body param: The email address of the customer
+      # @param customer_id [String, nil] The unique identifier for the customer in your system
       #
-      # @param customer_id [String, nil] Body param: The unique identifier for the customer in your system
+      # @param customer_name [String, nil] The company name of the customer/buyer
       #
-      # @param customer_name [String, nil] Body param: The company name of the customer/buyer
+      # @param customer_tax_id [String, nil] Customer tax ID. For Belgium this is the VAT number. Must include the country pr
       #
-      # @param customer_peppol_id [String, nil] Body param: Customer Peppol ID
+      # @param direction [Symbol, EInvoiceAPI::Models::DocumentDirection] The direction of the document: INBOUND (purchases) or OUTBOUND (sales)
       #
-      # @param customer_tax_id [String, nil] Body param: Customer tax ID. For Belgium this is the VAT number. Must include th
+      # @param document_type [Symbol, EInvoiceAPI::Models::DocumentType] The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
       #
-      # @param direction [Symbol, EInvoiceAPI::Models::DocumentDirection] Body param: The direction of the document: INBOUND (purchases) or OUTBOUND (sale
+      # @param due_date [Date, nil] The date when payment is due
       #
-      # @param document_type [Symbol, EInvoiceAPI::Models::DocumentType] Body param: The type of document: INVOICE, CREDIT_NOTE, or DEBIT_NOTE
+      # @param invoice_date [Date, nil] The date when the invoice was issued
       #
-      # @param due_date [Date, nil] Body param: The date when payment is due
+      # @param invoice_id [String, nil] The unique invoice identifier/number
       #
-      # @param invoice_date [Date, nil] Body param: The date when the invoice was issued
+      # @param invoice_total [Float, String, nil] The total amount of the invoice including tax (invoice*total = subtotal + total*
       #
-      # @param invoice_id [String, nil] Body param: The unique invoice identifier/number
+      # @param items [Array<EInvoiceAPI::Models::DocumentCreate::Item>] At least one line item is required
       #
-      # @param invoice_total [Float, String, nil] Body param: The total amount of the invoice including tax (invoice_total = subto
+      # @param note [String, nil] Additional notes or comments for the invoice
       #
-      # @param items [Array<EInvoiceAPI::Models::DocumentCreate::Item>] Body param: At least one line item is required
+      # @param payment_details [Array<EInvoiceAPI::Models::PaymentDetailCreate>, nil]
       #
-      # @param note [String, nil] Body param: Additional notes or comments for the invoice
+      # @param payment_term [String, nil] The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
       #
-      # @param payment_details [Array<EInvoiceAPI::Models::PaymentDetailCreate>, nil] Body param
+      # @param previous_unpaid_balance [Float, String, nil] The previous unpaid balance from prior invoices, if any. Must be positive and ro
       #
-      # @param payment_term [String, nil] Body param: The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
+      # @param purchase_order [String, nil] The purchase order reference number
       #
-      # @param previous_unpaid_balance [Float, String, nil] Body param: The previous unpaid balance from prior invoices, if any. Must be pos
+      # @param remittance_address [String, nil] The address where payment should be sent or remitted to
       #
-      # @param purchase_order [String, nil] Body param: The purchase order reference number
+      # @param remittance_address_recipient [String, nil] The recipient name at the remittance address
       #
-      # @param remittance_address [String, nil] Body param: The address where payment should be sent or remitted to
+      # @param service_address [String, nil] The address where services were performed or goods were delivered
       #
-      # @param remittance_address_recipient [String, nil] Body param: The recipient name at the remittance address
+      # @param service_address_recipient [String, nil] The recipient name at the service address
       #
-      # @param service_address [String, nil] Body param: The address where services were performed or goods were delivered
+      # @param service_end_date [Date, nil] The end date of the service period or delivery period
       #
-      # @param service_address_recipient [String, nil] Body param: The recipient name at the service address
+      # @param service_start_date [Date, nil] The start date of the service period or delivery period
       #
-      # @param service_end_date [Date, nil] Body param: The end date of the service period or delivery period
+      # @param shipping_address [String, nil] The shipping/delivery address
       #
-      # @param service_start_date [Date, nil] Body param: The start date of the service period or delivery period
+      # @param shipping_address_recipient [String, nil] The recipient name at the shipping address
       #
-      # @param shipping_address [String, nil] Body param: The shipping/delivery address
+      # @param state [Symbol, EInvoiceAPI::Models::DocumentState] The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
       #
-      # @param shipping_address_recipient [String, nil] Body param: The recipient name at the shipping address
+      # @param subtotal [Float, String, nil] The taxable base of the invoice. Should be the sum of all line items - allowance
       #
-      # @param state [Symbol, EInvoiceAPI::Models::DocumentState] Body param: The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or
+      # @param tax_code [Symbol, EInvoiceAPI::Models::DocumentCreate::TaxCode] Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E
       #
-      # @param subtotal [Float, String, nil] Body param: The taxable base of the invoice. Should be the sum of all line items
+      # @param tax_details [Array<EInvoiceAPI::Models::DocumentCreate::TaxDetail>, nil]
       #
-      # @param tax_code [Symbol, EInvoiceAPI::Models::DocumentCreate::TaxCode] Body param: Tax category code of the invoice (e.g., S for standard rate, Z for z
+      # @param total_discount [Float, String, nil] The net financial discount/charge of the invoice (non-VAT charges minus non-VAT
       #
-      # @param tax_details [Array<EInvoiceAPI::Models::DocumentCreate::TaxDetail>, nil] Body param
+      # @param total_tax [Float, String, nil] The total tax amount of the invoice. Must be positive and rounded to maximum 2 d
       #
-      # @param total_discount [Float, String, nil] Body param: The net financial discount/charge of the invoice (non-VAT charges mi
+      # @param vatex [Symbol, EInvoiceAPI::Models::DocumentCreate::Vatex, nil] VATEX code list for VAT exemption reasons
       #
-      # @param total_tax [Float, String, nil] Body param: The total tax amount of the invoice. Must be positive and rounded to
+      # @param vatex_note [String, nil] Textual explanation for VAT exemption
       #
-      # @param vatex [Symbol, EInvoiceAPI::Models::DocumentCreate::Vatex, nil] Body param: VATEX code list for VAT exemption reasons
+      # @param vendor_address [String, nil] The address of the vendor/seller
       #
-      # @param vatex_note [String, nil] Body param: Textual explanation for VAT exemption
+      # @param vendor_address_recipient [String, nil] The recipient name at the vendor address
       #
-      # @param vendor_address [String, nil] Body param: The address of the vendor/seller
+      # @param vendor_company_id [String, nil] Vendor company ID. For Belgium this is the CBE number or their EUID (European Un
       #
-      # @param vendor_address_recipient [String, nil] Body param: The recipient name at the vendor address
+      # @param vendor_email [String, nil] The email address of the vendor
       #
-      # @param vendor_company_id [String, nil] Body param: Vendor company ID. For Belgium this is the CBE number or their EUID
+      # @param vendor_name [String, nil] The name of the vendor/seller/supplier
       #
-      # @param vendor_email [String, nil] Body param: The email address of the vendor
-      #
-      # @param vendor_name [String, nil] Body param: The name of the vendor/seller/supplier
-      #
-      # @param vendor_tax_id [String, nil] Body param: Vendor tax ID. For Belgium this is the VAT number. Must include the
+      # @param vendor_tax_id [String, nil] Vendor tax ID. For Belgium this is the VAT number. Must include the country pref
       #
       # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -122,14 +118,11 @@ module EInvoiceAPI
       #
       # @see EInvoiceAPI::Models::DocumentCreateParams
       def create(params = {})
-        query_params = [:construct_pdf]
         parsed, options = EInvoiceAPI::DocumentCreateParams.dump_request(params)
-        query = EInvoiceAPI::Internal::Util.encode_query_params(parsed.slice(*query_params))
         @client.request(
           method: :post,
           path: "api/documents/",
-          query: query,
-          body: parsed.except(*query_params),
+          body: parsed,
           model: EInvoiceAPI::DocumentResponse,
           options: options
         )
@@ -207,12 +200,7 @@ module EInvoiceAPI
         )
       end
 
-      # Send an invoice or credit note via Peppol. By default, the sender and receiver
-      # Peppol IDs are derived from the company (tax) IDs in the document, regardless of
-      # whether the document was created from a UBL with a different endpoint ID. To
-      # explicitly set the sender or receiver Peppol ID, provide them via the query
-      # parameters (sender_peppol_scheme, sender_peppol_id, receiver_peppol_scheme,
-      # receiver_peppol_id).
+      # Send an invoice or credit note via Peppol
       #
       # @overload send_(document_id, email: nil, receiver_peppol_id: nil, receiver_peppol_scheme: nil, sender_peppol_id: nil, sender_peppol_scheme: nil, request_options: {})
       #

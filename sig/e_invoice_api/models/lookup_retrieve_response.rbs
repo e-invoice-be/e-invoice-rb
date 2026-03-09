@@ -120,9 +120,7 @@ module EInvoiceAPI
           dns_records: ::Array[EInvoiceAPI::Models::LookupRetrieveResponse::DNSInfo::DNSRecord],
           sml_hostname: String,
           status: String,
-          error: String?,
-          lookup_method: String?,
-          smp_hostname: String?
+          error: String?
         }
 
       class DNSInfo < EInvoiceAPI::Internal::Type::BaseModel
@@ -134,26 +132,18 @@ module EInvoiceAPI
 
         attr_accessor error: String?
 
-        attr_accessor lookup_method: String?
-
-        attr_accessor smp_hostname: String?
-
         def initialize: (
           dns_records: ::Array[EInvoiceAPI::Models::LookupRetrieveResponse::DNSInfo::DNSRecord],
           sml_hostname: String,
           status: String,
-          ?error: String?,
-          ?lookup_method: String?,
-          ?smp_hostname: String?
+          ?error: String?
         ) -> void
 
         def to_hash: -> {
           dns_records: ::Array[EInvoiceAPI::Models::LookupRetrieveResponse::DNSInfo::DNSRecord],
           sml_hostname: String,
           status: String,
-          error: String?,
-          lookup_method: String?,
-          smp_hostname: String?
+          error: String?
         }
 
         type dns_record = { ip: String }
