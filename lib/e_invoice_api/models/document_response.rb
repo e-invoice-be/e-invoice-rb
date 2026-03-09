@@ -9,6 +9,11 @@ module EInvoiceAPI
       #   @return [String]
       required :id, String
 
+      # @!attribute created_at
+      #
+      #   @return [Time]
+      required :created_at, Time
+
       # @!attribute allowances
       #
       #   @return [Array<EInvoiceAPI::Models::DocumentResponse::Allowance>, nil]
@@ -90,6 +95,12 @@ module EInvoiceAPI
       #
       #   @return [String, nil]
       optional :customer_name, String, nil?: true
+
+      # @!attribute customer_peppol_id
+      #   Customer Peppol ID
+      #
+      #   @return [String, nil]
+      optional :customer_peppol_id, String, nil?: true
 
       # @!attribute customer_tax_id
       #   Customer tax ID. For Belgium this is the VAT number. Must include the country
@@ -310,11 +321,13 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :vendor_tax_id, String, nil?: true
 
-      # @!method initialize(id:, allowances: nil, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, charges: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_company_id: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_company_id: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil)
+      # @!method initialize(id:, created_at:, allowances: nil, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, charges: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_company_id: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_peppol_id: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_company_id: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil)
       #   Some parameter documentations has been truncated, see
       #   {EInvoiceAPI::Models::DocumentResponse} for more details.
       #
       #   @param id [String]
+      #
+      #   @param created_at [Time]
       #
       #   @param allowances [Array<EInvoiceAPI::Models::DocumentResponse::Allowance>, nil]
       #
@@ -341,6 +354,8 @@ module EInvoiceAPI
       #   @param customer_id [String, nil] The unique identifier for the customer in your system
       #
       #   @param customer_name [String, nil] The company name of the customer/buyer
+      #
+      #   @param customer_peppol_id [String, nil] Customer Peppol ID
       #
       #   @param customer_tax_id [String, nil] Customer tax ID. For Belgium this is the VAT number. Must include the country pr
       #
