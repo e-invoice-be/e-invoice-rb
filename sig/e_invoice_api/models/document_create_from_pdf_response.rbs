@@ -15,7 +15,6 @@ module EInvoiceAPI
         customer_email: String?,
         customer_id: String?,
         customer_name: String?,
-        customer_peppol_id: String?,
         customer_tax_id: String?,
         direction: EInvoiceAPI::Models::document_direction,
         document_type: EInvoiceAPI::Models::document_type,
@@ -84,8 +83,6 @@ module EInvoiceAPI
       attr_accessor customer_id: String?
 
       attr_accessor customer_name: String?
-
-      attr_accessor customer_peppol_id: String?
 
       attr_accessor customer_tax_id: String?
 
@@ -195,7 +192,6 @@ module EInvoiceAPI
         ?customer_email: String?,
         ?customer_id: String?,
         ?customer_name: String?,
-        ?customer_peppol_id: String?,
         ?customer_tax_id: String?,
         ?direction: EInvoiceAPI::Models::document_direction,
         ?document_type: EInvoiceAPI::Models::document_type,
@@ -248,7 +244,6 @@ module EInvoiceAPI
         customer_email: String?,
         customer_id: String?,
         customer_name: String?,
-        customer_peppol_id: String?,
         customer_tax_id: String?,
         direction: EInvoiceAPI::Models::document_direction,
         document_type: EInvoiceAPI::Models::document_type,

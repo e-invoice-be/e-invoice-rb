@@ -306,14 +306,6 @@ module EInvoiceAPI
         sig { returns(T.nilable(String)) }
         attr_accessor :error
 
-        # DNS lookup method used: 'naptr' (new spec) or 'busdox' (legacy)
-        sig { returns(T.nilable(String)) }
-        attr_accessor :lookup_method
-
-        # Hostname of the SMP (Service Metadata Publisher) discovered via DNS
-        sig { returns(T.nilable(String)) }
-        attr_accessor :smp_hostname
-
         # Information about the DNS lookup performed
         sig do
           params(
@@ -323,9 +315,7 @@ module EInvoiceAPI
               ],
             sml_hostname: String,
             status: String,
-            error: T.nilable(String),
-            lookup_method: T.nilable(String),
-            smp_hostname: T.nilable(String)
+            error: T.nilable(String)
           ).returns(T.attached_class)
         end
         def self.new(
@@ -336,11 +326,7 @@ module EInvoiceAPI
           # Status of the DNS lookup: 'success', 'error', or 'pending'
           status:,
           # Error message if the DNS lookup failed
-          error: nil,
-          # DNS lookup method used: 'naptr' (new spec) or 'busdox' (legacy)
-          lookup_method: nil,
-          # Hostname of the SMP (Service Metadata Publisher) discovered via DNS
-          smp_hostname: nil
+          error: nil
         )
         end
 
@@ -353,9 +339,7 @@ module EInvoiceAPI
                 ],
               sml_hostname: String,
               status: String,
-              error: T.nilable(String),
-              lookup_method: T.nilable(String),
-              smp_hostname: T.nilable(String)
+              error: T.nilable(String)
             }
           )
         end
