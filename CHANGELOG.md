@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.25.0 (2026-03-09)
+
+Full Changelog: [v0.24.1...v0.25.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.24.1...v0.25.0)
+
+### Features
+
+* **api:** api update ([1ddf3a7](https://github.com/e-invoice-be/e-invoice-rb/commit/1ddf3a7ff1a45ec8bf41330acda0fd423e106ae4))
+
+
+### Chores
+
+* **ci:** add build step ([b48f5ff](https://github.com/e-invoice-be/e-invoice-rb/commit/b48f5fffbbf62a14f99c8773657e7290de5cc3b8))
+* **ci:** skip uploading artifacts on stainless-internal branches ([24d4e8b](https://github.com/e-invoice-be/e-invoice-rb/commit/24d4e8b599b40467668c0b2546316f56da852a24))
+* **internal:** codegen related update ([413ebdf](https://github.com/e-invoice-be/e-invoice-rb/commit/413ebdf6f0651dc190507f8dac2f0613cbc577e4))
+* **internal:** codegen related update ([90aacdf](https://github.com/e-invoice-be/e-invoice-rb/commit/90aacdf2d72161fd78bed080d67362d317e262d0))
+* update placeholder string ([ba061b0](https://github.com/e-invoice-be/e-invoice-rb/commit/ba061b082989675ed4c4dbcf79e3c6fc429ba7cd))
+
 ## 0.24.1 (2026-02-27)
 
 Full Changelog: [v0.24.0...v0.24.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.24.0...v0.24.1)
