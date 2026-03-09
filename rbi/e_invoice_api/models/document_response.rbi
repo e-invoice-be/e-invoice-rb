@@ -11,6 +11,9 @@ module EInvoiceAPI
       sig { returns(String) }
       attr_accessor :id
 
+      sig { returns(Time) }
+      attr_accessor :created_at
+
       sig do
         returns(T.nilable(T::Array[EInvoiceAPI::DocumentResponse::Allowance]))
       end
@@ -69,6 +72,10 @@ module EInvoiceAPI
       # The company name of the customer/buyer
       sig { returns(T.nilable(String)) }
       attr_accessor :customer_name
+
+      # Customer Peppol ID
+      sig { returns(T.nilable(String)) }
+      attr_accessor :customer_peppol_id
 
       # Customer tax ID. For Belgium this is the VAT number. Must include the country
       # prefix
@@ -242,6 +249,7 @@ module EInvoiceAPI
       sig do
         params(
           id: String,
+          created_at: Time,
           allowances:
             T.nilable(
               T::Array[EInvoiceAPI::DocumentResponse::Allowance::OrHash]
@@ -262,6 +270,7 @@ module EInvoiceAPI
           customer_email: T.nilable(String),
           customer_id: T.nilable(String),
           customer_name: T.nilable(String),
+          customer_peppol_id: T.nilable(String),
           customer_tax_id: T.nilable(String),
           direction: EInvoiceAPI::DocumentDirection::OrSymbol,
           document_type: EInvoiceAPI::DocumentType::OrSymbol,
@@ -307,6 +316,7 @@ module EInvoiceAPI
       end
       def self.new(
         id:,
+        created_at:,
         allowances: nil,
         # The amount due for payment. Must be positive and rounded to maximum 2 decimals
         amount_due: nil,
@@ -331,6 +341,8 @@ module EInvoiceAPI
         customer_id: nil,
         # The company name of the customer/buyer
         customer_name: nil,
+        # Customer Peppol ID
+        customer_peppol_id: nil,
         # Customer tax ID. For Belgium this is the VAT number. Must include the country
         # prefix
         customer_tax_id: nil,
@@ -415,6 +427,7 @@ module EInvoiceAPI
         override.returns(
           {
             id: String,
+            created_at: Time,
             allowances:
               T.nilable(T::Array[EInvoiceAPI::DocumentResponse::Allowance]),
             amount_due: T.nilable(String),
@@ -430,6 +443,7 @@ module EInvoiceAPI
             customer_email: T.nilable(String),
             customer_id: T.nilable(String),
             customer_name: T.nilable(String),
+            customer_peppol_id: T.nilable(String),
             customer_tax_id: T.nilable(String),
             direction: EInvoiceAPI::DocumentDirection::TaggedSymbol,
             document_type: EInvoiceAPI::DocumentType::TaggedSymbol,

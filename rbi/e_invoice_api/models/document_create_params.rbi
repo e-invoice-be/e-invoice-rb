@@ -14,15 +14,36 @@ module EInvoiceAPI
           )
         end
 
+      # If true, generate a constructed PDF from the document and include it both as
+      # document attachment and embedded in the UBL.
+      sig { returns(T.nilable(T::Boolean)) }
+      attr_reader :construct_pdf
+
+      sig { params(construct_pdf: T::Boolean).void }
+      attr_writer :construct_pdf
+
       sig do
-        params(request_options: EInvoiceAPI::RequestOptions::OrHash).returns(
-          T.attached_class
-        )
+        params(
+          construct_pdf: T::Boolean,
+          request_options: EInvoiceAPI::RequestOptions::OrHash
+        ).returns(T.attached_class)
       end
-      def self.new(request_options: {})
+      def self.new(
+        # If true, generate a constructed PDF from the document and include it both as
+        # document attachment and embedded in the UBL.
+        construct_pdf: nil,
+        request_options: {}
+      )
       end
 
-      sig { override.returns({ request_options: EInvoiceAPI::RequestOptions }) }
+      sig do
+        override.returns(
+          {
+            construct_pdf: T::Boolean,
+            request_options: EInvoiceAPI::RequestOptions
+          }
+        )
+      end
       def to_hash
       end
     end
