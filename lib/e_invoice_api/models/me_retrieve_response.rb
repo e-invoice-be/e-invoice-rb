@@ -4,10 +4,22 @@ module EInvoiceAPI
   module Models
     # @see EInvoiceAPI::Resources::Me#retrieve
     class MeRetrieveResponse < EInvoiceAPI::Internal::Type::BaseModel
+      # @!attribute credit_balance
+      #   Credit balance of the tenant
+      #
+      #   @return [Integer]
+      required :credit_balance, Integer
+
       # @!attribute name
       #
       #   @return [String]
       required :name, String
+
+      # @!attribute plan
+      #   Plan of the tenant
+      #
+      #   @return [Symbol, EInvoiceAPI::Models::MeRetrieveResponse::Plan]
+      required :plan, enum: -> { EInvoiceAPI::Models::MeRetrieveResponse::Plan }
 
       # @!attribute bcc_recipient_email
       #   BCC recipient email to deliver documents
@@ -66,12 +78,6 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :company_zip, String, nil?: true
 
-      # @!attribute credit_balance
-      #   Credit balance of the tenant
-      #
-      #   @return [Integer, nil]
-      optional :credit_balance, Integer
-
       # @!attribute description
       #
       #   @return [String, nil]
@@ -89,12 +95,6 @@ module EInvoiceAPI
       #   @return [Array<String>, nil]
       optional :peppol_ids, EInvoiceAPI::Internal::Type::ArrayOf[String], nil?: true
 
-      # @!attribute plan
-      #   Plan of the tenant
-      #
-      #   @return [Symbol, EInvoiceAPI::Models::MeRetrieveResponse::Plan, nil]
-      optional :plan, enum: -> { EInvoiceAPI::Models::MeRetrieveResponse::Plan }
-
       # @!attribute smp_registration
       #   Whether the tenant is registered on our SMP
       #
@@ -107,11 +107,15 @@ module EInvoiceAPI
       #   @return [Time, nil]
       optional :smp_registration_date, Time, nil?: true
 
-      # @!method initialize(name:, bcc_recipient_email: nil, company_address: nil, company_city: nil, company_country: nil, company_email: nil, company_name: nil, company_number: nil, company_tax_id: nil, company_zip: nil, credit_balance: nil, description: nil, ibans: nil, peppol_ids: nil, plan: nil, smp_registration: nil, smp_registration_date: nil)
+      # @!method initialize(credit_balance:, name:, plan:, bcc_recipient_email: nil, company_address: nil, company_city: nil, company_country: nil, company_email: nil, company_name: nil, company_number: nil, company_tax_id: nil, company_zip: nil, description: nil, ibans: nil, peppol_ids: nil, smp_registration: nil, smp_registration_date: nil)
       #   Some parameter documentations has been truncated, see
       #   {EInvoiceAPI::Models::MeRetrieveResponse} for more details.
       #
+      #   @param credit_balance [Integer] Credit balance of the tenant
+      #
       #   @param name [String]
+      #
+      #   @param plan [Symbol, EInvoiceAPI::Models::MeRetrieveResponse::Plan] Plan of the tenant
       #
       #   @param bcc_recipient_email [String, nil] BCC recipient email to deliver documents
       #
@@ -131,15 +135,11 @@ module EInvoiceAPI
       #
       #   @param company_zip [String, nil] Zip code of the company
       #
-      #   @param credit_balance [Integer] Credit balance of the tenant
-      #
       #   @param description [String, nil]
       #
       #   @param ibans [Array<String>, nil] IBANs of the tenant
       #
       #   @param peppol_ids [Array<String>, nil] Peppol IDs of the tenant
-      #
-      #   @param plan [Symbol, EInvoiceAPI::Models::MeRetrieveResponse::Plan] Plan of the tenant
       #
       #   @param smp_registration [Boolean, nil] Whether the tenant is registered on our SMP
       #

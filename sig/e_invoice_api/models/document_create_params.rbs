@@ -1,25 +1,15 @@
 module EInvoiceAPI
   module Models
     type document_create_params =
-      { construct_pdf: bool } & EInvoiceAPI::Internal::Type::request_parameters
+      {  } & EInvoiceAPI::Internal::Type::request_parameters
 
     class DocumentCreateParams < EInvoiceAPI::Models::DocumentCreate
       extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
       include EInvoiceAPI::Internal::Type::RequestParameters
 
-      def construct_pdf: -> bool?
+      def initialize: (?request_options: EInvoiceAPI::request_opts) -> void
 
-      def construct_pdf=: (bool _) -> bool
-
-      def initialize: (
-        ?construct_pdf: bool,
-        ?request_options: EInvoiceAPI::request_opts
-      ) -> void
-
-      def to_hash: -> {
-        construct_pdf: bool,
-        request_options: EInvoiceAPI::RequestOptions
-      }
+      def to_hash: -> { request_options: EInvoiceAPI::RequestOptions }
     end
   end
 end

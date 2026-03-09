@@ -15,7 +15,6 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
     assert_pattern do
       response => {
         id: String,
-        created_at: Time,
         allowances: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Allowance]) | nil,
         amount_due: String | nil,
         attachments: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Documents::DocumentAttachment]) | nil,
@@ -29,7 +28,6 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         customer_email: String | nil,
         customer_id: String | nil,
         customer_name: String | nil,
-        customer_peppol_id: String | nil,
         customer_tax_id: String | nil,
         direction: EInvoiceAPI::DocumentDirection | nil,
         document_type: EInvoiceAPI::DocumentType | nil,
@@ -80,7 +78,6 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
     assert_pattern do
       response => {
         id: String,
-        created_at: Time,
         allowances: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Allowance]) | nil,
         amount_due: String | nil,
         attachments: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Documents::DocumentAttachment]) | nil,
@@ -94,7 +91,6 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         customer_email: String | nil,
         customer_id: String | nil,
         customer_name: String | nil,
-        customer_peppol_id: String | nil,
         customer_tax_id: String | nil,
         direction: EInvoiceAPI::DocumentDirection | nil,
         document_type: EInvoiceAPI::DocumentType | nil,
@@ -173,7 +169,6 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         customer_email: String | nil,
         customer_id: String | nil,
         customer_name: String | nil,
-        customer_peppol_id: String | nil,
         customer_tax_id: String | nil,
         direction: EInvoiceAPI::DocumentDirection | nil,
         document_type: EInvoiceAPI::DocumentType | nil,
@@ -226,7 +221,6 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
     assert_pattern do
       response => {
         id: String,
-        created_at: Time,
         allowances: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Allowance]) | nil,
         amount_due: String | nil,
         attachments: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Documents::DocumentAttachment]) | nil,
@@ -240,7 +234,6 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         customer_email: String | nil,
         customer_id: String | nil,
         customer_name: String | nil,
-        customer_peppol_id: String | nil,
         customer_tax_id: String | nil,
         direction: EInvoiceAPI::DocumentDirection | nil,
         document_type: EInvoiceAPI::DocumentType | nil,

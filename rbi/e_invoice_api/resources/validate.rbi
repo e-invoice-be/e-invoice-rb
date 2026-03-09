@@ -23,7 +23,6 @@ module EInvoiceAPI
           customer_email: T.nilable(String),
           customer_id: T.nilable(String),
           customer_name: T.nilable(String),
-          customer_peppol_id: T.nilable(String),
           customer_tax_id: T.nilable(String),
           direction: EInvoiceAPI::DocumentDirection::OrSymbol,
           document_type: EInvoiceAPI::DocumentType::OrSymbol,
@@ -94,8 +93,6 @@ module EInvoiceAPI
         customer_id: nil,
         # The company name of the customer/buyer
         customer_name: nil,
-        # Customer Peppol ID
-        customer_peppol_id: nil,
         # Customer tax ID. For Belgium this is the VAT number. Must include the country
         # prefix
         customer_tax_id: nil,
