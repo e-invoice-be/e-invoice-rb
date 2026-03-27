@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.26.1 (2026-03-27)
+
+Full Changelog: [v0.26.0...v0.26.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.26.0...v0.26.1)
+
+### Bug Fixes
+
+* **internal:** correct multipart form field name encoding ([4bed606](https://github.com/e-invoice-be/e-invoice-rb/commit/4bed6066b55c0a5fbf4ab0b7e2d4474b9582f6db))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([48d14ce](https://github.com/e-invoice-be/e-invoice-rb/commit/48d14ce95a45fc34315479de40bbfe83962fb8d3))
+* **internal:** tweak CI branches ([8687e8d](https://github.com/e-invoice-be/e-invoice-rb/commit/8687e8d5e308562c7adef99a0331d1d3206bab0b))
+* **internal:** update gitignore ([342e355](https://github.com/e-invoice-be/e-invoice-rb/commit/342e355df5e8608456ddc7d1c6ab3b94a11b7cc1))
+
 ## 0.26.0 (2026-03-09)
 
 Full Changelog: [v0.25.0...v0.26.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.25.0...v0.26.0)
