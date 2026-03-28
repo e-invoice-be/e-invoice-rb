@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.26.2 (2026-03-28)
+
+Full Changelog: [v0.26.1...v0.26.2](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.26.1...v0.26.2)
+
+### Chores
+
+* **ci:** support opting out of skipping builds on metadata-only commits ([1e7dc7f](https://github.com/e-invoice-be/e-invoice-rb/commit/1e7dc7fab78fb7aa5e3b878514a51de56487c54d))
+
 ## 0.26.1 (2026-03-27)
 
 Full Changelog: [v0.26.0...v0.26.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.26.0...v0.26.1)
