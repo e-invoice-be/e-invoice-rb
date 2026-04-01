@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.26.3 (2026-04-01)
+
+Full Changelog: [v0.26.2...v0.26.3](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.26.2...v0.26.3)
+
+### Bug Fixes
+
+* align path encoding with RFC 3986 section 3.3 ([8e0aa33](https://github.com/e-invoice-be/e-invoice-rb/commit/8e0aa333af64b16c5c5de9092f810696beda0bd4))
+
 ## 0.26.2 (2026-04-01)
 
 Full Changelog: [v0.26.1...v0.26.2](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.26.1...v0.26.2)
