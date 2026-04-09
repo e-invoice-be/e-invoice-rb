@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    e-invoice-api (0.26.3)
+    e-invoice-api (0.26.4)
       cgi
       connection_pool
 
