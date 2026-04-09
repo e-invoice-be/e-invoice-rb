@@ -11,6 +11,18 @@ module EInvoiceAPI
           )
         end
 
+      # Whether a business card is set at the SMP
+      sig { returns(T::Boolean) }
+      attr_accessor :business_card_valid
+
+      # Whether the DNS resolves to a valid SMP
+      sig { returns(T::Boolean) }
+      attr_accessor :dns_valid
+
+      # Whether the Peppol ID is valid and registered in the Peppol network
+      sig { returns(T::Boolean) }
+      attr_accessor :is_valid
+
       # Business card information for the Peppol ID
       sig do
         returns(
@@ -31,18 +43,6 @@ module EInvoiceAPI
       end
       attr_writer :business_card
 
-      # Whether a business card is set at the SMP
-      sig { returns(T::Boolean) }
-      attr_accessor :business_card_valid
-
-      # Whether the DNS resolves to a valid SMP
-      sig { returns(T::Boolean) }
-      attr_accessor :dns_valid
-
-      # Whether the Peppol ID is valid and registered in the Peppol network
-      sig { returns(T::Boolean) }
-      attr_accessor :is_valid
-
       sig { returns(T.nilable(T::Array[String])) }
       attr_reader :supported_document_types
 
@@ -55,25 +55,25 @@ module EInvoiceAPI
       # network, including whether the ID is valid and what document types it supports.
       sig do
         params(
+          business_card_valid: T::Boolean,
+          dns_valid: T::Boolean,
+          is_valid: T::Boolean,
           business_card:
             T.nilable(
               EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard::OrHash
             ),
-          business_card_valid: T::Boolean,
-          dns_valid: T::Boolean,
-          is_valid: T::Boolean,
           supported_document_types: T::Array[String]
         ).returns(T.attached_class)
       end
       def self.new(
-        # Business card information for the Peppol ID
-        business_card:,
         # Whether a business card is set at the SMP
         business_card_valid:,
         # Whether the DNS resolves to a valid SMP
         dns_valid:,
         # Whether the Peppol ID is valid and registered in the Peppol network
         is_valid:,
+        # Business card information for the Peppol ID
+        business_card: nil,
         supported_document_types: nil
       )
       end
@@ -81,13 +81,13 @@ module EInvoiceAPI
       sig do
         override.returns(
           {
+            business_card_valid: T::Boolean,
+            dns_valid: T::Boolean,
+            is_valid: T::Boolean,
             business_card:
               T.nilable(
                 EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard
               ),
-            business_card_valid: T::Boolean,
-            dns_valid: T::Boolean,
-            is_valid: T::Boolean,
             supported_document_types: T::Array[String]
           }
         )
