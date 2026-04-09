@@ -4,14 +4,6 @@ module EInvoiceAPI
   module Models
     # @see EInvoiceAPI::Resources::Validate#validate_peppol_id
     class ValidateValidatePeppolIDResponse < EInvoiceAPI::Internal::Type::BaseModel
-      # @!attribute business_card
-      #   Business card information for the Peppol ID
-      #
-      #   @return [EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard, nil]
-      required :business_card,
-               -> { EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard },
-               nil?: true
-
       # @!attribute business_card_valid
       #   Whether a business card is set at the SMP
       #
@@ -30,24 +22,32 @@ module EInvoiceAPI
       #   @return [Boolean]
       required :is_valid, EInvoiceAPI::Internal::Type::Boolean
 
+      # @!attribute business_card
+      #   Business card information for the Peppol ID
+      #
+      #   @return [EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard, nil]
+      optional :business_card,
+               -> { EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard },
+               nil?: true
+
       # @!attribute supported_document_types
       #
       #   @return [Array<String>, nil]
       optional :supported_document_types, EInvoiceAPI::Internal::Type::ArrayOf[String]
 
-      # @!method initialize(business_card:, business_card_valid:, dns_valid:, is_valid:, supported_document_types: nil)
+      # @!method initialize(business_card_valid:, dns_valid:, is_valid:, business_card: nil, supported_document_types: nil)
       #   Response for a Peppol ID validation request.
       #
       #   This model represents the validation result of a Peppol ID in the Peppol
       #   network, including whether the ID is valid and what document types it supports.
-      #
-      #   @param business_card [EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard, nil] Business card information for the Peppol ID
       #
       #   @param business_card_valid [Boolean] Whether a business card is set at the SMP
       #
       #   @param dns_valid [Boolean] Whether the DNS resolves to a valid SMP
       #
       #   @param is_valid [Boolean] Whether the Peppol ID is valid and registered in the Peppol network
+      #
+      #   @param business_card [EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard, nil] Business card information for the Peppol ID
       #
       #   @param supported_document_types [Array<String>]
 
