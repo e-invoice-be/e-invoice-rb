@@ -34,10 +34,10 @@ class EInvoiceAPI::Test::Resources::ValidateTest < EInvoiceAPI::Test::ResourceTe
 
     assert_pattern do
       response => {
-        business_card: EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard | nil,
         business_card_valid: EInvoiceAPI::Internal::Type::Boolean,
         dns_valid: EInvoiceAPI::Internal::Type::Boolean,
         is_valid: EInvoiceAPI::Internal::Type::Boolean,
+        business_card: EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard | nil,
         supported_document_types: ^(EInvoiceAPI::Internal::Type::ArrayOf[String]) | nil
       }
     end
