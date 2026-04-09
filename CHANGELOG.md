@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.26.4 (2026-04-09)
+
+Full Changelog: [v0.26.3...v0.26.4](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.26.3...v0.26.4)
+
+### Bug Fixes
+
+* multipart encoding for file arrays ([77874cb](https://github.com/e-invoice-be/e-invoice-rb/commit/77874cb9a28df936f4e019d601874c8f15108349))
+
 ## 0.26.3 (2026-04-01)
 
 Full Changelog: [v0.26.2...v0.26.3](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.26.2...v0.26.3)
