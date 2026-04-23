@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.27.1 (2026-04-23)
+
+Full Changelog: [v0.27.0...v0.27.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.27.0...v0.27.1)
+
+### Chores
+
+* **internal:** more robust bootstrap script ([d6d46ed](https://github.com/e-invoice-be/e-invoice-rb/commit/d6d46ed3774c0a4a4eff971d81d7141c61843333))
+
 ## 0.27.0 (2026-04-09)
 
 Full Changelog: [v0.26.4...v0.27.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.26.4...v0.27.0)
