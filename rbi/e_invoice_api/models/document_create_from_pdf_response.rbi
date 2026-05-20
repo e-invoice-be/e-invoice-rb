@@ -93,6 +93,14 @@ module EInvoiceAPI
       sig { returns(T.nilable(Date)) }
       attr_accessor :due_date
 
+      # Error message when success is False
+      sig { returns(T.nilable(String)) }
+      attr_accessor :error_message
+
+      # Error type/category when success is False
+      sig { returns(T.nilable(String)) }
+      attr_accessor :error_type
+
       # The date when the invoice was issued
       sig { returns(T.nilable(Date)) }
       attr_accessor :invoice_date
@@ -106,7 +114,7 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :invoice_total
 
-      # At least one line item is required
+      # Line items (may be empty for failed conversions)
       sig do
         returns(
           T.nilable(
@@ -301,6 +309,8 @@ module EInvoiceAPI
           direction: EInvoiceAPI::DocumentDirection::OrSymbol,
           document_type: EInvoiceAPI::DocumentType::OrSymbol,
           due_date: T.nilable(Date),
+          error_message: T.nilable(String),
+          error_type: T.nilable(String),
           invoice_date: T.nilable(Date),
           invoice_id: T.nilable(String),
           invoice_total: T.nilable(String),
@@ -384,6 +394,10 @@ module EInvoiceAPI
         document_type: nil,
         # The date when payment is due
         due_date: nil,
+        # Error message when success is False
+        error_message: nil,
+        # Error type/category when success is False
+        error_type: nil,
         # The date when the invoice was issued
         invoice_date: nil,
         # The unique invoice identifier/number
@@ -391,7 +405,7 @@ module EInvoiceAPI
         # The total amount of the invoice including tax (invoice_total = subtotal +
         # total_tax + total_discount). Must be positive and rounded to maximum 2 decimals
         invoice_total: nil,
-        # At least one line item is required
+        # Line items (may be empty for failed conversions)
         items: nil,
         # Additional notes or comments for the invoice
         note: nil,
@@ -482,6 +496,8 @@ module EInvoiceAPI
             direction: EInvoiceAPI::DocumentDirection::TaggedSymbol,
             document_type: EInvoiceAPI::DocumentType::TaggedSymbol,
             due_date: T.nilable(Date),
+            error_message: T.nilable(String),
+            error_type: T.nilable(String),
             invoice_date: T.nilable(Date),
             invoice_id: T.nilable(String),
             invoice_total: T.nilable(String),

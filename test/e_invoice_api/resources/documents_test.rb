@@ -178,6 +178,8 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         direction: EInvoiceAPI::DocumentDirection | nil,
         document_type: EInvoiceAPI::DocumentType | nil,
         due_date: Date | nil,
+        error_message: String | nil,
+        error_type: String | nil,
         invoice_date: Date | nil,
         invoice_id: String | nil,
         invoice_total: String | nil,
