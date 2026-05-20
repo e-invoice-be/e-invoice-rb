@@ -23,6 +23,10 @@ module EInvoiceAPI
       sig { returns(T::Boolean) }
       attr_accessor :is_valid
 
+      # List of document types that this Peppol ID supports
+      sig { returns(T::Array[String]) }
+      attr_accessor :supported_document_types
+
       # Business card information for the Peppol ID
       sig do
         returns(
@@ -43,12 +47,6 @@ module EInvoiceAPI
       end
       attr_writer :business_card
 
-      sig { returns(T.nilable(T::Array[String])) }
-      attr_reader :supported_document_types
-
-      sig { params(supported_document_types: T::Array[String]).void }
-      attr_writer :supported_document_types
-
       # Response for a Peppol ID validation request.
       #
       # This model represents the validation result of a Peppol ID in the Peppol
@@ -58,11 +56,11 @@ module EInvoiceAPI
           business_card_valid: T::Boolean,
           dns_valid: T::Boolean,
           is_valid: T::Boolean,
+          supported_document_types: T::Array[String],
           business_card:
             T.nilable(
               EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard::OrHash
-            ),
-          supported_document_types: T::Array[String]
+            )
         ).returns(T.attached_class)
       end
       def self.new(
@@ -72,9 +70,10 @@ module EInvoiceAPI
         dns_valid:,
         # Whether the Peppol ID is valid and registered in the Peppol network
         is_valid:,
+        # List of document types that this Peppol ID supports
+        supported_document_types:,
         # Business card information for the Peppol ID
-        business_card: nil,
-        supported_document_types: nil
+        business_card: nil
       )
       end
 
@@ -84,11 +83,11 @@ module EInvoiceAPI
             business_card_valid: T::Boolean,
             dns_valid: T::Boolean,
             is_valid: T::Boolean,
+            supported_document_types: T::Array[String],
             business_card:
               T.nilable(
                 EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard
-              ),
-            supported_document_types: T::Array[String]
+              )
           }
         )
       end
