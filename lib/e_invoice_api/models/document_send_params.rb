@@ -13,6 +13,7 @@ module EInvoiceAPI
       required :document_id, String
 
       # @!attribute email
+      #   @deprecated
       #
       #   @return [String, nil]
       optional :email, String, nil?: true
