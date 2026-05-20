@@ -22,6 +22,12 @@ module EInvoiceAPI
       #   @return [Boolean]
       required :is_valid, EInvoiceAPI::Internal::Type::Boolean
 
+      # @!attribute supported_document_types
+      #   List of document types that this Peppol ID supports
+      #
+      #   @return [Array<String>]
+      required :supported_document_types, EInvoiceAPI::Internal::Type::ArrayOf[String]
+
       # @!attribute business_card
       #   Business card information for the Peppol ID
       #
@@ -30,12 +36,7 @@ module EInvoiceAPI
                -> { EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard },
                nil?: true
 
-      # @!attribute supported_document_types
-      #
-      #   @return [Array<String>, nil]
-      optional :supported_document_types, EInvoiceAPI::Internal::Type::ArrayOf[String]
-
-      # @!method initialize(business_card_valid:, dns_valid:, is_valid:, business_card: nil, supported_document_types: nil)
+      # @!method initialize(business_card_valid:, dns_valid:, is_valid:, supported_document_types:, business_card: nil)
       #   Response for a Peppol ID validation request.
       #
       #   This model represents the validation result of a Peppol ID in the Peppol
@@ -47,9 +48,9 @@ module EInvoiceAPI
       #
       #   @param is_valid [Boolean] Whether the Peppol ID is valid and registered in the Peppol network
       #
-      #   @param business_card [EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard, nil] Business card information for the Peppol ID
+      #   @param supported_document_types [Array<String>] List of document types that this Peppol ID supports
       #
-      #   @param supported_document_types [Array<String>]
+      #   @param business_card [EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard, nil] Business card information for the Peppol ID
 
       # @see EInvoiceAPI::Models::ValidateValidatePeppolIDResponse#business_card
       class BusinessCard < EInvoiceAPI::Internal::Type::BaseModel

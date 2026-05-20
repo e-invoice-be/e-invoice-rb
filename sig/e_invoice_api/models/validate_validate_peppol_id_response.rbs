@@ -5,8 +5,8 @@ module EInvoiceAPI
         business_card_valid: bool,
         dns_valid: bool,
         is_valid: bool,
-        business_card: EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard?,
-        supported_document_types: ::Array[String]
+        supported_document_types: ::Array[String],
+        business_card: EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard?
       }
 
     class ValidateValidatePeppolIDResponse < EInvoiceAPI::Internal::Type::BaseModel
@@ -16,26 +16,24 @@ module EInvoiceAPI
 
       attr_accessor is_valid: bool
 
+      attr_accessor supported_document_types: ::Array[String]
+
       attr_accessor business_card: EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard?
-
-      attr_reader supported_document_types: ::Array[String]?
-
-      def supported_document_types=: (::Array[String]) -> ::Array[String]
 
       def initialize: (
         business_card_valid: bool,
         dns_valid: bool,
         is_valid: bool,
-        ?business_card: EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard?,
-        ?supported_document_types: ::Array[String]
+        supported_document_types: ::Array[String],
+        ?business_card: EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard?
       ) -> void
 
       def to_hash: -> {
         business_card_valid: bool,
         dns_valid: bool,
         is_valid: bool,
-        business_card: EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard?,
-        supported_document_types: ::Array[String]
+        supported_document_types: ::Array[String],
+        business_card: EInvoiceAPI::Models::ValidateValidatePeppolIDResponse::BusinessCard?
       }
 
       type business_card =
