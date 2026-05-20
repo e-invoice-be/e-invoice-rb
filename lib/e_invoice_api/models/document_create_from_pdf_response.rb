@@ -113,6 +113,18 @@ module EInvoiceAPI
       #   @return [Date, nil]
       optional :due_date, Date, nil?: true
 
+      # @!attribute error_message
+      #   Error message when success is False
+      #
+      #   @return [String, nil]
+      optional :error_message, String, nil?: true
+
+      # @!attribute error_type
+      #   Error type/category when success is False
+      #
+      #   @return [String, nil]
+      optional :error_type, String, nil?: true
+
       # @!attribute invoice_date
       #   The date when the invoice was issued
       #
@@ -133,7 +145,7 @@ module EInvoiceAPI
       optional :invoice_total, String, nil?: true
 
       # @!attribute items
-      #   At least one line item is required
+      #   Line items (may be empty for failed conversions)
       #
       #   @return [Array<EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item>, nil]
       optional :items,
@@ -319,7 +331,7 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :vendor_tax_id, String, nil?: true
 
-      # @!method initialize(allowances: nil, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, charges: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_company_id: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_peppol_id: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, success: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, ubl_document: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_company_id: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil)
+      # @!method initialize(allowances: nil, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, charges: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_company_id: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_peppol_id: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, error_message: nil, error_type: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, success: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, ubl_document: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_company_id: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil)
       #   Some parameter documentations has been truncated, see
       #   {EInvoiceAPI::Models::DocumentCreateFromPdfResponse} for more details.
       #
@@ -359,13 +371,17 @@ module EInvoiceAPI
       #
       #   @param due_date [Date, nil] The date when payment is due
       #
+      #   @param error_message [String, nil] Error message when success is False
+      #
+      #   @param error_type [String, nil] Error type/category when success is False
+      #
       #   @param invoice_date [Date, nil] The date when the invoice was issued
       #
       #   @param invoice_id [String, nil] The unique invoice identifier/number
       #
       #   @param invoice_total [String, nil] The total amount of the invoice including tax (invoice*total = subtotal + total*
       #
-      #   @param items [Array<EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item>] At least one line item is required
+      #   @param items [Array<EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item>] Line items (may be empty for failed conversions)
       #
       #   @param note [String, nil] Additional notes or comments for the invoice
       #

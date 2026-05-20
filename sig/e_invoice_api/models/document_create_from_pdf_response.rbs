@@ -20,6 +20,8 @@ module EInvoiceAPI
         direction: EInvoiceAPI::Models::document_direction,
         document_type: EInvoiceAPI::Models::document_type,
         due_date: Date?,
+        error_message: String?,
+        error_type: String?,
         invoice_date: Date?,
         invoice_id: String?,
         invoice_total: String?,
@@ -102,6 +104,10 @@ module EInvoiceAPI
       ) -> EInvoiceAPI::Models::document_type
 
       attr_accessor due_date: Date?
+
+      attr_accessor error_message: String?
+
+      attr_accessor error_type: String?
 
       attr_accessor invoice_date: Date?
 
@@ -200,6 +206,8 @@ module EInvoiceAPI
         ?direction: EInvoiceAPI::Models::document_direction,
         ?document_type: EInvoiceAPI::Models::document_type,
         ?due_date: Date?,
+        ?error_message: String?,
+        ?error_type: String?,
         ?invoice_date: Date?,
         ?invoice_id: String?,
         ?invoice_total: String?,
@@ -253,6 +261,8 @@ module EInvoiceAPI
         direction: EInvoiceAPI::Models::document_direction,
         document_type: EInvoiceAPI::Models::document_type,
         due_date: Date?,
+        error_message: String?,
+        error_type: String?,
         invoice_date: Date?,
         invoice_id: String?,
         invoice_total: String?,
