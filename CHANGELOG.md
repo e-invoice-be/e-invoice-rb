@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.31.1 (2026-06-17)
+
+Full Changelog: [v0.31.0...v0.31.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.31.0...v0.31.1)
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([3e19758](https://github.com/e-invoice-be/e-invoice-rb/commit/3e19758ffc22a9ea8f7d413b65ba12b4fab22104))
+
 ## 0.31.0 (2026-05-20)
 
 Full Changelog: [v0.30.0...v0.31.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.30.0...v0.31.0)
