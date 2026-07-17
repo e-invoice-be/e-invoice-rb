@@ -915,6 +915,7 @@ module EInvoiceAPI
           charges: ::Array[EInvoiceAPI::DocumentCreate::Item::Charge]?,
           date: nil,
           description: String?,
+          item_attributes: ::Array[EInvoiceAPI::DocumentCreate::Item::ItemAttribute]?,
           product_code: String?,
           quantity: EInvoiceAPI::Models::DocumentCreate::Item::quantity?,
           tax: EInvoiceAPI::Models::DocumentCreate::Item::tax?,
@@ -934,6 +935,8 @@ module EInvoiceAPI
 
         attr_accessor description: String?
 
+        attr_accessor item_attributes: ::Array[EInvoiceAPI::DocumentCreate::Item::ItemAttribute]?
+
         attr_accessor product_code: String?
 
         attr_accessor quantity: EInvoiceAPI::Models::DocumentCreate::Item::quantity?
@@ -952,6 +955,7 @@ module EInvoiceAPI
           ?charges: ::Array[EInvoiceAPI::DocumentCreate::Item::Charge]?,
           ?date: nil,
           ?description: String?,
+          ?item_attributes: ::Array[EInvoiceAPI::DocumentCreate::Item::ItemAttribute]?,
           ?product_code: String?,
           ?quantity: EInvoiceAPI::Models::DocumentCreate::Item::quantity?,
           ?tax: EInvoiceAPI::Models::DocumentCreate::Item::tax?,
@@ -966,6 +970,7 @@ module EInvoiceAPI
           charges: ::Array[EInvoiceAPI::DocumentCreate::Item::Charge]?,
           date: nil,
           description: String?,
+          item_attributes: ::Array[EInvoiceAPI::DocumentCreate::Item::ItemAttribute]?,
           product_code: String?,
           quantity: EInvoiceAPI::Models::DocumentCreate::Item::quantity?,
           tax: EInvoiceAPI::Models::DocumentCreate::Item::tax?,
@@ -1592,6 +1597,18 @@ module EInvoiceAPI
 
             def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Item::Charge::tax_rate]
           end
+        end
+
+        type item_attribute = { name: String, value: String? }
+
+        class ItemAttribute < EInvoiceAPI::Internal::Type::BaseModel
+          attr_accessor name: String
+
+          attr_accessor value: String?
+
+          def initialize: (name: String, ?value: String?) -> void
+
+          def to_hash: -> { name: String, value: String? }
         end
 
         type quantity = Float | String

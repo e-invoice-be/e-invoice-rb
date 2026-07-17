@@ -304,6 +304,7 @@ module EInvoiceAPI
           charges: ::Array[EInvoiceAPI::Charge]?,
           date: nil,
           description: String?,
+          item_attributes: ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item::ItemAttribute]?,
           product_code: String?,
           quantity: String?,
           tax: String?,
@@ -323,6 +324,8 @@ module EInvoiceAPI
 
         attr_accessor description: String?
 
+        attr_accessor item_attributes: ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item::ItemAttribute]?
+
         attr_accessor product_code: String?
 
         attr_accessor quantity: String?
@@ -341,6 +344,7 @@ module EInvoiceAPI
           ?charges: ::Array[EInvoiceAPI::Charge]?,
           ?date: nil,
           ?description: String?,
+          ?item_attributes: ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item::ItemAttribute]?,
           ?product_code: String?,
           ?quantity: String?,
           ?tax: String?,
@@ -355,6 +359,7 @@ module EInvoiceAPI
           charges: ::Array[EInvoiceAPI::Charge]?,
           date: nil,
           description: String?,
+          item_attributes: ::Array[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item::ItemAttribute]?,
           product_code: String?,
           quantity: String?,
           tax: String?,
@@ -362,6 +367,18 @@ module EInvoiceAPI
           unit: EInvoiceAPI::Models::unit_of_measure_code?,
           unit_price: String?
         }
+
+        type item_attribute = { name: String, value: String? }
+
+        class ItemAttribute < EInvoiceAPI::Internal::Type::BaseModel
+          attr_accessor name: String
+
+          attr_accessor value: String?
+
+          def initialize: (name: String, ?value: String?) -> void
+
+          def to_hash: -> { name: String, value: String? }
+        end
       end
 
       type tax_code = :AE | :E | :S | :Z | :G | :O | :K | :L | :M | :B
