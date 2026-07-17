@@ -1007,6 +1007,16 @@ module EInvoiceAPI
         #   @return [String, nil]
         optional :description, String, nil?: true
 
+        # @!attribute item_attributes
+        #   Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+        #
+        #   @return [Array<EInvoiceAPI::Models::DocumentCreate::Item::ItemAttribute>, nil]
+        optional :item_attributes,
+                 -> {
+                   EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentCreate::Item::ItemAttribute]
+                 },
+                 nil?: true
+
         # @!attribute product_code
         #   The product code of the line item.
         #
@@ -1047,7 +1057,7 @@ module EInvoiceAPI
         #   @return [Float, String, nil]
         optional :unit_price, union: -> { EInvoiceAPI::DocumentCreate::Item::UnitPrice }, nil?: true
 
-        # @!method initialize(allowances: nil, amount: nil, charges: nil, date: nil, description: nil, product_code: nil, quantity: nil, tax: nil, tax_rate: nil, unit: nil, unit_price: nil)
+        # @!method initialize(allowances: nil, amount: nil, charges: nil, date: nil, description: nil, item_attributes: nil, product_code: nil, quantity: nil, tax: nil, tax_rate: nil, unit: nil, unit_price: nil)
         #   Some parameter documentations has been truncated, see
         #   {EInvoiceAPI::Models::DocumentCreate::Item} for more details.
         #
@@ -1060,6 +1070,8 @@ module EInvoiceAPI
         #   @param date [nil]
         #
         #   @param description [String, nil] The description of the line item.
+        #
+        #   @param item_attributes [Array<EInvoiceAPI::Models::DocumentCreate::Item::ItemAttribute>, nil] Item-level attributes (BG-32) from cac:AdditionalItemProperty.
         #
         #   @param product_code [String, nil] The product code of the line item.
         #
@@ -1625,6 +1637,28 @@ module EInvoiceAPI
             # @!method self.variants
             #   @return [Array(Float, String)]
           end
+        end
+
+        class ItemAttribute < EInvoiceAPI::Internal::Type::BaseModel
+          # @!attribute name
+          #   Attribute name (BT-160).
+          #
+          #   @return [String]
+          required :name, String
+
+          # @!attribute value
+          #   Attribute value (BT-161).
+          #
+          #   @return [String, nil]
+          optional :value, String, nil?: true
+
+          # @!method initialize(name:, value: nil)
+          #   An item-level attribute (BG-32 / BT-160 + BT-161) from
+          #   cac:AdditionalItemProperty.
+          #
+          #   @param name [String] Attribute name (BT-160).
+          #
+          #   @param value [String, nil] Attribute value (BT-161).
         end
 
         # The quantity of items (goods or services) that is the subject of the line item.

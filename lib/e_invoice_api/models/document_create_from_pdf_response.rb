@@ -472,6 +472,14 @@ module EInvoiceAPI
         #   @return [String, nil]
         optional :description, String, nil?: true
 
+        # @!attribute item_attributes
+        #   Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+        #
+        #   @return [Array<EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item::ItemAttribute>, nil]
+        optional :item_attributes,
+                 -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item::ItemAttribute] },
+                 nil?: true
+
         # @!attribute product_code
         #   The product code of the line item.
         #
@@ -512,7 +520,7 @@ module EInvoiceAPI
         #   @return [String, nil]
         optional :unit_price, String, nil?: true
 
-        # @!method initialize(allowances: nil, amount: nil, charges: nil, date: nil, description: nil, product_code: nil, quantity: nil, tax: nil, tax_rate: nil, unit: nil, unit_price: nil)
+        # @!method initialize(allowances: nil, amount: nil, charges: nil, date: nil, description: nil, item_attributes: nil, product_code: nil, quantity: nil, tax: nil, tax_rate: nil, unit: nil, unit_price: nil)
         #   Some parameter documentations has been truncated, see
         #   {EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item} for more details.
         #
@@ -526,6 +534,8 @@ module EInvoiceAPI
         #
         #   @param description [String, nil] The description of the line item.
         #
+        #   @param item_attributes [Array<EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item::ItemAttribute>, nil] Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+        #
         #   @param product_code [String, nil] The product code of the line item.
         #
         #   @param quantity [String, nil] The quantity of items (goods or services) that is the subject of the line item.
@@ -537,6 +547,28 @@ module EInvoiceAPI
         #   @param unit [Symbol, EInvoiceAPI::Models::UnitOfMeasureCode, nil] Unit of Measure Codes from UNECERec20 used in Peppol BIS Billing 3.0.
         #
         #   @param unit_price [String, nil] The item net price (BT-146). The price of an item, exclusive of VAT, after subtr
+
+        class ItemAttribute < EInvoiceAPI::Internal::Type::BaseModel
+          # @!attribute name
+          #   Attribute name (BT-160).
+          #
+          #   @return [String]
+          required :name, String
+
+          # @!attribute value
+          #   Attribute value (BT-161).
+          #
+          #   @return [String, nil]
+          optional :value, String, nil?: true
+
+          # @!method initialize(name:, value: nil)
+          #   An item-level attribute (BG-32 / BT-160 + BT-161) from
+          #   cac:AdditionalItemProperty.
+          #
+          #   @param name [String] Attribute name (BT-160).
+          #
+          #   @param value [String, nil] Attribute value (BT-161).
+        end
       end
 
       # Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E

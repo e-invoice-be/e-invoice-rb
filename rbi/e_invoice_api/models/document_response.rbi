@@ -1930,6 +1930,16 @@ module EInvoiceAPI
         sig { returns(T.nilable(String)) }
         attr_accessor :description
 
+        # Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+        sig do
+          returns(
+            T.nilable(
+              T::Array[EInvoiceAPI::DocumentResponse::Item::ItemAttribute]
+            )
+          )
+        end
+        attr_accessor :item_attributes
+
         # The product code of the line item.
         sig { returns(T.nilable(String)) }
         attr_accessor :product_code
@@ -1965,6 +1975,12 @@ module EInvoiceAPI
             charges: T.nilable(T::Array[EInvoiceAPI::Charge::OrHash]),
             date: NilClass,
             description: T.nilable(String),
+            item_attributes:
+              T.nilable(
+                T::Array[
+                  EInvoiceAPI::DocumentResponse::Item::ItemAttribute::OrHash
+                ]
+              ),
             product_code: T.nilable(String),
             quantity: T.nilable(String),
             tax: T.nilable(String),
@@ -1986,6 +2002,8 @@ module EInvoiceAPI
           date: nil,
           # The description of the line item.
           description: nil,
+          # Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+          item_attributes: nil,
           # The product code of the line item.
           product_code: nil,
           # The quantity of items (goods or services) that is the subject of the line item.
@@ -2013,6 +2031,10 @@ module EInvoiceAPI
               charges: T.nilable(T::Array[EInvoiceAPI::Charge]),
               date: NilClass,
               description: T.nilable(String),
+              item_attributes:
+                T.nilable(
+                  T::Array[EInvoiceAPI::DocumentResponse::Item::ItemAttribute]
+                ),
               product_code: T.nilable(String),
               quantity: T.nilable(String),
               tax: T.nilable(String),
@@ -2023,6 +2045,43 @@ module EInvoiceAPI
           )
         end
         def to_hash
+        end
+
+        class ItemAttribute < EInvoiceAPI::Internal::Type::BaseModel
+          OrHash =
+            T.type_alias do
+              T.any(
+                EInvoiceAPI::DocumentResponse::Item::ItemAttribute,
+                EInvoiceAPI::Internal::AnyHash
+              )
+            end
+
+          # Attribute name (BT-160).
+          sig { returns(String) }
+          attr_accessor :name
+
+          # Attribute value (BT-161).
+          sig { returns(T.nilable(String)) }
+          attr_accessor :value
+
+          # An item-level attribute (BG-32 / BT-160 + BT-161) from
+          # cac:AdditionalItemProperty.
+          sig do
+            params(name: String, value: T.nilable(String)).returns(
+              T.attached_class
+            )
+          end
+          def self.new(
+            # Attribute name (BT-160).
+            name:,
+            # Attribute value (BT-161).
+            value: nil
+          )
+          end
+
+          sig { override.returns({ name: String, value: T.nilable(String) }) }
+          def to_hash
+          end
         end
       end
 
