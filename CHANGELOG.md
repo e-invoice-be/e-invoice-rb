@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.32.0 (2026-07-17)
+
+Full Changelog: [v0.31.1...v0.32.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.31.1...v0.32.0)
+
+### Features
+
+* **api:** api update ([00dfda9](https://github.com/e-invoice-be/e-invoice-rb/commit/00dfda9f497707ca78b523adc9d88a7d14b0d9ca))
+
+
+### Chores
+
+* **internal:** bound formatter parallelism to CPU count ([bf2d22e](https://github.com/e-invoice-be/e-invoice-rb/commit/bf2d22e4087b1e4bff36d73e44d7b4d54a32924d))
+
 ## 0.31.1 (2026-06-17)
 
 Full Changelog: [v0.31.0...v0.31.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.31.0...v0.31.1)
