@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.33.0 (2026-07-18)
+
+Full Changelog: [v0.32.0...v0.33.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.32.0...v0.33.0)
+
+### Features
+
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([1635ea6](https://github.com/e-invoice-be/e-invoice-rb/commit/1635ea68fd31813091e7a69e07d3ae4360867d1c))
+
 ## 0.32.0 (2026-07-17)
 
 Full Changelog: [v0.31.1...v0.32.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.31.1...v0.32.0)
