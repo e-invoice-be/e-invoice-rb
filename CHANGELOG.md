@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.34.0 (2026-11-03)
+
+Full Changelog: [v0.33.0...v0.34.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.33.0...v0.34.0)
+
+### Features
+
+* **api:** sync SDK with live OpenAPI spec ([#77](https://github.com/e-invoice-be/e-invoice-rb/issues/77)) ([c4a220b](https://github.com/e-invoice-be/e-invoice-rb/commit/c4a220b9729c0735f6b73b36fa66e5e6e5bf3e2b))
+
 ## 0.33.0 (2026-07-18)
 
 Full Changelog: [v0.32.0...v0.33.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.32.0...v0.33.0)
