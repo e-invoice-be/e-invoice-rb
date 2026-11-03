@@ -1,0 +1,23 @@
+module EInvoiceAPI
+  module Models
+    type webhook_history_params =
+      { webhook_id: String } & EInvoiceAPI::Internal::Type::request_parameters
+
+    class WebhookHistoryParams < EInvoiceAPI::Internal::Type::BaseModel
+      extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
+      include EInvoiceAPI::Internal::Type::RequestParameters
+
+      attr_accessor webhook_id: String
+
+      def initialize: (
+        webhook_id: String,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        webhook_id: String,
+        request_options: EInvoiceAPI::RequestOptions
+      }
+    end
+  end
+end

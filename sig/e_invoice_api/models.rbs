@@ -5,6 +5,8 @@ module EInvoiceAPI
 
   class Charge = EInvoiceAPI::Models::Charge
 
+  module Conversion = EInvoiceAPI::Models::Conversion
+
   module CurrencyCode = EInvoiceAPI::Models::CurrencyCode
 
   class DocumentAttachmentCreate = EInvoiceAPI::Models::DocumentAttachmentCreate
@@ -19,6 +21,8 @@ module EInvoiceAPI
 
   module DocumentDirection = EInvoiceAPI::Models::DocumentDirection
 
+  class DocumentLifecycleParams = EInvoiceAPI::Models::DocumentLifecycleParams
+
   class DocumentResponse = EInvoiceAPI::Models::DocumentResponse
 
   class DocumentRetrieveParams = EInvoiceAPI::Models::DocumentRetrieveParams
@@ -29,9 +33,15 @@ module EInvoiceAPI
 
   module DocumentState = EInvoiceAPI::Models::DocumentState
 
+  class DocumentTimelineParams = EInvoiceAPI::Models::DocumentTimelineParams
+
   module DocumentType = EInvoiceAPI::Models::DocumentType
 
   class DocumentValidateParams = EInvoiceAPI::Models::DocumentValidateParams
+
+  class DraftListParams = EInvoiceAPI::Models::DraftListParams
+
+  class InboundEmailResponse = EInvoiceAPI::Models::InboundEmailResponse
 
   class InboxListCreditNotesParams = EInvoiceAPI::Models::InboxListCreditNotesParams
 
@@ -43,6 +53,14 @@ module EInvoiceAPI
 
   class LookupRetrieveParticipantsParams = EInvoiceAPI::Models::LookupRetrieveParticipantsParams
 
+  class MailboxDownloadAttachmentParams = EInvoiceAPI::Models::MailboxDownloadAttachmentParams
+
+  class MailboxListParams = EInvoiceAPI::Models::MailboxListParams
+
+  class MailboxReprocessParams = EInvoiceAPI::Models::MailboxReprocessParams
+
+  class MailboxRetrieveParams = EInvoiceAPI::Models::MailboxRetrieveParams
+
   class MeRetrieveParams = EInvoiceAPI::Models::MeRetrieveParams
 
   class OutboxListDraftDocumentsParams = EInvoiceAPI::Models::OutboxListDraftDocumentsParams
@@ -52,6 +70,8 @@ module EInvoiceAPI
   class PaginatedDocumentResponse = EInvoiceAPI::Models::PaginatedDocumentResponse
 
   class PaymentDetailCreate = EInvoiceAPI::Models::PaymentDetailCreate
+
+  class StatsRetrieveParams = EInvoiceAPI::Models::StatsRetrieveParams
 
   class UblDocumentValidation = EInvoiceAPI::Models::UblDocumentValidation
 
@@ -67,11 +87,15 @@ module EInvoiceAPI
 
   class WebhookDeleteParams = EInvoiceAPI::Models::WebhookDeleteParams
 
+  class WebhookHistoryParams = EInvoiceAPI::Models::WebhookHistoryParams
+
   class WebhookListParams = EInvoiceAPI::Models::WebhookListParams
 
   class WebhookResponse = EInvoiceAPI::Models::WebhookResponse
 
   class WebhookRetrieveParams = EInvoiceAPI::Models::WebhookRetrieveParams
+
+  class WebhookTestParams = EInvoiceAPI::Models::WebhookTestParams
 
   class WebhookUpdateParams = EInvoiceAPI::Models::WebhookUpdateParams
 end

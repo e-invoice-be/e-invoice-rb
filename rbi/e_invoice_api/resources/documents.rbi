@@ -21,6 +21,7 @@ module EInvoiceAPI
             T.nilable(T::Array[EInvoiceAPI::DocumentAttachmentCreate::OrHash]),
           billing_address: T.nilable(String),
           billing_address_recipient: T.nilable(String),
+          buyer_reference: T.nilable(String),
           charges:
             T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Charge::OrHash]),
           currency: EInvoiceAPI::CurrencyCode::OrSymbol,
@@ -31,6 +32,7 @@ module EInvoiceAPI
           customer_id: T.nilable(String),
           customer_name: T.nilable(String),
           customer_peppol_id: T.nilable(String),
+          customer_phone: T.nilable(String),
           customer_tax_id: T.nilable(String),
           direction: EInvoiceAPI::DocumentDirection::OrSymbol,
           document_type: EInvoiceAPI::DocumentType::OrSymbol,
@@ -44,6 +46,8 @@ module EInvoiceAPI
           payment_details:
             T.nilable(T::Array[EInvoiceAPI::PaymentDetailCreate::OrHash]),
           payment_term: T.nilable(String),
+          preceding_invoice_date: T.nilable(Date),
+          preceding_invoice_id: T.nilable(String),
           previous_unpaid_balance:
             T.nilable(
               EInvoiceAPI::DocumentCreate::PreviousUnpaidBalance::Variants
@@ -51,6 +55,9 @@ module EInvoiceAPI
           purchase_order: T.nilable(String),
           remittance_address: T.nilable(String),
           remittance_address_recipient: T.nilable(String),
+          rounding_amount:
+            T.nilable(EInvoiceAPI::DocumentCreate::RoundingAmount::Variants),
+          sales_order: T.nilable(String),
           service_address: T.nilable(String),
           service_address_recipient: T.nilable(String),
           service_end_date: T.nilable(Date),
@@ -60,11 +67,16 @@ module EInvoiceAPI
           state: EInvoiceAPI::DocumentState::OrSymbol,
           subtotal: T.nilable(EInvoiceAPI::DocumentCreate::Subtotal::Variants),
           tax_code: EInvoiceAPI::DocumentCreate::TaxCode::OrSymbol,
+          tax_currency: T.nilable(String),
           tax_details:
             T.nilable(T::Array[EInvoiceAPI::DocumentCreate::TaxDetail::OrHash]),
           total_discount:
             T.nilable(EInvoiceAPI::DocumentCreate::TotalDiscount::Variants),
           total_tax: T.nilable(EInvoiceAPI::DocumentCreate::TotalTax::Variants),
+          total_tax_in_tax_currency:
+            T.nilable(
+              EInvoiceAPI::DocumentCreate::TotalTaxInTaxCurrency::Variants
+            ),
           vatex: T.nilable(EInvoiceAPI::DocumentCreate::Vatex::OrSymbol),
           vatex_note: T.nilable(String),
           vendor_address: T.nilable(String),
@@ -72,6 +84,7 @@ module EInvoiceAPI
           vendor_company_id: T.nilable(String),
           vendor_email: T.nilable(String),
           vendor_name: T.nilable(String),
+          vendor_phone: T.nilable(String),
           vendor_tax_id: T.nilable(String),
           request_options: EInvoiceAPI::RequestOptions::OrHash
         ).returns(EInvoiceAPI::DocumentResponse)
@@ -91,6 +104,9 @@ module EInvoiceAPI
         billing_address: nil,
         # Body param: The recipient name at the billing address
         billing_address_recipient: nil,
+        # Body param: The buyer reference (BT-10), e.g. a cost centre or accounting
+        # reference requested by the buyer
+        buyer_reference: nil,
         # Body param
         charges: nil,
         # Body param: Currency of the invoice (ISO 4217 currency code)
@@ -111,6 +127,8 @@ module EInvoiceAPI
         customer_name: nil,
         # Body param: Customer Peppol ID
         customer_peppol_id: nil,
+        # Body param: The telephone number of the customer contact (BT-57)
+        customer_phone: nil,
         # Body param: Customer tax ID. For Belgium this is the VAT number. Must include
         # the country prefix
         customer_tax_id: nil,
@@ -137,6 +155,11 @@ module EInvoiceAPI
         payment_details: nil,
         # Body param: The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
         payment_term: nil,
+        # Body param: The preceding invoice issue date (BT-26)
+        preceding_invoice_date: nil,
+        # Body param: The preceding invoice reference (BT-25): the number of the invoice
+        # this document corrects, for example the invoice a credit note credits
+        preceding_invoice_id: nil,
         # Body param: The previous unpaid balance from prior invoices, if any. Must be
         # positive and rounded to maximum 2 decimals
         previous_unpaid_balance: nil,
@@ -146,6 +169,13 @@ module EInvoiceAPI
         remittance_address: nil,
         # Body param: The recipient name at the remittance address
         remittance_address_recipient: nil,
+        # Body param: The amount added to the invoice total to round the amount for
+        # payment (BT-114), for example to whole kronor (amount_due = invoice_total +
+        # rounding_amount when nothing is prepaid). Can be negative. Between -5.00 and
+        # 5.00, rounded to maximum 2 decimals
+        rounding_amount: nil,
+        # Body param: The sales order reference (BT-14) assigned by the seller
+        sales_order: nil,
         # Body param: The address where services were performed or goods were delivered
         service_address: nil,
         # Body param: The recipient name at the service address
@@ -168,6 +198,10 @@ module EInvoiceAPI
         # Body param: Tax category code of the invoice (e.g., S for standard rate, Z for
         # zero rate, E for exempt)
         tax_code: nil,
+        # Body param: The VAT accounting currency (BT-6, ISO 4217 currency code), when VAT
+        # is accounted in a currency other than the invoice currency. Must differ from
+        # currency and requires total_tax_in_tax_currency
+        tax_currency: nil,
         # Body param
         tax_details: nil,
         # Body param: The net financial discount/charge of the invoice (non-VAT charges
@@ -177,6 +211,10 @@ module EInvoiceAPI
         # Body param: The total tax amount of the invoice. Must be positive and rounded to
         # maximum 2 decimals
         total_tax: nil,
+        # Body param: The total VAT amount in the VAT accounting currency tax_currency
+        # (BT-111). Does not add to invoice_total. Requires tax_currency. Rounded to
+        # maximum 2 decimals
+        total_tax_in_tax_currency: nil,
         # Body param: VATEX code list for VAT exemption reasons
         #
         # Agency: CEF Identifier: vatex
@@ -194,6 +232,10 @@ module EInvoiceAPI
         vendor_email: nil,
         # Body param: The name of the vendor/seller/supplier
         vendor_name: nil,
+        # Body param: The telephone number of the vendor contact (BT-42). Required when
+        # vendor and customer are both in Germany (DE-R-006); it must then hold at least 3
+        # digits (DE-R-027, a warning).
+        vendor_phone: nil,
         # Body param: Vendor tax ID. For Belgium this is the VAT number. Must include the
         # country prefix
         vendor_tax_id: nil,
@@ -281,6 +323,31 @@ module EInvoiceAPI
         ).returns(EInvoiceAPI::UblDocumentValidation)
       end
       def validate(document_id, request_options: {})
+      end
+
+      # Get the timeline of events for an invoice or credit note, including creation,
+      # validation, transmission, and delivery events
+      sig do
+        params(
+          document_id: String,
+          request_options: EInvoiceAPI::RequestOptions::OrHash
+        ).returns(EInvoiceAPI::Models::DocumentTimelineResponse)
+      end
+      def timeline(document_id, request_options: {})
+      end
+
+      # Get the lifecycle events stated about an invoice or credit note after creation
+      # (Peppol Message Level and Invoice Responses, partner status events), oldest
+      # first. Each event carries a route-agnostic canonical status next to the
+      # untouched native code of its source; native codes without a canonical equivalent
+      # have canonical_status null.
+      sig do
+        params(
+          document_id: String,
+          request_options: EInvoiceAPI::RequestOptions::OrHash
+        ).returns(EInvoiceAPI::Models::DocumentLifecycleResponse)
+      end
+      def lifecycle(document_id, request_options: {})
       end
 
       # @api private

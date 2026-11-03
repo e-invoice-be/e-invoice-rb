@@ -6,9 +6,11 @@ module EInvoiceAPI
       # Some parameter documentations has been truncated, see
       # {EInvoiceAPI::Models::ValidateValidateJsonParams} for more details.
       #
-      # Validate if the JSON document can be converted to a valid UBL document
+      # Validate if the JSON document can be converted to a valid UBL document. The
+      # generated UBL is returned in ubl_document also when is_valid is false, so you
+      # can inspect it.
       #
-      # @overload validate_json(allowances: nil, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, charges: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_company_id: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_peppol_id: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, previous_unpaid_balance: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_company_id: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil, request_options: {})
+      # @overload validate_json(allowances: nil, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, buyer_reference: nil, charges: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_company_id: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_peppol_id: nil, customer_phone: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, preceding_invoice_date: nil, preceding_invoice_id: nil, previous_unpaid_balance: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, rounding_amount: nil, sales_order: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, tax_code: nil, tax_currency: nil, tax_details: nil, total_discount: nil, total_tax: nil, total_tax_in_tax_currency: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_company_id: nil, vendor_email: nil, vendor_name: nil, vendor_phone: nil, vendor_tax_id: nil, request_options: {})
       #
       # @param allowances [Array<EInvoiceAPI::Models::DocumentCreate::Allowance>, nil]
       #
@@ -19,6 +21,8 @@ module EInvoiceAPI
       # @param billing_address [String, nil] The billing address (if different from customer address)
       #
       # @param billing_address_recipient [String, nil] The recipient name at the billing address
+      #
+      # @param buyer_reference [String, nil] The buyer reference (BT-10), e.g. a cost centre or accounting reference requeste
       #
       # @param charges [Array<EInvoiceAPI::Models::DocumentCreate::Charge>, nil]
       #
@@ -37,6 +41,8 @@ module EInvoiceAPI
       # @param customer_name [String, nil] The company name of the customer/buyer
       #
       # @param customer_peppol_id [String, nil] Customer Peppol ID
+      #
+      # @param customer_phone [String, nil] The telephone number of the customer contact (BT-57)
       #
       # @param customer_tax_id [String, nil] Customer tax ID. For Belgium this is the VAT number. Must include the country pr
       #
@@ -60,6 +66,10 @@ module EInvoiceAPI
       #
       # @param payment_term [String, nil] The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
       #
+      # @param preceding_invoice_date [Date, nil] The preceding invoice issue date (BT-26)
+      #
+      # @param preceding_invoice_id [String, nil] The preceding invoice reference (BT-25): the number of the invoice this document
+      #
       # @param previous_unpaid_balance [Float, String, nil] The previous unpaid balance from prior invoices, if any. Must be positive and ro
       #
       # @param purchase_order [String, nil] The purchase order reference number
@@ -67,6 +77,10 @@ module EInvoiceAPI
       # @param remittance_address [String, nil] The address where payment should be sent or remitted to
       #
       # @param remittance_address_recipient [String, nil] The recipient name at the remittance address
+      #
+      # @param rounding_amount [Float, String, nil] The amount added to the invoice total to round the amount for payment (BT-114),
+      #
+      # @param sales_order [String, nil] The sales order reference (BT-14) assigned by the seller
       #
       # @param service_address [String, nil] The address where services were performed or goods were delivered
       #
@@ -86,11 +100,15 @@ module EInvoiceAPI
       #
       # @param tax_code [Symbol, EInvoiceAPI::Models::DocumentCreate::TaxCode] Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E
       #
+      # @param tax_currency [String, nil] The VAT accounting currency (BT-6, ISO 4217 currency code), when VAT is accounte
+      #
       # @param tax_details [Array<EInvoiceAPI::Models::DocumentCreate::TaxDetail>, nil]
       #
       # @param total_discount [Float, String, nil] The net financial discount/charge of the invoice (non-VAT charges minus non-VAT
       #
       # @param total_tax [Float, String, nil] The total tax amount of the invoice. Must be positive and rounded to maximum 2 d
+      #
+      # @param total_tax_in_tax_currency [Float, String, nil] The total VAT amount in the VAT accounting currency tax_currency (BT-111). Does
       #
       # @param vatex [Symbol, EInvoiceAPI::Models::DocumentCreate::Vatex, nil] VATEX code list for VAT exemption reasons
       #
@@ -105,6 +123,8 @@ module EInvoiceAPI
       # @param vendor_email [String, nil] The email address of the vendor
       #
       # @param vendor_name [String, nil] The name of the vendor/seller/supplier
+      #
+      # @param vendor_phone [String, nil] The telephone number of the vendor contact (BT-42). Required when vendor and cus
       #
       # @param vendor_tax_id [String, nil] Vendor tax ID. For Belgium this is the VAT number. Must include the country pref
       #

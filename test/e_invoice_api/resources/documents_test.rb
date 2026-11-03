@@ -21,6 +21,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         attachments: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Documents::DocumentAttachment]) | nil,
         billing_address: String | nil,
         billing_address_recipient: String | nil,
+        buyer_reference: String | nil,
         charges: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Charge]) | nil,
         currency: EInvoiceAPI::CurrencyCode | nil,
         customer_address: String | nil,
@@ -30,6 +31,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         customer_id: String | nil,
         customer_name: String | nil,
         customer_peppol_id: String | nil,
+        customer_phone: String | nil,
         customer_tax_id: String | nil,
         direction: EInvoiceAPI::DocumentDirection | nil,
         document_type: EInvoiceAPI::DocumentType | nil,
@@ -41,9 +43,13 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         note: String | nil,
         payment_details: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::PaymentDetail]) | nil,
         payment_term: String | nil,
+        preceding_invoice_date: Date | nil,
+        preceding_invoice_id: String | nil,
         purchase_order: String | nil,
         remittance_address: String | nil,
         remittance_address_recipient: String | nil,
+        rounding_amount: String | nil,
+        sales_order: String | nil,
         service_address: String | nil,
         service_address_recipient: String | nil,
         service_end_date: Date | nil,
@@ -53,9 +59,11 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         state: EInvoiceAPI::DocumentState | nil,
         subtotal: String | nil,
         tax_code: EInvoiceAPI::DocumentResponse::TaxCode | nil,
+        tax_currency: String | nil,
         tax_details: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::TaxDetail]) | nil,
         total_discount: String | nil,
         total_tax: String | nil,
+        total_tax_in_tax_currency: String | nil,
         vatex: EInvoiceAPI::DocumentResponse::Vatex | nil,
         vatex_note: String | nil,
         vendor_address: String | nil,
@@ -63,6 +71,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         vendor_company_id: String | nil,
         vendor_email: String | nil,
         vendor_name: String | nil,
+        vendor_phone: String | nil,
         vendor_tax_id: String | nil
       }
     end
@@ -86,6 +95,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         attachments: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Documents::DocumentAttachment]) | nil,
         billing_address: String | nil,
         billing_address_recipient: String | nil,
+        buyer_reference: String | nil,
         charges: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Charge]) | nil,
         currency: EInvoiceAPI::CurrencyCode | nil,
         customer_address: String | nil,
@@ -95,6 +105,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         customer_id: String | nil,
         customer_name: String | nil,
         customer_peppol_id: String | nil,
+        customer_phone: String | nil,
         customer_tax_id: String | nil,
         direction: EInvoiceAPI::DocumentDirection | nil,
         document_type: EInvoiceAPI::DocumentType | nil,
@@ -106,9 +117,13 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         note: String | nil,
         payment_details: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::PaymentDetail]) | nil,
         payment_term: String | nil,
+        preceding_invoice_date: Date | nil,
+        preceding_invoice_id: String | nil,
         purchase_order: String | nil,
         remittance_address: String | nil,
         remittance_address_recipient: String | nil,
+        rounding_amount: String | nil,
+        sales_order: String | nil,
         service_address: String | nil,
         service_address_recipient: String | nil,
         service_end_date: Date | nil,
@@ -118,9 +133,11 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         state: EInvoiceAPI::DocumentState | nil,
         subtotal: String | nil,
         tax_code: EInvoiceAPI::DocumentResponse::TaxCode | nil,
+        tax_currency: String | nil,
         tax_details: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::TaxDetail]) | nil,
         total_discount: String | nil,
         total_tax: String | nil,
+        total_tax_in_tax_currency: String | nil,
         vatex: EInvoiceAPI::DocumentResponse::Vatex | nil,
         vatex_note: String | nil,
         vendor_address: String | nil,
@@ -128,6 +145,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         vendor_company_id: String | nil,
         vendor_email: String | nil,
         vendor_name: String | nil,
+        vendor_phone: String | nil,
         vendor_tax_id: String | nil
       }
     end
@@ -165,6 +183,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         attachments: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentAttachmentCreate]) | nil,
         billing_address: String | nil,
         billing_address_recipient: String | nil,
+        buyer_reference: String | nil,
         charges: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Charge]) | nil,
         currency: EInvoiceAPI::CurrencyCode | nil,
         customer_address: String | nil,
@@ -174,6 +193,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         customer_id: String | nil,
         customer_name: String | nil,
         customer_peppol_id: String | nil,
+        customer_phone: String | nil,
         customer_tax_id: String | nil,
         direction: EInvoiceAPI::DocumentDirection | nil,
         document_type: EInvoiceAPI::DocumentType | nil,
@@ -187,9 +207,13 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         note: String | nil,
         payment_details: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::PaymentDetailCreate]) | nil,
         payment_term: String | nil,
+        preceding_invoice_date: Date | nil,
+        preceding_invoice_id: String | nil,
         purchase_order: String | nil,
         remittance_address: String | nil,
         remittance_address_recipient: String | nil,
+        rounding_amount: String | nil,
+        sales_order: String | nil,
         service_address: String | nil,
         service_address_recipient: String | nil,
         service_end_date: Date | nil,
@@ -200,9 +224,11 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         subtotal: String | nil,
         success: EInvoiceAPI::Internal::Type::Boolean | nil,
         tax_code: EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode | nil,
+        tax_currency: String | nil,
         tax_details: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxDetail]) | nil,
         total_discount: String | nil,
         total_tax: String | nil,
+        total_tax_in_tax_currency: String | nil,
         ubl_document: String | nil,
         vatex: EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex | nil,
         vatex_note: String | nil,
@@ -211,6 +237,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         vendor_company_id: String | nil,
         vendor_email: String | nil,
         vendor_name: String | nil,
+        vendor_phone: String | nil,
         vendor_tax_id: String | nil
       }
     end
@@ -234,6 +261,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         attachments: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Documents::DocumentAttachment]) | nil,
         billing_address: String | nil,
         billing_address_recipient: String | nil,
+        buyer_reference: String | nil,
         charges: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::Charge]) | nil,
         currency: EInvoiceAPI::CurrencyCode | nil,
         customer_address: String | nil,
@@ -243,6 +271,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         customer_id: String | nil,
         customer_name: String | nil,
         customer_peppol_id: String | nil,
+        customer_phone: String | nil,
         customer_tax_id: String | nil,
         direction: EInvoiceAPI::DocumentDirection | nil,
         document_type: EInvoiceAPI::DocumentType | nil,
@@ -254,9 +283,13 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         note: String | nil,
         payment_details: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::PaymentDetail]) | nil,
         payment_term: String | nil,
+        preceding_invoice_date: Date | nil,
+        preceding_invoice_id: String | nil,
         purchase_order: String | nil,
         remittance_address: String | nil,
         remittance_address_recipient: String | nil,
+        rounding_amount: String | nil,
+        sales_order: String | nil,
         service_address: String | nil,
         service_address_recipient: String | nil,
         service_end_date: Date | nil,
@@ -266,9 +299,11 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         state: EInvoiceAPI::DocumentState | nil,
         subtotal: String | nil,
         tax_code: EInvoiceAPI::DocumentResponse::TaxCode | nil,
+        tax_currency: String | nil,
         tax_details: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::DocumentResponse::TaxDetail]) | nil,
         total_discount: String | nil,
         total_tax: String | nil,
+        total_tax_in_tax_currency: String | nil,
         vatex: EInvoiceAPI::DocumentResponse::Vatex | nil,
         vatex_note: String | nil,
         vendor_address: String | nil,
@@ -276,6 +311,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         vendor_company_id: String | nil,
         vendor_email: String | nil,
         vendor_name: String | nil,
+        vendor_phone: String | nil,
         vendor_tax_id: String | nil
       }
     end
@@ -297,6 +333,40 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
         is_valid: EInvoiceAPI::Internal::Type::Boolean,
         issues: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::UblDocumentValidation::Issue]),
         ubl_document: String | nil
+      }
+    end
+  end
+
+  def test_timeline
+    skip("Mock server tests are disabled")
+
+    response = @e_invoice.documents.timeline("document_id")
+
+    assert_pattern do
+      response => EInvoiceAPI::Models::DocumentTimelineResponse
+    end
+
+    assert_pattern do
+      response => {
+        document_id: String,
+        events: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Models::DocumentTimelineResponse::Event])
+      }
+    end
+  end
+
+  def test_lifecycle
+    skip("Mock server tests are disabled")
+
+    response = @e_invoice.documents.lifecycle("document_id")
+
+    assert_pattern do
+      response => EInvoiceAPI::Models::DocumentLifecycleResponse
+    end
+
+    assert_pattern do
+      response => {
+        document_id: String,
+        events: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Models::DocumentLifecycleResponse::Event])
       }
     end
   end

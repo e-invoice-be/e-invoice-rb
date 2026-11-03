@@ -23,6 +23,8 @@ module EInvoiceAPI
       sig { returns(T::Array[EInvoiceAPI::UblDocumentValidation::Issue]) }
       attr_accessor :issues
 
+      # The UBL document as an XML string, returned whenever it could be generated, also
+      # when the document is not valid. Only is_valid tells whether it is valid.
       sig { returns(T.nilable(String)) }
       attr_accessor :ubl_document
 
@@ -35,7 +37,15 @@ module EInvoiceAPI
           ubl_document: T.nilable(String)
         ).returns(T.attached_class)
       end
-      def self.new(id:, file_name:, is_valid:, issues:, ubl_document: nil)
+      def self.new(
+        id:,
+        file_name:,
+        is_valid:,
+        issues:,
+        # The UBL document as an XML string, returned whenever it could be generated, also
+        # when the document is not valid. Only is_valid tells whether it is valid.
+        ubl_document: nil
+      )
       end
 
       sig do

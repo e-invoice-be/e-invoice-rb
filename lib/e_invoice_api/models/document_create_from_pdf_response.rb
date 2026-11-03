@@ -34,6 +34,13 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :billing_address_recipient, String, nil?: true
 
+      # @!attribute buyer_reference
+      #   The buyer reference (BT-10), e.g. a cost centre or accounting reference
+      #   requested by the buyer
+      #
+      #   @return [String, nil]
+      optional :buyer_reference, String, nil?: true
+
       # @!attribute charges
       #
       #   @return [Array<EInvoiceAPI::Models::Charge>, nil]
@@ -87,6 +94,12 @@ module EInvoiceAPI
       #
       #   @return [String, nil]
       optional :customer_peppol_id, String, nil?: true
+
+      # @!attribute customer_phone
+      #   The telephone number of the customer contact (BT-57)
+      #
+      #   @return [String, nil]
+      optional :customer_phone, String, nil?: true
 
       # @!attribute customer_tax_id
       #   Customer tax ID. For Belgium this is the VAT number. Must include the country
@@ -170,6 +183,19 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :payment_term, String, nil?: true
 
+      # @!attribute preceding_invoice_date
+      #   The preceding invoice issue date (BT-26)
+      #
+      #   @return [Date, nil]
+      optional :preceding_invoice_date, Date, nil?: true
+
+      # @!attribute preceding_invoice_id
+      #   The preceding invoice reference (BT-25): the number of the invoice this document
+      #   corrects, for example the invoice a credit note credits
+      #
+      #   @return [String, nil]
+      optional :preceding_invoice_id, String, nil?: true
+
       # @!attribute purchase_order
       #   The purchase order reference number
       #
@@ -187,6 +213,21 @@ module EInvoiceAPI
       #
       #   @return [String, nil]
       optional :remittance_address_recipient, String, nil?: true
+
+      # @!attribute rounding_amount
+      #   The amount added to the invoice total to round the amount for payment (BT-114),
+      #   for example to whole kronor (amount_due = invoice_total + rounding_amount when
+      #   nothing is prepaid). Can be negative. Between -5.00 and 5.00, rounded to maximum
+      #   2 decimals
+      #
+      #   @return [String, nil]
+      optional :rounding_amount, String, nil?: true
+
+      # @!attribute sales_order
+      #   The sales order reference (BT-14) assigned by the seller
+      #
+      #   @return [String, nil]
+      optional :sales_order, String, nil?: true
 
       # @!attribute service_address
       #   The address where services were performed or goods were delivered
@@ -251,6 +292,14 @@ module EInvoiceAPI
       #   @return [Symbol, EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode, nil]
       optional :tax_code, enum: -> { EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode }
 
+      # @!attribute tax_currency
+      #   The VAT accounting currency (BT-6, ISO 4217 currency code), when VAT is
+      #   accounted in a currency other than the invoice currency. Must differ from
+      #   currency and requires total_tax_in_tax_currency
+      #
+      #   @return [String, nil]
+      optional :tax_currency, String, nil?: true
+
       # @!attribute tax_details
       #
       #   @return [Array<EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxDetail>, nil]
@@ -272,6 +321,13 @@ module EInvoiceAPI
       #
       #   @return [String, nil]
       optional :total_tax, String, nil?: true
+
+      # @!attribute total_tax_in_tax_currency
+      #   The total VAT amount in the VAT accounting currency tax_currency (BT-111). Does
+      #   not add to invoice_total. Requires tax_currency. Rounded to maximum 2 decimals
+      #
+      #   @return [String, nil]
+      optional :total_tax_in_tax_currency, String, nil?: true
 
       # @!attribute ubl_document
       #   The UBL document as an XML string
@@ -324,6 +380,14 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :vendor_name, String, nil?: true
 
+      # @!attribute vendor_phone
+      #   The telephone number of the vendor contact (BT-42). Required when vendor and
+      #   customer are both in Germany (DE-R-006); it must then hold at least 3 digits
+      #   (DE-R-027, a warning).
+      #
+      #   @return [String, nil]
+      optional :vendor_phone, String, nil?: true
+
       # @!attribute vendor_tax_id
       #   Vendor tax ID. For Belgium this is the VAT number. Must include the country
       #   prefix
@@ -331,7 +395,7 @@ module EInvoiceAPI
       #   @return [String, nil]
       optional :vendor_tax_id, String, nil?: true
 
-      # @!method initialize(allowances: nil, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, charges: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_company_id: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_peppol_id: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, error_message: nil, error_type: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, success: nil, tax_code: nil, tax_details: nil, total_discount: nil, total_tax: nil, ubl_document: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_company_id: nil, vendor_email: nil, vendor_name: nil, vendor_tax_id: nil)
+      # @!method initialize(allowances: nil, amount_due: nil, attachments: nil, billing_address: nil, billing_address_recipient: nil, buyer_reference: nil, charges: nil, currency: nil, customer_address: nil, customer_address_recipient: nil, customer_company_id: nil, customer_email: nil, customer_id: nil, customer_name: nil, customer_peppol_id: nil, customer_phone: nil, customer_tax_id: nil, direction: nil, document_type: nil, due_date: nil, error_message: nil, error_type: nil, invoice_date: nil, invoice_id: nil, invoice_total: nil, items: nil, note: nil, payment_details: nil, payment_term: nil, preceding_invoice_date: nil, preceding_invoice_id: nil, purchase_order: nil, remittance_address: nil, remittance_address_recipient: nil, rounding_amount: nil, sales_order: nil, service_address: nil, service_address_recipient: nil, service_end_date: nil, service_start_date: nil, shipping_address: nil, shipping_address_recipient: nil, state: nil, subtotal: nil, success: nil, tax_code: nil, tax_currency: nil, tax_details: nil, total_discount: nil, total_tax: nil, total_tax_in_tax_currency: nil, ubl_document: nil, vatex: nil, vatex_note: nil, vendor_address: nil, vendor_address_recipient: nil, vendor_company_id: nil, vendor_email: nil, vendor_name: nil, vendor_phone: nil, vendor_tax_id: nil)
       #   Some parameter documentations has been truncated, see
       #   {EInvoiceAPI::Models::DocumentCreateFromPdfResponse} for more details.
       #
@@ -344,6 +408,8 @@ module EInvoiceAPI
       #   @param billing_address [String, nil] The billing address (if different from customer address)
       #
       #   @param billing_address_recipient [String, nil] The recipient name at the billing address
+      #
+      #   @param buyer_reference [String, nil] The buyer reference (BT-10), e.g. a cost centre or accounting reference requeste
       #
       #   @param charges [Array<EInvoiceAPI::Models::Charge>, nil]
       #
@@ -362,6 +428,8 @@ module EInvoiceAPI
       #   @param customer_name [String, nil] The company name of the customer/buyer
       #
       #   @param customer_peppol_id [String, nil] Customer Peppol ID
+      #
+      #   @param customer_phone [String, nil] The telephone number of the customer contact (BT-57)
       #
       #   @param customer_tax_id [String, nil] Customer tax ID. For Belgium this is the VAT number. Must include the country pr
       #
@@ -389,11 +457,19 @@ module EInvoiceAPI
       #
       #   @param payment_term [String, nil] The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
       #
+      #   @param preceding_invoice_date [Date, nil] The preceding invoice issue date (BT-26)
+      #
+      #   @param preceding_invoice_id [String, nil] The preceding invoice reference (BT-25): the number of the invoice this document
+      #
       #   @param purchase_order [String, nil] The purchase order reference number
       #
       #   @param remittance_address [String, nil] The address where payment should be sent or remitted to
       #
       #   @param remittance_address_recipient [String, nil] The recipient name at the remittance address
+      #
+      #   @param rounding_amount [String, nil] The amount added to the invoice total to round the amount for payment (BT-114),
+      #
+      #   @param sales_order [String, nil] The sales order reference (BT-14) assigned by the seller
       #
       #   @param service_address [String, nil] The address where services were performed or goods were delivered
       #
@@ -415,11 +491,15 @@ module EInvoiceAPI
       #
       #   @param tax_code [Symbol, EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxCode] Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E
       #
+      #   @param tax_currency [String, nil] The VAT accounting currency (BT-6, ISO 4217 currency code), when VAT is accounte
+      #
       #   @param tax_details [Array<EInvoiceAPI::Models::DocumentCreateFromPdfResponse::TaxDetail>, nil]
       #
       #   @param total_discount [String, nil] The net financial discount/charge of the invoice (non-VAT charges minus non-VAT
       #
       #   @param total_tax [String, nil] The total tax amount of the invoice. Must be positive and rounded to maximum 2 d
+      #
+      #   @param total_tax_in_tax_currency [String, nil] The total VAT amount in the VAT accounting currency tax_currency (BT-111). Does
       #
       #   @param ubl_document [String, nil] The UBL document as an XML string
       #
@@ -436,6 +516,8 @@ module EInvoiceAPI
       #   @param vendor_email [String, nil] The email address of the vendor
       #
       #   @param vendor_name [String, nil] The name of the vendor/seller/supplier
+      #
+      #   @param vendor_phone [String, nil] The telephone number of the vendor contact (BT-42). Required when vendor and cus
       #
       #   @param vendor_tax_id [String, nil] Vendor tax ID. For Belgium this is the VAT number. Must include the country pref
 
@@ -463,8 +545,8 @@ module EInvoiceAPI
 
         # @!attribute date
         #
-        #   @return [nil]
-        optional :date, NilClass
+        #   @return [Date, nil]
+        optional :date, Date, nil?: true
 
         # @!attribute description
         #   The description of the line item.
@@ -479,6 +561,23 @@ module EInvoiceAPI
         optional :item_attributes,
                  -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item::ItemAttribute] },
                  nil?: true
+
+        # @!attribute name
+        #   The item name (BT-153), for example the product name. Written to
+        #   cac:Item/cbc:Name. When omitted or blank, `description` (BT-154) is used as the
+        #   item name. A posted line item needs a `name` or a `description`; a line item
+        #   with neither is rejected with 422.
+        #
+        #   @return [String, nil]
+        optional :name, String, nil?: true
+
+        # @!attribute price_base_quantity
+        #   The item price base quantity (BT-149). The number of item units to which the
+        #   unit price applies, for example 100 when the unit price is a price for each 100
+        #   units. Must be greater than 0. Defaults to 1.
+        #
+        #   @return [String, nil]
+        optional :price_base_quantity, String
 
         # @!attribute product_code
         #   The product code of the line item.
@@ -520,7 +619,7 @@ module EInvoiceAPI
         #   @return [String, nil]
         optional :unit_price, String, nil?: true
 
-        # @!method initialize(allowances: nil, amount: nil, charges: nil, date: nil, description: nil, item_attributes: nil, product_code: nil, quantity: nil, tax: nil, tax_rate: nil, unit: nil, unit_price: nil)
+        # @!method initialize(allowances: nil, amount: nil, charges: nil, date: nil, description: nil, item_attributes: nil, name: nil, price_base_quantity: nil, product_code: nil, quantity: nil, tax: nil, tax_rate: nil, unit: nil, unit_price: nil)
         #   Some parameter documentations has been truncated, see
         #   {EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item} for more details.
         #
@@ -530,11 +629,15 @@ module EInvoiceAPI
         #
         #   @param charges [Array<EInvoiceAPI::Models::Charge>, nil] The charges of the line item.
         #
-        #   @param date [nil]
+        #   @param date [Date, nil]
         #
         #   @param description [String, nil] The description of the line item.
         #
         #   @param item_attributes [Array<EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Item::ItemAttribute>, nil] Item-level attributes (BG-32) from cac:AdditionalItemProperty.
+        #
+        #   @param name [String, nil] The item name (BT-153), for example the product name. Written to cac:Item/cbc:Na
+        #
+        #   @param price_base_quantity [String] The item price base quantity (BT-149). The number of item units to which the uni
         #
         #   @param product_code [String, nil] The product code of the line item.
         #

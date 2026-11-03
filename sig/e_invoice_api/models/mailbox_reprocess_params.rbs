@@ -1,0 +1,24 @@
+module EInvoiceAPI
+  module Models
+    type mailbox_reprocess_params =
+      { inbound_email_id: String }
+      & EInvoiceAPI::Internal::Type::request_parameters
+
+    class MailboxReprocessParams < EInvoiceAPI::Internal::Type::BaseModel
+      extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
+      include EInvoiceAPI::Internal::Type::RequestParameters
+
+      attr_accessor inbound_email_id: String
+
+      def initialize: (
+        inbound_email_id: String,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        inbound_email_id: String,
+        request_options: EInvoiceAPI::RequestOptions
+      }
+    end
+  end
+end

@@ -1,0 +1,32 @@
+module EInvoiceAPI
+  module Models
+    type webhook_test_params =
+      { webhook_id: String, data: ::Hash[Symbol, top], event_type: String }
+      & EInvoiceAPI::Internal::Type::request_parameters
+
+    class WebhookTestParams < EInvoiceAPI::Internal::Type::BaseModel
+      extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
+      include EInvoiceAPI::Internal::Type::RequestParameters
+
+      attr_accessor webhook_id: String
+
+      attr_accessor data: ::Hash[Symbol, top]
+
+      attr_accessor event_type: String
+
+      def initialize: (
+        webhook_id: String,
+        data: ::Hash[Symbol, top],
+        event_type: String,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        webhook_id: String,
+        data: ::Hash[Symbol, top],
+        event_type: String,
+        request_options: EInvoiceAPI::RequestOptions
+      }
+    end
+  end
+end

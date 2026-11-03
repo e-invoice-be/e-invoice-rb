@@ -24,6 +24,14 @@ module EInvoiceAPI
 
     attr_reader webhooks: EInvoiceAPI::Resources::Webhooks
 
+    attr_reader drafts: EInvoiceAPI::Resources::Drafts
+
+    attr_reader conversion: EInvoiceAPI::Resources::Conversion
+
+    attr_reader stats: EInvoiceAPI::Resources::Stats
+
+    attr_reader mailbox: EInvoiceAPI::Resources::Mailbox
+
     private def auth_headers: -> ::Hash[String, String]
 
     def initialize: (

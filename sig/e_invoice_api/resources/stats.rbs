@@ -1,0 +1,14 @@
+module EInvoiceAPI
+  module Resources
+    class Stats
+      def retrieve: (
+        ?aggregation: EInvoiceAPI::Models::StatsRetrieveParams::aggregation?,
+        ?end_date: Date?,
+        ?start_date: Date?,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> EInvoiceAPI::Models::StatsRetrieveResponse
+
+      def initialize: (client: EInvoiceAPI::Client) -> void
+    end
+  end
+end

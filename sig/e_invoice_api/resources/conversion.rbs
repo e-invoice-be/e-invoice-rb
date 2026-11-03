@@ -1,0 +1,9 @@
+module EInvoiceAPI
+  module Resources
+    class Conversion
+      attr_reader pdf: EInvoiceAPI::Resources::Conversion::Pdf
+
+      def initialize: (client: EInvoiceAPI::Client) -> void
+    end
+  end
+end

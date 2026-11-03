@@ -12,6 +12,7 @@ module EInvoiceAPI
         ?attachments: ::Array[EInvoiceAPI::DocumentAttachmentCreate]?,
         ?billing_address: String?,
         ?billing_address_recipient: String?,
+        ?buyer_reference: String?,
         ?charges: ::Array[EInvoiceAPI::DocumentCreate::Charge]?,
         ?currency: EInvoiceAPI::Models::currency_code,
         ?customer_address: String?,
@@ -21,6 +22,7 @@ module EInvoiceAPI
         ?customer_id: String?,
         ?customer_name: String?,
         ?customer_peppol_id: String?,
+        ?customer_phone: String?,
         ?customer_tax_id: String?,
         ?direction: EInvoiceAPI::Models::document_direction,
         ?document_type: EInvoiceAPI::Models::document_type,
@@ -32,10 +34,14 @@ module EInvoiceAPI
         ?note: String?,
         ?payment_details: ::Array[EInvoiceAPI::PaymentDetailCreate]?,
         ?payment_term: String?,
+        ?preceding_invoice_date: Date?,
+        ?preceding_invoice_id: String?,
         ?previous_unpaid_balance: EInvoiceAPI::Models::DocumentCreate::previous_unpaid_balance?,
         ?purchase_order: String?,
         ?remittance_address: String?,
         ?remittance_address_recipient: String?,
+        ?rounding_amount: EInvoiceAPI::Models::DocumentCreate::rounding_amount?,
+        ?sales_order: String?,
         ?service_address: String?,
         ?service_address_recipient: String?,
         ?service_end_date: Date?,
@@ -45,9 +51,11 @@ module EInvoiceAPI
         ?state: EInvoiceAPI::Models::document_state,
         ?subtotal: EInvoiceAPI::Models::DocumentCreate::subtotal?,
         ?tax_code: EInvoiceAPI::Models::DocumentCreate::tax_code,
+        ?tax_currency: String?,
         ?tax_details: ::Array[EInvoiceAPI::DocumentCreate::TaxDetail]?,
         ?total_discount: EInvoiceAPI::Models::DocumentCreate::total_discount?,
         ?total_tax: EInvoiceAPI::Models::DocumentCreate::total_tax?,
+        ?total_tax_in_tax_currency: EInvoiceAPI::Models::DocumentCreate::total_tax_in_tax_currency?,
         ?vatex: EInvoiceAPI::Models::DocumentCreate::vatex?,
         ?vatex_note: String?,
         ?vendor_address: String?,
@@ -55,6 +63,7 @@ module EInvoiceAPI
         ?vendor_company_id: String?,
         ?vendor_email: String?,
         ?vendor_name: String?,
+        ?vendor_phone: String?,
         ?vendor_tax_id: String?,
         ?request_options: EInvoiceAPI::request_opts
       ) -> EInvoiceAPI::DocumentResponse
@@ -90,6 +99,16 @@ module EInvoiceAPI
         String document_id,
         ?request_options: EInvoiceAPI::request_opts
       ) -> EInvoiceAPI::UblDocumentValidation
+
+      def timeline: (
+        String document_id,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> EInvoiceAPI::Models::DocumentTimelineResponse
+
+      def lifecycle: (
+        String document_id,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> EInvoiceAPI::Models::DocumentLifecycleResponse
 
       def initialize: (client: EInvoiceAPI::Client) -> void
     end

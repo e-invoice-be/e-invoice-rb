@@ -1,0 +1,126 @@
+module EInvoiceAPI
+  module Models
+    type inbound_email_response =
+      {
+        id: String,
+        created_at: Time,
+        message_id: String,
+        sender_email: String,
+        attachment_count: Integer,
+        attachments: ::Array[EInvoiceAPI::InboundEmailResponse::Attachment],
+        bcc_addresses: String?,
+        cc_addresses: String?,
+        document_id: String?,
+        error_message: String?,
+        processed: bool,
+        processed_at: Time?,
+        received_at: Time?,
+        sender_name: String?,
+        subject: String?,
+        to_addresses: String?
+      }
+
+    class InboundEmailResponse < EInvoiceAPI::Internal::Type::BaseModel
+      attr_accessor id: String
+
+      attr_accessor created_at: Time
+
+      attr_accessor message_id: String
+
+      attr_accessor sender_email: String
+
+      attr_reader attachment_count: Integer?
+
+      def attachment_count=: (Integer) -> Integer
+
+      attr_reader attachments: ::Array[EInvoiceAPI::InboundEmailResponse::Attachment]?
+
+      def attachments=: (
+        ::Array[EInvoiceAPI::InboundEmailResponse::Attachment]
+      ) -> ::Array[EInvoiceAPI::InboundEmailResponse::Attachment]
+
+      attr_accessor bcc_addresses: String?
+
+      attr_accessor cc_addresses: String?
+
+      attr_accessor document_id: String?
+
+      attr_accessor error_message: String?
+
+      attr_reader processed: bool?
+
+      def processed=: (bool) -> bool
+
+      attr_accessor processed_at: Time?
+
+      attr_accessor received_at: Time?
+
+      attr_accessor sender_name: String?
+
+      attr_accessor subject: String?
+
+      attr_accessor to_addresses: String?
+
+      def initialize: (
+        id: String,
+        created_at: Time,
+        message_id: String,
+        sender_email: String,
+        ?attachment_count: Integer,
+        ?attachments: ::Array[EInvoiceAPI::InboundEmailResponse::Attachment],
+        ?bcc_addresses: String?,
+        ?cc_addresses: String?,
+        ?document_id: String?,
+        ?error_message: String?,
+        ?processed: bool,
+        ?processed_at: Time?,
+        ?received_at: Time?,
+        ?sender_name: String?,
+        ?subject: String?,
+        ?to_addresses: String?
+      ) -> void
+
+      def to_hash: -> {
+        id: String,
+        created_at: Time,
+        message_id: String,
+        sender_email: String,
+        attachment_count: Integer,
+        attachments: ::Array[EInvoiceAPI::InboundEmailResponse::Attachment],
+        bcc_addresses: String?,
+        cc_addresses: String?,
+        document_id: String?,
+        error_message: String?,
+        processed: bool,
+        processed_at: Time?,
+        received_at: Time?,
+        sender_name: String?,
+        subject: String?,
+        to_addresses: String?
+      }
+
+      type attachment =
+        { filename: String, content_type: String?, size: Integer? }
+
+      class Attachment < EInvoiceAPI::Internal::Type::BaseModel
+        attr_accessor filename: String
+
+        attr_accessor content_type: String?
+
+        attr_accessor size: Integer?
+
+        def initialize: (
+          filename: String,
+          ?content_type: String?,
+          ?size: Integer?
+        ) -> void
+
+        def to_hash: -> {
+          filename: String,
+          content_type: String?,
+          size: Integer?
+        }
+      end
+    end
+  end
+end

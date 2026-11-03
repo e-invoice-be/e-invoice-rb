@@ -1,0 +1,45 @@
+module EInvoiceAPI
+  module Models
+    class DocumentCreateFromPdfTask = Conversion::DocumentCreateFromPdfTask
+
+    module Conversion
+      type document_create_from_pdf_task =
+        {
+          task_id: String,
+          status: EInvoiceAPI::Models::Conversion::DocumentCreateFromPdfTask::status
+        }
+
+      class DocumentCreateFromPdfTask < EInvoiceAPI::Internal::Type::BaseModel
+        attr_accessor task_id: String
+
+        attr_reader status: EInvoiceAPI::Models::Conversion::DocumentCreateFromPdfTask::status?
+
+        def status=: (
+          EInvoiceAPI::Models::Conversion::DocumentCreateFromPdfTask::status
+        ) -> EInvoiceAPI::Models::Conversion::DocumentCreateFromPdfTask::status
+
+        def initialize: (
+          task_id: String,
+          ?status: EInvoiceAPI::Models::Conversion::DocumentCreateFromPdfTask::status
+        ) -> void
+
+        def to_hash: -> {
+          task_id: String,
+          status: EInvoiceAPI::Models::Conversion::DocumentCreateFromPdfTask::status
+        }
+
+        type status = :pending | :completed | :failed
+
+        module Status
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          PENDING: :pending
+          COMPLETED: :completed
+          FAILED: :failed
+
+          def self?.values: -> ::Array[EInvoiceAPI::Models::Conversion::DocumentCreateFromPdfTask::status]
+        end
+      end
+    end
+  end
+end

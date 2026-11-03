@@ -1,0 +1,36 @@
+module EInvoiceAPI
+  module Resources
+    class Mailbox
+      def list: (
+        ?page: Integer,
+        ?page_size: Integer,
+        ?processed: bool?,
+        ?received_from: Time?,
+        ?received_to: Time?,
+        ?search: String?,
+        ?sort_by: EInvoiceAPI::Models::MailboxListParams::sort_by,
+        ?sort_order: EInvoiceAPI::Models::MailboxListParams::sort_order,
+        ?status: EInvoiceAPI::Models::MailboxListParams::status?,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> EInvoiceAPI::Internal::DocumentsNumberPage[EInvoiceAPI::InboundEmailResponse]
+
+      def retrieve: (
+        String inbound_email_id,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> EInvoiceAPI::InboundEmailResponse
+
+      def download_attachment: (
+        String filename,
+        inbound_email_id: String,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> top
+
+      def reprocess: (
+        String inbound_email_id,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> EInvoiceAPI::InboundEmailResponse
+
+      def initialize: (client: EInvoiceAPI::Client) -> void
+    end
+  end
+end
