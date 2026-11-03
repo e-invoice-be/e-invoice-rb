@@ -63,6 +63,35 @@ module EInvoiceAPI
       def delete(webhook_id, request_options: {})
       end
 
+      # Get the history of a webhook
+      sig do
+        params(
+          webhook_id: String,
+          request_options: EInvoiceAPI::RequestOptions::OrHash
+        ).returns(EInvoiceAPI::Models::WebhookHistoryResponse)
+      end
+      def history(webhook_id, request_options: {})
+      end
+
+      # Send a test event to a webhook for testing and debugging purposes
+      sig do
+        params(
+          webhook_id: String,
+          data: T::Hash[Symbol, T.anything],
+          event_type: String,
+          request_options: EInvoiceAPI::RequestOptions::OrHash
+        ).returns(EInvoiceAPI::Models::WebhookTestResponse)
+      end
+      def test_(
+        webhook_id,
+        # Custom event data payload
+        data:,
+        # Must be valid WebhookEventType
+        event_type:,
+        request_options: {}
+      )
+      end
+
       # @api private
       sig { params(client: EInvoiceAPI::Client).returns(T.attached_class) }
       def self.new(client:)

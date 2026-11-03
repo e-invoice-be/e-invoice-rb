@@ -39,6 +39,18 @@ module EInvoiceAPI
     # @return [EInvoiceAPI::Resources::Webhooks]
     attr_reader :webhooks
 
+    # @return [EInvoiceAPI::Resources::Drafts]
+    attr_reader :drafts
+
+    # @return [EInvoiceAPI::Resources::Conversion]
+    attr_reader :conversion
+
+    # @return [EInvoiceAPI::Resources::Stats]
+    attr_reader :stats
+
+    # @return [EInvoiceAPI::Resources::Mailbox]
+    attr_reader :mailbox
+
     # @api private
     #
     # @return [Hash{String=>String}]
@@ -107,6 +119,10 @@ module EInvoiceAPI
       @lookup = EInvoiceAPI::Resources::Lookup.new(client: self)
       @me = EInvoiceAPI::Resources::Me.new(client: self)
       @webhooks = EInvoiceAPI::Resources::Webhooks.new(client: self)
+      @drafts = EInvoiceAPI::Resources::Drafts.new(client: self)
+      @conversion = EInvoiceAPI::Resources::Conversion.new(client: self)
+      @stats = EInvoiceAPI::Resources::Stats.new(client: self)
+      @mailbox = EInvoiceAPI::Resources::Mailbox.new(client: self)
     end
   end
 end

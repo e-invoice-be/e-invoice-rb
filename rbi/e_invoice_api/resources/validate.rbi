@@ -3,7 +3,9 @@
 module EInvoiceAPI
   module Resources
     class Validate
-      # Validate if the JSON document can be converted to a valid UBL document
+      # Validate if the JSON document can be converted to a valid UBL document. The
+      # generated UBL is returned in ubl_document also when is_valid is false, so you
+      # can inspect it.
       sig do
         params(
           allowances:
@@ -14,6 +16,7 @@ module EInvoiceAPI
             T.nilable(T::Array[EInvoiceAPI::DocumentAttachmentCreate::OrHash]),
           billing_address: T.nilable(String),
           billing_address_recipient: T.nilable(String),
+          buyer_reference: T.nilable(String),
           charges:
             T.nilable(T::Array[EInvoiceAPI::DocumentCreate::Charge::OrHash]),
           currency: EInvoiceAPI::CurrencyCode::OrSymbol,
@@ -24,6 +27,7 @@ module EInvoiceAPI
           customer_id: T.nilable(String),
           customer_name: T.nilable(String),
           customer_peppol_id: T.nilable(String),
+          customer_phone: T.nilable(String),
           customer_tax_id: T.nilable(String),
           direction: EInvoiceAPI::DocumentDirection::OrSymbol,
           document_type: EInvoiceAPI::DocumentType::OrSymbol,
@@ -37,6 +41,8 @@ module EInvoiceAPI
           payment_details:
             T.nilable(T::Array[EInvoiceAPI::PaymentDetailCreate::OrHash]),
           payment_term: T.nilable(String),
+          preceding_invoice_date: T.nilable(Date),
+          preceding_invoice_id: T.nilable(String),
           previous_unpaid_balance:
             T.nilable(
               EInvoiceAPI::DocumentCreate::PreviousUnpaidBalance::Variants
@@ -44,6 +50,9 @@ module EInvoiceAPI
           purchase_order: T.nilable(String),
           remittance_address: T.nilable(String),
           remittance_address_recipient: T.nilable(String),
+          rounding_amount:
+            T.nilable(EInvoiceAPI::DocumentCreate::RoundingAmount::Variants),
+          sales_order: T.nilable(String),
           service_address: T.nilable(String),
           service_address_recipient: T.nilable(String),
           service_end_date: T.nilable(Date),
@@ -53,11 +62,16 @@ module EInvoiceAPI
           state: EInvoiceAPI::DocumentState::OrSymbol,
           subtotal: T.nilable(EInvoiceAPI::DocumentCreate::Subtotal::Variants),
           tax_code: EInvoiceAPI::DocumentCreate::TaxCode::OrSymbol,
+          tax_currency: T.nilable(String),
           tax_details:
             T.nilable(T::Array[EInvoiceAPI::DocumentCreate::TaxDetail::OrHash]),
           total_discount:
             T.nilable(EInvoiceAPI::DocumentCreate::TotalDiscount::Variants),
           total_tax: T.nilable(EInvoiceAPI::DocumentCreate::TotalTax::Variants),
+          total_tax_in_tax_currency:
+            T.nilable(
+              EInvoiceAPI::DocumentCreate::TotalTaxInTaxCurrency::Variants
+            ),
           vatex: T.nilable(EInvoiceAPI::DocumentCreate::Vatex::OrSymbol),
           vatex_note: T.nilable(String),
           vendor_address: T.nilable(String),
@@ -65,6 +79,7 @@ module EInvoiceAPI
           vendor_company_id: T.nilable(String),
           vendor_email: T.nilable(String),
           vendor_name: T.nilable(String),
+          vendor_phone: T.nilable(String),
           vendor_tax_id: T.nilable(String),
           request_options: EInvoiceAPI::RequestOptions::OrHash
         ).returns(EInvoiceAPI::UblDocumentValidation)
@@ -78,6 +93,9 @@ module EInvoiceAPI
         billing_address: nil,
         # The recipient name at the billing address
         billing_address_recipient: nil,
+        # The buyer reference (BT-10), e.g. a cost centre or accounting reference
+        # requested by the buyer
+        buyer_reference: nil,
         charges: nil,
         # Currency of the invoice (ISO 4217 currency code)
         currency: nil,
@@ -96,6 +114,8 @@ module EInvoiceAPI
         customer_name: nil,
         # Customer Peppol ID
         customer_peppol_id: nil,
+        # The telephone number of the customer contact (BT-57)
+        customer_phone: nil,
         # Customer tax ID. For Belgium this is the VAT number. Must include the country
         # prefix
         customer_tax_id: nil,
@@ -119,6 +139,11 @@ module EInvoiceAPI
         payment_details: nil,
         # The payment terms (e.g., 'Net 30', 'Due on receipt', '2/10 Net 30')
         payment_term: nil,
+        # The preceding invoice issue date (BT-26)
+        preceding_invoice_date: nil,
+        # The preceding invoice reference (BT-25): the number of the invoice this document
+        # corrects, for example the invoice a credit note credits
+        preceding_invoice_id: nil,
         # The previous unpaid balance from prior invoices, if any. Must be positive and
         # rounded to maximum 2 decimals
         previous_unpaid_balance: nil,
@@ -128,6 +153,13 @@ module EInvoiceAPI
         remittance_address: nil,
         # The recipient name at the remittance address
         remittance_address_recipient: nil,
+        # The amount added to the invoice total to round the amount for payment (BT-114),
+        # for example to whole kronor (amount_due = invoice_total + rounding_amount when
+        # nothing is prepaid). Can be negative. Between -5.00 and 5.00, rounded to maximum
+        # 2 decimals
+        rounding_amount: nil,
+        # The sales order reference (BT-14) assigned by the seller
+        sales_order: nil,
         # The address where services were performed or goods were delivered
         service_address: nil,
         # The recipient name at the service address
@@ -149,6 +181,10 @@ module EInvoiceAPI
         # Tax category code of the invoice (e.g., S for standard rate, Z for zero rate, E
         # for exempt)
         tax_code: nil,
+        # The VAT accounting currency (BT-6, ISO 4217 currency code), when VAT is
+        # accounted in a currency other than the invoice currency. Must differ from
+        # currency and requires total_tax_in_tax_currency
+        tax_currency: nil,
         tax_details: nil,
         # The net financial discount/charge of the invoice (non-VAT charges minus non-VAT
         # allowances). Can be positive (net charge), negative (net discount), or zero.
@@ -157,6 +193,9 @@ module EInvoiceAPI
         # The total tax amount of the invoice. Must be positive and rounded to maximum 2
         # decimals
         total_tax: nil,
+        # The total VAT amount in the VAT accounting currency tax_currency (BT-111). Does
+        # not add to invoice_total. Requires tax_currency. Rounded to maximum 2 decimals
+        total_tax_in_tax_currency: nil,
         # VATEX code list for VAT exemption reasons
         #
         # Agency: CEF Identifier: vatex
@@ -174,6 +213,10 @@ module EInvoiceAPI
         vendor_email: nil,
         # The name of the vendor/seller/supplier
         vendor_name: nil,
+        # The telephone number of the vendor contact (BT-42). Required when vendor and
+        # customer are both in Germany (DE-R-006); it must then hold at least 3 digits
+        # (DE-R-027, a warning).
+        vendor_phone: nil,
         # Vendor tax ID. For Belgium this is the VAT number. Must include the country
         # prefix
         vendor_tax_id: nil,

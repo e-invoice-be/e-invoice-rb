@@ -106,6 +106,51 @@ module EInvoiceAPI
         )
       end
 
+      # Get the history of a webhook
+      #
+      # @overload history(webhook_id, request_options: {})
+      #
+      # @param webhook_id [String]
+      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [EInvoiceAPI::Models::WebhookHistoryResponse]
+      #
+      # @see EInvoiceAPI::Models::WebhookHistoryParams
+      def history(webhook_id, params = {})
+        @client.request(
+          method: :get,
+          path: ["api/webhooks/%1$s/history", webhook_id],
+          model: EInvoiceAPI::Models::WebhookHistoryResponse,
+          options: params[:request_options]
+        )
+      end
+
+      # Send a test event to a webhook for testing and debugging purposes
+      #
+      # @overload test_(webhook_id, data:, event_type:, request_options: {})
+      #
+      # @param webhook_id [String]
+      #
+      # @param data [Hash{Symbol=>Object}] Custom event data payload
+      #
+      # @param event_type [String] Must be valid WebhookEventType
+      #
+      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [EInvoiceAPI::Models::WebhookTestResponse]
+      #
+      # @see EInvoiceAPI::Models::WebhookTestParams
+      def test_(webhook_id, params)
+        parsed, options = EInvoiceAPI::WebhookTestParams.dump_request(params)
+        @client.request(
+          method: :post,
+          path: ["api/webhooks/%1$s/test", webhook_id],
+          body: parsed,
+          model: EInvoiceAPI::Models::WebhookTestResponse,
+          options: options
+        )
+      end
+
       # @api private
       #
       # @param client [EInvoiceAPI::Client]

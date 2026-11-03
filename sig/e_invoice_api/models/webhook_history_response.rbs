@@ -1,0 +1,13 @@
+module EInvoiceAPI
+  module Models
+    type webhook_history_response = { history: ::Array[::Hash[Symbol, top]] }
+
+    class WebhookHistoryResponse < EInvoiceAPI::Internal::Type::BaseModel
+      attr_accessor history: ::Array[::Hash[Symbol, top]]
+
+      def initialize: (history: ::Array[::Hash[Symbol, top]]) -> void
+
+      def to_hash: -> { history: ::Array[::Hash[Symbol, top]] }
+    end
+  end
+end

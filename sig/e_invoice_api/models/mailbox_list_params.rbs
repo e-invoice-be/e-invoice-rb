@@ -1,0 +1,112 @@
+module EInvoiceAPI
+  module Models
+    type mailbox_list_params =
+      {
+        page: Integer,
+        page_size: Integer,
+        processed: bool?,
+        received_from: Time?,
+        received_to: Time?,
+        search: String?,
+        sort_by: EInvoiceAPI::Models::MailboxListParams::sort_by,
+        sort_order: EInvoiceAPI::Models::MailboxListParams::sort_order,
+        status: EInvoiceAPI::Models::MailboxListParams::status?
+      }
+      & EInvoiceAPI::Internal::Type::request_parameters
+
+    class MailboxListParams < EInvoiceAPI::Internal::Type::BaseModel
+      extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
+      include EInvoiceAPI::Internal::Type::RequestParameters
+
+      attr_reader page: Integer?
+
+      def page=: (Integer) -> Integer
+
+      attr_reader page_size: Integer?
+
+      def page_size=: (Integer) -> Integer
+
+      attr_accessor processed: bool?
+
+      attr_accessor received_from: Time?
+
+      attr_accessor received_to: Time?
+
+      attr_accessor search: String?
+
+      attr_reader sort_by: EInvoiceAPI::Models::MailboxListParams::sort_by?
+
+      def sort_by=: (
+        EInvoiceAPI::Models::MailboxListParams::sort_by
+      ) -> EInvoiceAPI::Models::MailboxListParams::sort_by
+
+      attr_reader sort_order: EInvoiceAPI::Models::MailboxListParams::sort_order?
+
+      def sort_order=: (
+        EInvoiceAPI::Models::MailboxListParams::sort_order
+      ) -> EInvoiceAPI::Models::MailboxListParams::sort_order
+
+      attr_accessor status: EInvoiceAPI::Models::MailboxListParams::status?
+
+      def initialize: (
+        ?page: Integer,
+        ?page_size: Integer,
+        ?processed: bool?,
+        ?received_from: Time?,
+        ?received_to: Time?,
+        ?search: String?,
+        ?sort_by: EInvoiceAPI::Models::MailboxListParams::sort_by,
+        ?sort_order: EInvoiceAPI::Models::MailboxListParams::sort_order,
+        ?status: EInvoiceAPI::Models::MailboxListParams::status?,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        page: Integer,
+        page_size: Integer,
+        processed: bool?,
+        received_from: Time?,
+        received_to: Time?,
+        search: String?,
+        sort_by: EInvoiceAPI::Models::MailboxListParams::sort_by,
+        sort_order: EInvoiceAPI::Models::MailboxListParams::sort_order,
+        status: EInvoiceAPI::Models::MailboxListParams::status?,
+        request_options: EInvoiceAPI::RequestOptions
+      }
+
+      type sort_by = :received_at | :created_at
+
+      module SortBy
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        RECEIVED_AT: :received_at
+        CREATED_AT: :created_at
+
+        def self?.values: -> ::Array[EInvoiceAPI::Models::MailboxListParams::sort_by]
+      end
+
+      type sort_order = :asc | :desc
+
+      module SortOrder
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        ASC: :asc
+        DESC: :desc
+
+        def self?.values: -> ::Array[EInvoiceAPI::Models::MailboxListParams::sort_order]
+      end
+
+      type status = :pending | :success | :failed
+
+      module Status
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        PENDING: :pending
+        SUCCESS: :success
+        FAILED: :failed
+
+        def self?.values: -> ::Array[EInvoiceAPI::Models::MailboxListParams::status]
+      end
+    end
+  end
+end

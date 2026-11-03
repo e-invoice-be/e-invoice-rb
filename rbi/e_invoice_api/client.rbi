@@ -34,6 +34,18 @@ module EInvoiceAPI
     sig { returns(EInvoiceAPI::Resources::Webhooks) }
     attr_reader :webhooks
 
+    sig { returns(EInvoiceAPI::Resources::Drafts) }
+    attr_reader :drafts
+
+    sig { returns(EInvoiceAPI::Resources::Conversion) }
+    attr_reader :conversion
+
+    sig { returns(EInvoiceAPI::Resources::Stats) }
+    attr_reader :stats
+
+    sig { returns(EInvoiceAPI::Resources::Mailbox) }
+    attr_reader :mailbox
+
     # @api private
     sig { override.returns(T::Hash[String, String]) }
     private def auth_headers

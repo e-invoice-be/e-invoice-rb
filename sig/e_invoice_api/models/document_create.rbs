@@ -7,6 +7,7 @@ module EInvoiceAPI
         attachments: ::Array[EInvoiceAPI::DocumentAttachmentCreate]?,
         billing_address: String?,
         billing_address_recipient: String?,
+        buyer_reference: String?,
         charges: ::Array[EInvoiceAPI::DocumentCreate::Charge]?,
         currency: EInvoiceAPI::Models::currency_code,
         customer_address: String?,
@@ -16,6 +17,7 @@ module EInvoiceAPI
         customer_id: String?,
         customer_name: String?,
         customer_peppol_id: String?,
+        customer_phone: String?,
         customer_tax_id: String?,
         direction: EInvoiceAPI::Models::document_direction,
         document_type: EInvoiceAPI::Models::document_type,
@@ -27,10 +29,14 @@ module EInvoiceAPI
         note: String?,
         payment_details: ::Array[EInvoiceAPI::PaymentDetailCreate]?,
         payment_term: String?,
+        preceding_invoice_date: Date?,
+        preceding_invoice_id: String?,
         previous_unpaid_balance: EInvoiceAPI::Models::DocumentCreate::previous_unpaid_balance?,
         purchase_order: String?,
         remittance_address: String?,
         remittance_address_recipient: String?,
+        rounding_amount: EInvoiceAPI::Models::DocumentCreate::rounding_amount?,
+        sales_order: String?,
         service_address: String?,
         service_address_recipient: String?,
         service_end_date: Date?,
@@ -40,9 +46,11 @@ module EInvoiceAPI
         state: EInvoiceAPI::Models::document_state,
         subtotal: EInvoiceAPI::Models::DocumentCreate::subtotal?,
         tax_code: EInvoiceAPI::Models::DocumentCreate::tax_code,
+        tax_currency: String?,
         tax_details: ::Array[EInvoiceAPI::DocumentCreate::TaxDetail]?,
         total_discount: EInvoiceAPI::Models::DocumentCreate::total_discount?,
         total_tax: EInvoiceAPI::Models::DocumentCreate::total_tax?,
+        total_tax_in_tax_currency: EInvoiceAPI::Models::DocumentCreate::total_tax_in_tax_currency?,
         vatex: EInvoiceAPI::Models::DocumentCreate::vatex?,
         vatex_note: String?,
         vendor_address: String?,
@@ -50,6 +58,7 @@ module EInvoiceAPI
         vendor_company_id: String?,
         vendor_email: String?,
         vendor_name: String?,
+        vendor_phone: String?,
         vendor_tax_id: String?
       }
 
@@ -63,6 +72,8 @@ module EInvoiceAPI
       attr_accessor billing_address: String?
 
       attr_accessor billing_address_recipient: String?
+
+      attr_accessor buyer_reference: String?
 
       attr_accessor charges: ::Array[EInvoiceAPI::DocumentCreate::Charge]?
 
@@ -85,6 +96,8 @@ module EInvoiceAPI
       attr_accessor customer_name: String?
 
       attr_accessor customer_peppol_id: String?
+
+      attr_accessor customer_phone: String?
 
       attr_accessor customer_tax_id: String?
 
@@ -120,6 +133,10 @@ module EInvoiceAPI
 
       attr_accessor payment_term: String?
 
+      attr_accessor preceding_invoice_date: Date?
+
+      attr_accessor preceding_invoice_id: String?
+
       attr_accessor previous_unpaid_balance: EInvoiceAPI::Models::DocumentCreate::previous_unpaid_balance?
 
       attr_accessor purchase_order: String?
@@ -127,6 +144,10 @@ module EInvoiceAPI
       attr_accessor remittance_address: String?
 
       attr_accessor remittance_address_recipient: String?
+
+      attr_accessor rounding_amount: EInvoiceAPI::Models::DocumentCreate::rounding_amount?
+
+      attr_accessor sales_order: String?
 
       attr_accessor service_address: String?
 
@@ -154,11 +175,15 @@ module EInvoiceAPI
         EInvoiceAPI::Models::DocumentCreate::tax_code
       ) -> EInvoiceAPI::Models::DocumentCreate::tax_code
 
+      attr_accessor tax_currency: String?
+
       attr_accessor tax_details: ::Array[EInvoiceAPI::DocumentCreate::TaxDetail]?
 
       attr_accessor total_discount: EInvoiceAPI::Models::DocumentCreate::total_discount?
 
       attr_accessor total_tax: EInvoiceAPI::Models::DocumentCreate::total_tax?
+
+      attr_accessor total_tax_in_tax_currency: EInvoiceAPI::Models::DocumentCreate::total_tax_in_tax_currency?
 
       attr_accessor vatex: EInvoiceAPI::Models::DocumentCreate::vatex?
 
@@ -174,6 +199,8 @@ module EInvoiceAPI
 
       attr_accessor vendor_name: String?
 
+      attr_accessor vendor_phone: String?
+
       attr_accessor vendor_tax_id: String?
 
       def initialize: (
@@ -182,6 +209,7 @@ module EInvoiceAPI
         ?attachments: ::Array[EInvoiceAPI::DocumentAttachmentCreate]?,
         ?billing_address: String?,
         ?billing_address_recipient: String?,
+        ?buyer_reference: String?,
         ?charges: ::Array[EInvoiceAPI::DocumentCreate::Charge]?,
         ?currency: EInvoiceAPI::Models::currency_code,
         ?customer_address: String?,
@@ -191,6 +219,7 @@ module EInvoiceAPI
         ?customer_id: String?,
         ?customer_name: String?,
         ?customer_peppol_id: String?,
+        ?customer_phone: String?,
         ?customer_tax_id: String?,
         ?direction: EInvoiceAPI::Models::document_direction,
         ?document_type: EInvoiceAPI::Models::document_type,
@@ -202,10 +231,14 @@ module EInvoiceAPI
         ?note: String?,
         ?payment_details: ::Array[EInvoiceAPI::PaymentDetailCreate]?,
         ?payment_term: String?,
+        ?preceding_invoice_date: Date?,
+        ?preceding_invoice_id: String?,
         ?previous_unpaid_balance: EInvoiceAPI::Models::DocumentCreate::previous_unpaid_balance?,
         ?purchase_order: String?,
         ?remittance_address: String?,
         ?remittance_address_recipient: String?,
+        ?rounding_amount: EInvoiceAPI::Models::DocumentCreate::rounding_amount?,
+        ?sales_order: String?,
         ?service_address: String?,
         ?service_address_recipient: String?,
         ?service_end_date: Date?,
@@ -215,9 +248,11 @@ module EInvoiceAPI
         ?state: EInvoiceAPI::Models::document_state,
         ?subtotal: EInvoiceAPI::Models::DocumentCreate::subtotal?,
         ?tax_code: EInvoiceAPI::Models::DocumentCreate::tax_code,
+        ?tax_currency: String?,
         ?tax_details: ::Array[EInvoiceAPI::DocumentCreate::TaxDetail]?,
         ?total_discount: EInvoiceAPI::Models::DocumentCreate::total_discount?,
         ?total_tax: EInvoiceAPI::Models::DocumentCreate::total_tax?,
+        ?total_tax_in_tax_currency: EInvoiceAPI::Models::DocumentCreate::total_tax_in_tax_currency?,
         ?vatex: EInvoiceAPI::Models::DocumentCreate::vatex?,
         ?vatex_note: String?,
         ?vendor_address: String?,
@@ -225,6 +260,7 @@ module EInvoiceAPI
         ?vendor_company_id: String?,
         ?vendor_email: String?,
         ?vendor_name: String?,
+        ?vendor_phone: String?,
         ?vendor_tax_id: String?
       ) -> void
 
@@ -234,6 +270,7 @@ module EInvoiceAPI
         attachments: ::Array[EInvoiceAPI::DocumentAttachmentCreate]?,
         billing_address: String?,
         billing_address_recipient: String?,
+        buyer_reference: String?,
         charges: ::Array[EInvoiceAPI::DocumentCreate::Charge]?,
         currency: EInvoiceAPI::Models::currency_code,
         customer_address: String?,
@@ -243,6 +280,7 @@ module EInvoiceAPI
         customer_id: String?,
         customer_name: String?,
         customer_peppol_id: String?,
+        customer_phone: String?,
         customer_tax_id: String?,
         direction: EInvoiceAPI::Models::document_direction,
         document_type: EInvoiceAPI::Models::document_type,
@@ -254,10 +292,14 @@ module EInvoiceAPI
         note: String?,
         payment_details: ::Array[EInvoiceAPI::PaymentDetailCreate]?,
         payment_term: String?,
+        preceding_invoice_date: Date?,
+        preceding_invoice_id: String?,
         previous_unpaid_balance: EInvoiceAPI::Models::DocumentCreate::previous_unpaid_balance?,
         purchase_order: String?,
         remittance_address: String?,
         remittance_address_recipient: String?,
+        rounding_amount: EInvoiceAPI::Models::DocumentCreate::rounding_amount?,
+        sales_order: String?,
         service_address: String?,
         service_address_recipient: String?,
         service_end_date: Date?,
@@ -267,9 +309,11 @@ module EInvoiceAPI
         state: EInvoiceAPI::Models::document_state,
         subtotal: EInvoiceAPI::Models::DocumentCreate::subtotal?,
         tax_code: EInvoiceAPI::Models::DocumentCreate::tax_code,
+        tax_currency: String?,
         tax_details: ::Array[EInvoiceAPI::DocumentCreate::TaxDetail]?,
         total_discount: EInvoiceAPI::Models::DocumentCreate::total_discount?,
         total_tax: EInvoiceAPI::Models::DocumentCreate::total_tax?,
+        total_tax_in_tax_currency: EInvoiceAPI::Models::DocumentCreate::total_tax_in_tax_currency?,
         vatex: EInvoiceAPI::Models::DocumentCreate::vatex?,
         vatex_note: String?,
         vendor_address: String?,
@@ -277,6 +321,7 @@ module EInvoiceAPI
         vendor_company_id: String?,
         vendor_email: String?,
         vendor_name: String?,
+        vendor_phone: String?,
         vendor_tax_id: String?
       }
 
@@ -913,9 +958,11 @@ module EInvoiceAPI
           allowances: ::Array[EInvoiceAPI::DocumentCreate::Item::Allowance]?,
           amount: EInvoiceAPI::Models::DocumentCreate::Item::amount?,
           charges: ::Array[EInvoiceAPI::DocumentCreate::Item::Charge]?,
-          date: nil,
+          date: Date?,
           description: String?,
           item_attributes: ::Array[EInvoiceAPI::DocumentCreate::Item::ItemAttribute]?,
+          name: String?,
+          price_base_quantity: EInvoiceAPI::Models::DocumentCreate::Item::price_base_quantity,
           product_code: String?,
           quantity: EInvoiceAPI::Models::DocumentCreate::Item::quantity?,
           tax: EInvoiceAPI::Models::DocumentCreate::Item::tax?,
@@ -931,11 +978,19 @@ module EInvoiceAPI
 
         attr_accessor charges: ::Array[EInvoiceAPI::DocumentCreate::Item::Charge]?
 
-        attr_accessor date: nil
+        attr_accessor date: Date?
 
         attr_accessor description: String?
 
         attr_accessor item_attributes: ::Array[EInvoiceAPI::DocumentCreate::Item::ItemAttribute]?
+
+        attr_accessor name: String?
+
+        attr_reader price_base_quantity: EInvoiceAPI::Models::DocumentCreate::Item::price_base_quantity?
+
+        def price_base_quantity=: (
+          EInvoiceAPI::Models::DocumentCreate::Item::price_base_quantity
+        ) -> EInvoiceAPI::Models::DocumentCreate::Item::price_base_quantity
 
         attr_accessor product_code: String?
 
@@ -953,9 +1008,11 @@ module EInvoiceAPI
           ?allowances: ::Array[EInvoiceAPI::DocumentCreate::Item::Allowance]?,
           ?amount: EInvoiceAPI::Models::DocumentCreate::Item::amount?,
           ?charges: ::Array[EInvoiceAPI::DocumentCreate::Item::Charge]?,
-          ?date: nil,
+          ?date: Date?,
           ?description: String?,
           ?item_attributes: ::Array[EInvoiceAPI::DocumentCreate::Item::ItemAttribute]?,
+          ?name: String?,
+          ?price_base_quantity: EInvoiceAPI::Models::DocumentCreate::Item::price_base_quantity,
           ?product_code: String?,
           ?quantity: EInvoiceAPI::Models::DocumentCreate::Item::quantity?,
           ?tax: EInvoiceAPI::Models::DocumentCreate::Item::tax?,
@@ -968,9 +1025,11 @@ module EInvoiceAPI
           allowances: ::Array[EInvoiceAPI::DocumentCreate::Item::Allowance]?,
           amount: EInvoiceAPI::Models::DocumentCreate::Item::amount?,
           charges: ::Array[EInvoiceAPI::DocumentCreate::Item::Charge]?,
-          date: nil,
+          date: Date?,
           description: String?,
           item_attributes: ::Array[EInvoiceAPI::DocumentCreate::Item::ItemAttribute]?,
+          name: String?,
+          price_base_quantity: EInvoiceAPI::Models::DocumentCreate::Item::price_base_quantity,
           product_code: String?,
           quantity: EInvoiceAPI::Models::DocumentCreate::Item::quantity?,
           tax: EInvoiceAPI::Models::DocumentCreate::Item::tax?,
@@ -1611,6 +1670,14 @@ module EInvoiceAPI
           def to_hash: -> { name: String, value: String? }
         end
 
+        type price_base_quantity = Float | String
+
+        module PriceBaseQuantity
+          extend EInvoiceAPI::Internal::Type::Union
+
+          def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::Item::price_base_quantity]
+        end
+
         type quantity = Float | String
 
         module Quantity
@@ -1650,6 +1717,14 @@ module EInvoiceAPI
         extend EInvoiceAPI::Internal::Type::Union
 
         def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::previous_unpaid_balance]
+      end
+
+      type rounding_amount = Float | String
+
+      module RoundingAmount
+        extend EInvoiceAPI::Internal::Type::Union
+
+        def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::rounding_amount]
       end
 
       type subtotal = Float | String
@@ -1723,6 +1798,14 @@ module EInvoiceAPI
         extend EInvoiceAPI::Internal::Type::Union
 
         def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::total_tax]
+      end
+
+      type total_tax_in_tax_currency = Float | String
+
+      module TotalTaxInTaxCurrency
+        extend EInvoiceAPI::Internal::Type::Union
+
+        def self?.variants: -> ::Array[EInvoiceAPI::Models::DocumentCreate::total_tax_in_tax_currency]
       end
 
       type vatex =

@@ -30,6 +30,18 @@ module EInvoiceAPI
         ?request_options: EInvoiceAPI::request_opts
       ) -> EInvoiceAPI::Models::WebhookDeleteResponse
 
+      def history: (
+        String webhook_id,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> EInvoiceAPI::Models::WebhookHistoryResponse
+
+      def test_: (
+        String webhook_id,
+        data: ::Hash[Symbol, top],
+        event_type: String,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> EInvoiceAPI::Models::WebhookTestResponse
+
       def initialize: (client: EInvoiceAPI::Client) -> void
     end
   end

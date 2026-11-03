@@ -1,0 +1,84 @@
+module EInvoiceAPI
+  module Models
+    type document_timeline_response =
+      {
+        document_id: String,
+        events: ::Array[EInvoiceAPI::Models::DocumentTimelineResponse::Event]
+      }
+
+    class DocumentTimelineResponse < EInvoiceAPI::Internal::Type::BaseModel
+      attr_accessor document_id: String
+
+      attr_accessor events: ::Array[EInvoiceAPI::Models::DocumentTimelineResponse::Event]
+
+      def initialize: (
+        document_id: String,
+        events: ::Array[EInvoiceAPI::Models::DocumentTimelineResponse::Event]
+      ) -> void
+
+      def to_hash: -> {
+        document_id: String,
+        events: ::Array[EInvoiceAPI::Models::DocumentTimelineResponse::Event]
+      }
+
+      type event =
+        {
+          event_type: EInvoiceAPI::Models::DocumentTimelineResponse::Event::event_type,
+          timestamp: Time,
+          id: String?,
+          details: ::Hash[Symbol, top]?
+        }
+
+      class Event < EInvoiceAPI::Internal::Type::BaseModel
+        attr_accessor event_type: EInvoiceAPI::Models::DocumentTimelineResponse::Event::event_type
+
+        attr_accessor timestamp: Time
+
+        attr_accessor id: String?
+
+        attr_accessor details: ::Hash[Symbol, top]?
+
+        def initialize: (
+          event_type: EInvoiceAPI::Models::DocumentTimelineResponse::Event::event_type,
+          timestamp: Time,
+          ?id: String?,
+          ?details: ::Hash[Symbol, top]?
+        ) -> void
+
+        def to_hash: -> {
+          event_type: EInvoiceAPI::Models::DocumentTimelineResponse::Event::event_type,
+          timestamp: Time,
+          id: String?,
+          details: ::Hash[Symbol, top]?
+        }
+
+        type event_type =
+          :email_received
+          | :email_processed
+          | :document_created
+          | :send_attempted
+          | :send_failed
+          | :send_success
+          | :receive_success
+          | :mlr_received
+          | :imr_received
+
+        module EventType
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          EMAIL_RECEIVED: :email_received
+          EMAIL_PROCESSED: :email_processed
+          DOCUMENT_CREATED: :document_created
+          SEND_ATTEMPTED: :send_attempted
+          SEND_FAILED: :send_failed
+          SEND_SUCCESS: :send_success
+          RECEIVE_SUCCESS: :receive_success
+          MLR_RECEIVED: :mlr_received
+          IMR_RECEIVED: :imr_received
+
+          def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentTimelineResponse::Event::event_type]
+        end
+      end
+    end
+  end
+end

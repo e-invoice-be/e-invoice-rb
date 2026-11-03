@@ -1,0 +1,24 @@
+module EInvoiceAPI
+  module Resources
+    class Conversion
+      class Pdf
+        def create: (
+          file: EInvoiceAPI::Internal::file_input,
+          ?request_options: EInvoiceAPI::request_opts
+        ) -> EInvoiceAPI::Conversion::DocumentCreateFromPdfTask
+
+        def retrieve: (
+          String task_id,
+          ?request_options: EInvoiceAPI::request_opts
+        ) -> EInvoiceAPI::Conversion::DocumentCreateFromPdfTask
+
+        def result: (
+          String task_id,
+          ?request_options: EInvoiceAPI::request_opts
+        ) -> EInvoiceAPI::Models::DocumentCreateFromPdfResponse
+
+        def initialize: (client: EInvoiceAPI::Client) -> void
+      end
+    end
+  end
+end

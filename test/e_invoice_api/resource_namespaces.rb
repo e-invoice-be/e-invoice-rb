@@ -3,6 +3,9 @@
 module EInvoiceAPI
   module Test
     module Resources
+      module Conversion
+      end
+
       module Documents
       end
     end

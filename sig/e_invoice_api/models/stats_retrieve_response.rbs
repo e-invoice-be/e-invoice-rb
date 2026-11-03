@@ -1,0 +1,107 @@
+module EInvoiceAPI
+  module Models
+    type stats_retrieve_response =
+      {
+        actions: ::Array[EInvoiceAPI::Models::StatsRetrieveResponse::Action],
+        aggregation: EInvoiceAPI::Models::StatsRetrieveResponse::aggregation,
+        average_daily_usage: Float,
+        period_end: Date,
+        period_start: Date,
+        tenant_id: String,
+        total_days: Integer,
+        budget_estimation_days: Float
+      }
+
+    class StatsRetrieveResponse < EInvoiceAPI::Internal::Type::BaseModel
+      attr_accessor actions: ::Array[EInvoiceAPI::Models::StatsRetrieveResponse::Action]
+
+      attr_accessor aggregation: EInvoiceAPI::Models::StatsRetrieveResponse::aggregation
+
+      attr_accessor average_daily_usage: Float
+
+      attr_accessor period_end: Date
+
+      attr_accessor period_start: Date
+
+      attr_accessor tenant_id: String
+
+      attr_accessor total_days: Integer
+
+      attr_reader budget_estimation_days: Float?
+
+      def budget_estimation_days=: (Float) -> Float
+
+      def initialize: (
+        actions: ::Array[EInvoiceAPI::Models::StatsRetrieveResponse::Action],
+        aggregation: EInvoiceAPI::Models::StatsRetrieveResponse::aggregation,
+        average_daily_usage: Float,
+        period_end: Date,
+        period_start: Date,
+        tenant_id: String,
+        total_days: Integer,
+        ?budget_estimation_days: Float
+      ) -> void
+
+      def to_hash: -> {
+        actions: ::Array[EInvoiceAPI::Models::StatsRetrieveResponse::Action],
+        aggregation: EInvoiceAPI::Models::StatsRetrieveResponse::aggregation,
+        average_daily_usage: Float,
+        period_end: Date,
+        period_start: Date,
+        tenant_id: String,
+        total_days: Integer,
+        budget_estimation_days: Float
+      }
+
+      type action =
+        {
+          action: EInvoiceAPI::Models::StatsRetrieveResponse::Action::action,
+          count: Integer,
+          stat_date: Date
+        }
+
+      class Action < EInvoiceAPI::Internal::Type::BaseModel
+        attr_accessor action: EInvoiceAPI::Models::StatsRetrieveResponse::Action::action
+
+        attr_accessor count: Integer
+
+        attr_accessor stat_date: Date
+
+        def initialize: (
+          action: EInvoiceAPI::Models::StatsRetrieveResponse::Action::action,
+          count: Integer,
+          stat_date: Date
+        ) -> void
+
+        def to_hash: -> {
+          action: EInvoiceAPI::Models::StatsRetrieveResponse::Action::action,
+          count: Integer,
+          stat_date: Date
+        }
+
+        type action = :DOCUMENT_SENT | :DOCUMENT_RECEIVED
+
+        module Action
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          DOCUMENT_SENT: :DOCUMENT_SENT
+          DOCUMENT_RECEIVED: :DOCUMENT_RECEIVED
+
+          def self?.values: -> ::Array[EInvoiceAPI::Models::StatsRetrieveResponse::Action::action]
+        end
+      end
+
+      type aggregation = :DAY | :WEEK | :MONTH
+
+      module Aggregation
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        DAY: :DAY
+        WEEK: :WEEK
+        MONTH: :MONTH
+
+        def self?.values: -> ::Array[EInvoiceAPI::Models::StatsRetrieveResponse::aggregation]
+      end
+    end
+  end
+end

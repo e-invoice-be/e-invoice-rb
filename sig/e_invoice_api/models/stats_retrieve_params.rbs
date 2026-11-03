@@ -1,0 +1,48 @@
+module EInvoiceAPI
+  module Models
+    type stats_retrieve_params =
+      {
+        aggregation: EInvoiceAPI::Models::StatsRetrieveParams::aggregation?,
+        end_date: Date?,
+        start_date: Date?
+      }
+      & EInvoiceAPI::Internal::Type::request_parameters
+
+    class StatsRetrieveParams < EInvoiceAPI::Internal::Type::BaseModel
+      extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
+      include EInvoiceAPI::Internal::Type::RequestParameters
+
+      attr_accessor aggregation: EInvoiceAPI::Models::StatsRetrieveParams::aggregation?
+
+      attr_accessor end_date: Date?
+
+      attr_accessor start_date: Date?
+
+      def initialize: (
+        ?aggregation: EInvoiceAPI::Models::StatsRetrieveParams::aggregation?,
+        ?end_date: Date?,
+        ?start_date: Date?,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        aggregation: EInvoiceAPI::Models::StatsRetrieveParams::aggregation?,
+        end_date: Date?,
+        start_date: Date?,
+        request_options: EInvoiceAPI::RequestOptions
+      }
+
+      type aggregation = :DAY | :WEEK | :MONTH
+
+      module Aggregation
+        extend EInvoiceAPI::Internal::Type::Enum
+
+        DAY: :DAY
+        WEEK: :WEEK
+        MONTH: :MONTH
+
+        def self?.values: -> ::Array[EInvoiceAPI::Models::StatsRetrieveParams::aggregation]
+      end
+    end
+  end
+end

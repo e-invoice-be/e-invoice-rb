@@ -7,6 +7,8 @@ module EInvoiceAPI
 
   Charge = EInvoiceAPI::Models::Charge
 
+  Conversion = EInvoiceAPI::Models::Conversion
+
   CurrencyCode = EInvoiceAPI::Models::CurrencyCode
 
   DocumentAttachmentCreate = EInvoiceAPI::Models::DocumentAttachmentCreate
@@ -21,6 +23,8 @@ module EInvoiceAPI
 
   DocumentDirection = EInvoiceAPI::Models::DocumentDirection
 
+  DocumentLifecycleParams = EInvoiceAPI::Models::DocumentLifecycleParams
+
   DocumentResponse = EInvoiceAPI::Models::DocumentResponse
 
   DocumentRetrieveParams = EInvoiceAPI::Models::DocumentRetrieveParams
@@ -31,9 +35,15 @@ module EInvoiceAPI
 
   DocumentState = EInvoiceAPI::Models::DocumentState
 
+  DocumentTimelineParams = EInvoiceAPI::Models::DocumentTimelineParams
+
   DocumentType = EInvoiceAPI::Models::DocumentType
 
   DocumentValidateParams = EInvoiceAPI::Models::DocumentValidateParams
+
+  DraftListParams = EInvoiceAPI::Models::DraftListParams
+
+  InboundEmailResponse = EInvoiceAPI::Models::InboundEmailResponse
 
   InboxListCreditNotesParams = EInvoiceAPI::Models::InboxListCreditNotesParams
 
@@ -46,6 +56,15 @@ module EInvoiceAPI
   LookupRetrieveParticipantsParams =
     EInvoiceAPI::Models::LookupRetrieveParticipantsParams
 
+  MailboxDownloadAttachmentParams =
+    EInvoiceAPI::Models::MailboxDownloadAttachmentParams
+
+  MailboxListParams = EInvoiceAPI::Models::MailboxListParams
+
+  MailboxReprocessParams = EInvoiceAPI::Models::MailboxReprocessParams
+
+  MailboxRetrieveParams = EInvoiceAPI::Models::MailboxRetrieveParams
+
   MeRetrieveParams = EInvoiceAPI::Models::MeRetrieveParams
 
   OutboxListDraftDocumentsParams =
@@ -57,6 +76,8 @@ module EInvoiceAPI
   PaginatedDocumentResponse = EInvoiceAPI::Models::PaginatedDocumentResponse
 
   PaymentDetailCreate = EInvoiceAPI::Models::PaymentDetailCreate
+
+  StatsRetrieveParams = EInvoiceAPI::Models::StatsRetrieveParams
 
   UblDocumentValidation = EInvoiceAPI::Models::UblDocumentValidation
 
@@ -73,11 +94,15 @@ module EInvoiceAPI
 
   WebhookDeleteParams = EInvoiceAPI::Models::WebhookDeleteParams
 
+  WebhookHistoryParams = EInvoiceAPI::Models::WebhookHistoryParams
+
   WebhookListParams = EInvoiceAPI::Models::WebhookListParams
 
   WebhookResponse = EInvoiceAPI::Models::WebhookResponse
 
   WebhookRetrieveParams = EInvoiceAPI::Models::WebhookRetrieveParams
+
+  WebhookTestParams = EInvoiceAPI::Models::WebhookTestParams
 
   WebhookUpdateParams = EInvoiceAPI::Models::WebhookUpdateParams
 end

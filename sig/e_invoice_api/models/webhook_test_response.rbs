@@ -1,0 +1,30 @@
+module EInvoiceAPI
+  module Models
+    type webhook_test_response =
+      {
+        message: String,
+        success: bool,
+        webhook_delivery_result: ::Hash[Symbol, top]
+      }
+
+    class WebhookTestResponse < EInvoiceAPI::Internal::Type::BaseModel
+      attr_accessor message: String
+
+      attr_accessor success: bool
+
+      attr_accessor webhook_delivery_result: ::Hash[Symbol, top]
+
+      def initialize: (
+        message: String,
+        success: bool,
+        webhook_delivery_result: ::Hash[Symbol, top]
+      ) -> void
+
+      def to_hash: -> {
+        message: String,
+        success: bool,
+        webhook_delivery_result: ::Hash[Symbol, top]
+      }
+    end
+  end
+end

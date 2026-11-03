@@ -54,8 +54,8 @@ module EInvoiceAPI
       optional :company_number, String, nil?: true
 
       # @!attribute company_tax_id
-      #   Company tax ID. For Belgium this is the VAT number. Must include the country
-      #   prefix
+      #   Company tax ID (VAT number), including the country prefix. Stored in compact
+      #   form: uppercased with separators removed, e.g. `BE0123456789`.
       #
       #   @return [String, nil]
       optional :company_tax_id, String, nil?: true
@@ -96,13 +96,14 @@ module EInvoiceAPI
       optional :plan, enum: -> { EInvoiceAPI::Models::MeRetrieveResponse::Plan }
 
       # @!attribute smp_registration
-      #   Whether the tenant is registered on our SMP
+      #   Legacy field. Does not show whether a Peppol ID is published: it is usually
+      #   `false`, also for a tenant whose Peppol IDs are published.
       #
       #   @return [Boolean, nil]
       optional :smp_registration, EInvoiceAPI::Internal::Type::Boolean, nil?: true
 
       # @!attribute smp_registration_date
-      #   Date when the tenant was registered on SMP
+      #   Legacy field. Does not show whether or when a Peppol ID was published.
       #
       #   @return [Time, nil]
       optional :smp_registration_date, Time, nil?: true
@@ -127,7 +128,7 @@ module EInvoiceAPI
       #
       #   @param company_number [String, nil] Company number. For Belgium this is the CBE number or their EUID (European Uniqu
       #
-      #   @param company_tax_id [String, nil] Company tax ID. For Belgium this is the VAT number. Must include the country pre
+      #   @param company_tax_id [String, nil] Company tax ID (VAT number), including the country prefix. Stored in compact for
       #
       #   @param company_zip [String, nil] Zip code of the company
       #
@@ -141,9 +142,9 @@ module EInvoiceAPI
       #
       #   @param plan [Symbol, EInvoiceAPI::Models::MeRetrieveResponse::Plan] Plan of the tenant
       #
-      #   @param smp_registration [Boolean, nil] Whether the tenant is registered on our SMP
+      #   @param smp_registration [Boolean, nil] Legacy field. Does not show whether a Peppol ID is published: it is usually `fal
       #
-      #   @param smp_registration_date [Time, nil] Date when the tenant was registered on SMP
+      #   @param smp_registration_date [Time, nil] Legacy field. Does not show whether or when a Peppol ID was published.
 
       # Plan of the tenant
       #

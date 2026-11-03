@@ -1,0 +1,151 @@
+module EInvoiceAPI
+  module Models
+    type document_lifecycle_response =
+      {
+        document_id: String,
+        events: ::Array[EInvoiceAPI::Models::DocumentLifecycleResponse::Event]
+      }
+
+    class DocumentLifecycleResponse < EInvoiceAPI::Internal::Type::BaseModel
+      attr_accessor document_id: String
+
+      attr_accessor events: ::Array[EInvoiceAPI::Models::DocumentLifecycleResponse::Event]
+
+      def initialize: (
+        document_id: String,
+        events: ::Array[EInvoiceAPI::Models::DocumentLifecycleResponse::Event]
+      ) -> void
+
+      def to_hash: -> {
+        document_id: String,
+        events: ::Array[EInvoiceAPI::Models::DocumentLifecycleResponse::Event]
+      }
+
+      type event =
+        {
+          canonical_status: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::canonical_status?,
+          direction: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::direction,
+          level: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::level,
+          native_code: String?,
+          occurred_at: Time,
+          reason: String?,
+          reason_code: String?,
+          source: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::source
+        }
+
+      class Event < EInvoiceAPI::Internal::Type::BaseModel
+        attr_accessor canonical_status: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::canonical_status?
+
+        attr_accessor direction: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::direction
+
+        attr_accessor level: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::level
+
+        attr_accessor native_code: String?
+
+        attr_accessor occurred_at: Time
+
+        attr_accessor reason: String?
+
+        attr_accessor reason_code: String?
+
+        attr_accessor source: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::source
+
+        def initialize: (
+          canonical_status: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::canonical_status?,
+          direction: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::direction,
+          level: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::level,
+          native_code: String?,
+          occurred_at: Time,
+          reason: String?,
+          reason_code: String?,
+          source: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::source
+        ) -> void
+
+        def to_hash: -> {
+          canonical_status: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::canonical_status?,
+          direction: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::direction,
+          level: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::level,
+          native_code: String?,
+          occurred_at: Time,
+          reason: String?,
+          reason_code: String?,
+          source: EInvoiceAPI::Models::DocumentLifecycleResponse::Event::source
+        }
+
+        type canonical_status =
+          :deposited
+          | :emitted
+          | :delivered
+          | :rejected
+          | :acknowledged
+          | :approved
+          | :partially_approved
+          | :disputed
+          | :on_hold
+          | :refused
+          | :payment_sent
+          | :paid
+
+        module CanonicalStatus
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          DEPOSITED: :deposited
+          EMITTED: :emitted
+          DELIVERED: :delivered
+          REJECTED: :rejected
+          ACKNOWLEDGED: :acknowledged
+          APPROVED: :approved
+          PARTIALLY_APPROVED: :partially_approved
+          DISPUTED: :disputed
+          ON_HOLD: :on_hold
+          REFUSED: :refused
+          PAYMENT_SENT: :payment_sent
+          PAID: :paid
+
+          def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentLifecycleResponse::Event::canonical_status]
+        end
+
+        type direction = :in | :out
+
+        module Direction
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          IN: :in
+          OUT: :out
+
+          def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentLifecycleResponse::Event::direction]
+        end
+
+        type level = :transport | :business
+
+        module Level
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          TRANSPORT: :transport
+          BUSINESS: :business
+
+          def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentLifecycleResponse::Event::level]
+        end
+
+        type source =
+          :"peppol:mlr"
+          | :"peppol:mls"
+          | :"peppol:imr"
+          | :"fr:superpdp"
+          | :local
+
+        module Source
+          extend EInvoiceAPI::Internal::Type::Enum
+
+          PEPPOL_MLR: :"peppol:mlr"
+          PEPPOL_MLS: :"peppol:mls"
+          PEPPOL_IMR: :"peppol:imr"
+          FR_SUPERPDP: :"fr:superpdp"
+          LOCAL: :local
+
+          def self?.values: -> ::Array[EInvoiceAPI::Models::DocumentLifecycleResponse::Event::source]
+        end
+      end
+    end
+  end
+end

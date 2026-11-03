@@ -1,0 +1,28 @@
+module EInvoiceAPI
+  module Models
+    type mailbox_download_attachment_params =
+      { inbound_email_id: String, filename: String }
+      & EInvoiceAPI::Internal::Type::request_parameters
+
+    class MailboxDownloadAttachmentParams < EInvoiceAPI::Internal::Type::BaseModel
+      extend EInvoiceAPI::Internal::Type::RequestParameters::Converter
+      include EInvoiceAPI::Internal::Type::RequestParameters
+
+      attr_accessor inbound_email_id: String
+
+      attr_accessor filename: String
+
+      def initialize: (
+        inbound_email_id: String,
+        filename: String,
+        ?request_options: EInvoiceAPI::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        inbound_email_id: String,
+        filename: String,
+        request_options: EInvoiceAPI::RequestOptions
+      }
+    end
+  end
+end

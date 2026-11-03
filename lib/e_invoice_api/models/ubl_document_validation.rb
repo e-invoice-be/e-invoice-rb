@@ -25,16 +25,25 @@ module EInvoiceAPI
       required :issues, -> { EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::UblDocumentValidation::Issue] }
 
       # @!attribute ubl_document
+      #   The UBL document as an XML string, returned whenever it could be generated, also
+      #   when the document is not valid. Only is_valid tells whether it is valid.
       #
       #   @return [String, nil]
       optional :ubl_document, String, nil?: true
 
       # @!method initialize(id:, file_name:, is_valid:, issues:, ubl_document: nil)
+      #   Some parameter documentations has been truncated, see
+      #   {EInvoiceAPI::Models::UblDocumentValidation} for more details.
+      #
       #   @param id [String]
+      #
       #   @param file_name [String, nil]
+      #
       #   @param is_valid [Boolean]
+      #
       #   @param issues [Array<EInvoiceAPI::Models::UblDocumentValidation::Issue>]
-      #   @param ubl_document [String, nil]
+      #
+      #   @param ubl_document [String, nil] The UBL document as an XML string, returned whenever it could be generated, also
 
       class Issue < EInvoiceAPI::Internal::Type::BaseModel
         # @!attribute message

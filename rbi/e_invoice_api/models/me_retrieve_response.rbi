@@ -44,8 +44,8 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :company_number
 
-      # Company tax ID. For Belgium this is the VAT number. Must include the country
-      # prefix
+      # Company tax ID (VAT number), including the country prefix. Stored in compact
+      # form: uppercased with separators removed, e.g. `BE0123456789`.
       sig { returns(T.nilable(String)) }
       attr_accessor :company_tax_id
 
@@ -86,11 +86,12 @@ module EInvoiceAPI
       end
       attr_writer :plan
 
-      # Whether the tenant is registered on our SMP
+      # Legacy field. Does not show whether a Peppol ID is published: it is usually
+      # `false`, also for a tenant whose Peppol IDs are published.
       sig { returns(T.nilable(T::Boolean)) }
       attr_accessor :smp_registration
 
-      # Date when the tenant was registered on SMP
+      # Legacy field. Does not show whether or when a Peppol ID was published.
       sig { returns(T.nilable(Time)) }
       attr_accessor :smp_registration_date
 
@@ -133,8 +134,8 @@ module EInvoiceAPI
         # Company number. For Belgium this is the CBE number or their EUID (European
         # Unique Identifier) number
         company_number: nil,
-        # Company tax ID. For Belgium this is the VAT number. Must include the country
-        # prefix
+        # Company tax ID (VAT number), including the country prefix. Stored in compact
+        # form: uppercased with separators removed, e.g. `BE0123456789`.
         company_tax_id: nil,
         # Zip code of the company
         company_zip: nil,
@@ -147,9 +148,10 @@ module EInvoiceAPI
         peppol_ids: nil,
         # Plan of the tenant
         plan: nil,
-        # Whether the tenant is registered on our SMP
+        # Legacy field. Does not show whether a Peppol ID is published: it is usually
+        # `false`, also for a tenant whose Peppol IDs are published.
         smp_registration: nil,
-        # Date when the tenant was registered on SMP
+        # Legacy field. Does not show whether or when a Peppol ID was published.
         smp_registration_date: nil
       )
       end

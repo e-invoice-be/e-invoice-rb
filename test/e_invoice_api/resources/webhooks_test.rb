@@ -88,4 +88,38 @@ class EInvoiceAPI::Test::Resources::WebhooksTest < EInvoiceAPI::Test::ResourceTe
       }
     end
   end
+
+  def test_history
+    skip("Mock server tests are disabled")
+
+    response = @e_invoice.webhooks.history("webhook_id")
+
+    assert_pattern do
+      response => EInvoiceAPI::Models::WebhookHistoryResponse
+    end
+
+    assert_pattern do
+      response => {
+        history: ^(EInvoiceAPI::Internal::Type::ArrayOf[EInvoiceAPI::Internal::Type::HashOf[EInvoiceAPI::Internal::Type::Unknown]])
+      }
+    end
+  end
+
+  def test_test__required_params
+    skip("Mock server tests are disabled")
+
+    response = @e_invoice.webhooks.test_("webhook_id", data: {foo: "bar"}, event_type: "event_type")
+
+    assert_pattern do
+      response => EInvoiceAPI::Models::WebhookTestResponse
+    end
+
+    assert_pattern do
+      response => {
+        message: String,
+        success: EInvoiceAPI::Internal::Type::Boolean,
+        webhook_delivery_result: ^(EInvoiceAPI::Internal::Type::HashOf[EInvoiceAPI::Internal::Type::Unknown])
+      }
+    end
+  end
 end

@@ -9,6 +9,7 @@ module EInvoiceAPI
         attachments: ::Array[EInvoiceAPI::Documents::DocumentAttachment]?,
         billing_address: String?,
         billing_address_recipient: String?,
+        buyer_reference: String?,
         charges: ::Array[EInvoiceAPI::DocumentResponse::Charge]?,
         currency: EInvoiceAPI::Models::currency_code,
         customer_address: String?,
@@ -18,6 +19,7 @@ module EInvoiceAPI
         customer_id: String?,
         customer_name: String?,
         customer_peppol_id: String?,
+        customer_phone: String?,
         customer_tax_id: String?,
         direction: EInvoiceAPI::Models::document_direction,
         document_type: EInvoiceAPI::Models::document_type,
@@ -29,9 +31,13 @@ module EInvoiceAPI
         note: String?,
         payment_details: ::Array[EInvoiceAPI::DocumentResponse::PaymentDetail]?,
         payment_term: String?,
+        preceding_invoice_date: Date?,
+        preceding_invoice_id: String?,
         purchase_order: String?,
         remittance_address: String?,
         remittance_address_recipient: String?,
+        rounding_amount: String?,
+        sales_order: String?,
         service_address: String?,
         service_address_recipient: String?,
         service_end_date: Date?,
@@ -41,9 +47,11 @@ module EInvoiceAPI
         state: EInvoiceAPI::Models::document_state,
         subtotal: String?,
         tax_code: EInvoiceAPI::Models::DocumentResponse::tax_code,
+        tax_currency: String?,
         tax_details: ::Array[EInvoiceAPI::DocumentResponse::TaxDetail]?,
         total_discount: String?,
         total_tax: String?,
+        total_tax_in_tax_currency: String?,
         vatex: EInvoiceAPI::Models::DocumentResponse::vatex?,
         vatex_note: String?,
         vendor_address: String?,
@@ -51,6 +59,7 @@ module EInvoiceAPI
         vendor_company_id: String?,
         vendor_email: String?,
         vendor_name: String?,
+        vendor_phone: String?,
         vendor_tax_id: String?
       }
 
@@ -68,6 +77,8 @@ module EInvoiceAPI
       attr_accessor billing_address: String?
 
       attr_accessor billing_address_recipient: String?
+
+      attr_accessor buyer_reference: String?
 
       attr_accessor charges: ::Array[EInvoiceAPI::DocumentResponse::Charge]?
 
@@ -90,6 +101,8 @@ module EInvoiceAPI
       attr_accessor customer_name: String?
 
       attr_accessor customer_peppol_id: String?
+
+      attr_accessor customer_phone: String?
 
       attr_accessor customer_tax_id: String?
 
@@ -121,11 +134,19 @@ module EInvoiceAPI
 
       attr_accessor payment_term: String?
 
+      attr_accessor preceding_invoice_date: Date?
+
+      attr_accessor preceding_invoice_id: String?
+
       attr_accessor purchase_order: String?
 
       attr_accessor remittance_address: String?
 
       attr_accessor remittance_address_recipient: String?
+
+      attr_accessor rounding_amount: String?
+
+      attr_accessor sales_order: String?
 
       attr_accessor service_address: String?
 
@@ -153,11 +174,15 @@ module EInvoiceAPI
         EInvoiceAPI::Models::DocumentResponse::tax_code
       ) -> EInvoiceAPI::Models::DocumentResponse::tax_code
 
+      attr_accessor tax_currency: String?
+
       attr_accessor tax_details: ::Array[EInvoiceAPI::DocumentResponse::TaxDetail]?
 
       attr_accessor total_discount: String?
 
       attr_accessor total_tax: String?
+
+      attr_accessor total_tax_in_tax_currency: String?
 
       attr_accessor vatex: EInvoiceAPI::Models::DocumentResponse::vatex?
 
@@ -173,6 +198,8 @@ module EInvoiceAPI
 
       attr_accessor vendor_name: String?
 
+      attr_accessor vendor_phone: String?
+
       attr_accessor vendor_tax_id: String?
 
       def initialize: (
@@ -183,6 +210,7 @@ module EInvoiceAPI
         ?attachments: ::Array[EInvoiceAPI::Documents::DocumentAttachment]?,
         ?billing_address: String?,
         ?billing_address_recipient: String?,
+        ?buyer_reference: String?,
         ?charges: ::Array[EInvoiceAPI::DocumentResponse::Charge]?,
         ?currency: EInvoiceAPI::Models::currency_code,
         ?customer_address: String?,
@@ -192,6 +220,7 @@ module EInvoiceAPI
         ?customer_id: String?,
         ?customer_name: String?,
         ?customer_peppol_id: String?,
+        ?customer_phone: String?,
         ?customer_tax_id: String?,
         ?direction: EInvoiceAPI::Models::document_direction,
         ?document_type: EInvoiceAPI::Models::document_type,
@@ -203,9 +232,13 @@ module EInvoiceAPI
         ?note: String?,
         ?payment_details: ::Array[EInvoiceAPI::DocumentResponse::PaymentDetail]?,
         ?payment_term: String?,
+        ?preceding_invoice_date: Date?,
+        ?preceding_invoice_id: String?,
         ?purchase_order: String?,
         ?remittance_address: String?,
         ?remittance_address_recipient: String?,
+        ?rounding_amount: String?,
+        ?sales_order: String?,
         ?service_address: String?,
         ?service_address_recipient: String?,
         ?service_end_date: Date?,
@@ -215,9 +248,11 @@ module EInvoiceAPI
         ?state: EInvoiceAPI::Models::document_state,
         ?subtotal: String?,
         ?tax_code: EInvoiceAPI::Models::DocumentResponse::tax_code,
+        ?tax_currency: String?,
         ?tax_details: ::Array[EInvoiceAPI::DocumentResponse::TaxDetail]?,
         ?total_discount: String?,
         ?total_tax: String?,
+        ?total_tax_in_tax_currency: String?,
         ?vatex: EInvoiceAPI::Models::DocumentResponse::vatex?,
         ?vatex_note: String?,
         ?vendor_address: String?,
@@ -225,6 +260,7 @@ module EInvoiceAPI
         ?vendor_company_id: String?,
         ?vendor_email: String?,
         ?vendor_name: String?,
+        ?vendor_phone: String?,
         ?vendor_tax_id: String?
       ) -> void
 
@@ -236,6 +272,7 @@ module EInvoiceAPI
         attachments: ::Array[EInvoiceAPI::Documents::DocumentAttachment]?,
         billing_address: String?,
         billing_address_recipient: String?,
+        buyer_reference: String?,
         charges: ::Array[EInvoiceAPI::DocumentResponse::Charge]?,
         currency: EInvoiceAPI::Models::currency_code,
         customer_address: String?,
@@ -245,6 +282,7 @@ module EInvoiceAPI
         customer_id: String?,
         customer_name: String?,
         customer_peppol_id: String?,
+        customer_phone: String?,
         customer_tax_id: String?,
         direction: EInvoiceAPI::Models::document_direction,
         document_type: EInvoiceAPI::Models::document_type,
@@ -256,9 +294,13 @@ module EInvoiceAPI
         note: String?,
         payment_details: ::Array[EInvoiceAPI::DocumentResponse::PaymentDetail]?,
         payment_term: String?,
+        preceding_invoice_date: Date?,
+        preceding_invoice_id: String?,
         purchase_order: String?,
         remittance_address: String?,
         remittance_address_recipient: String?,
+        rounding_amount: String?,
+        sales_order: String?,
         service_address: String?,
         service_address_recipient: String?,
         service_end_date: Date?,
@@ -268,9 +310,11 @@ module EInvoiceAPI
         state: EInvoiceAPI::Models::document_state,
         subtotal: String?,
         tax_code: EInvoiceAPI::Models::DocumentResponse::tax_code,
+        tax_currency: String?,
         tax_details: ::Array[EInvoiceAPI::DocumentResponse::TaxDetail]?,
         total_discount: String?,
         total_tax: String?,
+        total_tax_in_tax_currency: String?,
         vatex: EInvoiceAPI::Models::DocumentResponse::vatex?,
         vatex_note: String?,
         vendor_address: String?,
@@ -278,6 +322,7 @@ module EInvoiceAPI
         vendor_company_id: String?,
         vendor_email: String?,
         vendor_name: String?,
+        vendor_phone: String?,
         vendor_tax_id: String?
       }
 
@@ -834,9 +879,11 @@ module EInvoiceAPI
           allowances: ::Array[EInvoiceAPI::Allowance]?,
           amount: String?,
           charges: ::Array[EInvoiceAPI::Charge]?,
-          date: nil,
+          date: Date?,
           description: String?,
           item_attributes: ::Array[EInvoiceAPI::DocumentResponse::Item::ItemAttribute]?,
+          name: String?,
+          price_base_quantity: String,
           product_code: String?,
           quantity: String?,
           tax: String?,
@@ -852,11 +899,17 @@ module EInvoiceAPI
 
         attr_accessor charges: ::Array[EInvoiceAPI::Charge]?
 
-        attr_accessor date: nil
+        attr_accessor date: Date?
 
         attr_accessor description: String?
 
         attr_accessor item_attributes: ::Array[EInvoiceAPI::DocumentResponse::Item::ItemAttribute]?
+
+        attr_accessor name: String?
+
+        attr_reader price_base_quantity: String?
+
+        def price_base_quantity=: (String) -> String
 
         attr_accessor product_code: String?
 
@@ -874,9 +927,11 @@ module EInvoiceAPI
           ?allowances: ::Array[EInvoiceAPI::Allowance]?,
           ?amount: String?,
           ?charges: ::Array[EInvoiceAPI::Charge]?,
-          ?date: nil,
+          ?date: Date?,
           ?description: String?,
           ?item_attributes: ::Array[EInvoiceAPI::DocumentResponse::Item::ItemAttribute]?,
+          ?name: String?,
+          ?price_base_quantity: String,
           ?product_code: String?,
           ?quantity: String?,
           ?tax: String?,
@@ -889,9 +944,11 @@ module EInvoiceAPI
           allowances: ::Array[EInvoiceAPI::Allowance]?,
           amount: String?,
           charges: ::Array[EInvoiceAPI::Charge]?,
-          date: nil,
+          date: Date?,
           description: String?,
           item_attributes: ::Array[EInvoiceAPI::DocumentResponse::Item::ItemAttribute]?,
+          name: String?,
+          price_base_quantity: String,
           product_code: String?,
           quantity: String?,
           tax: String?,

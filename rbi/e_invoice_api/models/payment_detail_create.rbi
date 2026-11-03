@@ -24,7 +24,9 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :payment_reference
 
-      # SWIFT/BIC code of the bank
+      # The payment service provider identifier (BT-86): the BIC of the payee's bank, or
+      # `SE:BANKGIRO` / `SE:PLUSGIRO` when `bank_account_number` is a Swedish bankgiro
+      # or plusgiro number.
       sig { returns(T.nilable(String)) }
       attr_accessor :swift
 
@@ -44,7 +46,9 @@ module EInvoiceAPI
         # Structured payment reference or communication (e.g., structured communication
         # for Belgian bank transfers)
         payment_reference: nil,
-        # SWIFT/BIC code of the bank
+        # The payment service provider identifier (BT-86): the BIC of the payee's bank, or
+        # `SE:BANKGIRO` / `SE:PLUSGIRO` when `bank_account_number` is a Swedish bankgiro
+        # or plusgiro number.
         swift: nil
       )
       end
