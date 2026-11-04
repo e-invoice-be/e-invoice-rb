@@ -73,6 +73,9 @@ jobs:
 
       - name: Check gem packaging
         run: bundle exec rake build:gem:check
+
+      - name: Check docs
+        run: bundle exec rake docs:check
   audit:
     timeout-minutes: 10
     name: audit
@@ -119,6 +122,9 @@ jobs:
         env:
           # Fail rather than silently skip the resource tests if Prism can't start
           PRISM_MOCK: '1'
+          # Mock the copy of the spec in the repo, not the live one, so that runs don't
+          # depend on api.e-invoice.be (see the OpenAPI spec drift workflow)
+          OPENAPI_SPEC_URL: openapi.json
         run: ./scripts/test
 
       - name: Upload coverage report

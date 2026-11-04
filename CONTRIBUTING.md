@@ -76,6 +76,32 @@ otherwise those tests are skipped with a warning. You can also run the mock your
 serves `$OPENAPI_SPEC_URL`, defaulting to the live spec). Set `PRISM_MOCK=1` to fail instead of skipping
 (as CI does), or `PRISM_MOCK=0` to skip them.
 
+### The copy of the OpenAPI spec
+
+CI doesn't mock the live spec: it sets `OPENAPI_SPEC_URL=openapi.json`, a copy of the spec in the repo root, so
+that a change to the API or an outage of `api.e-invoice.be` can't break a run, and a run on an old commit gives the
+same result. To run the tests locally against the same spec as CI:
+
+```bash
+$ OPENAPI_SPEC_URL=openapi.json ./scripts/test
+```
+
+(If a mock server is already listening on port 4010, `./scripts/test` uses it instead, whatever spec it serves.)
+
+When you sync the SDK with the API, update the copy in the same pull request:
+
+```bash
+$ ./scripts/update-openapi-spec
+$ git diff --stat openapi.json
+```
+
+The script (which needs `curl` and `python3`) downloads the live spec and writes it pretty-printed, so the diff
+shows what changed. Commit `openapi.json` with the SDK changes.
+
+To check whether the copy is out of date, run the **OpenAPI spec drift** workflow from the Actions tab (or
+`gh workflow run openapi-spec-drift.yml`). It only runs manually. When the copy differs from the live spec, it
+opens an issue with the diff, or updates the open one; the run itself doesn't fail.
+
 Coverage of `lib/` is measured with [SimpleCov](https://github.com/simplecov-ruby/simplecov) and written to
 `coverage/index.html`. A full run fails if line or branch coverage falls below the floors in `.simplecov`. Use
 `TEST=path/to/file_test.rb` to run a single file (no minimum), or `COVERAGE=0` to skip measurement.
@@ -99,13 +125,35 @@ Besides rubocop, sorbet and steep, `rake lint` also runs:
 - `format:check`: fails if `rake format` would change anything (it checks a temporary copy and never rewrites
   your files).
 
-Other checks, which CI runs separately or which aren't enforced yet:
+Other checks, which CI runs separately:
 
 - `rake audit`: checks `Gemfile.lock` against the Ruby advisory database (needs network).
 - `rake build:gem:check`: builds the gem, installs it in isolation and requires it, which catches files
   missing from the gemspec.
-- `rake docs:check`: fails on any YARD warning. It isn't part of CI yet because the generated `@param` tags
-  currently produce warnings.
+- `rake docs:check`: fails on any YARD warning.
+
+### Doc comments
+
+When a method's real signature differs from the one callers use (for example `def list(params = {})`), its doc
+comment has an `@overload` tag with the public signature. Indent the `@param` tags (and their `@option` lines)
+by two spaces under the `@overload` tag, so that YARD documents them on the overload. A `@param` tag at the
+method level must match a name in the real signature, or `rake docs:check` fails:
+
+```ruby
+# Retrieve a document.
+#
+# @overload retrieve(document_id, request_options: {})
+#
+#   @param document_id [String]
+#
+#   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+#
+# @return [EInvoiceAPI::Models::DocumentResponse]
+def retrieve(document_id, params = {})
+```
+
+Stainless generates the `@param` tags at the method level. After a Stainless sync, check the doc comments with
+`rake docs:check` before you merge.
 
 To format and fix all lint issues automatically:
 

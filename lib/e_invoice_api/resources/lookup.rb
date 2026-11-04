@@ -14,9 +14,9 @@ module EInvoiceAPI
       #
       # @overload retrieve(peppol_id:, request_options: {})
       #
-      # @param peppol_id [String] Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgia
+      #   @param peppol_id [String] Peppol ID in the format `<scheme>:<id>`. Example: `0208:1018265814` for a Belgia
       #
-      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [EInvoiceAPI::Models::LookupRetrieveResponse]
       #
@@ -41,11 +41,11 @@ module EInvoiceAPI
       #
       # @overload retrieve_participants(query:, country_code: nil, request_options: {})
       #
-      # @param query [String] Query to lookup
+      #   @param query [String] Query to lookup
       #
-      # @param country_code [String, nil] Country code of the company to lookup. If not provided, the search will be globa
+      #   @param country_code [String, nil] Country code of the company to lookup. If not provided, the search will be globa
       #
-      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [EInvoiceAPI::Models::LookupRetrieveParticipantsResponse]
       #

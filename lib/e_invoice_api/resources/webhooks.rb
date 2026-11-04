@@ -7,10 +7,10 @@ module EInvoiceAPI
       #
       # @overload create(events:, url:, enabled: nil, request_options: {})
       #
-      # @param events [Array<String>]
-      # @param url [String]
-      # @param enabled [Boolean]
-      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #   @param events [Array<String>]
+      #   @param url [String]
+      #   @param enabled [Boolean]
+      #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [EInvoiceAPI::Models::WebhookResponse]
       #
@@ -30,8 +30,8 @@ module EInvoiceAPI
       #
       # @overload retrieve(webhook_id, request_options: {})
       #
-      # @param webhook_id [String]
-      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #   @param webhook_id [String]
+      #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [EInvoiceAPI::Models::WebhookResponse]
       #
@@ -49,11 +49,11 @@ module EInvoiceAPI
       #
       # @overload update(webhook_id, enabled: nil, events: nil, url: nil, request_options: {})
       #
-      # @param webhook_id [String]
-      # @param enabled [Boolean, nil]
-      # @param events [Array<String>, nil]
-      # @param url [String, nil]
-      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #   @param webhook_id [String]
+      #   @param enabled [Boolean, nil]
+      #   @param events [Array<String>, nil]
+      #   @param url [String, nil]
+      #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [EInvoiceAPI::Models::WebhookResponse]
       #
@@ -73,7 +73,7 @@ module EInvoiceAPI
       #
       # @overload list(request_options: {})
       #
-      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Array<EInvoiceAPI::Models::WebhookResponse>]
       #
@@ -91,8 +91,8 @@ module EInvoiceAPI
       #
       # @overload delete(webhook_id, request_options: {})
       #
-      # @param webhook_id [String]
-      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #   @param webhook_id [String]
+      #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [EInvoiceAPI::Models::WebhookDeleteResponse]
       #
@@ -110,8 +110,8 @@ module EInvoiceAPI
       #
       # @overload history(webhook_id, request_options: {})
       #
-      # @param webhook_id [String]
-      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #   @param webhook_id [String]
+      #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [EInvoiceAPI::Models::WebhookHistoryResponse]
       #
@@ -129,13 +129,13 @@ module EInvoiceAPI
       #
       # @overload test_(webhook_id, data:, event_type:, request_options: {})
       #
-      # @param webhook_id [String]
+      #   @param webhook_id [String]
       #
-      # @param data [Hash{Symbol=>Object}] Custom event data payload
+      #   @param data [Hash{Symbol=>Object}] Custom event data payload
       #
-      # @param event_type [String] Must be valid WebhookEventType
+      #   @param event_type [String] Must be valid WebhookEventType
       #
-      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [EInvoiceAPI::Models::WebhookTestResponse]
       #

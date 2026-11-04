@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+# Update openapi.json, the copy of the OpenAPI spec that the Prism mock server
+# serves to the resource tests in CI, from the live spec.
+#
+# usage: scripts/update-openapi-spec [<spec url or path>]
+#
+# The spec defaults to $OPENAPI_LIVE_SPEC_URL, or else the live spec at
+# https://api.e-invoice.be/api/openapi.json. The copy is pretty-printed (key
+# order and number literals are kept), so `git diff openapi.json` shows what
+# changed. Needs curl and python3; the output doesn't depend on their versions.
+
+set -euo pipefail
+
+SOURCE="${1:-${OPENAPI_LIVE_SPEC_URL:-https://api.e-invoice.be/api/openapi.json}}"
+if [[ "$SOURCE" != *://* && -e "$SOURCE" ]]; then
+  SOURCE="$(cd -- "$(dirname -- "$SOURCE")" && pwd)/$(basename -- "$SOURCE")"
+fi
+
+cd -- "$(dirname -- "$0")/.."
+
+TARGET="openapi.json"
+
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "Error: python3 is not installed" >&2
+  exit 1
+fi
+
+TMP="$(mktemp)"
+trap 'rm -f "$TMP"' EXIT
+
+# Pretty-print with 2-space indents, without escaping non-ASCII characters, and
+# check that the result looks like an OpenAPI spec.
+format() {
+  python3 -I -c '
+import json, sys
+spec = json.load(sys.stdin)
+if not (isinstance(spec, dict) and "openapi" in spec and "paths" in spec):
+    sys.exit("Error: " + sys.argv[1] + " is not an OpenAPI spec")
+json.dump(spec, sys.stdout, indent=2, ensure_ascii=False)
+sys.stdout.write("\n")
+' "$SOURCE"
+}
+
+echo "==> Downloading the OpenAPI spec from ${SOURCE}"
+if [[ "$SOURCE" == *://* ]]; then
+  curl --fail --silent --show-error --location --max-time 60 "$SOURCE" | format >"$TMP"
+else
+  format <"$SOURCE" >"$TMP"
+fi
+
+chmod 644 "$TMP"
+mv "$TMP" "$TARGET"
+trap - EXIT
+echo "==> Wrote ${TARGET} (OpenAPI $(python3 -I -c 'import json, sys; s = json.load(open(sys.argv[1])); print(s["openapi"] + ", API version " + s["info"]["version"])' "$TARGET"))"
