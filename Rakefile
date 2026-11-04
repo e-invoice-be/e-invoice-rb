@@ -233,6 +233,13 @@ multitask(:"build:gem:check") do
     env.merge!(ENV.keys.grep(/\ABUNDLE(R)?_/).to_h { [_1, nil] })
     smoke = File.expand_path("scripts/utils/check-installed-gem.rb")
     sh(env, RbConfig.ruby, smoke, Dir.pwd, chdir: tmp, verbose: false)
+
+    # load it again through bundler, with only the SDK in the Gemfile: catches undeclared dependencies
+    app = File.join(tmp, "app")
+    mkdir_p(app, verbose: false)
+    version = Gem::Specification.load("e_invoice_api.gemspec").version.to_s
+    bundled = File.expand_path("scripts/utils/check-bundled-gem.rb")
+    sh(env, RbConfig.ruby, bundled, app, version, chdir: tmp, verbose: false)
   end
 end
 

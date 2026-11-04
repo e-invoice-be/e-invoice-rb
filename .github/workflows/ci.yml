@@ -71,9 +71,6 @@ jobs:
       - name: Run lints
         run: ./scripts/lint
 
-      - name: Check gem packaging
-        run: bundle exec rake build:gem:check
-
       - name: Check docs
         run: bundle exec rake docs:check
   audit:
@@ -126,6 +123,10 @@ jobs:
           # depend on api.e-invoice.be (see the OpenAPI spec drift workflow)
           OPENAPI_SPEC_URL: openapi.json
         run: ./scripts/test
+
+      # Per ruby version: e.g. `base64` is a bundled gem from ruby 3.4, so the gemspec must declare it to use it
+      - name: Check gem packaging
+        run: bundle exec rake build:gem:check
 
       - name: Upload coverage report
         if: always() && matrix.ruby == '3.2'

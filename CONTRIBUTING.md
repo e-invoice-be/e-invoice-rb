@@ -129,7 +129,9 @@ Other checks, which CI runs separately:
 
 - `rake audit`: checks `Gemfile.lock` against the Ruby advisory database (needs network).
 - `rake build:gem:check`: builds the gem, installs it in isolation and requires it, which catches files
-  missing from the gemspec.
+  missing from the gemspec. It then requires it again in a Bundler app with only the SDK in its Gemfile, which
+  catches gems the SDK requires but the gemspec does not declare (such as `base64`, a bundled gem since Ruby
+  3.4). CI runs it on every Ruby version in the test matrix.
 - `rake docs:check`: fails on any YARD warning.
 
 ### Doc comments
