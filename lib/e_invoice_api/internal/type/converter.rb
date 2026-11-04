@@ -15,15 +15,15 @@ module EInvoiceAPI
         #
         # @param state [Hash{Symbol=>Object}] .
         #
-        #   @option state [Boolean] :translate_names
+        # @option state [Boolean] :translate_names
         #
-        #   @option state [Boolean] :strictness
+        # @option state [Boolean] :strictness
         #
-        #   @option state [Hash{Symbol=>Object}] :exactness
+        # @option state [Hash{Symbol=>Object}] :exactness
         #
-        #   @option state [Class<StandardError>] :error
+        # @option state [Class<StandardError>] :error
         #
-        #   @option state [Integer] :branched
+        # @option state [Integer] :branched
         #
         # @return [Object]
         def coerce(value, state:) = (raise NotImplementedError)
@@ -34,7 +34,7 @@ module EInvoiceAPI
         #
         # @param state [Hash{Symbol=>Object}] .
         #
-        #   @option state [Boolean] :can_retry
+        # @option state [Boolean] :can_retry
         #
         # @return [Object]
         def dump(value, state:)
@@ -74,13 +74,13 @@ module EInvoiceAPI
           #
           # @param spec [Hash{Symbol=>Object}, Proc, EInvoiceAPI::Internal::Type::Converter, Class] .
           #
-          #   @option spec [NilClass, TrueClass, FalseClass, Integer, Float, Symbol] :const
+          # @option spec [NilClass, TrueClass, FalseClass, Integer, Float, Symbol] :const
           #
-          #   @option spec [Proc] :enum
+          # @option spec [Proc] :enum
           #
-          #   @option spec [Proc] :union
+          # @option spec [Proc] :union
           #
-          #   @option spec [Boolean] :"nil?"
+          # @option spec [Boolean] :"nil?"
           #
           # @return [Proc]
           def type_info(spec)
@@ -102,23 +102,23 @@ module EInvoiceAPI
           #
           # @param type_info [Hash{Symbol=>Object}, Proc, EInvoiceAPI::Internal::Type::Converter, Class] .
           #
-          #   @option type_info [NilClass, TrueClass, FalseClass, Integer, Float, Symbol] :const
+          # @option type_info [NilClass, TrueClass, FalseClass, Integer, Float, Symbol] :const
           #
-          #   @option type_info [Proc] :enum
+          # @option type_info [Proc] :enum
           #
-          #   @option type_info [Proc] :union
+          # @option type_info [Proc] :union
           #
-          #   @option type_info [Boolean] :"nil?"
+          # @option type_info [Boolean] :"nil?"
           #
           # @param spec [Hash{Symbol=>Object}, Proc, EInvoiceAPI::Internal::Type::Converter, Class] .
           #
-          #   @option spec [NilClass, TrueClass, FalseClass, Integer, Float, Symbol] :const
+          # @option spec [NilClass, TrueClass, FalseClass, Integer, Float, Symbol] :const
           #
-          #   @option spec [Proc] :enum
+          # @option spec [Proc] :enum
           #
-          #   @option spec [Proc] :union
+          # @option spec [Proc] :union
           #
-          #   @option spec [Boolean] :"nil?"
+          # @option spec [Boolean] :"nil?"
           #
           # @return [Hash{Symbol=>Object}]
           def meta_info(type_info, spec)
@@ -173,15 +173,15 @@ module EInvoiceAPI
           #
           # See implementation below for more details.
           #
-          #   @option state [Boolean] :translate_names
+          # @option state [Boolean] :translate_names
           #
-          #   @option state [Boolean] :strictness
+          # @option state [Boolean] :strictness
           #
-          #   @option state [Hash{Symbol=>Object}] :exactness
+          # @option state [Hash{Symbol=>Object}] :exactness
           #
-          #   @option state [Class<StandardError>] :error
+          # @option state [Class<StandardError>] :error
           #
-          #   @option state [Integer] :branched
+          # @option state [Integer] :branched
           #
           # @return [Object]
           def coerce(target, value, state: EInvoiceAPI::Internal::Type::Converter.new_coerce_state)
@@ -276,7 +276,7 @@ module EInvoiceAPI
           #
           # @param state [Hash{Symbol=>Object}] .
           #
-          #   @option state [Boolean] :can_retry
+          # @option state [Boolean] :can_retry
           #
           # @return [Object]
           def dump(target, value, state: {can_retry: true})

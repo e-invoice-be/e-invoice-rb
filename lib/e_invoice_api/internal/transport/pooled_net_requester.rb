@@ -52,11 +52,11 @@ module EInvoiceAPI
           #
           # @param request [Hash{Symbol=>Object}] .
           #
-          #   @option request [Symbol] :method
+          # @option request [Symbol] :method
           #
-          #   @option request [URI::Generic] :url
+          # @option request [URI::Generic] :url
           #
-          #   @option request [Hash{String=>String}] :headers
+          # @option request [Hash{String=>String}] :headers
           #
           # @param blk [Proc]
           #
@@ -116,15 +116,15 @@ module EInvoiceAPI
         #
         # @param request [Hash{Symbol=>Object}] .
         #
-        #   @option request [Symbol] :method
+        # @option request [Symbol] :method
         #
-        #   @option request [URI::Generic] :url
+        # @option request [URI::Generic] :url
         #
-        #   @option request [Hash{String=>String}] :headers
+        # @option request [Hash{String=>String}] :headers
         #
-        #   @option request [Object] :body
+        # @option request [Object] :body
         #
-        #   @option request [Float] :deadline
+        # @option request [Float] :deadline
         #
         # @return [Array(Integer, Net::HTTPResponse, Enumerable<String>)]
         def execute(request)

@@ -314,15 +314,15 @@ module EInvoiceAPI
         #
         # @param parsed [Hash{Symbol=>String, Integer, nil}] .
         #
-        #   @option parsed [String, nil] :scheme
+        # @option parsed [String, nil] :scheme
         #
-        #   @option parsed [String, nil] :host
+        # @option parsed [String, nil] :host
         #
-        #   @option parsed [Integer, nil] :port
+        # @option parsed [Integer, nil] :port
         #
-        #   @option parsed [String, nil] :path
+        # @option parsed [String, nil] :path
         #
-        #   @option parsed [Hash{String=>Array<String>}] :query
+        # @option parsed [Hash{String=>Array<String>}] :query
         #
         # @return [URI::Generic]
         def unparse_uri(parsed)
@@ -333,27 +333,27 @@ module EInvoiceAPI
         #
         # @param lhs [Hash{Symbol=>String, Integer, nil}] .
         #
-        #   @option lhs [String, nil] :scheme
+        # @option lhs [String, nil] :scheme
         #
-        #   @option lhs [String, nil] :host
+        # @option lhs [String, nil] :host
         #
-        #   @option lhs [Integer, nil] :port
+        # @option lhs [Integer, nil] :port
         #
-        #   @option lhs [String, nil] :path
+        # @option lhs [String, nil] :path
         #
-        #   @option lhs [Hash{String=>Array<String>}] :query
+        # @option lhs [Hash{String=>Array<String>}] :query
         #
         # @param rhs [Hash{Symbol=>String, Integer, nil}] .
         #
-        #   @option rhs [String, nil] :scheme
+        # @option rhs [String, nil] :scheme
         #
-        #   @option rhs [String, nil] :host
+        # @option rhs [String, nil] :host
         #
-        #   @option rhs [Integer, nil] :port
+        # @option rhs [Integer, nil] :port
         #
-        #   @option rhs [String, nil] :path
+        # @option rhs [String, nil] :path
         #
-        #   @option rhs [Hash{String=>Array<String>}] :query
+        # @option rhs [Hash{String=>Array<String>}] :query
         #
         # @return [URI::Generic]
         def join_parsed_uri(lhs, rhs)

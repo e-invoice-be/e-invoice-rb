@@ -71,17 +71,17 @@ module EInvoiceAPI
           #
           # @param request [Hash{Symbol=>Object}] .
           #
-          #   @option request [Symbol] :method
+          # @option request [Symbol] :method
           #
-          #   @option request [URI::Generic] :url
+          # @option request [URI::Generic] :url
           #
-          #   @option request [Hash{String=>String}] :headers
+          # @option request [Hash{String=>String}] :headers
           #
-          #   @option request [Object] :body
+          # @option request [Object] :body
           #
-          #   @option request [Integer] :max_retries
+          # @option request [Integer] :max_retries
           #
-          #   @option request [Float] :timeout
+          # @option request [Float] :timeout
           #
           # @param status [Integer]
           #
@@ -234,37 +234,37 @@ module EInvoiceAPI
         #
         # @param req [Hash{Symbol=>Object}] .
         #
-        #   @option req [Symbol] :method
+        # @option req [Symbol] :method
         #
-        #   @option req [String, Array<String>] :path
+        # @option req [String, Array<String>] :path
         #
-        #   @option req [Hash{String=>Array<String>, String, nil}, nil] :query
+        # @option req [Hash{String=>Array<String>, String, nil}, nil] :query
         #
-        #   @option req [Hash{String=>String, Integer, Array<String, Integer, nil>, nil}, nil] :headers
+        # @option req [Hash{String=>String, Integer, Array<String, Integer, nil>, nil}, nil] :headers
         #
-        #   @option req [Object, nil] :body
+        # @option req [Object, nil] :body
         #
-        #   @option req [Symbol, Integer, Array<Symbol, Integer>, Proc, nil] :unwrap
+        # @option req [Symbol, Integer, Array<Symbol, Integer>, Proc, nil] :unwrap
         #
-        #   @option req [Class<EInvoiceAPI::Internal::Type::BasePage>, nil] :page
+        # @option req [Class<EInvoiceAPI::Internal::Type::BasePage>, nil] :page
         #
-        #   @option req [Class<EInvoiceAPI::Internal::Type::BaseStream>, nil] :stream
+        # @option req [Class<EInvoiceAPI::Internal::Type::BaseStream>, nil] :stream
         #
-        #   @option req [EInvoiceAPI::Internal::Type::Converter, Class, nil] :model
+        # @option req [EInvoiceAPI::Internal::Type::Converter, Class, nil] :model
         #
         # @param opts [Hash{Symbol=>Object}] .
         #
-        #   @option opts [String, nil] :idempotency_key
+        # @option opts [String, nil] :idempotency_key
         #
-        #   @option opts [Hash{String=>Array<String>, String, nil}, nil] :extra_query
+        # @option opts [Hash{String=>Array<String>, String, nil}, nil] :extra_query
         #
-        #   @option opts [Hash{String=>String, nil}, nil] :extra_headers
+        # @option opts [Hash{String=>String, nil}, nil] :extra_headers
         #
-        #   @option opts [Object, nil] :extra_body
+        # @option opts [Object, nil] :extra_body
         #
-        #   @option opts [Integer, nil] :max_retries
+        # @option opts [Integer, nil] :max_retries
         #
-        #   @option opts [Float, nil] :timeout
+        # @option opts [Float, nil] :timeout
         #
         # @return [Hash{Symbol=>Object}]
         private def build_request(req, opts)
@@ -356,17 +356,17 @@ module EInvoiceAPI
         #
         # @param request [Hash{Symbol=>Object}] .
         #
-        #   @option request [Symbol] :method
+        # @option request [Symbol] :method
         #
-        #   @option request [URI::Generic] :url
+        # @option request [URI::Generic] :url
         #
-        #   @option request [Hash{String=>String}] :headers
+        # @option request [Hash{String=>String}] :headers
         #
-        #   @option request [Object] :body
+        # @option request [Object] :body
         #
-        #   @option request [Integer] :max_retries
+        # @option request [Integer] :max_retries
         #
-        #   @option request [Float] :timeout
+        # @option request [Float] :timeout
         #
         # @param redirect_count [Integer]
         #
@@ -466,17 +466,17 @@ module EInvoiceAPI
         #
         #   @param options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil] .
         #
-        #     @option options [String, nil] :idempotency_key
+        #   @option options [String, nil] :idempotency_key
         #
-        #     @option options [Hash{String=>Array<String>, String, nil}, nil] :extra_query
+        #   @option options [Hash{String=>Array<String>, String, nil}, nil] :extra_query
         #
-        #     @option options [Hash{String=>String, nil}, nil] :extra_headers
+        #   @option options [Hash{String=>String, nil}, nil] :extra_headers
         #
-        #     @option options [Object, nil] :extra_body
+        #   @option options [Object, nil] :extra_body
         #
-        #     @option options [Integer, nil] :max_retries
+        #   @option options [Integer, nil] :max_retries
         #
-        #     @option options [Float, nil] :timeout
+        #   @option options [Float, nil] :timeout
         #
         # @raise [EInvoiceAPI::Errors::APIError]
         # @return [Object]

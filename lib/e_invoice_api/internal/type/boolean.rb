@@ -37,15 +37,15 @@ module EInvoiceAPI
           #
           # @param state [Hash{Symbol=>Object}] .
           #
-          #   @option state [Boolean] :translate_names
+          # @option state [Boolean] :translate_names
           #
-          #   @option state [Boolean] :strictness
+          # @option state [Boolean] :strictness
           #
-          #   @option state [Hash{Symbol=>Object}] :exactness
+          # @option state [Hash{Symbol=>Object}] :exactness
           #
-          #   @option state [Class<StandardError>] :error
+          # @option state [Class<StandardError>] :error
           #
-          #   @option state [Integer] :branched
+          # @option state [Integer] :branched
           #
           # @return [Boolean, Object]
           def coerce(value, state:)
@@ -60,7 +60,7 @@ module EInvoiceAPI
           #
           #   @param state [Hash{Symbol=>Object}] .
           #
-          #     @option state [Boolean] :can_retry
+          #   @option state [Boolean] :can_retry
           #
           #   @return [Boolean, Object]
 
