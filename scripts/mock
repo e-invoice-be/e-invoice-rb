@@ -5,8 +5,9 @@
 # usage: scripts/mock [<spec url or path>] [--daemon]
 #
 # The spec defaults to $OPENAPI_SPEC_URL, or else the live spec at
-# https://api.e-invoice.be/api/openapi.json. Prism only reads the spec; it never
-# forwards requests to the real API.
+# https://api.e-invoice.be/api/openapi.json. CI uses openapi.json, the copy of the
+# spec in the repo (see scripts/update-openapi-spec). Prism only reads the spec;
+# it never forwards requests to the real API.
 #
 # With --daemon, Prism runs in the background in its own process group (logging
 # to .prism.log) and this script returns once it is listening. The group's ID is
