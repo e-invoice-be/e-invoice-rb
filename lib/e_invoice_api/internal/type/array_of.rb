@@ -18,17 +18,17 @@ module EInvoiceAPI
 
         # @overload [](type_info, spec = {})
         #
-        # @param type_info [Hash{Symbol=>Object}, Proc, EInvoiceAPI::Internal::Type::Converter, Class]
+        #   @param type_info [Hash{Symbol=>Object}, Proc, EInvoiceAPI::Internal::Type::Converter, Class]
         #
-        # @param spec [Hash{Symbol=>Object}] .
+        #   @param spec [Hash{Symbol=>Object}] .
         #
-        #   @option spec [NilClass, TrueClass, FalseClass, Integer, Float, Symbol] :const
+        #     @option spec [NilClass, TrueClass, FalseClass, Integer, Float, Symbol] :const
         #
-        #   @option spec [Proc] :enum
+        #     @option spec [Proc] :enum
         #
-        #   @option spec [Proc] :union
+        #     @option spec [Proc] :union
         #
-        #   @option spec [Boolean] :"nil?"
+        #     @option spec [Boolean] :"nil?"
         #
         # @return [self]
         def self.[](...) = new(...)

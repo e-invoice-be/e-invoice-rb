@@ -7,7 +7,7 @@ module EInvoiceAPI
       #
       # @overload retrieve(request_options: {})
       #
-      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [EInvoiceAPI::Models::MeRetrieveResponse]
       #

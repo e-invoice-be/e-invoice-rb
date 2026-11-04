@@ -8,8 +8,8 @@ module EInvoiceAPI
         #
         # @overload create(file:, request_options: {})
         #
-        # @param file [Pathname, StringIO, IO, String, EInvoiceAPI::FilePart]
-        # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+        #   @param file [Pathname, StringIO, IO, String, EInvoiceAPI::FilePart]
+        #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [EInvoiceAPI::Models::Conversion::DocumentCreateFromPdfTask]
         #
@@ -30,8 +30,8 @@ module EInvoiceAPI
         #
         # @overload retrieve(task_id, request_options: {})
         #
-        # @param task_id [String]
-        # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+        #   @param task_id [String]
+        #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [EInvoiceAPI::Models::Conversion::DocumentCreateFromPdfTask]
         #
@@ -49,8 +49,8 @@ module EInvoiceAPI
         #
         # @overload result(task_id, request_options: {})
         #
-        # @param task_id [String]
-        # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+        #   @param task_id [String]
+        #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [EInvoiceAPI::Models::DocumentCreateFromPdfResponse]
         #

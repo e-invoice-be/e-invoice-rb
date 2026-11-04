@@ -9,9 +9,9 @@ module EInvoiceAPI
         #
         # @overload retrieve(attachment_id, document_id:, request_options: {})
         #
-        # @param attachment_id [String]
-        # @param document_id [String]
-        # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+        #   @param attachment_id [String]
+        #   @param document_id [String]
+        #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [EInvoiceAPI::Models::Documents::DocumentAttachment]
         #
@@ -34,8 +34,8 @@ module EInvoiceAPI
         #
         # @overload list(document_id, request_options: {})
         #
-        # @param document_id [String]
-        # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+        #   @param document_id [String]
+        #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Array<EInvoiceAPI::Models::Documents::DocumentAttachment>]
         #
@@ -53,9 +53,9 @@ module EInvoiceAPI
         #
         # @overload delete(attachment_id, document_id:, request_options: {})
         #
-        # @param attachment_id [String]
-        # @param document_id [String]
-        # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+        #   @param attachment_id [String]
+        #   @param document_id [String]
+        #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [EInvoiceAPI::Models::Documents::AttachmentDeleteResponse]
         #
@@ -83,9 +83,9 @@ module EInvoiceAPI
         #
         # @overload add(document_id, file:, request_options: {})
         #
-        # @param document_id [String]
-        # @param file [Pathname, StringIO, IO, String, EInvoiceAPI::FilePart]
-        # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+        #   @param document_id [String]
+        #   @param file [Pathname, StringIO, IO, String, EInvoiceAPI::FilePart]
+        #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [EInvoiceAPI::Models::Documents::DocumentAttachment]
         #

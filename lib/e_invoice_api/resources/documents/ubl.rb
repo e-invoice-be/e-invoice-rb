@@ -8,8 +8,8 @@ module EInvoiceAPI
         #
         # @overload create_from_ubl(file:, request_options: {})
         #
-        # @param file [Pathname, StringIO, IO, String, EInvoiceAPI::FilePart]
-        # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+        #   @param file [Pathname, StringIO, IO, String, EInvoiceAPI::FilePart]
+        #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [EInvoiceAPI::Models::DocumentResponse]
         #
@@ -30,8 +30,8 @@ module EInvoiceAPI
         #
         # @overload get(document_id, request_options: {})
         #
-        # @param document_id [String]
-        # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+        #   @param document_id [String]
+        #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [EInvoiceAPI::Models::Documents::UblGetResponse]
         #
