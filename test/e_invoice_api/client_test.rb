@@ -137,7 +137,21 @@ class EInvoiceAPITest < Minitest::Test
     assert_equal(1.3, Thread.current.thread_variable_get(:mock_sleep).last)
   end
 
-  def test_retry_count_header
+  def test_no_platform_headers
+    stub_request(:post, "http://localhost/api/documents/").to_return_json(status: 200, body: {})
+
+    e_invoice = EInvoiceAPI::Client.new(base_url: "http://localhost", api_key: "My API Key")
+
+    e_invoice.documents.create
+
+    assert_requested(:any, /./, times: 1) do
+      header_names = _1.headers.keys.map(&:downcase)
+      assert_empty(header_names.grep(/\Ax-/))
+      assert_includes(header_names, "user-agent")
+    end
+  end
+
+  def test_retries_send_the_same_headers
     stub_request(:post, "http://localhost/api/documents/").to_return_json(status: 500, body: {})
 
     e_invoice = EInvoiceAPI::Client.new(base_url: "http://localhost", api_key: "My API Key")
@@ -146,35 +160,51 @@ class EInvoiceAPITest < Minitest::Test
       e_invoice.documents.create
     end
 
-    3.times do
-      assert_requested(:any, /./, headers: {"x-stainless-retry-count" => _1})
-    end
+    sent = []
+    assert_requested(:any, /./, times: 3) { sent << _1.headers.transform_keys(&:downcase) }
+    assert_equal(1, sent.uniq.length)
+    assert_empty(sent.first.keys.grep(/\Ax-/))
   end
 
-  def test_omit_retry_count_header
+  def test_extra_headers_sent_on_every_retry
     stub_request(:post, "http://localhost/api/documents/").to_return_json(status: 500, body: {})
 
     e_invoice = EInvoiceAPI::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(EInvoiceAPI::Errors::InternalServerError) do
-      e_invoice.documents.create(request_options: {extra_headers: {"x-stainless-retry-count" => nil}})
+      e_invoice.documents.create(request_options: {extra_headers: {"x-custom" => "42"}})
     end
 
-    assert_requested(:any, /./, times: 3) do
-      refute_includes(_1.headers.keys.map(&:downcase), "x-stainless-retry-count")
-    end
+    assert_requested(:any, /./, headers: {"x-custom" => "42"}, times: 3)
   end
 
-  def test_overwrite_retry_count_header
+  def test_generated_idempotency_key_is_reused_across_retries
     stub_request(:post, "http://localhost/api/documents/").to_return_json(status: 500, body: {})
 
     e_invoice = EInvoiceAPI::Client.new(base_url: "http://localhost", api_key: "My API Key")
+    e_invoice.instance_variable_set(:@idempotency_header, "idempotency-key")
 
     assert_raises(EInvoiceAPI::Errors::InternalServerError) do
-      e_invoice.documents.create(request_options: {extra_headers: {"x-stainless-retry-count" => "42"}})
+      e_invoice.documents.create
     end
 
-    assert_requested(:any, /./, headers: {"x-stainless-retry-count" => "42"}, times: 3)
+    keys = []
+    assert_requested(:any, /./, times: 3) { keys << _1.headers.transform_keys(&:downcase)["idempotency-key"] }
+    assert_equal(1, keys.uniq.length)
+    assert_match(/\Ae-invoice-ruby-retry-\h{8}-\h{4}-\h{4}-\h{4}-\h{12}\z/, keys.first)
+  end
+
+  def test_idempotency_key_request_option
+    stub_request(:post, "http://localhost/api/documents/").to_return_json(status: 500, body: {})
+
+    e_invoice = EInvoiceAPI::Client.new(base_url: "http://localhost", api_key: "My API Key")
+    e_invoice.instance_variable_set(:@idempotency_header, "idempotency-key")
+
+    assert_raises(EInvoiceAPI::Errors::InternalServerError) do
+      e_invoice.documents.create(request_options: {idempotency_key: "my-key"})
+    end
+
+    assert_requested(:any, /./, headers: {"idempotency-key" => "my-key"}, times: 3)
   end
 
   def test_client_redirect_307

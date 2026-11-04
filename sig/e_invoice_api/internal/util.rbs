@@ -9,10 +9,6 @@ module EInvoiceAPI
         Module | Class ns
       ) -> Enumerable[(Module | Class)]
 
-      def self?.arch: -> String
-
-      def self?.os: -> String
-
       def self?.primitive?: (top input) -> bool
 
       def self?.coerce_boolean: (String | bool input) -> (bool | top)

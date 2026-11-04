@@ -14,11 +14,12 @@ This will install all the required dependencies.
 
 ## Modifying/Adding code
 
-Most of the SDK is generated code. Modifications to code will be persisted between generations, but may result in merge conflicts between manual patches and changes from the generator. The generator will never modify the contents of `lib/e_invoice_api/helpers/` and `examples/` directory.
+e-invoice.be maintains this SDK by hand: all of the code, including `lib/`, `rbi/` and `sig/`, is edited directly. Make
+your change on a branch, run the checks below, and open a pull request to `main`.
 
 ## Adding and running examples
 
-All files in the `examples/` directory are not modified by the generator and can be freely edited or added to.
+You can freely edit or add files in the `examples/` directory.
 
 ```ruby
 #!/usr/bin/env ruby
@@ -154,8 +155,8 @@ method level must match a name in the real signature, or `rake docs:check` fails
 def retrieve(document_id, params = {})
 ```
 
-Stainless generates the `@param` tags at the method level. After a Stainless sync, check the doc comments with
-`rake docs:check` before you merge.
+Keep the `@param` tags under the `@overload` tag when you add or change a method, and run `rake docs:check` before
+you merge.
 
 To format and fix all lint issues automatically:
 
@@ -192,3 +193,42 @@ To preview the documentation, run:
 ```bash
 $ bundle exec rake docs:preview [PORT=8808]
 ```
+
+## Releasing
+
+Releases are manual. The gem on RubyGems is [`e-invoice-api`](https://rubygems.org/gems/e-invoice-api). It follows
+[SemVer](https://semver.org/spec/v2.0.0.html); while the major version is `0`, a breaking change increases the minor
+version.
+
+1. On a branch from `main`, change the version to `X.Y.Z` in:
+   - `lib/e_invoice_api/version.rb` (`EInvoiceAPI::VERSION`; the gemspec and the `User-Agent` header read it).
+   - The `Gemfile` snippet in the Installation section of `README.md` (`gem "e-invoice-api", "~> X.Y.Z"`).
+   - `Gemfile.lock`: run `bundle install`, which updates the `e-invoice-api (X.Y.Z)` line under `PATH`.
+2. In `CHANGELOG.md`, turn the `## Unreleased` section into `## X.Y.Z (YYYY-MM-DD)` (or add that section at the top),
+   with a `Full Changelog: [vA.B.C...vX.Y.Z](https://github.com/e-invoice-be/e-invoice-rb/compare/vA.B.C...vX.Y.Z)`
+   line like the earlier entries. List breaking changes first, under a `### ⚠ BREAKING CHANGES` heading.
+3. Open a pull request titled `release: X.Y.Z` and merge it to `main`.
+4. Tag the merge commit on `main` and push the tag:
+
+   ```bash
+   $ git checkout main && git pull
+   $ git tag vX.Y.Z
+   $ git push origin vX.Y.Z
+   ```
+
+5. Create a GitHub release from the tag, with the changelog entry as the text:
+
+   ```bash
+   $ gh release create vX.Y.Z --title vX.Y.Z --notes-file <file with the changelog entry>
+   ```
+
+Publishing the release starts the **Publish Gem** workflow (`.github/workflows/publish-gem.yml`). It checks out the
+tag and runs `bin/publish-gem`, which runs `bundle`, deletes any `*.gem` file in the repository root and runs
+`rake release`. That task builds the gem from `e_invoice_api.gemspec` (`rake build:gem`) and pushes it to RubyGems
+with `gem push`, authenticated by the `E_INVOICE_GEM_HOST_API_KEY` (or `GEM_HOST_API_KEY`) repository or
+organization secret. `RUBYGEMS_HOST` is only needed for a private gem server.
+
+If the workflow fails, fix the cause and run it again from the Actions tab (it has a `workflow_dispatch` trigger) or
+with `gh workflow run publish-gem.yml --ref vX.Y.Z`. Select the tag as the ref, so that it builds the released commit.
+RubyGems refuses to push a version that already exists, so a re-run cannot overwrite a published gem. Afterwards,
+check that the new version shows on [RubyGems](https://rubygems.org/gems/e-invoice-api).

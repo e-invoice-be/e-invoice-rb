@@ -2,7 +2,6 @@
 .idea/
 .ignore
 .prism.log
-.stdy.log
 .ruby-lsp/
 .yardoc/
 bin/tapioca

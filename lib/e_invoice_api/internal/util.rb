@@ -29,48 +29,6 @@ module EInvoiceAPI
       class << self
         # @api private
         #
-        # @return [String]
-        def arch
-          case (arch = RbConfig::CONFIG["arch"])&.downcase
-          in nil
-            "unknown"
-          in /aarch64|arm64/
-            "arm64"
-          in /x86_64/
-            "x64"
-          in /arm/
-            "arm"
-          else
-            "other:#{arch}"
-          end
-        end
-
-        # @api private
-        #
-        # @return [String]
-        def os
-          case (host = RbConfig::CONFIG["host_os"])&.downcase
-          in nil
-            "Unknown"
-          in /linux/
-            "Linux"
-          in /darwin/
-            "MacOS"
-          in /freebsd/
-            "FreeBSD"
-          in /openbsd/
-            "OpenBSD"
-          in /mswin|mingw|cygwin|ucrt/
-            "Windows"
-          else
-            "Other:#{host}"
-          end
-        end
-      end
-
-      class << self
-        # @api private
-        #
         # @param input [Object]
         #
         # @return [Boolean]

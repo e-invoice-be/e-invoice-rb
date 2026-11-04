@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### ⚠ BREAKING CHANGES
+
+* Requests no longer send the `x-stainless-arch`, `x-stainless-lang`, `x-stainless-os`, `x-stainless-package-version`, `x-stainless-runtime`, `x-stainless-runtime-version`, `x-stainless-retry-count` and `x-stainless-timeout` headers. The `User-Agent` header stays. Retries work as before.
+* Generated idempotency keys start with `e-invoice-ruby-retry-` instead of `stainless-ruby-retry-`. `EInvoiceAPI::Client` sends no idempotency header by default, so this only affects code that sets one.
+* Removed `EInvoiceAPI::Internal::Util.arch`, `EInvoiceAPI::Internal::Util.os` and the `EInvoiceAPI::Internal::Transport::BaseClient::PLATFORM_HEADERS` constant, and the `send_retry_header:` keyword of `BaseClient#send_request`. They only served these headers.
+
+### Chores
+
+* Remove the Stainless leftovers: the SDK is now maintained by e-invoice.be ([#92](https://github.com/e-invoice-be/e-invoice-rb/issues/92))
+
 ## 0.34.0 (2026-11-03)
 
 Full Changelog: [v0.33.0...v0.34.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.33.0...v0.34.0)
