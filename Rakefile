@@ -219,7 +219,7 @@ multitask(:"build:gem:check") do
     created_ignore = !File.exist?(ignore_file)
     begin
       Pathname(ignore_file).write("rbi/*\nsig/*\n") if created_ignore
-      sh(*%w[gem build --quiet e_invoice_api.gemspec --output], gem_file)
+      sh(*%w[gem build --strict --quiet e_invoice_api.gemspec --output], gem_file)
     ensure
       rm_f(ignore_file, verbose: false) if created_ignore
     end

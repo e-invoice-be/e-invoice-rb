@@ -12,8 +12,8 @@ PATH
   remote: .
   specs:
     e-invoice-api (0.34.0)
-      cgi
-      connection_pool
+      cgi (>= 0.2, < 1)
+      connection_pool (>= 2.0, < 4, != 3.0.0)
 
 GEM
   remote: https://rubygems.org/
