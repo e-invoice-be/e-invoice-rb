@@ -4042,7 +4042,7 @@
           },
           "count": {
             "type": "integer",
-            "minimum": 0,
+            "minimum": 0.0,
             "title": "Count",
             "description": "Number of occurrences of this action in this period"
           }
@@ -4093,8 +4093,8 @@
             "anyOf": [
               {
                 "type": "number",
-                "maximum": 100,
-                "minimum": 0
+                "maximum": 100.0,
+                "minimum": 0.0
               },
               {
                 "type": "string",
@@ -4143,8 +4143,8 @@
             "anyOf": [
               {
                 "type": "number",
-                "maximum": 100,
-                "minimum": 0
+                "maximum": 100.0,
+                "minimum": 0.0
               },
               {
                 "type": "string",
@@ -4156,7 +4156,7 @@
             ],
             "title": "Tax Rate",
             "description": "The VAT rate, represented as percentage that applies to the allowance. Must be rounded to maximum 2 decimals",
-            "default": 21
+            "default": 21.0
           },
           "tax_code": {
             "$ref": "#/components/schemas/TaxCategoryCode",
@@ -4244,7 +4244,7 @@
             ],
             "title": "Tax Rate",
             "description": "The VAT rate, represented as percentage that applies to the allowance. Must be rounded to maximum 2 decimals",
-            "default": 21
+            "default": 21.0
           },
           "tax_code": {
             "$ref": "#/components/schemas/TaxCategoryCode",
@@ -4332,7 +4332,7 @@
             ],
             "title": "Tax Rate",
             "description": "The VAT rate, represented as percentage that applies to the allowance. Must be rounded to maximum 2 decimals",
-            "default": 21
+            "default": 21.0
           },
           "tax_code": {
             "$ref": "#/components/schemas/TaxCategoryCode",
@@ -4640,8 +4640,8 @@
             "anyOf": [
               {
                 "type": "number",
-                "maximum": 100,
-                "minimum": 0
+                "maximum": 100.0,
+                "minimum": 0.0
               },
               {
                 "type": "string",
@@ -4690,8 +4690,8 @@
             "anyOf": [
               {
                 "type": "number",
-                "maximum": 100,
-                "minimum": 0
+                "maximum": 100.0,
+                "minimum": 0.0
               },
               {
                 "type": "string",
@@ -4703,7 +4703,7 @@
             ],
             "title": "Tax Rate",
             "description": "The VAT rate, represented as percentage that applies to the charge",
-            "default": 21,
+            "default": 21.0,
             "examples": [
               "21.00",
               "0.00",
@@ -4803,7 +4803,7 @@
             ],
             "title": "Tax Rate",
             "description": "The VAT rate, represented as percentage that applies to the charge",
-            "default": 21,
+            "default": 21.0,
             "examples": [
               "21.00",
               "0.00",
@@ -4903,7 +4903,7 @@
             ],
             "title": "Tax Rate",
             "description": "The VAT rate, represented as percentage that applies to the charge",
-            "default": 21,
+            "default": 21.0,
             "examples": [
               "21.00",
               "0.00",
@@ -5778,8 +5778,8 @@
             "anyOf": [
               {
                 "type": "number",
-                "maximum": 5,
-                "minimum": -5
+                "maximum": 5.0,
+                "minimum": -5.0
               },
               {
                 "type": "string",
@@ -8213,7 +8213,7 @@
             ],
             "title": "Tax Rate",
             "description": "The VAT rate of the line item expressed as percentage with 2 decimals",
-            "default": 0,
+            "default": 0.0,
             "examples": [
               "21.00",
               "0.00",
@@ -8410,8 +8410,8 @@
             "anyOf": [
               {
                 "type": "number",
-                "maximum": 100,
-                "minimum": 0
+                "maximum": 100.0,
+                "minimum": 0.0
               },
               {
                 "type": "string",
@@ -8423,7 +8423,7 @@
             ],
             "title": "Tax Rate",
             "description": "The VAT rate of the line item expressed as percentage with 2 decimals",
-            "default": 0,
+            "default": 0.0,
             "examples": [
               "21.00",
               "0.00",
@@ -8461,7 +8461,7 @@
             "anyOf": [
               {
                 "type": "number",
-                "exclusiveMinimum": 0
+                "exclusiveMinimum": 0.0
               },
               {
                 "type": "string",
@@ -8630,7 +8630,7 @@
             ],
             "title": "Tax Rate",
             "description": "The VAT rate of the line item expressed as percentage with 2 decimals",
-            "default": 0,
+            "default": 0.0,
             "examples": [
               "21.00",
               "0.00",
@@ -9581,22 +9581,22 @@
           },
           "total_days": {
             "type": "integer",
-            "minimum": 1,
+            "minimum": 1.0,
             "title": "Total Days",
             "description": "Number of days in the period"
           },
           "average_daily_usage": {
             "type": "number",
-            "minimum": 0,
+            "minimum": 0.0,
             "title": "Average Daily Usage",
             "description": "Average daily usage (total actions / total days)"
           },
           "budget_estimation_days": {
             "type": "number",
-            "minimum": 0,
+            "minimum": 0.0,
             "title": "Budget Estimation Days",
             "description": "Estimated days until credits run out (credit_balance / average_daily_usage). 0.0 if average_daily_usage is 0 or credit_balance is None",
-            "default": 0
+            "default": 0.0
           }
         },
         "type": "object",

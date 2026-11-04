@@ -86,6 +86,8 @@ same result. To run the tests locally against the same spec as CI:
 $ OPENAPI_SPEC_URL=openapi.json ./scripts/test
 ```
 
+(If a mock server is already listening on port 4010, `./scripts/test` uses it instead, whatever spec it serves.)
+
 When you sync the SDK with the API, update the copy in the same pull request:
 
 ```bash
@@ -93,8 +95,8 @@ $ ./scripts/update-openapi-spec
 $ git diff --stat openapi.json
 ```
 
-The script downloads the live spec and writes it pretty-printed (with [jq](https://jqlang.org)), so the diff shows
-what changed. Commit `openapi.json` with the SDK changes.
+The script (which needs `curl` and `python3`) downloads the live spec and writes it pretty-printed, so the diff
+shows what changed. Commit `openapi.json` with the SDK changes.
 
 To check whether the copy is out of date, run the **OpenAPI spec drift** workflow from the Actions tab (or
 `gh workflow run openapi-spec-drift.yml`). It only runs manually. When the copy differs from the live spec, it
