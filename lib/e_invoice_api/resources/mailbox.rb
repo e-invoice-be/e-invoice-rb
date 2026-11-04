@@ -11,25 +11,25 @@ module EInvoiceAPI
       #
       # @overload list(page: nil, page_size: nil, processed: nil, received_from: nil, received_to: nil, search: nil, sort_by: nil, sort_order: nil, status: nil, request_options: {})
       #
-      # @param page [Integer] Page number
+      #   @param page [Integer] Page number
       #
-      # @param page_size [Integer] Number of items per page
+      #   @param page_size [Integer] Number of items per page
       #
-      # @param processed [Boolean, nil] Filter by processing status. If not provided, returns all. Ignored when `status`
+      #   @param processed [Boolean, nil] Filter by processing status. If not provided, returns all. Ignored when `status`
       #
-      # @param received_from [Time, nil] Inclusive lower bound on received date (falls back to created_at when received_a
+      #   @param received_from [Time, nil] Inclusive lower bound on received date (falls back to created_at when received_a
       #
-      # @param received_to [Time, nil] Inclusive upper bound on received date (falls back to created_at when received_a
+      #   @param received_to [Time, nil] Inclusive upper bound on received date (falls back to created_at when received_a
       #
-      # @param search [String, nil] Case-insensitive search across sender email, subject, message ID, and attachment
+      #   @param search [String, nil] Case-insensitive search across sender email, subject, message ID, and attachment
       #
-      # @param sort_by [Symbol, EInvoiceAPI::Models::MailboxListParams::SortBy] Field to sort by
+      #   @param sort_by [Symbol, EInvoiceAPI::Models::MailboxListParams::SortBy] Field to sort by
       #
-      # @param sort_order [Symbol, EInvoiceAPI::Models::MailboxListParams::SortOrder] Sort direction (asc/desc)
+      #   @param sort_order [Symbol, EInvoiceAPI::Models::MailboxListParams::SortOrder] Sort direction (asc/desc)
       #
-      # @param status [Symbol, EInvoiceAPI::Models::MailboxListParams::Status, nil] Filter by status: pending, success, or failed. Takes precedence over `processed`
+      #   @param status [Symbol, EInvoiceAPI::Models::MailboxListParams::Status, nil] Filter by status: pending, success, or failed. Takes precedence over `processed`
       #
-      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [EInvoiceAPI::Internal::DocumentsNumberPage<EInvoiceAPI::Models::InboundEmailResponse>]
       #
@@ -51,8 +51,8 @@ module EInvoiceAPI
       #
       # @overload retrieve(inbound_email_id, request_options: {})
       #
-      # @param inbound_email_id [String]
-      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #   @param inbound_email_id [String]
+      #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [EInvoiceAPI::Models::InboundEmailResponse]
       #
@@ -71,9 +71,9 @@ module EInvoiceAPI
       #
       # @overload download_attachment(filename, inbound_email_id:, request_options: {})
       #
-      # @param filename [String]
-      # @param inbound_email_id [String]
-      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #   @param filename [String]
+      #   @param inbound_email_id [String]
+      #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Object]
       #
@@ -97,8 +97,8 @@ module EInvoiceAPI
       #
       # @overload reprocess(inbound_email_id, request_options: {})
       #
-      # @param inbound_email_id [String]
-      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #   @param inbound_email_id [String]
+      #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [EInvoiceAPI::Models::InboundEmailResponse]
       #

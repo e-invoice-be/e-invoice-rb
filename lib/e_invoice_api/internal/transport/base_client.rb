@@ -446,37 +446,37 @@ module EInvoiceAPI
         #
         # @overload request(method, path, query: {}, headers: {}, body: nil, unwrap: nil, page: nil, stream: nil, model: EInvoiceAPI::Internal::Type::Unknown, options: {})
         #
-        # @param method [Symbol]
+        #   @param method [Symbol]
         #
-        # @param path [String, Array<String>]
+        #   @param path [String, Array<String>]
         #
-        # @param query [Hash{String=>Array<String>, String, nil}, nil]
+        #   @param query [Hash{String=>Array<String>, String, nil}, nil]
         #
-        # @param headers [Hash{String=>String, Integer, Array<String, Integer, nil>, nil}, nil]
+        #   @param headers [Hash{String=>String, Integer, Array<String, Integer, nil>, nil}, nil]
         #
-        # @param body [Object, nil]
+        #   @param body [Object, nil]
         #
-        # @param unwrap [Symbol, Integer, Array<Symbol, Integer>, Proc, nil]
+        #   @param unwrap [Symbol, Integer, Array<Symbol, Integer>, Proc, nil]
         #
-        # @param page [Class<EInvoiceAPI::Internal::Type::BasePage>, nil]
+        #   @param page [Class<EInvoiceAPI::Internal::Type::BasePage>, nil]
         #
-        # @param stream [Class<EInvoiceAPI::Internal::Type::BaseStream>, nil]
+        #   @param stream [Class<EInvoiceAPI::Internal::Type::BaseStream>, nil]
         #
-        # @param model [EInvoiceAPI::Internal::Type::Converter, Class, nil]
+        #   @param model [EInvoiceAPI::Internal::Type::Converter, Class, nil]
         #
-        # @param options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil] .
+        #   @param options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil] .
         #
-        #   @option options [String, nil] :idempotency_key
+        #     @option options [String, nil] :idempotency_key
         #
-        #   @option options [Hash{String=>Array<String>, String, nil}, nil] :extra_query
+        #     @option options [Hash{String=>Array<String>, String, nil}, nil] :extra_query
         #
-        #   @option options [Hash{String=>String, nil}, nil] :extra_headers
+        #     @option options [Hash{String=>String, nil}, nil] :extra_headers
         #
-        #   @option options [Object, nil] :extra_body
+        #     @option options [Object, nil] :extra_body
         #
-        #   @option options [Integer, nil] :max_retries
+        #     @option options [Integer, nil] :max_retries
         #
-        #   @option options [Float, nil] :timeout
+        #     @option options [Float, nil] :timeout
         #
         # @raise [EInvoiceAPI::Errors::APIError]
         # @return [Object]

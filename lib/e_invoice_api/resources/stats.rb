@@ -13,13 +13,13 @@ module EInvoiceAPI
       #
       # @overload retrieve(aggregation: nil, end_date: nil, start_date: nil, request_options: {})
       #
-      # @param aggregation [Symbol, EInvoiceAPI::Models::StatsRetrieveParams::Aggregation, nil] Aggregation type: DAY, WEEK, or MONTH. Defaults to DAY.
+      #   @param aggregation [Symbol, EInvoiceAPI::Models::StatsRetrieveParams::Aggregation, nil] Aggregation type: DAY, WEEK, or MONTH. Defaults to DAY.
       #
-      # @param end_date [Date, nil] End date in yyyy-mm-dd format. If not provided, queries to latest available data
+      #   @param end_date [Date, nil] End date in yyyy-mm-dd format. If not provided, queries to latest available data
       #
-      # @param start_date [Date, nil] Start date in yyyy-mm-dd format. If not provided, queries from earliest availabl
+      #   @param start_date [Date, nil] Start date in yyyy-mm-dd format. If not provided, queries from earliest availabl
       #
-      # @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+      #   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [EInvoiceAPI::Models::StatsRetrieveResponse]
       #
