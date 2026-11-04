@@ -6,7 +6,7 @@ module EInvoiceAPI
       # @api private
       module RequestParameters
         # @!attribute request_options
-        # Options to specify HTTP behaviour for this request.
+        #   Options to specify HTTP behaviour for this request.
         #
         #   @return [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}]
 

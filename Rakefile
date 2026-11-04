@@ -166,6 +166,8 @@ desc("Check yard docs: fail on any yard warning; prints documentation coverage (
 multitask(:"docs:check") do
   # `stats` parses everything `yard doc` does, so it reports the same warnings; nothing is written to disk
   sh(*%w[yard stats --no-save --no-cache --fail-on-warning])
+  # a tag YARD cannot parse becomes literal text, and `yard stats` does not warn about it
+  ruby("scripts/utils/check-yard-literal-tags.rb")
 end
 
 desc("Typecheck `*.rbs`")
