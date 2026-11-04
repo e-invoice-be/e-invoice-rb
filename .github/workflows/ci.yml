@@ -73,6 +73,9 @@ jobs:
 
       - name: Check gem packaging
         run: bundle exec rake build:gem:check
+
+      - name: Check docs
+        run: bundle exec rake docs:check
   audit:
     timeout-minutes: 10
     name: audit

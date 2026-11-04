@@ -99,13 +99,35 @@ Besides rubocop, sorbet and steep, `rake lint` also runs:
 - `format:check`: fails if `rake format` would change anything (it checks a temporary copy and never rewrites
   your files).
 
-Other checks, which CI runs separately or which aren't enforced yet:
+Other checks, which CI runs separately:
 
 - `rake audit`: checks `Gemfile.lock` against the Ruby advisory database (needs network).
 - `rake build:gem:check`: builds the gem, installs it in isolation and requires it, which catches files
   missing from the gemspec.
-- `rake docs:check`: fails on any YARD warning. It isn't part of CI yet because the generated `@param` tags
-  currently produce warnings.
+- `rake docs:check`: fails on any YARD warning.
+
+### Doc comments
+
+When a method's real signature differs from the one callers use (for example `def list(params = {})`), its doc
+comment has an `@overload` tag with the public signature. Indent the `@param` tags (and their `@option` lines)
+by two spaces under the `@overload` tag, so that YARD documents them on the overload. A `@param` tag at the
+method level must match a name in the real signature, or `rake docs:check` fails:
+
+```ruby
+# Retrieve a document.
+#
+# @overload retrieve(document_id, request_options: {})
+#
+#   @param document_id [String]
+#
+#   @param request_options [EInvoiceAPI::RequestOptions, Hash{Symbol=>Object}, nil]
+#
+# @return [EInvoiceAPI::Models::DocumentResponse]
+def retrieve(document_id, params = {})
+```
+
+Stainless generates the `@param` tags at the method level. After a Stainless sync, check the doc comments with
+`rake docs:check` before you merge.
 
 To format and fix all lint issues automatically:
 
