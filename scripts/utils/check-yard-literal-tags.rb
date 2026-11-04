@@ -69,8 +69,8 @@ warn(<<~MSG)
 
   Comment indentation only; do not change code:
   - Put @option at the same indent as the @param it belongs to. Under @overload that is
-    two spaces, the same as @param (CONTRIBUTING.md). A Stainless sync indents @option
-    under @param; dedent those lines.
+    two spaces, the same as @param (CONTRIBUTING.md). An @option indented under its
+    @param becomes text; dedent those lines.
   - For a directive (@!attribute, @!method), indent the whole description by two spaces.
     A tag indented further than that description becomes text.
 MSG

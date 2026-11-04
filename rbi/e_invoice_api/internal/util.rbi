@@ -22,18 +22,6 @@ module EInvoiceAPI
 
       class << self
         # @api private
-        sig { returns(String) }
-        def arch
-        end
-
-        # @api private
-        sig { returns(String) }
-        def os
-        end
-      end
-
-      class << self
-        # @api private
         sig { params(input: T.anything).returns(T::Boolean) }
         def primitive?(input)
         end
