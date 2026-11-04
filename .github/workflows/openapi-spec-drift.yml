@@ -1,0 +1,86 @@
+name: OpenAPI spec drift
+# Compares openapi.json, the copy of the spec that the CI resource tests mock,
+# with the live spec. When they differ, it opens an issue with the diff, or
+# updates the open one. It doesn't fail the run. Run it manually from the
+# Actions tab, or with `gh workflow run openapi-spec-drift.yml`.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: openapi-spec-drift
+  cancel-in-progress: false
+
+jobs:
+  check:
+    timeout-minutes: 10
+    name: check
+    runs-on: ubuntu-latest
+    env:
+      ISSUE_TITLE: 'OpenAPI spec drift: openapi.json differs from the live spec'
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Download the live spec
+        run: ./scripts/update-openapi-spec
+
+      - name: Compare with the copy
+        id: compare
+        run: |
+          git diff --no-color --stat openapi.json >spec.stat
+          git diff --no-color openapi.json >spec.diff
+          if [ -s spec.diff ]; then
+            echo "drift=true" >>"$GITHUB_OUTPUT"
+            echo "::warning title=OpenAPI spec drift::openapi.json differs from the live spec: $(tail -n 1 spec.stat)"
+            cat spec.diff
+          else
+            echo "drift=false" >>"$GITHUB_OUTPUT"
+            echo "openapi.json matches the live spec." | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload the diff
+        if: steps.compare.outputs.drift == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: openapi-spec-diff
+          path: spec.diff
+
+      - name: Open or update the drift issue
+        if: steps.compare.outputs.drift == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          # An issue body holds at most 65536 characters; the artifact has the full diff.
+          max=60000
+          {
+            echo "The live spec at https://api.e-invoice.be/api/openapi.json differs from \`openapi.json\`, the copy that the CI resource tests mock."
+            echo
+            echo "To update the copy, run \`./scripts/update-openapi-spec\` and commit \`openapi.json\`, preferably in the pull request that syncs the SDK with the API (see CONTRIBUTING.md)."
+            echo
+            echo "Found by [this run](${RUN_URL}) on commit ${GITHUB_SHA}: $(tail -n 1 spec.stat)."
+            echo
+            echo '```diff'
+            head -c "$max" spec.diff
+            echo
+            echo '```'
+            if [ "$(wc -c <spec.diff)" -gt "$max" ]; then
+              echo
+              echo "The diff is truncated. Download the \`openapi-spec-diff\` artifact of the run for the full diff."
+            fi
+          } >issue.md
+          cat issue.md >>"$GITHUB_STEP_SUMMARY"
+
+          number="$(gh issue list --state open --search "in:title \"${ISSUE_TITLE}\"" --json number,title \
+            --jq "map(select(.title == env.ISSUE_TITLE)) | first | .number // empty")"
+          if [ -n "$number" ]; then
+            gh issue edit "$number" --body-file issue.md
+            gh issue comment "$number" --body "Updated the diff from ${RUN_URL}."
+            echo "::notice title=OpenAPI spec drift::Updated issue #${number}"
+          else
+            url="$(gh issue create --title "$ISSUE_TITLE" --body-file issue.md)"
+            echo "::notice title=OpenAPI spec drift::Opened ${url}"
+          fi

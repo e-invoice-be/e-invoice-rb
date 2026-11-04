@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+# Update openapi.json, the copy of the OpenAPI spec that the Prism mock server
+# serves to the resource tests in CI, from the live spec.
+#
+# usage: scripts/update-openapi-spec [<spec url or path>]
+#
+# The spec defaults to $OPENAPI_LIVE_SPEC_URL, or else the live spec at
+# https://api.e-invoice.be/api/openapi.json. The copy is pretty-printed with jq
+# (key order is kept), so `git diff openapi.json` shows what changed. Needs curl
+# and jq.
+
+set -euo pipefail
+
+cd -- "$(dirname -- "$0")/.."
+
+SOURCE="${1:-${OPENAPI_LIVE_SPEC_URL:-https://api.e-invoice.be/api/openapi.json}}"
+TARGET="openapi.json"
+
+if ! command -v jq >/dev/null 2>&1; then
+  echo "Error: jq is not installed" >&2
+  exit 1
+fi
+
+TMP="$(mktemp)"
+trap 'rm -f "$TMP"' EXIT
+
+echo "==> Downloading the OpenAPI spec from ${SOURCE}"
+if [[ "$SOURCE" == *://* ]]; then
+  curl --fail --silent --show-error --location --max-time 60 "$SOURCE" | jq . >"$TMP"
+else
+  jq . "$SOURCE" >"$TMP"
+fi
+
+if ! jq -e 'type == "object" and has("openapi") and has("paths")' "$TMP" >/dev/null; then
+  echo "Error: ${SOURCE} is not an OpenAPI spec" >&2
+  exit 1
+fi
+
+chmod 644 "$TMP"
+mv "$TMP" "$TARGET"
+trap - EXIT
+echo "==> Wrote ${TARGET} (OpenAPI $(jq -r .openapi "$TARGET"), API version $(jq -r .info.version "$TARGET"))"
