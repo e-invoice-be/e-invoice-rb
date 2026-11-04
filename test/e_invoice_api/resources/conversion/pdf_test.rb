@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 
 class EInvoiceAPI::Test::Resources::Conversion::PdfTest < EInvoiceAPI::Test::ResourceTest
   def test_create_required_params
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.conversion.pdf.create(file: StringIO.new("Example data"))
 
@@ -21,7 +21,7 @@ class EInvoiceAPI::Test::Resources::Conversion::PdfTest < EInvoiceAPI::Test::Res
   end
 
   def test_retrieve
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.conversion.pdf.retrieve("task_id")
 
@@ -38,7 +38,7 @@ class EInvoiceAPI::Test::Resources::Conversion::PdfTest < EInvoiceAPI::Test::Res
   end
 
   def test_result
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.conversion.pdf.result("task_id")
 

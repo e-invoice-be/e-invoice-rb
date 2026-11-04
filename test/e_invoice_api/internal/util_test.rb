@@ -358,9 +358,13 @@ class EInvoiceAPI::Test::UtilFusedEnumTest < Minitest::Test
     fused_2 = EInvoiceAPI::Internal::Util.chain_fused(fused_1) { fused_1.each(&_1) }
     fused_3 = EInvoiceAPI::Internal::Util.chain_fused(fused_2) { fused_2.each(&_1) }
 
+    # signal from inside the iteration: killing the thread before the enumerator
+    # has started would never run its `ensure`, making the test flaky
     th = ::Thread.new do
-      que << "🐶"
-      fused_3.each { sleep(10) }
+      fused_3.each do
+        que << "🐶"
+        sleep(10)
+      end
     end
 
     assert_equal("🐶", que.pop)

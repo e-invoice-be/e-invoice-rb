@@ -1,0 +1,20 @@
+version: 2
+updates:
+  # Development/test gems only: runtime dependencies are declared in the gemspec
+  # and should stay as loose as possible for gem consumers.
+  - package-ecosystem: bundler
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      dev-dependencies:
+        patterns: ["*"]
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]

@@ -4,7 +4,7 @@ require_relative "../test_helper"
 
 class EInvoiceAPI::Test::Resources::WebhooksTest < EInvoiceAPI::Test::ResourceTest
   def test_create_required_params
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.webhooks.create(events: ["string"], url: "https://example.com")
 
@@ -24,7 +24,7 @@ class EInvoiceAPI::Test::Resources::WebhooksTest < EInvoiceAPI::Test::ResourceTe
   end
 
   def test_retrieve
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.webhooks.retrieve("webhook_id")
 
@@ -44,7 +44,7 @@ class EInvoiceAPI::Test::Resources::WebhooksTest < EInvoiceAPI::Test::ResourceTe
   end
 
   def test_update
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.webhooks.update("webhook_id")
 
@@ -64,7 +64,7 @@ class EInvoiceAPI::Test::Resources::WebhooksTest < EInvoiceAPI::Test::ResourceTe
   end
 
   def test_list
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.webhooks.list
 
@@ -74,7 +74,7 @@ class EInvoiceAPI::Test::Resources::WebhooksTest < EInvoiceAPI::Test::ResourceTe
   end
 
   def test_delete
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.webhooks.delete("webhook_id")
 
@@ -90,7 +90,7 @@ class EInvoiceAPI::Test::Resources::WebhooksTest < EInvoiceAPI::Test::ResourceTe
   end
 
   def test_history
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.webhooks.history("webhook_id")
 
@@ -106,7 +106,7 @@ class EInvoiceAPI::Test::Resources::WebhooksTest < EInvoiceAPI::Test::ResourceTe
   end
 
   def test_test__required_params
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.webhooks.test_("webhook_id", data: {foo: "bar"}, event_type: "event_type")
 

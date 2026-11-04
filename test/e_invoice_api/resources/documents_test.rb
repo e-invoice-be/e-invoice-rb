@@ -4,7 +4,7 @@ require_relative "../test_helper"
 
 class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceTest
   def test_create
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.documents.create
 
@@ -78,7 +78,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
   end
 
   def test_retrieve
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.documents.retrieve("document_id")
 
@@ -152,7 +152,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
   end
 
   def test_delete
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.documents.delete("document_id")
 
@@ -168,7 +168,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
   end
 
   def test_create_from_pdf_required_params
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.documents.create_from_pdf(file: StringIO.new("Example data"))
 
@@ -244,7 +244,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
   end
 
   def test_send_
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.documents.send_("document_id")
 
@@ -318,7 +318,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
   end
 
   def test_validate
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.documents.validate("document_id")
 
@@ -338,7 +338,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
   end
 
   def test_timeline
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.documents.timeline("document_id")
 
@@ -355,7 +355,7 @@ class EInvoiceAPI::Test::Resources::DocumentsTest < EInvoiceAPI::Test::ResourceT
   end
 
   def test_lifecycle
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.documents.lifecycle("document_id")
 

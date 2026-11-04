@@ -70,9 +70,12 @@ jobs:
 
       - name: Run lints
         run: ./scripts/lint
-  test:
+
+      - name: Check gem packaging
+        run: bundle exec rake build:gem:check
+  audit:
     timeout-minutes: 10
-    name: test
+    name: audit
     runs-on: ${{ startsWith(github.repository, 'stainless-sdks/') && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
     if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
     steps:
@@ -84,5 +87,52 @@ jobs:
       - run: |-
           bundle install
 
+      - name: Audit dependencies for known vulnerabilities
+        run: bundle exec rake audit
+  test:
+    timeout-minutes: 10
+    name: test (ruby ${{ matrix.ruby }})
+    runs-on: ${{ startsWith(github.repository, 'stainless-sdks/') && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
+    strategy:
+      fail-fast: false
+      matrix:
+        # Oldest supported (gemspec `required_ruby_version`) through latest.
+        ruby: ['3.2', '3.3', '3.4']
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@c4e5b1316158f92e3d49443a9d58b31d25ac0f8f # v1.306.0
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: false
+      - run: |-
+          bundle install
+
+      # Runs the Prism mock server for the resource tests (scripts/mock)
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+
       - name: Run tests
+        env:
+          # Fail rather than silently skip the resource tests if Prism can't start
+          PRISM_MOCK: '1'
         run: ./scripts/test
+
+      - name: Upload coverage report
+        if: always() && matrix.ruby == '3.2'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: coverage
+          path: coverage/
+          if-no-files-found: ignore
+
+      - name: Upload Prism log
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: prism-log-ruby-${{ matrix.ruby }}
+          path: .prism.log
+          if-no-files-found: ignore

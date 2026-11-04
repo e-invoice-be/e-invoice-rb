@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+# Start a Prism mock server for the e-invoice OpenAPI spec on port 4010.
+#
+# usage: scripts/mock [<spec url or path>] [--daemon]
+#
+# The spec defaults to $OPENAPI_SPEC_URL, or else the live spec at
+# https://api.e-invoice.be/api/openapi.json. Prism only reads the spec; it never
+# forwards requests to the real API.
+#
+# With --daemon, Prism runs in the background in its own process group (logging
+# to .prism.log) and this script returns once it is listening. The group's ID is
+# written to $PRISM_PID_FILE (default: $TMPDIR/e-invoice-prism-<port>.pid), so
+# `kill -- -"$(cat "$PRISM_PID_FILE")"` stops it.
+
+set -e
+
+cd -- "$(dirname -- "$0")/.."
+
+DEFAULT_SPEC_URL="https://api.e-invoice.be/api/openapi.json"
+PRISM_PACKAGE="@stoplight/prism-cli@~5"
+PORT="${PRISM_PORT:-4010}"
+PRISM_PID_FILE="${PRISM_PID_FILE:-${TMPDIR:-/tmp}/e-invoice-prism-${PORT}.pid}"
+
+if [[ -n "$1" && "$1" != '--'* ]]; then
+  SPEC="$1"
+  shift
+else
+  SPEC="${OPENAPI_SPEC_URL:-$DEFAULT_SPEC_URL}"
+fi
+
+echo "==> Starting Prism mock server on port ${PORT} with spec ${SPEC}"
+
+prism() {
+  npm exec --yes --package="$PRISM_PACKAGE" -- prism mock --host 127.0.0.1 --port "$PORT" "$SPEC"
+}
+
+if [ "$1" == "--daemon" ]; then
+  # Job control puts the background job (npm and the Prism node process it
+  # spawns) in its own process group, so the whole group can be killed at once.
+  set -m
+  prism &>.prism.log &
+  echo $! >"$PRISM_PID_FILE"
+  set +m
+
+  # Wait for the server to come online (npm may first need to download Prism).
+  echo -n "Waiting for server"
+  for _ in $(seq 1 3000); do
+    if grep -q "✖  fatal\|Prism is listening" .prism.log 2>/dev/null; then
+      break
+    fi
+    if ! kill -0 "$(cat "$PRISM_PID_FILE")" 2>/dev/null; then
+      break
+    fi
+    echo -n "."
+    sleep 0.1
+  done
+  echo
+
+  if ! grep -q "Prism is listening" .prism.log; then
+    cat .prism.log
+    kill -- -"$(cat "$PRISM_PID_FILE")" 2>/dev/null || true
+    rm -f "$PRISM_PID_FILE"
+    echo "Error: Prism mock server failed to start" >&2
+    exit 1
+  fi
+else
+  prism
+fi

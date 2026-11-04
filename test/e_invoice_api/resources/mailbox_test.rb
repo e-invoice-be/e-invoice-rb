@@ -4,7 +4,7 @@ require_relative "../test_helper"
 
 class EInvoiceAPI::Test::Resources::MailboxTest < EInvoiceAPI::Test::ResourceTest
   def test_list
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.mailbox.list
 
@@ -42,7 +42,7 @@ class EInvoiceAPI::Test::Resources::MailboxTest < EInvoiceAPI::Test::ResourceTes
   end
 
   def test_retrieve
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.mailbox.retrieve("inbound_email_id")
 
@@ -73,7 +73,7 @@ class EInvoiceAPI::Test::Resources::MailboxTest < EInvoiceAPI::Test::ResourceTes
   end
 
   def test_download_attachment_required_params
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.mailbox.download_attachment("filename", inbound_email_id: "inbound_email_id")
 
@@ -83,7 +83,7 @@ class EInvoiceAPI::Test::Resources::MailboxTest < EInvoiceAPI::Test::ResourceTes
   end
 
   def test_reprocess
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.mailbox.reprocess("inbound_email_id")
 

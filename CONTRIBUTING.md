@@ -67,8 +67,18 @@ $ bundle exec rake
 ## Running tests
 
 ```bash
-$ bundle exec rake test
+$ ./scripts/test
 ```
+
+The tests under `test/e_invoice_api/resources/` run against a [Prism](https://github.com/stoplightio/prism) mock
+of the OpenAPI spec. `./scripts/test` starts one automatically when Node.js 20.19+ (with `npm`) is installed;
+otherwise those tests are skipped with a warning. You can also run the mock yourself with `./scripts/mock` (it
+serves `$OPENAPI_SPEC_URL`, defaulting to the live spec). Set `PRISM_MOCK=1` to fail instead of skipping
+(as CI does), or `PRISM_MOCK=0` to skip them.
+
+Coverage of `lib/` is measured with [SimpleCov](https://github.com/simplecov-ruby/simplecov) and written to
+`coverage/index.html`. A full run fails if line or branch coverage falls below the floors in `.simplecov`. Use
+`TEST=path/to/file_test.rb` to run a single file (no minimum), or `COVERAGE=0` to skip measurement.
 
 ## Linting and formatting
 
@@ -81,6 +91,21 @@ To lint and typecheck:
 ```bash
 $ bundle exec rake lint
 ```
+
+Besides rubocop, sorbet and steep, `rake lint` also runs:
+
+- `lint:parity`: checks that every file in `lib/` has a matching `rbi/` and `sig/` file, and that every model
+  declares the same fields in all three trees.
+- `format:check`: fails if `rake format` would change anything (it checks a temporary copy and never rewrites
+  your files).
+
+Other checks, which CI runs separately or which aren't enforced yet:
+
+- `rake audit`: checks `Gemfile.lock` against the Ruby advisory database (needs network).
+- `rake build:gem:check`: builds the gem, installs it in isolation and requires it, which catches files
+  missing from the gemspec.
+- `rake docs:check`: fails on any YARD warning. It isn't part of CI yet because the generated `@param` tags
+  currently produce warnings.
 
 To format and fix all lint issues automatically:
 

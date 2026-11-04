@@ -5,6 +5,7 @@ source "https://rubygems.org"
 gemspec
 
 group :development do
+  gem "bundler-audit"
   gem "rake"
   gem "rbs"
   gem "rubocop"
@@ -22,6 +23,7 @@ group :development, :test do
   gem "minitest-hooks"
   gem "minitest-proveit"
   gem "minitest-rg"
+  gem "simplecov"
   gem "webmock"
 end
 
