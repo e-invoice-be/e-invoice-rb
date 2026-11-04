@@ -166,39 +166,8 @@ desc("Check yard docs: fail on any yard warning; prints documentation coverage (
 multitask(:"docs:check") do
   # `stats` parses everything `yard doc` does, so it reports the same warnings; nothing is written to disk
   sh(*%w[yard stats --no-save --no-cache --fail-on-warning])
-
-  # YARD gives no warning for a tag that it cannot read as a tag: one indented under another tag, or one in a
-  # directive (`@!attribute`) whose description is not indented. It becomes text, so the page shows the tag as
-  # literal text, and markdown takes the braces of a type like `Hash{Symbol=>Object}` as a link and drops them
-  require "yard"
-  yardoc = YARD::CLI::Yardoc.new
-  # reads `.yardopts`, which defines the custom tags and the excluded paths
-  yardoc.parse_arguments
-  YARD::Registry.clear
-  YARD.parse(yardoc.files, yardoc.excluded)
-  library = YARD::Tags::Library.instance
-  # only a known tag counts, so that code such as `@ivar = 1` in a description is no match
-  tag_line = ->(text) do
-    text.to_s.scan(/^\s*@(!)?(\w+)/).any? do |bang, name|
-      bang ? library.has_directive?(name) : library.has_tag?(name)
-    end
-  end
-  literal =
-    YARD::Registry.all.flat_map do |object|
-      [object.docstring, *object.tags(:overload).map(&:docstring)].flat_map do |docstring|
-        tags = docstring.tags.reject { _1.tag_name == "example" }
-        texts = tags.map do |tag|
-          # the text of an `@option` tag is in its pair
-          text = (tag.respond_to?(:pair) ? tag.pair : tag).text
-          [["@#{tag.tag_name}", tag.name].compact.join(" "), text]
-        end
-        [["description", docstring], *texts].filter_map do |where, text|
-          "#{object.file}:#{object.line}: #{object.path}: #{where}" if tag_line.call(text)
-        end
-      end
-    end
-  message = ["YARD shows these tags as literal text; fix their indentation:", *literal]
-  fail(message.join("\n")) unless literal.empty?
+  # a tag YARD cannot parse becomes literal text, and `yard stats` does not warn about it
+  ruby("scripts/utils/check-yard-literal-tags.rb")
 end
 
 desc("Typecheck `*.rbs`")
