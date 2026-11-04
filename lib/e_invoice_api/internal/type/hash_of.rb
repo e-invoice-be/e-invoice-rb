@@ -22,13 +22,13 @@ module EInvoiceAPI
         #
         #   @param spec [Hash{Symbol=>Object}] .
         #
-        #     @option spec [NilClass, TrueClass, FalseClass, Integer, Float, Symbol] :const
+        #   @option spec [NilClass, TrueClass, FalseClass, Integer, Float, Symbol] :const
         #
-        #     @option spec [Proc] :enum
+        #   @option spec [Proc] :enum
         #
-        #     @option spec [Proc] :union
+        #   @option spec [Proc] :union
         #
-        #     @option spec [Boolean] :"nil?"
+        #   @option spec [Boolean] :"nil?"
         #
         # @return [self]
         def self.[](...) = new(...)
@@ -77,15 +77,15 @@ module EInvoiceAPI
         #
         # @param state [Hash{Symbol=>Object}] .
         #
-        #   @option state [Boolean] :translate_names
+        # @option state [Boolean] :translate_names
         #
-        #   @option state [Boolean] :strictness
+        # @option state [Boolean] :strictness
         #
-        #   @option state [Hash{Symbol=>Object}] :exactness
+        # @option state [Hash{Symbol=>Object}] :exactness
         #
-        #   @option state [Class<StandardError>] :error
+        # @option state [Class<StandardError>] :error
         #
-        #   @option state [Integer] :branched
+        # @option state [Integer] :branched
         #
         # @return [Hash{Symbol=>Object}, Object]
         def coerce(value, state:)
@@ -122,7 +122,7 @@ module EInvoiceAPI
         #
         # @param state [Hash{Symbol=>Object}] .
         #
-        #   @option state [Boolean] :can_retry
+        # @option state [Boolean] :can_retry
         #
         # @return [Hash{Symbol=>Object}, Object]
         def dump(value, state:)
@@ -159,13 +159,13 @@ module EInvoiceAPI
         #
         # @param spec [Hash{Symbol=>Object}] .
         #
-        #   @option spec [NilClass, TrueClass, FalseClass, Integer, Float, Symbol] :const
+        # @option spec [NilClass, TrueClass, FalseClass, Integer, Float, Symbol] :const
         #
-        #   @option spec [Proc] :enum
+        # @option spec [Proc] :enum
         #
-        #   @option spec [Proc] :union
+        # @option spec [Proc] :union
         #
-        #   @option spec [Boolean] :"nil?"
+        # @option spec [Boolean] :"nil?"
         def initialize(type_info, spec = {})
           @item_type_fn = EInvoiceAPI::Internal::Type::Converter.type_info(type_info || spec)
           @meta = EInvoiceAPI::Internal::Type::Converter.meta_info(type_info, spec)
