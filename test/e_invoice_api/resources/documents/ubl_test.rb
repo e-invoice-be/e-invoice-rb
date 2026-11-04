@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 
 class EInvoiceAPI::Test::Resources::Documents::UblTest < EInvoiceAPI::Test::ResourceTest
   def test_create_from_ubl_required_params
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.documents.ubl.create_from_ubl(file: StringIO.new("Example data"))
 
@@ -78,7 +78,7 @@ class EInvoiceAPI::Test::Resources::Documents::UblTest < EInvoiceAPI::Test::Reso
   end
 
   def test_get
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.documents.ubl.get("document_id")
 

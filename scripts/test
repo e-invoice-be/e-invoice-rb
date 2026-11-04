@@ -4,7 +4,8 @@ set -e
 
 cd -- "$(dirname -- "$0")/.."
 
-
+# Start a Prism mock server for the resource tests (see the file for PRISM_MOCK)
+source ./scripts/utils/mock-server.sh
 
 echo "==> Running tests"
 bundle exec rake test "$@"

@@ -6,6 +6,13 @@
 # - Define shared testing namespace so that we don't need to indent test files as much
 # - Setting up testing dependencies
 
+# Coverage must start before any of lib/ is loaded. Configuration lives in
+# `.simplecov`; set `COVERAGE=0` to skip measurement entirely.
+unless ENV["COVERAGE"] == "0"
+  require "simplecov"
+  SimpleCov.start
+end
+
 require "digest"
 require "singleton"
 

@@ -4,7 +4,7 @@ require_relative "../test_helper"
 
 class EInvoiceAPI::Test::Resources::InboxTest < EInvoiceAPI::Test::ResourceTest
   def test_list
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.inbox.list
 
@@ -85,7 +85,7 @@ class EInvoiceAPI::Test::Resources::InboxTest < EInvoiceAPI::Test::ResourceTest
   end
 
   def test_list_credit_notes
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.inbox.list_credit_notes
 
@@ -166,7 +166,7 @@ class EInvoiceAPI::Test::Resources::InboxTest < EInvoiceAPI::Test::ResourceTest
   end
 
   def test_list_invoices
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.inbox.list_invoices
 

@@ -4,7 +4,7 @@ require_relative "../test_helper"
 
 class EInvoiceAPI::Test::Resources::LookupTest < EInvoiceAPI::Test::ResourceTest
   def test_retrieve_required_params
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.lookup.retrieve(peppol_id: "peppol_id")
 
@@ -27,7 +27,7 @@ class EInvoiceAPI::Test::Resources::LookupTest < EInvoiceAPI::Test::ResourceTest
   end
 
   def test_retrieve_participants_required_params
-    skip("Mock server tests are disabled")
+    skip("Needs a Prism mock server; run scripts/test") unless ENV["PRISM_MOCK"] == "1"
 
     response = @e_invoice.lookup.retrieve_participants(query: "query")
 
