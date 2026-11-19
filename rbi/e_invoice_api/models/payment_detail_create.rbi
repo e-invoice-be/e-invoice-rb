@@ -11,7 +11,9 @@ module EInvoiceAPI
           )
         end
 
-      # Bank account number (for non-IBAN accounts)
+      # Bank account number (for non-IBAN accounts). With `swift` `SE:BANKGIRO` or
+      # `SE:PLUSGIRO`, the bankgiro or plusgiro number, with `iban` left empty; spaces
+      # and hyphens are removed.
       sig { returns(T.nilable(String)) }
       attr_accessor :bank_account_number
 
@@ -39,7 +41,9 @@ module EInvoiceAPI
         ).returns(T.attached_class)
       end
       def self.new(
-        # Bank account number (for non-IBAN accounts)
+        # Bank account number (for non-IBAN accounts). With `swift` `SE:BANKGIRO` or
+        # `SE:PLUSGIRO`, the bankgiro or plusgiro number, with `iban` left empty; spaces
+        # and hyphens are removed.
         bank_account_number: nil,
         # International Bank Account Number for payment transfers
         iban: nil,

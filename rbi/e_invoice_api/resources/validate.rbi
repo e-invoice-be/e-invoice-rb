@@ -101,7 +101,8 @@ module EInvoiceAPI
         currency: nil,
         # The address of the customer/buyer
         customer_address: nil,
-        # The recipient name at the customer address
+        # The recipient name at the customer address. Also the customer contact name
+        # (BT-56) in the UBL.
         customer_address_recipient: nil,
         # Customer company ID. For Belgium this is the CBE number or their EUID (European
         # Unique Identifier) number. In the Netherlands this is the KVK number.
@@ -147,7 +148,7 @@ module EInvoiceAPI
         # The previous unpaid balance from prior invoices, if any. Must be positive and
         # rounded to maximum 2 decimals
         previous_unpaid_balance: nil,
-        # The purchase order reference number
+        # The purchase order reference number (BT-13)
         purchase_order: nil,
         # The address where payment should be sent or remitted to
         remittance_address: nil,
@@ -170,7 +171,7 @@ module EInvoiceAPI
         service_start_date: nil,
         # The shipping/delivery address
         shipping_address: nil,
-        # The recipient name at the shipping address
+        # The name of the deliver-to party (BT-70)
         shipping_address_recipient: nil,
         # The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
         state: nil,
@@ -200,11 +201,13 @@ module EInvoiceAPI
         #
         # Agency: CEF Identifier: vatex
         vatex: nil,
-        # Textual explanation for VAT exemption
+        # VAT exemption reason text (BT-120). An exemption reason (vatex or vatex_note) is
+        # required for tax_code E, AE, K, G and O, and not allowed for S, Z, L and M
         vatex_note: nil,
         # The address of the vendor/seller
         vendor_address: nil,
-        # The recipient name at the vendor address
+        # The recipient name at the vendor address. Also the vendor contact name (BT-41)
+        # in the UBL, required when vendor and customer are both in Germany (DE-R-005).
         vendor_address_recipient: nil,
         # Vendor company ID. For Belgium this is the CBE number or their EUID (European
         # Unique Identifier) number. In the Netherlands this is the KVK number.

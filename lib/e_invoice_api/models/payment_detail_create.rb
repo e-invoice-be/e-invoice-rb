@@ -4,7 +4,9 @@ module EInvoiceAPI
   module Models
     class PaymentDetailCreate < EInvoiceAPI::Internal::Type::BaseModel
       # @!attribute bank_account_number
-      #   Bank account number (for non-IBAN accounts)
+      #   Bank account number (for non-IBAN accounts). With `swift` `SE:BANKGIRO` or
+      #   `SE:PLUSGIRO`, the bankgiro or plusgiro number, with `iban` left empty; spaces
+      #   and hyphens are removed.
       #
       #   @return [String, nil]
       optional :bank_account_number, String, nil?: true
@@ -34,7 +36,7 @@ module EInvoiceAPI
       #   Some parameter documentations has been truncated, see
       #   {EInvoiceAPI::Models::PaymentDetailCreate} for more details.
       #
-      #   @param bank_account_number [String, nil] Bank account number (for non-IBAN accounts)
+      #   @param bank_account_number [String, nil] Bank account number (for non-IBAN accounts). With `swift` `SE:BANKGIRO` or
       #
       #   @param iban [String, nil] International Bank Account Number for payment transfers
       #

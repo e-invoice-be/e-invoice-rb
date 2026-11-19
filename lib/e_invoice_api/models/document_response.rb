@@ -73,7 +73,8 @@ module EInvoiceAPI
       optional :customer_address, String, nil?: true
 
       # @!attribute customer_address_recipient
-      #   The recipient name at the customer address
+      #   The recipient name at the customer address. Also the customer contact name
+      #   (BT-56) in the UBL.
       #
       #   @return [String, nil]
       optional :customer_address_recipient, String, nil?: true
@@ -199,7 +200,7 @@ module EInvoiceAPI
       optional :preceding_invoice_id, String, nil?: true
 
       # @!attribute purchase_order
-      #   The purchase order reference number
+      #   The purchase order reference number (BT-13)
       #
       #   @return [String, nil]
       optional :purchase_order, String, nil?: true
@@ -262,7 +263,7 @@ module EInvoiceAPI
       optional :shipping_address, String, nil?: true
 
       # @!attribute shipping_address_recipient
-      #   The recipient name at the shipping address
+      #   The name of the deliver-to party (BT-70)
       #
       #   @return [String, nil]
       optional :shipping_address_recipient, String, nil?: true
@@ -334,7 +335,8 @@ module EInvoiceAPI
       optional :vatex, enum: -> { EInvoiceAPI::DocumentResponse::Vatex }, nil?: true
 
       # @!attribute vatex_note
-      #   Textual explanation for VAT exemption
+      #   VAT exemption reason text (BT-120). An exemption reason (vatex or vatex_note) is
+      #   required for tax_code E, AE, K, G and O, and not allowed for S, Z, L and M
       #
       #   @return [String, nil]
       optional :vatex_note, String, nil?: true
@@ -346,7 +348,8 @@ module EInvoiceAPI
       optional :vendor_address, String, nil?: true
 
       # @!attribute vendor_address_recipient
-      #   The recipient name at the vendor address
+      #   The recipient name at the vendor address. Also the vendor contact name (BT-41)
+      #   in the UBL, required when vendor and customer are both in Germany (DE-R-005).
       #
       #   @return [String, nil]
       optional :vendor_address_recipient, String, nil?: true
@@ -411,7 +414,7 @@ module EInvoiceAPI
       #
       #   @param customer_address [String, nil] The address of the customer/buyer
       #
-      #   @param customer_address_recipient [String, nil] The recipient name at the customer address
+      #   @param customer_address_recipient [String, nil] The recipient name at the customer address. Also the customer contact name (BT-5
       #
       #   @param customer_company_id [String, nil] Customer company ID. For Belgium this is the CBE number or their EUID (European
       #
@@ -451,7 +454,7 @@ module EInvoiceAPI
       #
       #   @param preceding_invoice_id [String, nil] The preceding invoice reference (BT-25): the number of the invoice this document
       #
-      #   @param purchase_order [String, nil] The purchase order reference number
+      #   @param purchase_order [String, nil] The purchase order reference number (BT-13)
       #
       #   @param remittance_address [String, nil] The address where payment should be sent or remitted to
       #
@@ -471,7 +474,7 @@ module EInvoiceAPI
       #
       #   @param shipping_address [String, nil] The shipping/delivery address
       #
-      #   @param shipping_address_recipient [String, nil] The recipient name at the shipping address
+      #   @param shipping_address_recipient [String, nil] The name of the deliver-to party (BT-70)
       #
       #   @param state [Symbol, EInvoiceAPI::Models::DocumentState] The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
       #
@@ -491,11 +494,11 @@ module EInvoiceAPI
       #
       #   @param vatex [Symbol, EInvoiceAPI::Models::DocumentResponse::Vatex, nil] VATEX code list for VAT exemption reasons
       #
-      #   @param vatex_note [String, nil] Textual explanation for VAT exemption
+      #   @param vatex_note [String, nil] VAT exemption reason text (BT-120). An exemption reason (vatex or vatex_note) is
       #
       #   @param vendor_address [String, nil] The address of the vendor/seller
       #
-      #   @param vendor_address_recipient [String, nil] The recipient name at the vendor address
+      #   @param vendor_address_recipient [String, nil] The recipient name at the vendor address. Also the vendor contact name (BT-41) i
       #
       #   @param vendor_company_id [String, nil] Vendor company ID. For Belgium this is the CBE number or their EUID (European Un
       #
@@ -930,7 +933,11 @@ module EInvoiceAPI
         optional :date, Date, nil?: true
 
         # @!attribute description
-        #   The description of the line item.
+        #   The description of the line item (BT-154). Doubles as the item name when `name`
+        #   is omitted, so a posted line item needs a `name` or a `description`. On a
+        #   received document it holds the item description, or the item name (BT-153) when
+        #   the document has no item description; CII documents with both combine them as
+        #   `name: description`.
         #
         #   @return [String, nil]
         optional :description, String, nil?: true
@@ -1014,7 +1021,7 @@ module EInvoiceAPI
         #
         #   @param date [Date, nil]
         #
-        #   @param description [String, nil] The description of the line item.
+        #   @param description [String, nil] The description of the line item (BT-154). Doubles as the item name when `name`
         #
         #   @param item_attributes [Array<EInvoiceAPI::Models::DocumentResponse::Item::ItemAttribute>, nil] Item-level attributes (BG-32) from cac:AdditionalItemProperty.
         #
@@ -1059,7 +1066,9 @@ module EInvoiceAPI
 
       class PaymentDetail < EInvoiceAPI::Internal::Type::BaseModel
         # @!attribute bank_account_number
-        #   Bank account number (for non-IBAN accounts)
+        #   Bank account number (for non-IBAN accounts). With `swift` `SE:BANKGIRO` or
+        #   `SE:PLUSGIRO`, the bankgiro or plusgiro number, with `iban` left empty; spaces
+        #   and hyphens are removed.
         #
         #   @return [String, nil]
         optional :bank_account_number, String, nil?: true
@@ -1089,7 +1098,7 @@ module EInvoiceAPI
         #   Some parameter documentations has been truncated, see
         #   {EInvoiceAPI::Models::DocumentResponse::PaymentDetail} for more details.
         #
-        #   @param bank_account_number [String, nil] Bank account number (for non-IBAN accounts)
+        #   @param bank_account_number [String, nil] Bank account number (for non-IBAN accounts). With `swift` `SE:BANKGIRO` or
         #
         #   @param iban [String, nil] International Bank Account Number for payment transfers
         #
@@ -1166,6 +1175,7 @@ module EInvoiceAPI
         VATEX_EU_132_1_O = :"VATEX-EU-132-1O"
         VATEX_EU_132_1_P = :"VATEX-EU-132-1P"
         VATEX_EU_132_1_Q = :"VATEX-EU-132-1Q"
+        VATEX_EU_135_1 = :"VATEX-EU-135-1"
         VATEX_EU_143 = :"VATEX-EU-143"
         VATEX_EU_143_1_A = :"VATEX-EU-143-1A"
         VATEX_EU_143_1_B = :"VATEX-EU-143-1B"
@@ -1197,6 +1207,7 @@ module EInvoiceAPI
         VATEX_EU_151_1_C = :"VATEX-EU-151-1C"
         VATEX_EU_151_1_D = :"VATEX-EU-151-1D"
         VATEX_EU_151_1_E = :"VATEX-EU-151-1E"
+        VATEX_EU_153 = :"VATEX-EU-153"
         VATEX_EU_159 = :"VATEX-EU-159"
         VATEX_EU_309 = :"VATEX-EU-309"
         VATEX_EU_AE = :"VATEX-EU-AE"
@@ -1207,6 +1218,30 @@ module EInvoiceAPI
         VATEX_EU_IC = :"VATEX-EU-IC"
         VATEX_EU_O = :"VATEX-EU-O"
         VATEX_EU_J = :"VATEX-EU-J"
+        VATEX_FR_298_SEXDECIESA = :"VATEX-FR-298SEXDECIESA"
+        VATEX_FR_AE = :"VATEX-FR-AE"
+        VATEX_FR_CGI261_1 = :"VATEX-FR-CGI261-1"
+        VATEX_FR_CGI261_2 = :"VATEX-FR-CGI261-2"
+        VATEX_FR_CGI261_3 = :"VATEX-FR-CGI261-3"
+        VATEX_FR_CGI261_4 = :"VATEX-FR-CGI261-4"
+        VATEX_FR_CGI261_5 = :"VATEX-FR-CGI261-5"
+        VATEX_FR_CGI261_7 = :"VATEX-FR-CGI261-7"
+        VATEX_FR_CGI261_8 = :"VATEX-FR-CGI261-8"
+        VATEX_FR_CGI261A = :"VATEX-FR-CGI261A"
+        VATEX_FR_CGI261B = :"VATEX-FR-CGI261B"
+        VATEX_FR_CGI261C_1 = :"VATEX-FR-CGI261C-1"
+        VATEX_FR_CGI261C_2 = :"VATEX-FR-CGI261C-2"
+        VATEX_FR_CGI261C_3 = :"VATEX-FR-CGI261C-3"
+        VATEX_FR_CGI261D_1 = :"VATEX-FR-CGI261D-1"
+        VATEX_FR_CGI261D_1_BIS = :"VATEX-FR-CGI261D-1BIS"
+        VATEX_FR_CGI261D_2 = :"VATEX-FR-CGI261D-2"
+        VATEX_FR_CGI261D_3 = :"VATEX-FR-CGI261D-3"
+        VATEX_FR_CGI261D_4 = :"VATEX-FR-CGI261D-4"
+        VATEX_FR_CGI261E_1 = :"VATEX-FR-CGI261E-1"
+        VATEX_FR_CGI261E_2 = :"VATEX-FR-CGI261E-2"
+        VATEX_FR_CGI275 = :"VATEX-FR-CGI275"
+        VATEX_FR_CGI277A = :"VATEX-FR-CGI277A"
+        VATEX_FR_CGI295 = :"VATEX-FR-CGI295"
         VATEX_FR_FRANCHISE = :"VATEX-FR-FRANCHISE"
         VATEX_FR_CNWVAT = :"VATEX-FR-CNWVAT"
 
