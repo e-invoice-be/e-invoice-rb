@@ -50,7 +50,8 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :customer_address
 
-      # The recipient name at the customer address
+      # The recipient name at the customer address. Also the customer contact name
+      # (BT-56) in the UBL.
       sig { returns(T.nilable(String)) }
       attr_accessor :customer_address_recipient
 
@@ -163,7 +164,7 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :preceding_invoice_id
 
-      # The purchase order reference number
+      # The purchase order reference number (BT-13)
       sig { returns(T.nilable(String)) }
       attr_accessor :purchase_order
 
@@ -206,7 +207,7 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :shipping_address
 
-      # The recipient name at the shipping address
+      # The name of the deliver-to party (BT-70)
       sig { returns(T.nilable(String)) }
       attr_accessor :shipping_address_recipient
 
@@ -298,7 +299,8 @@ module EInvoiceAPI
       end
       attr_accessor :vatex
 
-      # Textual explanation for VAT exemption
+      # VAT exemption reason text (BT-120). An exemption reason (vatex or vatex_note) is
+      # required for tax_code E, AE, K, G and O, and not allowed for S, Z, L and M
       sig { returns(T.nilable(String)) }
       attr_accessor :vatex_note
 
@@ -306,7 +308,8 @@ module EInvoiceAPI
       sig { returns(T.nilable(String)) }
       attr_accessor :vendor_address
 
-      # The recipient name at the vendor address
+      # The recipient name at the vendor address. Also the vendor contact name (BT-41)
+      # in the UBL, required when vendor and customer are both in Germany (DE-R-005).
       sig { returns(T.nilable(String)) }
       attr_accessor :vendor_address_recipient
 
@@ -430,7 +433,8 @@ module EInvoiceAPI
         currency: nil,
         # The address of the customer/buyer
         customer_address: nil,
-        # The recipient name at the customer address
+        # The recipient name at the customer address. Also the customer contact name
+        # (BT-56) in the UBL.
         customer_address_recipient: nil,
         # Customer company ID. For Belgium this is the CBE number or their EUID (European
         # Unique Identifier) number. In the Netherlands this is the KVK number.
@@ -477,7 +481,7 @@ module EInvoiceAPI
         # The preceding invoice reference (BT-25): the number of the invoice this document
         # corrects, for example the invoice a credit note credits
         preceding_invoice_id: nil,
-        # The purchase order reference number
+        # The purchase order reference number (BT-13)
         purchase_order: nil,
         # The address where payment should be sent or remitted to
         remittance_address: nil,
@@ -500,7 +504,7 @@ module EInvoiceAPI
         service_start_date: nil,
         # The shipping/delivery address
         shipping_address: nil,
-        # The recipient name at the shipping address
+        # The name of the deliver-to party (BT-70)
         shipping_address_recipient: nil,
         # The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or RECEIVED
         state: nil,
@@ -534,11 +538,13 @@ module EInvoiceAPI
         #
         # Agency: CEF Identifier: vatex
         vatex: nil,
-        # Textual explanation for VAT exemption
+        # VAT exemption reason text (BT-120). An exemption reason (vatex or vatex_note) is
+        # required for tax_code E, AE, K, G and O, and not allowed for S, Z, L and M
         vatex_note: nil,
         # The address of the vendor/seller
         vendor_address: nil,
-        # The recipient name at the vendor address
+        # The recipient name at the vendor address. Also the vendor contact name (BT-41)
+        # in the UBL, required when vendor and customer are both in Germany (DE-R-005).
         vendor_address_recipient: nil,
         # Vendor company ID. For Belgium this is the CBE number or their EUID (European
         # Unique Identifier) number. In the Netherlands this is the KVK number.
@@ -668,7 +674,11 @@ module EInvoiceAPI
         sig { returns(T.nilable(Date)) }
         attr_accessor :date
 
-        # The description of the line item.
+        # The description of the line item (BT-154). Doubles as the item name when `name`
+        # is omitted, so a posted line item needs a `name` or a `description`. On a
+        # received document it holds the item description, or the item name (BT-153) when
+        # the document has no item description; CII documents with both combine them as
+        # `name: description`.
         sig { returns(T.nilable(String)) }
         attr_accessor :description
 
@@ -762,7 +772,11 @@ module EInvoiceAPI
           # The charges of the line item.
           charges: nil,
           date: nil,
-          # The description of the line item.
+          # The description of the line item (BT-154). Doubles as the item name when `name`
+          # is omitted, so a posted line item needs a `name` or a `description`. On a
+          # received document it holds the item description, or the item name (BT-153) when
+          # the document has no item description; CII documents with both combine them as
+          # `name: description`.
           description: nil,
           # Item-level attributes (BG-32) from cac:AdditionalItemProperty.
           item_attributes: nil,
@@ -1085,6 +1099,11 @@ module EInvoiceAPI
             :"VATEX-EU-132-1Q",
             EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
+        VATEX_EU_135_1 =
+          T.let(
+            :"VATEX-EU-135-1",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
         VATEX_EU_143 =
           T.let(
             :"VATEX-EU-143",
@@ -1240,6 +1259,11 @@ module EInvoiceAPI
             :"VATEX-EU-151-1E",
             EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
+        VATEX_EU_153 =
+          T.let(
+            :"VATEX-EU-153",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
         VATEX_EU_159 =
           T.let(
             :"VATEX-EU-159",
@@ -1288,6 +1312,126 @@ module EInvoiceAPI
         VATEX_EU_J =
           T.let(
             :"VATEX-EU-J",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_298_SEXDECIESA =
+          T.let(
+            :"VATEX-FR-298SEXDECIESA",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_AE =
+          T.let(
+            :"VATEX-FR-AE",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261_1 =
+          T.let(
+            :"VATEX-FR-CGI261-1",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261_2 =
+          T.let(
+            :"VATEX-FR-CGI261-2",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261_3 =
+          T.let(
+            :"VATEX-FR-CGI261-3",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261_4 =
+          T.let(
+            :"VATEX-FR-CGI261-4",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261_5 =
+          T.let(
+            :"VATEX-FR-CGI261-5",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261_7 =
+          T.let(
+            :"VATEX-FR-CGI261-7",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261_8 =
+          T.let(
+            :"VATEX-FR-CGI261-8",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261A =
+          T.let(
+            :"VATEX-FR-CGI261A",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261B =
+          T.let(
+            :"VATEX-FR-CGI261B",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261C_1 =
+          T.let(
+            :"VATEX-FR-CGI261C-1",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261C_2 =
+          T.let(
+            :"VATEX-FR-CGI261C-2",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261C_3 =
+          T.let(
+            :"VATEX-FR-CGI261C-3",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261D_1 =
+          T.let(
+            :"VATEX-FR-CGI261D-1",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261D_1_BIS =
+          T.let(
+            :"VATEX-FR-CGI261D-1BIS",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261D_2 =
+          T.let(
+            :"VATEX-FR-CGI261D-2",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261D_3 =
+          T.let(
+            :"VATEX-FR-CGI261D-3",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261D_4 =
+          T.let(
+            :"VATEX-FR-CGI261D-4",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261E_1 =
+          T.let(
+            :"VATEX-FR-CGI261E-1",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI261E_2 =
+          T.let(
+            :"VATEX-FR-CGI261E-2",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI275 =
+          T.let(
+            :"VATEX-FR-CGI275",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI277A =
+          T.let(
+            :"VATEX-FR-CGI277A",
+            EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
+          )
+        VATEX_FR_CGI295 =
+          T.let(
+            :"VATEX-FR-CGI295",
             EInvoiceAPI::Models::DocumentCreateFromPdfResponse::Vatex::TaggedSymbol
           )
         VATEX_FR_FRANCHISE =

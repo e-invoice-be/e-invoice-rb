@@ -36,7 +36,7 @@ module EInvoiceAPI
       #
       #   @param customer_address [String, nil] Body param: The address of the customer/buyer
       #
-      #   @param customer_address_recipient [String, nil] Body param: The recipient name at the customer address
+      #   @param customer_address_recipient [String, nil] Body param: The recipient name at the customer address. Also the customer contac
       #
       #   @param customer_company_id [String, nil] Body param: Customer company ID. For Belgium this is the CBE number or their EUI
       #
@@ -78,7 +78,7 @@ module EInvoiceAPI
       #
       #   @param previous_unpaid_balance [Float, String, nil] Body param: The previous unpaid balance from prior invoices, if any. Must be pos
       #
-      #   @param purchase_order [String, nil] Body param: The purchase order reference number
+      #   @param purchase_order [String, nil] Body param: The purchase order reference number (BT-13)
       #
       #   @param remittance_address [String, nil] Body param: The address where payment should be sent or remitted to
       #
@@ -98,7 +98,7 @@ module EInvoiceAPI
       #
       #   @param shipping_address [String, nil] Body param: The shipping/delivery address
       #
-      #   @param shipping_address_recipient [String, nil] Body param: The recipient name at the shipping address
+      #   @param shipping_address_recipient [String, nil] Body param: The name of the deliver-to party (BT-70)
       #
       #   @param state [Symbol, EInvoiceAPI::Models::DocumentState] Body param: The current state of the document: DRAFT, TRANSIT, FAILED, SENT, or
       #
@@ -118,11 +118,11 @@ module EInvoiceAPI
       #
       #   @param vatex [Symbol, EInvoiceAPI::Models::DocumentCreate::Vatex, nil] Body param: VATEX code list for VAT exemption reasons
       #
-      #   @param vatex_note [String, nil] Body param: Textual explanation for VAT exemption
+      #   @param vatex_note [String, nil] Body param: VAT exemption reason text (BT-120). An exemption reason (vatex or va
       #
       #   @param vendor_address [String, nil] Body param: The address of the vendor/seller
       #
-      #   @param vendor_address_recipient [String, nil] Body param: The recipient name at the vendor address
+      #   @param vendor_address_recipient [String, nil] Body param: The recipient name at the vendor address. Also the vendor contact na
       #
       #   @param vendor_company_id [String, nil] Body param: Vendor company ID. For Belgium this is the CBE number or their EUID
       #
