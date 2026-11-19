@@ -1,12 +1,23 @@
 # Changelog
 
-## Unreleased
+## 0.35.0 (2026-11-19)
+
+Full Changelog: [v0.34.0...v0.35.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.34.0...v0.35.0)
 
 ### ⚠ BREAKING CHANGES
 
 * Requests no longer send the `x-stainless-arch`, `x-stainless-lang`, `x-stainless-os`, `x-stainless-package-version`, `x-stainless-runtime`, `x-stainless-runtime-version`, `x-stainless-retry-count` and `x-stainless-timeout` headers. The `User-Agent` header stays. Retries work as before.
 * Generated idempotency keys start with `e-invoice-ruby-retry-` instead of `stainless-ruby-retry-`. `EInvoiceAPI::Client` sends no idempotency header by default, so this only affects code that sets one.
 * Removed `EInvoiceAPI::Internal::Util.arch`, `EInvoiceAPI::Internal::Util.os` and the `EInvoiceAPI::Internal::Transport::BaseClient::PLATFORM_HEADERS` constant, and the `send_retry_header:` keyword of `BaseClient#send_request`. They only served these headers.
+
+### Features
+
+* **api:** sync SDK with live OpenAPI spec: 1349 more `UnitOfMeasureCode` values, 26 more VAT exemption codes (`Vatex`), updated field descriptions ([#95](https://github.com/e-invoice-be/e-invoice-rb/issues/95)) ([5d02703](https://github.com/e-invoice-be/e-invoice-rb/commit/5d027039a57bf323d12e7808e62a468ccac0031e))
+
+### Bug Fixes
+
+* load on Ruby 3.4 without base64, check undeclared gem dependencies ([#91](https://github.com/e-invoice-be/e-invoice-rb/issues/91)) ([b874aa0](https://github.com/e-invoice-be/e-invoice-rb/commit/b874aa0dc75cd82ecb69c15a2a984136d402dcc2))
+* show yard @option tags as option lists and keep brace types ([#90](https://github.com/e-invoice-be/e-invoice-rb/issues/90)) ([476ebe0](https://github.com/e-invoice-be/e-invoice-rb/commit/476ebe064821fc62e50892db4d1148285c25272b))
 
 ### Chores
 
