@@ -39,7 +39,7 @@ The full REST API documentation can be found on [api.e-invoice.be](https://api.e
 To use this gem, install via Bundler by adding the following to your application's `Gemfile`:
 
 ```ruby
-gem "e-invoice-api", "~> 0.34.0"
+gem "e-invoice-api", "~> 0.35.0"
 ```
 
 ## Usage
