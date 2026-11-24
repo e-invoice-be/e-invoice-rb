@@ -19,6 +19,12 @@ module EInvoiceAPI
       sig { returns(Integer) }
       attr_accessor :total
 
+      sig { returns(Integer) }
+      attr_accessor :pages
+
+      sig { returns(T::Boolean) }
+      attr_accessor :has_next_page
+
       # @api private
       sig { returns(String) }
       def inspect

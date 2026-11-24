@@ -11,6 +11,10 @@ module EInvoiceAPI
 
       attr_accessor total: Integer
 
+      attr_accessor pages: Integer
+
+      attr_accessor has_next_page: bool
+
       def inspect: -> String
     end
   end

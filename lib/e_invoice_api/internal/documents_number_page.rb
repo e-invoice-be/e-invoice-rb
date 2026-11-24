@@ -5,7 +5,7 @@ module EInvoiceAPI
     # @generic Elem
     #
     # @example
-    #   if documents_number_page.has_next?
+    #   if documents_number_page.next_page?
     #     documents_number_page = documents_number_page.next_page
     #   end
     #
@@ -28,9 +28,15 @@ module EInvoiceAPI
       # @return [Integer]
       attr_accessor :total
 
+      # @return [Integer]
+      attr_accessor :pages
+
+      # @return [Boolean]
+      attr_accessor :has_next_page
+
       # @return [Boolean]
       def next_page?
-        !items.to_a.empty? && (page.nil? || total.nil? || page < total)
+        !items.to_a.empty? && (has_next_page.nil? ? (page.nil? || pages.nil? || page < pages) : has_next_page)
       end
 
       # @raise [EInvoiceAPI::HTTP::Error]
@@ -79,6 +85,8 @@ module EInvoiceAPI
         @page = page_data[:page]
         @page_size = page_data[:page_size]
         @total = page_data[:total]
+        @pages = page_data[:pages]
+        @has_next_page = page_data[:has_next_page]
       end
 
       # @api private
@@ -88,7 +96,7 @@ module EInvoiceAPI
         # rubocop:disable Layout/LineLength
         model = EInvoiceAPI::Internal::Type::Converter.inspect(@model, depth: 1)
 
-        "#<#{self.class}[#{model}]:0x#{object_id.to_s(16)} page=#{page.inspect} page_size=#{page_size.inspect} total=#{total.inspect}>"
+        "#<#{self.class}[#{model}]:0x#{object_id.to_s(16)} page=#{page.inspect} page_size=#{page_size.inspect} total=#{total.inspect} pages=#{pages.inspect} has_next_page=#{has_next_page.inspect}>"
         # rubocop:enable Layout/LineLength
       end
     end
