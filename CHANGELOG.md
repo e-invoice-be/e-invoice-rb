@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.35.1 (2026-11-24)
+
+Full Changelog: [v0.35.0...v0.35.1](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.35.0...v0.35.1)
+
+### Bug Fixes
+
+* **api:** sync SDK with live OpenAPI spec: `DocumentsNumberPage` reads `pages` and `has_next_page`, so `auto_paging_each` stops after the last page instead of requesting extra empty pages ([#97](https://github.com/e-invoice-be/e-invoice-rb/issues/97)) ([b29c667](https://github.com/e-invoice-be/e-invoice-rb/commit/b29c667cdc559e26d5f88c65d681c4b1a94c91ae))
+
 ## 0.35.0 (2026-11-19)
 
 Full Changelog: [v0.34.0...v0.35.0](https://github.com/e-invoice-be/e-invoice-rb/compare/v0.34.0...v0.35.0)
